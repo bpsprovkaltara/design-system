@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BPS Kaltara — Dashboard Statistik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; font-family: 'IBM Plex Sans', sans-serif; background: #faf8f5; color: #111827; -webkit-font-smoothing: antialiased; }
+#root { height: 100%; display: flex; }
+button { font-family: inherit; }
+:focus-visible { outline: 2px solid #1e3a5f; outline-offset: 2px; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #bcccdc; border-radius: 9999px; }
+
+/* Mini bar chart */
+.mini-bar { display: flex; align-items: flex-end; gap: 3px; height: 48px; }
+.mini-bar-col { flex: 1; border-radius: 2px 2px 0 0; background: #1e3a5f; opacity: .8; transition: opacity 150ms; }
+.mini-bar-col:hover { opacity: 1; }
+
+/* Choropleth legend */
+.legend { display: flex; flex-direction: column; gap: 3px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #829ab1; }
+.legend-swatch { width: 14px; height: 10px; border-radius: 2px; }
+
+/* Map placeholder districts */
+.map-district { transition: fill 150ms; cursor: pointer; }
+.map-district:hover { filter: brightness(1.1); }
+
+@keyframes shimmer { to { background-position: 1000px 0; } }
+/* warm-toned skeleton */
+.skel { background: linear-gradient(90deg,#ebe4da 25%,#f5f0ea 50%,#ebe4da 75%); background-size: 1000px 100%; animation: shimmer 2s infinite linear; border-radius: 3px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="components/Sidebar.jsx"></script>
+<script type="text/babel" src="components/Topbar.jsx"></script>
+<script type="text/babel" src="components/StatCard.jsx"></script>
+<script type="text/babel" src="components/DataTable.jsx"></script>
+
+<script type="text/babel">
+// ─── Data ───────────────────────────────────────────────────
+const tableData = [
+  ['Tarakan',         266397, 14823450, 6.12, 'Final'],
+  ['Nunukan',         196845, null,     7.84, 'Sementara'],
+  ['Bulungan',        131048, 8102310,  9.21, 'Final'],
+  ['Malinau',          80109, 3441200,  8.05, 'Final'],
+  ['Tana Tidung',      24083, 1204100,  10.3, 'Final'],
+  ['Tarakan Barat',    88120, 4300000,  6.80, 'Sementara'],
+  ['Tarakan Timur',    72400, 3800000,  7.10, 'Final'],
+  ['Tarakan Tengah',   60100, 3100000,  8.40, 'Revisi'],
+  ['Tarakan Utara',    45777, 2800000,  7.90, 'Final'],
+];
+
+const chartData = [52, 65, 59, 71, 68, 74, 70, 78, 82, 75, 88, 91];
+const months = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+
+// ─── Page: Beranda ──────────────────────────────────────────
+function BerandaPage() {
+  const maxVal = Math.max(...chartData);
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+      {/* Stat cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14 }}>
+        <StatCard label="Total Populasi" value="728.498" unit="jiwa" change="+2,4% dari 2022" changeDir="up" period="Sensus 2023" />
+        <StatCard label="Tingkat Kemiskinan" value="6,78%" unit="persen" change="−0,5 pp (membaik)" changeDir="up" period="Maret 2023" />
+        <StatCard label="PDRB Per Kapita" value="48,2 Jt" unit="Rupiah" change="" changeDir="" period="2023" provisional={true} />
+        <StatCard label="Tingkat Pengangguran" value="4,31%" unit="persen" change="+0,2 pp" changeDir="down" period="Agustus 2023" />
+      </div>
+
+      {/* Chart + Map row */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+        {/* Bar chart */}
+        <div style={{ background: '#faf8f5', borderRadius: 4, border: '1px solid #ebe4da', boxShadow: '0 1px 3px rgba(0,43,70,.04)', padding: 16 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: 13, color: '#1e3a5f' }}>PDRB Bulanan</div>
+              <div style={{ fontSize: 11, color: '#829ab1', marginTop: 2 }}>Sumber: BPS Kaltara · 2023 · Rp miliar</div>
+            </div>
+            <span style={{ fontSize: 10.5, fontWeight: 600, padding: '2px 8px', borderRadius: 9999, background: '#fef3c7', color: '#b45309' }}>⚠ Sementara</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 3, height: 90, marginBottom: 6 }}>
+            {chartData.map((v, i) => (
+              <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, height: '100%', justifyContent: 'flex-end' }}>
+                <div style={{ width: '100%', borderRadius: '2px 2px 0 0', background: i === chartData.length-1 ? '#1e3a5f' : '#9fb3c8', height: `${(v/maxVal)*100}%`, transition: 'height 300ms ease' }}></div>
+              </div>
+            ))}
+          </div>
+          <div style={{ display: 'flex', gap: 4 }}>
+            {months.map((m, i) => <div key={i} style={{ flex: 1, fontSize: 9, color: '#9fb3c8', textAlign: 'center' }}>{m}</div>)}
+          </div>
+        </div>
+
+        {/* Map placeholder */}
+        <div style={{ background: '#faf8f5', borderRadius: 4, border: '1px solid #ebe4da', boxShadow: '0 1px 3px rgba(0,43,70,.04)', padding: 16 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: 13, color: '#1e3a5f' }}>Peta Kemiskinan</div>
+              <div style={{ fontSize: 11, color: '#829ab1', marginTop: 2 }}>Kab/Kota · 2023 · Persentase (%)</div>
+            </div>
+          </div>
+          <figure style={{ margin: 0 }}>
+            <div style={{ background: '#f5f0ea', borderRadius: 3, height: 120, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
+              {/* Simplified province shape placeholder — navy scale choropleth */}
+              <svg viewBox="0 0 300 130" width="100%" height="100%" style={{ position: 'absolute', inset: 0 }}>
+                <rect x="10" y="10" width="55" height="45" rx="3" fill="#1e3a5f" opacity=".9" />
+                <text x="37" y="36" textAnchor="middle" fill="white" fontSize="9" fontWeight="600">Tarakan</text>
+                <text x="37" y="48" textAnchor="middle" fill="white" fontSize="8">6,12%</text>
+
+                <rect x="80" y="30" width="70" height="55" rx="3" fill="#334e68" opacity=".85" />
+                <text x="115" y="57" textAnchor="middle" fill="white" fontSize="9" fontWeight="600">Nunukan</text>
+                <text x="115" y="69" textAnchor="middle" fill="white" fontSize="8">7,84%</text>
+
+                <rect x="165" y="10" width="65" height="50" rx="3" fill="#9fb3c8" opacity=".9" />
+                <text x="197" y="36" textAnchor="middle" fill="#1e3a5f" fontSize="9" fontWeight="600">Bulungan</text>
+                <text x="197" y="48" textAnchor="middle" fill="#1e3a5f" fontSize="8">9,21%</text>
+
+                <rect x="165" y="70" width="50" height="45" rx="3" fill="#bcccdc" opacity=".9" />
+                <text x="190" y="94" textAnchor="middle" fill="#334e68" fontSize="9" fontWeight="600">Malinau</text>
+                <text x="190" y="106" textAnchor="middle" fill="#334e68" fontSize="8">8,05%</text>
+
+                <rect x="225" y="70" width="50" height="45" rx="3" fill="#627d98" opacity=".85" />
+                <text x="250" y="94" textAnchor="middle" fill="white" fontSize="8" fontWeight="600">Tana</text>
+                <text x="250" y="105" textAnchor="middle" fill="white" fontSize="8">Tidung</text>
+              </svg>
+            </div>
+            <figcaption style={{ fontSize: 10, color: '#9fb3c8', marginTop: 5, display: 'flex', gap: 8, alignItems: 'center' }}>
+              <div style={{ display: 'flex', gap: 3, alignItems: 'center' }}>
+                {['#d9e2ec','#9fb3c8','#627d98','#334e68','#1e3a5f'].map((c,i) => (
+                  <div key={i} style={{ width: 16, height: 7, background: c, borderRadius: 1 }}></div>
+                ))}
+              </div>
+              Rendah → Tinggi · Sumber: BPS Kaltara 2023
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+
+      {/* Table */}
+      <DataTable title="Data Kependudukan & Ekonomi" rows={tableData} onDownload={() => alert('Mengunduh data...')} />
+    </div>
+  );
+}
+
+// ─── Page: Kependudukan ─────────────────────────────────────
+function KependudukanPage() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14 }}>
+        <StatCard label="Total Populasi" value="728.498" unit="jiwa" change="+2,4%" changeDir="up" period="2023" />
+        <StatCard label="Laju Pertumbuhan" value="2,14%" unit="persen/tahun" change="+0,3 pp" changeDir="up" period="2020–2023" />
+        <StatCard label="Kepadatan" value="9,2" unit="jiwa/km²" change="+0,2" changeDir="up" period="2023" />
+        <StatCard label="Rasio Jenis Kelamin" value="108,4" unit="" change="Stabil" changeDir="neutral" period="2023" />
+      </div>
+      <div style={{ background: '#faf8f5', borderRadius: 4, border: '1px solid #ebe4da', padding: 18 }}>
+        <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 12, color: '#1e3a5f' }}>Distribusi Populasi per Kabupaten/Kota</div>
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8, height: 110 }}>
+          {[['Tarakan','266.397',266397],['Nunukan','196.845',196845],['Bulungan','131.048',131048],['Malinau','80.109',80109],['Tana Tidung','24.083',24083]].map(([name, label, val], i) => {
+            const colors = ['#1e3a5f','#334e68','#486581','#627d98','#829ab1'];
+            return (
+              <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, height: '100%', justifyContent: 'flex-end' }}>
+                <div style={{ fontSize: 9.5, fontWeight: 600, color: '#334e68', fontVariantNumeric: 'tabular-nums' }}>{label}</div>
+                <div style={{ width: '100%', borderRadius: '2px 2px 0 0', background: colors[i], height: `${(val/266397)*100}%` }}></div>
+                <div style={{ fontSize: 9.5, color: '#829ab1', textAlign: 'center', lineHeight: 1.3 }}>{name}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <DataTable title="Rincian Kependudukan" rows={tableData} onDownload={() => {}} />
+    </div>
+  );
+}
+
+// ─── Page: Publikasi ────────────────────────────────────────
+function PublikasiPage() {
+  const pubs = [
+    { title: 'Kaltara Dalam Angka 2023', type: 'Laporan Tahunan', date: 'Des 2023', status: 'Final' },
+    { title: 'Statistik Kemiskinan Kaltara 2023', type: 'Monografi', date: 'Nov 2023', status: 'Final' },
+    { title: 'PDRB Provinsi Kalimantan Utara 2022', type: 'Laporan Tahunan', date: 'Okt 2023', status: 'Final' },
+    { title: 'Survei Angkatan Kerja Nasional', type: 'Mikro Data', date: 'Sep 2023', status: 'Sementara' },
+    { title: 'Sensus Pertanian 2023', type: 'Laporan Khusus', date: 'Agu 2023', status: 'Proses' },
+  ];
+  const statusCfg = { 'Final': { bg: '#dcfce7', color: '#16A34A' }, 'Sementara': { bg: '#fef3c7', color: '#B45309' }, 'Proses': { bg: '#dbeafe', color: '#1D4ED8' } };
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      {pubs.map((p, i) => {
+        const cfg = statusCfg[p.status] || { bg: '#f3f4f6', color: '#6B7280' };
+        return (
+          <div key={i} style={{ background: '#fff', borderRadius: 8, border: '1px solid #e5eaf3', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: 14, boxShadow: '0 1px 2px rgba(0,61,130,.05)' }}>
+            <div style={{ width: 40, height: 48, background: '#EEF4FF', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#003D82" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: 700, fontSize: 13.5, color: '#111827' }}>{p.title}</div>
+              <div style={{ fontSize: 12, color: '#6B7280', marginTop: 2 }}>{p.type} · {p.date}</div>
+            </div>
+            <span style={{ fontSize: 11.5, fontWeight: 600, padding: '3px 10px', borderRadius: 9999, background: cfg.bg, color: cfg.color, flexShrink: 0 }}>{p.status}</span>
+            <button style={{ background: '#EEF4FF', border: 'none', borderRadius: 6, padding: '6px 12px', fontSize: 12, fontWeight: 600, color: '#003D82', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5, flexShrink: 0 }}>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Unduh
+            </button>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ─── Toast ──────────────────────────────────────────────────
+function Toast({ msg, type, onClose }) {
+  const cfg = {
+    success: { bg: '#f0fdf4', border: '#bbf7d0', color: '#15803d' },
+    info:    { bg: '#eff6ff', border: '#bfdbfe', color: '#1e40af' },
+    warning: { bg: '#fffbeb', border: '#fde68a', color: '#92400e' },
+    error:   { bg: '#fef2f2', border: '#fecaca', color: '#991b1b' },
+  }[type] || { bg: '#f3f4f6', border: '#e5e7eb', color: '#374151' };
+  React.useEffect(() => { const t = setTimeout(onClose, 4000); return () => clearTimeout(t); }, []);
+  return (
+    <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '12px 14px', borderRadius: 8, border: `1px solid ${cfg.border}`, background: cfg.bg, color: cfg.color, boxShadow: '0 4px 12px rgba(0,0,0,.1)', minWidth: 280, maxWidth: 340 }}>
+      <div style={{ flex: 1, fontSize: 13, fontWeight: 600 }}>{msg}</div>
+      <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'currentColor', opacity: .6, padding: 2 }}>✕</button>
+    </div>
+  );
+}
+
+// ─── App ────────────────────────────────────────────────────
+const PAGES = {
+  beranda: { label: 'Beranda', crumbs: ['Beranda'] },
+  kependudukan: { label: 'Kependudukan', crumbs: ['Statistik', 'Kependudukan'] },
+  ekonomi: { label: 'Ekonomi', crumbs: ['Statistik', 'Ekonomi'] },
+  pertanian: { label: 'Pertanian', crumbs: ['Statistik', 'Pertanian'] },
+  kemiskinan: { label: 'Kemiskinan', crumbs: ['Statistik', 'Kemiskinan'] },
+  ketenagakerjaan: { label: 'Ketenagakerjaan', crumbs: ['Statistik', 'Ketenagakerjaan'] },
+  publikasi: { label: 'Publikasi', crumbs: ['Publikasi'] },
+  peta: { label: 'Peta & GIS', crumbs: ['Peta & GIS'] },
+  pengaturan: { label: 'Pengaturan', crumbs: ['Pengaturan'] },
+};
+
+function PlaceholderPage({ title }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 300, gap: 12, color: '#6B7280' }}>
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#d1d9ea" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+      <div style={{ fontSize: 14, fontWeight: 600 }}>Halaman {title}</div>
+      <div style={{ fontSize: 13 }}>Konten sedang dalam pengembangan</div>
+    </div>
+  );
+}
+
+function App() {
+  const [collapsed, setCollapsed] = React.useState(() => localStorage.getItem('bps-sidebar-collapsed') === 'true');
+  const [page, setPage] = React.useState(() => localStorage.getItem('bps-active-page') || 'beranda');
+  const [toasts, setToasts] = React.useState([]);
+
+  const toggleSidebar = () => setCollapsed(v => {
+    const next = !v;
+    localStorage.setItem('bps-sidebar-collapsed', next);
+    return next;
+  });
+
+  const navigate = (p) => {
+    setPage(p);
+    localStorage.setItem('bps-active-page', p);
+    addToast(`Berpindah ke halaman ${PAGES[p]?.label || p}`, 'info');
+  };
+
+  const addToast = (msg, type = 'info') => {
+    const id = Date.now();
+    setToasts(t => [...t.slice(-2), { id, msg, type }]);
+  };
+
+  const pageInfo = PAGES[page] || PAGES.beranda;
+
+  const renderPage = () => {
+    if (page === 'beranda') return <BerandaPage />;
+    if (page === 'kependudukan') return <KependudukanPage />;
+    if (page === 'publikasi') return <PublikasiPage />;
+    return <PlaceholderPage title={pageInfo.label} />;
+  };
+
+  return (
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+      <Sidebar collapsed={collapsed} onToggle={toggleSidebar} activePage={page} onNavigate={navigate} />
+
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        <Topbar breadcrumbs={pageInfo.crumbs} />
+
+        <main id="main-content" style={{ flex: 1, overflowY: 'auto', padding: 24 }}>
+          {/* Page title */}
+          <div style={{ marginBottom: 18 }}>
+            <h1 style={{ fontSize: 20, fontWeight: 800, color: '#1e3a5f', lineHeight: 1.2 }}>{pageInfo.label}</h1>
+            <p style={{ fontSize: 12.5, color: '#829ab1', marginTop: 3 }}>
+              {page === 'beranda' ? 'Ringkasan indikator statistik Provinsi Kalimantan Utara' :
+               page === 'kependudukan' ? 'Data kependudukan seluruh kabupaten/kota · Sumber: BPS Kaltara 2023' :
+               page === 'publikasi' ? 'Daftar publikasi dan laporan resmi BPS Kaltara' :
+               `Halaman ${pageInfo.label} — data statistik daerah`}
+            </p>
+          </div>
+
+          {renderPage()}
+        </main>
+      </div>
+
+      {/* Toasts */}
+      <div style={{ position: 'fixed', bottom: 20, right: 20, display: 'flex', flexDirection: 'column', gap: 8, zIndex: 500 }}>
+        {toasts.map(t => (
+          <Toast key={t.id} msg={t.msg} type={t.type} onClose={() => setToasts(ts => ts.filter(x => x.id !== t.id))} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
