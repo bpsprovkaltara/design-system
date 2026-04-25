@@ -1,0 +1,184 @@
+
+> @bpskaltara/design-system@3.0.0 lint
+> eslint src --ext .ts,.tsx
+
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/showcase/CodeBlock.tsx
+  13:5  error  'navigator' is not defined   no-undef
+  15:5  error  'setTimeout' is not defined  no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/alert.tsx
+  38:32  error  'HTMLDivElement' is not defined                                                   no-undef
+  43:32  error  'HTMLDivElement' is not defined                                                   no-undef
+  61:37  error  'HTMLParagraphElement' is not defined                                             no-undef
+  61:80  error  'HTMLHeadingElement' is not defined                                               no-undef
+  63:5   error  Headings must have content and the content must be accessible by a screen reader  jsx-a11y/heading-has-content
+  73:3   error  'HTMLParagraphElement' is not defined                                             no-undef
+  74:24  error  'HTMLParagraphElement' is not defined                                             no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/badge.tsx
+  27:32  error  'HTMLDivElement' is not defined  no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/bps-data-table.tsx
+   5:58  error    'HTMLDivElement' is not defined           no-undef
+   6:24  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  10:20  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  10:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/breadcrumb.tsx
+   9:3   error  'HTMLElement' is not defined                                                     no-undef
+  14:41  error  'HTMLOListElement' is not defined                                                no-undef
+  28:41  error  'HTMLLIElement' is not defined                                                   no-undef
+  36:3   error  'HTMLAnchorElement' is not defined                                               no-undef
+  39:3   error  Anchors must have content and the content must be accessible by a screen reader  jsx-a11y/anchor-has-content
+  51:41  error  'HTMLSpanElement' is not defined                                                 no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/button.tsx
+  65:38  error  'HTMLButtonElement' is not defined  no-undef
+  73:33  error  'HTMLButtonElement' is not defined  no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/calendar.tsx
+  183:28  error  'HTMLButtonElement' is not defined  no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/card.tsx
+   6:3   error  'HTMLDivElement' is not defined  no-undef
+   7:24  error  'HTMLDivElement' is not defined  no-undef
+  21:3   error  'HTMLDivElement' is not defined  no-undef
+  22:24  error  'HTMLDivElement' is not defined  no-undef
+  33:3   error  'HTMLDivElement' is not defined  no-undef
+  34:24  error  'HTMLDivElement' is not defined  no-undef
+  45:3   error  'HTMLDivElement' is not defined  no-undef
+  46:24  error  'HTMLDivElement' is not defined  no-undef
+  57:3   error  'HTMLDivElement' is not defined  no-undef
+  58:24  error  'HTMLDivElement' is not defined  no-undef
+  65:3   error  'HTMLDivElement' is not defined  no-undef
+  66:24  error  'HTMLDivElement' is not defined  no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/carousel.tsx
+   44:3   error  'HTMLDivElement' is not defined                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              no-undef
+   45:24  error  'HTMLDivElement' is not defined                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              no-undef
+   87:35  error  'HTMLDivElement' is not defined                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              no-undef
+  112:7   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/carousel.tsx:112:7
+  110 |       }
+  111 |
+> 112 |       onSelect(api)
+      |       ^^^^^^^^ Avoid calling setState() directly within an effect
+  113 |       api.on("reInit", onSelect)
+  114 |       api.on("select", onSelect)
+  115 |  react-hooks/set-state-in-effect
+  152:3   error  'HTMLDivElement' is not defined                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              no-undef
+  153:24  error  'HTMLDivElement' is not defined                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              no-undef
+  174:3   error  'HTMLDivElement' is not defined                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              no-undef
+  175:24  error  'HTMLDivElement' is not defined                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              no-undef
+  196:3   error  'HTMLButtonElement' is not defined                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           no-undef
+  225:3   error  'HTMLButtonElement' is not defined                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/command.tsx
+   42:52  error  Unknown property 'cmdk-input-wrapper' found  react/no-unknown-property
+  130:25  error  'HTMLSpanElement' is not defined             no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/dialog.tsx
+  59:25  error  'HTMLDivElement' is not defined  no-undef
+  73:25  error  'HTMLDivElement' is not defined  no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/drawer.tsx
+  59:25  error  'HTMLDivElement' is not defined  no-undef
+  70:25  error  'HTMLDivElement' is not defined  no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/dropdown-menu.tsx
+  175:25  error  'HTMLSpanElement' is not defined  no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/form.tsx
+   64:35  error  'HTMLDivElement' is not defined        no-undef
+   64:72  error  'HTMLDivElement' is not defined        no-undef
+  109:3   error  'HTMLParagraphElement' is not defined  no-undef
+  110:24  error  'HTMLParagraphElement' is not defined  no-undef
+  125:3   error  'HTMLParagraphElement' is not defined  no-undef
+  126:24  error  'HTMLParagraphElement' is not defined  no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/input.tsx
+  5:32  error  'HTMLInputElement' is not defined  no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/pagination.tsx
+  18:3  error  'HTMLUListElement' is not defined                                                no-undef
+  30:3  error  'HTMLLIElement' is not defined                                                   no-undef
+  48:3  error  Anchors must have content and the content must be accessible by a screen reader  jsx-a11y/anchor-has-content
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/sheet.tsx
+  80:25  error  'HTMLDivElement' is not defined  no-undef
+  94:25  error  'HTMLDivElement' is not defined  no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/skeleton.tsx
+  3:44  error  'React' is not defined           no-undef
+  3:65  error  'HTMLDivElement' is not defined  no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/status-badge.tsx
+  35:32  error  'HTMLDivElement' is not defined  no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/table.tsx
+    6:3   error  'HTMLTableElement' is not defined         no-undef
+    7:24  error  'HTMLTableElement' is not defined         no-undef
+   20:3   error  'HTMLTableSectionElement' is not defined  no-undef
+   21:24  error  'HTMLTableSectionElement' is not defined  no-undef
+   28:3   error  'HTMLTableSectionElement' is not defined  no-undef
+   29:24  error  'HTMLTableSectionElement' is not defined  no-undef
+   40:3   error  'HTMLTableSectionElement' is not defined  no-undef
+   41:24  error  'HTMLTableSectionElement' is not defined  no-undef
+   55:3   error  'HTMLTableRowElement' is not defined      no-undef
+   56:24  error  'HTMLTableRowElement' is not defined      no-undef
+   70:3   error  'HTMLTableCellElement' is not defined     no-undef
+   71:26  error  'HTMLTableCellElement' is not defined     no-undef
+   85:3   error  'HTMLTableCellElement' is not defined     no-undef
+   86:26  error  'HTMLTableCellElement' is not defined     no-undef
+  100:3   error  'HTMLTableCaptionElement' is not defined  no-undef
+  101:24  error  'HTMLTableCaptionElement' is not defined  no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/textarea.tsx
+  7:18  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+  7:69  error  'HTMLTextAreaElement' is not defined                              no-undef
+  9:35  error  'HTMLTextAreaElement' is not defined                              no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/hooks/use-toast.ts
+  21:7   warning  'actionTypes' is assigned a value but only used as a type  @typescript-eslint/no-unused-vars
+  59:57  error    'setTimeout' is not defined                                no-undef
+  66:19  error    'setTimeout' is not defined                                no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/main.tsx
+  6:21  error  'document' is not defined  no-undef
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/pages/components/CardsPage.tsx
+  4:52  warning  'CardDescription' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/pages/components/InputsPage.tsx
+  29:13  error  A form label must be associated with a control  jsx-a11y/label-has-associated-control
+  38:13  error  A form label must be associated with a control  jsx-a11y/label-has-associated-control
+  52:13  error  A form label must be associated with a control  jsx-a11y/label-has-associated-control
+  56:13  error  A form label must be associated with a control  jsx-a11y/label-has-associated-control
+  61:13  error  A form label must be associated with a control  jsx-a11y/label-has-associated-control
+  68:13  error  A form label must be associated with a control  jsx-a11y/label-has-associated-control
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/pages/components/TablePage.tsx
+  23:61  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/pages/prototypes/AuthPage.tsx
+  22:13  error  A form label must be associated with a control                                                                                                                                                                                                                                                                                                                     jsx-a11y/label-has-associated-control
+  27:15  error  A form label must be associated with a control                                                                                                                                                                                                                                                                                                                     jsx-a11y/label-has-associated-control
+  28:15  error  The href attribute requires a valid value to be accessible. Provide a valid, navigable address as the href value. If you cannot provide a valid href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/pages/prototypes/DashboardPage.tsx
+  21:98  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/tailwind-preset.ts
+  186:13  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  186:13  error  'require' is not defined                 no-undef
+
+✖ 104 problems (97 errors, 7 warnings)
+

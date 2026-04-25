@@ -33,7 +33,7 @@ const buttonVariants = cva(
           'border border-border-default bg-transparent text-content-primary hover:bg-surface-sunken hover:border-border-strong',
         /* Secondary */
         secondary:
-          'bg-surface-sunken text-content-primary hover:bg-warm-200 border border-border-subtle',
+          'bg-surface-sunken text-content-primary hover:bg-muted border border-border-subtle',
         /* Ghost — no border */
         ghost: 'text-content-primary hover:bg-surface-sunken',
         /* Link */
@@ -46,11 +46,11 @@ const buttonVariants = cva(
           'border border-feedback-danger text-feedback-danger bg-transparent hover:bg-feedback-danger-bg',
       },
       size: {
-        xs:      'h-6 px-2 text-[11px] rounded-sm gap-1 [&_svg]:size-3',
-        sm:      'h-8 px-3 text-body-sm rounded-md gap-1.5 [&_svg]:size-3.5',
+        xs: 'h-6 px-2 text-[11px] rounded-sm gap-1 [&_svg]:size-3',
+        sm: 'h-8 px-3 text-body-sm rounded-md gap-1.5 [&_svg]:size-3.5',
         default: 'h-9 px-4 text-body-sm rounded-md [&_svg]:size-4',
-        lg:      'h-11 px-6 text-body rounded-lg [&_svg]:size-5',
-        icon:    'h-9 w-9 rounded-md [&_svg]:size-4',
+        lg: 'h-11 px-6 text-body rounded-lg [&_svg]:size-5',
+        icon: 'h-9 w-9 rounded-md [&_svg]:size-4',
         'icon-sm': 'h-7 w-7 rounded-sm [&_svg]:size-3.5',
       },
     },
@@ -62,8 +62,7 @@ const buttonVariants = cva(
 )
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   asChild?: boolean
   loading?: boolean
   iconLeft?: React.ReactNode

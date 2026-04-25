@@ -1,21 +1,25 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { ShowcaseLayout } from '@/layouts/ShowcaseLayout';
+import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { ShowcaseLayout } from '@/layouts/ShowcaseLayout'
 
-import { ColorsPage } from '@/pages/foundations/ColorsPage';
-import { TypographyPage } from '@/pages/foundations/TypographyPage';
-import { SpacingPage } from '@/pages/foundations/SpacingPage';
-import { OverviewPage } from '@/pages/overview/OverviewPage';
-import { ButtonsPage } from '@/pages/components/ButtonsPage';
+import { ColorsPage } from '@/pages/foundations/ColorsPage'
+import { TypographyPage } from '@/pages/foundations/TypographyPage'
+import { SpacingPage } from '@/pages/foundations/SpacingPage'
+import { OverviewPage } from '@/pages/overview/OverviewPage'
+import { ButtonsPage } from '@/pages/components/ButtonsPage'
 
-import { BadgesPage } from '@/pages/components/BadgesPage';
-import { CardsPage } from '@/pages/components/CardsPage';
-import { InputsPage } from '@/pages/components/InputsPage';
-import { TablePage } from '@/pages/components/TablePage';
-import { ToastPage } from '@/pages/components/ToastPage';
-import { LoadingPage } from '@/pages/components/LoadingPage';
-import { DashboardPage } from '@/pages/prototypes/DashboardPage';
-import { AuthPage } from '@/pages/prototypes/AuthPage';
+import { BadgesPage } from '@/pages/components/BadgesPage'
+import { CardsPage } from '@/pages/components/CardsPage'
+import { InputsPage } from '@/pages/components/InputsPage'
+import { TablePage } from '@/pages/components/TablePage'
+import { ToastPage } from '@/pages/components/ToastPage'
+import { LoadingPage } from '@/pages/components/LoadingPage'
+import { DashboardPage } from '@/pages/prototypes/DashboardPage'
+import { AuthPage } from '@/pages/prototypes/AuthPage'
+
+import { NavigationMenuPage } from '@/pages/components/NavigationMenuPage'
+import { CarouselPage } from '@/pages/components/CarouselPage'
+import { DrawerPage } from '@/pages/components/DrawerPage'
 
 function App() {
   return (
@@ -23,7 +27,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ShowcaseLayout />}>
           <Route index element={<OverviewPage />} />
-          
+
           {/* Foundations */}
           <Route path="foundations">
             <Route path="colors" element={<ColorsPage />} />
@@ -40,6 +44,9 @@ function App() {
             <Route path="table" element={<TablePage />} />
             <Route path="toast" element={<ToastPage />} />
             <Route path="loading" element={<LoadingPage />} />
+            <Route path="navigation-menu" element={<NavigationMenuPage />} />
+            <Route path="carousel" element={<CarouselPage />} />
+            <Route path="drawer" element={<DrawerPage />} />
           </Route>
 
           {/* Prototypes */}
@@ -50,7 +57,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
-  );
+  )
 }
 
-export default App;
+export default App

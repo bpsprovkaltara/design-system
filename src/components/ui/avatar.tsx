@@ -20,7 +20,8 @@ const avatarVariants = cva('relative flex shrink-0 overflow-hidden rounded-full'
 })
 
 interface AvatarProps
-  extends React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>,
+  extends
+    React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>,
     VariantProps<typeof avatarVariants> {
   children?: React.ReactNode
   className?: string
@@ -57,7 +58,7 @@ const AvatarFallback = React.forwardRef<
     ref={ref}
     className={cn(
       'flex h-full w-full items-center justify-center rounded-full',
-      'bg-navy-800 text-white font-semibold uppercase tracking-wide',
+      'bg-primary text-primary-foreground font-semibold uppercase tracking-wide',
       className
     )}
     {...props}

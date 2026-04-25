@@ -1,8 +1,8 @@
-import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
+import * as React from 'react'
+import { Check, ChevronsUpDown } from 'lucide-react'
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 import {
   Command,
   CommandEmpty,
@@ -10,12 +10,8 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
+} from '@/components/ui/command'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
 interface Option {
   value: string
@@ -37,16 +33,16 @@ export function BpsCombobox({
   options,
   value,
   onChange,
-  placeholder = "Pilih item...",
-  searchPlaceholder = "Cari...",
-  emptyText = "Tidak ditemukan.",
+  placeholder = 'Pilih item...',
+  searchPlaceholder = 'Cari...',
+  emptyText = 'Tidak ditemukan.',
   className,
-  disabled = false
+  disabled = false,
 }: BpsComboboxProps) {
   const [open, setOpen] = React.useState(false)
-  
+
   // Gunakan controlled component pattern jika props 'value' ada
-  const [internalValue, setInternalValue] = React.useState(value || "")
+  const [internalValue, setInternalValue] = React.useState(value || '')
   const actualValue = value !== undefined ? value : internalValue
 
   return (
@@ -58,8 +54,8 @@ export function BpsCombobox({
           aria-expanded={open}
           disabled={disabled}
           className={cn(
-            "w-full justify-between bg-background border-warm-200 text-foreground font-medium hover:bg-warm-100/50 hover:border-warm-300 transition-all shadow-sm",
-            !actualValue && "text-muted-foreground font-normal",
+            'w-full justify-between bg-background border-border text-foreground font-medium hover:bg-muted hover:border-border-strong transition-all shadow-sm',
+            !actualValue && 'text-muted-foreground font-normal',
             className
           )}
         >
@@ -71,7 +67,7 @@ export function BpsCombobox({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 border-warm-200 shadow-lg animate-in fade-in zoom-in-95 duration-200">
+      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 border-border shadow-lg animate-in fade-in zoom-in-95 duration-200">
         <Command className="bg-background">
           <CommandInput placeholder={searchPlaceholder} className="h-11" />
           <CommandList className="max-h-[300px]">
@@ -84,7 +80,7 @@ export function BpsCombobox({
                   key={option.value}
                   value={option.label} // Penting: gunakan label untuk pencarian cmdk yang lebih natural
                   onSelect={() => {
-                    const newValue = option.value === actualValue ? "" : option.value
+                    const newValue = option.value === actualValue ? '' : option.value
                     if (value === undefined) {
                       setInternalValue(newValue)
                     }
@@ -92,17 +88,17 @@ export function BpsCombobox({
                     setOpen(false)
                   }}
                   className={cn(
-                    "flex items-center justify-between px-3 py-2 cursor-pointer transition-colors",
-                    actualValue === option.value 
-                      ? "bg-primary/10 text-primary font-semibold" 
-                      : "hover:bg-warm-100"
+                    'flex items-center justify-between px-3 py-2 cursor-pointer transition-colors',
+                    actualValue === option.value
+                      ? 'bg-primary/10 text-primary font-semibold'
+                      : 'hover:bg-muted'
                   )}
                 >
                   <div className="flex items-center gap-2">
                     <Check
                       className={cn(
-                        "h-4 w-4",
-                        actualValue === option.value ? "opacity-100" : "opacity-0"
+                        'h-4 w-4',
+                        actualValue === option.value ? 'opacity-100' : 'opacity-0'
                       )}
                     />
                     {option.label}

@@ -1,14 +1,29 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { cn } from '@/lib/utils';
-import { Home, Palette, Type, Layout, MousePointerClick, Tag, Layers, CheckSquare, Table, Bell, Loader, LayoutDashboard, Lock } from 'lucide-react';
+import React from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { cn } from '@/lib/utils'
+import {
+  Home,
+  Palette,
+  Type,
+  Layout,
+  MousePointerClick,
+  Tag,
+  Layers,
+  CheckSquare,
+  Table,
+  Bell,
+  Loader,
+  LayoutDashboard,
+  Lock,
+  Menu,
+  GalleryHorizontal,
+  PanelBottomClose,
+} from 'lucide-react'
 
 const navGroups = [
   {
     title: 'Overview',
-    items: [
-      { id: '/', label: 'Get Started', icon: Home },
-    ]
+    items: [{ id: '/', label: 'Get Started', icon: Home }],
   },
   {
     title: 'Foundations',
@@ -16,7 +31,7 @@ const navGroups = [
       { id: '/foundations/colors', label: 'Colors', icon: Palette },
       { id: '/foundations/typography', label: 'Typography', icon: Type },
       { id: '/foundations/spacing', label: 'Spacing & Layout', icon: Layout },
-    ]
+    ],
   },
   {
     title: 'Components',
@@ -28,19 +43,22 @@ const navGroups = [
       { id: '/components/table', label: 'Data Table', icon: Table },
       { id: '/components/toast', label: 'Toast', icon: Bell },
       { id: '/components/loading', label: 'Loading', icon: Loader },
-    ]
+      { id: '/components/navigation-menu', label: 'Navigation Menu', icon: Menu },
+      { id: '/components/carousel', label: 'Carousel', icon: GalleryHorizontal },
+      { id: '/components/drawer', label: 'Drawer', icon: PanelBottomClose },
+    ],
   },
   {
     title: 'Prototypes',
     items: [
       { id: '/prototypes/dashboard', label: 'Dashboard', icon: LayoutDashboard },
       { id: '/prototypes/auth', label: 'Auth Flow', icon: Lock },
-    ]
-  }
-];
+    ],
+  },
+]
 
 export function Sidebar() {
-  const location = useLocation();
+  const location = useLocation()
 
   return (
     <aside className="w-64 flex-shrink-0 border-r bg-muted/30 flex flex-col h-screen overflow-y-auto">
@@ -48,7 +66,7 @@ export function Sidebar() {
         <h2 className="font-bold text-lg text-primary">BPS Kaltara</h2>
         <p className="text-xs text-muted-foreground">Design System v2.1.0</p>
       </div>
-      
+
       <nav className="p-4 space-y-8 flex-1">
         {navGroups.map((group, i) => (
           <div key={i}>
@@ -57,24 +75,24 @@ export function Sidebar() {
             </h3>
             <div className="space-y-1">
               {group.items.map((item) => {
-                const isActive = location.pathname === item.id;
-                const Icon = item.icon;
-                
+                const isActive = location.pathname === item.id
+                const Icon = item.icon
+
                 return (
                   <Link
                     key={item.id}
                     to={item.id}
                     className={cn(
-                      "flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors",
-                      isActive 
-                        ? "bg-primary text-primary-foreground font-medium" 
-                        : "text-foreground hover:bg-muted hover:text-primary"
+                      'flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors',
+                      isActive
+                        ? 'bg-primary text-primary-foreground font-medium'
+                        : 'text-foreground hover:bg-muted hover:text-primary'
                     )}
                   >
                     <Icon className="w-4 h-4" />
                     {item.label}
                   </Link>
-                );
+                )
               })}
             </div>
           </div>
@@ -84,5 +102,5 @@ export function Sidebar() {
         Developed for internal applications.
       </div>
     </aside>
-  );
+  )
 }
