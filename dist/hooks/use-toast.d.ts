@@ -6,24 +6,17 @@ type ToasterToast = ToastProps & {
     description?: React.ReactNode;
     action?: ToastActionElement;
 };
-declare const actionTypes: {
-    readonly ADD_TOAST: "ADD_TOAST";
-    readonly UPDATE_TOAST: "UPDATE_TOAST";
-    readonly DISMISS_TOAST: "DISMISS_TOAST";
-    readonly REMOVE_TOAST: "REMOVE_TOAST";
-};
-type ActionType = typeof actionTypes;
 type Action = {
-    type: ActionType["ADD_TOAST"];
+    type: "ADD_TOAST";
     toast: ToasterToast;
 } | {
-    type: ActionType["UPDATE_TOAST"];
+    type: "UPDATE_TOAST";
     toast: Partial<ToasterToast>;
 } | {
-    type: ActionType["DISMISS_TOAST"];
+    type: "DISMISS_TOAST";
     toastId?: ToasterToast["id"];
 } | {
-    type: ActionType["REMOVE_TOAST"];
+    type: "REMOVE_TOAST";
     toastId?: ToasterToast["id"];
 };
 interface State {

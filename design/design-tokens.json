@@ -1,0 +1,274 @@
+{
+  "colors": {
+    "navy": {
+      "50": "#f0f4f8",
+      "100": "#d9e2ec",
+      "200": "#bcccdc",
+      "300": "#9fb3c8",
+      "400": "#829ab1",
+      "500": "#627d98",
+      "600": "#486581",
+      "700": "#334e68",
+      "800": "#1e3a5f",
+      "900": "#0f2b46",
+      "950": "#091e33"
+    },
+    "amber": {
+      "50": "#fffbeb",
+      "100": "#fef3c7",
+      "200": "#fde68a",
+      "300": "#fcd34d",
+      "400": "#fbbf24",
+      "500": "#f59e0b",
+      "600": "#d97706",
+      "700": "#b45309",
+      "800": "#92400e",
+      "900": "#78350f"
+    },
+    "warm": {
+      "50": "#faf8f5",
+      "100": "#f5f0ea",
+      "200": "#ebe4da"
+    },
+    "semantic": {
+      "light": {
+        "background": "hsl(30 33% 97%)",
+        "backgroundResolved": "#faf8f5",
+        "foreground": "hsl(210 50% 10%)",
+        "foregroundResolved": "#0d1f33",
+        "card": "hsl(0 0% 100%)",
+        "cardResolved": "#ffffff",
+        "cardForeground": "hsl(210 50% 10%)",
+        "popover": "hsl(0 0% 100%)",
+        "popoverForeground": "hsl(210 50% 10%)",
+        "primary": "hsl(211 58% 24%)",
+        "primaryResolved": "#1e3a5f",
+        "primaryForeground": "hsl(210 40% 98%)",
+        "secondary": "hsl(30 20% 93%)",
+        "secondaryResolved": "#ede9e3",
+        "secondaryForeground": "hsl(211 58% 24%)",
+        "muted": "hsl(30 20% 93%)",
+        "mutedForeground": "hsl(210 15% 45%)",
+        "mutedForegroundResolved": "#627d98",
+        "accent": "hsl(38 92% 50%)",
+        "accentResolved": "#f59e0b",
+        "accentForeground": "hsl(211 58% 10%)",
+        "destructive": "hsl(0 84% 60%)",
+        "destructiveResolved": "#ef4444",
+        "destructiveForeground": "hsl(210 40% 98%)",
+        "border": "hsl(30 20% 88%)",
+        "borderResolved": "#ddd6cc",
+        "input": "hsl(30 20% 88%)",
+        "ring": "hsl(211 58% 24%)"
+      },
+      "dark": {
+        "background": "hsl(210 54% 6%)",
+        "foreground": "hsl(210 20% 95%)",
+        "card": "hsl(210 54% 8%)",
+        "cardForeground": "hsl(210 20% 95%)",
+        "primary": "hsl(211 70% 55%)",
+        "primaryForeground": "hsl(210 54% 6%)",
+        "secondary": "hsl(210 30% 15%)",
+        "secondaryForeground": "hsl(210 20% 95%)",
+        "muted": "hsl(210 30% 15%)",
+        "mutedForeground": "hsl(210 15% 55%)",
+        "accent": "hsl(38 92% 50%)",
+        "accentForeground": "hsl(210 54% 6%)",
+        "destructive": "hsl(0 62% 30%)",
+        "destructiveForeground": "hsl(210 40% 98%)",
+        "border": "hsl(210 30% 18%)",
+        "input": "hsl(210 30% 18%)",
+        "ring": "hsl(211 70% 55%)"
+      }
+    },
+    "sidebar": {
+      "background": "hsl(210 54% 10%)",
+      "backgroundResolved": "#0f2b46",
+      "foreground": "hsl(210 20% 85%)",
+      "accent": "hsl(210 40% 18%)",
+      "accentForeground": "hsl(210 20% 95%)",
+      "border": "hsl(210 40% 18%)",
+      "ring": "hsl(38 92% 50%)"
+    },
+    "chart": {
+      "1": "hsl(211 58% 24%)",
+      "2": "hsl(38 92% 50%)",
+      "3": "hsl(173 58% 39%)",
+      "4": "hsl(12 76% 61%)",
+      "5": "hsl(197 37% 24%)"
+    },
+    "status": {
+      "DRAFT":       { "bg": "#d9e2ec", "text": "#334e68", "border": "#bcccdc" },
+      "AKTIF":       { "bg": "#ecfdf5", "text": "#065f46", "border": "#a7f3d0" },
+      "PENILAIAN":   { "bg": "#fffbeb", "text": "#b45309", "border": "#fde68a" },
+      "SELESAI":     { "bg": "#eff6ff", "text": "#1d4ed8", "border": "#bfdbfe" },
+      "LOCKED":      { "bg": "#f3f4f6", "text": "#374151", "border": "#e5e7eb" },
+      "DIAJUKAN":    { "bg": "#faf5ff", "text": "#6d28d9", "border": "#ddd6fe" },
+      "DISETUJUI":   { "bg": "#ecfdf5", "text": "#065f46", "border": "#a7f3d0" },
+      "REVISI":      { "bg": "#fff7ed", "text": "#c2410c", "border": "#fed7aa" },
+      "FINAL":       { "bg": "#eff6ff", "text": "#1d4ed8", "border": "#bfdbfe" },
+      "BERJALAN":    { "bg": "#f0f9ff", "text": "#0369a1", "border": "#bae6fd" },
+      "DIBATALKAN":  { "bg": "#fef2f2", "text": "#b91c1c", "border": "#fecaca" },
+      "TODO":        { "bg": "#d9e2ec", "text": "#334e68", "border": "#bcccdc" },
+      "IN_PROGRESS": { "bg": "#eff6ff", "text": "#1d4ed8", "border": "#bfdbfe" },
+      "DONE":        { "bg": "#ecfdf5", "text": "#065f46", "border": "#a7f3d0" },
+      "BLOCKED":     { "bg": "#fef2f2", "text": "#b91c1c", "border": "#fecaca" }
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "sans": ["Geist Sans", "system-ui", "sans-serif"]
+    },
+    "fontSize": {
+      "xs":   "0.75rem",
+      "sm":   "0.875rem",
+      "base": "1rem",
+      "lg":   "1.125rem",
+      "xl":   "1.25rem",
+      "2xl":  "1.5rem",
+      "3xl":  "1.875rem",
+      "4xl":  "2.25rem",
+      "5xl":  "3rem"
+    },
+    "lineHeight": {
+      "none":    "1",
+      "tight":   "1.25",
+      "snug":    "1.375",
+      "normal":  "1.5",
+      "relaxed": "1.625",
+      "loose":   "2"
+    },
+    "fontWeight": {
+      "normal":   "400",
+      "medium":   "500",
+      "semibold": "600",
+      "bold":     "700"
+    },
+    "letterSpacing": {
+      "tight":   "-0.025em",
+      "normal":  "0em",
+      "wide":    "0.025em",
+      "wider":   "0.05em",
+      "widest":  "0.1em"
+    },
+    "scale": {
+      "pageTitle":    { "size": "1.25rem",  "weight": "600", "lineHeight": "1.375", "color": "navy-900", "usage": "Header h1 (page name)" },
+      "sectionTitle": { "size": "0.875rem", "weight": "600", "lineHeight": "1.5",   "color": "navy-900", "usage": "PageHeader h2" },
+      "cardTitle":    { "size": "1.5rem",   "weight": "700", "lineHeight": "1.25",  "color": "navy-900", "usage": "StatCard value" },
+      "label":        { "size": "0.875rem", "weight": "500", "lineHeight": "1.5",   "color": "navy-500", "usage": "StatCard title, table headers" },
+      "body":         { "size": "0.875rem", "weight": "400", "lineHeight": "1.5",   "color": "foreground", "usage": "Table cells, descriptions" },
+      "caption":      { "size": "0.75rem",  "weight": "400", "lineHeight": "1.5",   "color": "navy-400", "usage": "Subtitles, timestamps" },
+      "overline":     { "size": "0.6875rem","weight": "600", "lineHeight": "1.5",   "letterSpacing": "0.1em", "textTransform": "uppercase", "color": "navy-600", "usage": "Sidebar group labels" },
+      "badge":        { "size": "0.6875rem","weight": "500", "lineHeight": "1.5",   "usage": "StatusBadge labels" },
+      "kbd":          { "size": "0.6875rem","weight": "400", "fontFamily": "sans",  "usage": "Keyboard shortcut hints" }
+    }
+  },
+  "spacing": {
+    "base": "4px",
+    "scale": {
+      "0":    "0px",
+      "0.5":  "2px",
+      "1":    "4px",
+      "1.5":  "6px",
+      "2":    "8px",
+      "2.5":  "10px",
+      "3":    "12px",
+      "3.5":  "14px",
+      "4":    "16px",
+      "5":    "20px",
+      "6":    "24px",
+      "7":    "28px",
+      "8":    "32px",
+      "9":    "36px",
+      "10":   "40px",
+      "12":   "48px",
+      "14":   "56px",
+      "16":   "64px",
+      "20":   "80px",
+      "24":   "96px"
+    },
+    "layout": {
+      "sidebarWidth":    "260px",
+      "headerHeight":    "64px",
+      "mainPaddingX":    "24px",
+      "mainPaddingXLg":  "32px",
+      "mainPaddingY":    "24px",
+      "mainPaddingYLg":  "32px",
+      "cardPadding":     "20px",
+      "cardPaddingLg":   "24px"
+    }
+  },
+  "borderRadius": {
+    "none":    "0px",
+    "sm":      "0.25rem",
+    "DEFAULT": "0.375rem",
+    "md":      "0.375rem",
+    "lg":      "0.5rem",
+    "xl":      "0.75rem",
+    "2xl":     "1rem",
+    "full":    "9999px",
+    "cssVar":  "--radius: 0.5rem",
+    "usage": {
+      "button":           "rounded-md (0.375rem)",
+      "input":            "rounded-md (0.375rem)",
+      "card":             "rounded-xl (0.75rem)",
+      "badge":            "rounded-full (9999px)",
+      "iconContainer":    "rounded-lg (0.5rem)",
+      "avatar":           "rounded-full (9999px)",
+      "sidebarItem":      "rounded-lg (0.5rem)",
+      "progressBar":      "rounded-full (9999px)",
+      "tabsList":         "rounded-lg (0.5rem)",
+      "popover":          "rounded-md (0.375rem)"
+    }
+  },
+  "shadows": {
+    "sm":      "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+    "DEFAULT": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+    "md":      "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    "lg":      "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+    "xl":      "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+    "none":    "none",
+    "usage": {
+      "card":        "shadow-sm (rest) → shadow-md (hover)",
+      "button":      "shadow (default variant), shadow-sm (secondary/destructive/outline)",
+      "popover":     "shadow-md",
+      "input":       "shadow-sm"
+    }
+  },
+  "breakpoints": {
+    "sm":  "640px",
+    "md":  "768px",
+    "lg":  "1024px",
+    "xl":  "1280px",
+    "2xl": "1536px",
+    "usage": {
+      "sidebar":      "hidden below lg (1024px)",
+      "headerSearch": "hidden below sm (640px)",
+      "pageHeader":   "stacks below sm, row at sm+",
+      "mainPadding":  "px-6 py-6 → px-8 py-8 at lg"
+    }
+  },
+  "animation": {
+    "duration": {
+      "fast":    "150ms",
+      "normal":  "200ms",
+      "slow":    "300ms",
+      "slower":  "500ms"
+    },
+    "easing": {
+      "default": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "in":      "cubic-bezier(0.4, 0, 1, 1)",
+      "out":     "cubic-bezier(0, 0, 0.2, 1)"
+    },
+    "usage": {
+      "progressBar":   "transition-all duration-500 (500ms)",
+      "buttonHover":   "transition-colors (150ms default)",
+      "cardHover":     "transition-shadow",
+      "sidebarItem":   "transition-colors",
+      "overlayOpen":   "animate-in fade-in-0 zoom-in-95",
+      "overlayClose":  "animate-out fade-out-0 zoom-out-95",
+      "accordionOpen": "accordion-down",
+      "accordionClose":"accordion-up"
+    }
+  }
+}

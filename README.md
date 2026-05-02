@@ -7,10 +7,24 @@ Sistem desain ini adalah fondasi visual dan interaksi bagi seluruh ekosistem apl
 
 ## Installation
 
+Install via Git repository:
+
 ```bash
-npm install @bpskaltara/design-system
-# peer deps (skip any you already have)
-npm install react react-dom tailwindcss tailwindcss-animate
+npm install "git+ssh://git@github.com/<org>/<repo>.git"
+# atau
+npm install "git+https://github.com/<org>/<repo>.git"
+```
+
+Atau jika package sudah tersedia di registry private internal:
+
+```bash
+npm install @bpsprovkaltara/design-system
+```
+
+Peer dependencies minimum (install jika belum ada di consumer):
+
+```bash
+npm install react@^18 react-dom@^18 tailwindcss@^3.4 tailwindcss-animate
 ```
 
 ---
@@ -22,13 +36,13 @@ npm install react react-dom tailwindcss tailwindcss-animate
 ```ts
 // tailwind.config.ts
 import type { Config } from 'tailwindcss'
-import bpsPreset from '@bpskaltara/design-system/tailwind-preset'
+import bpsPreset from '@bpsprovkaltara/design-system/tailwind-preset'
 
 export default {
   presets: [bpsPreset],
   content: [
     './src/**/*.{ts,tsx}',
-    './node_modules/@bpskaltara/design-system/dist/**/*.{js,cjs}',
+    './node_modules/@bpsprovkaltara/design-system/dist/**/*.{js,cjs}',
   ],
 } satisfies Config
 ```
@@ -39,7 +53,7 @@ The second `content` glob lets Tailwind discover utility classes used inside the
 
 ```ts
 // src/main.tsx (or app entry)
-import '@bpskaltara/design-system/styles.css'
+import '@bpsprovkaltara/design-system/styles.css'
 ```
 
 This loads design tokens (`--primary`, `--navy-*`, typography, motion). Without it, components render unstyled.
@@ -47,7 +61,7 @@ This loads design tokens (`--primary`, `--navy-*`, typography, motion). Without 
 ### 3. Use components
 
 ```tsx
-import { Button, BpsDatePicker, StatusBadge } from '@bpskaltara/design-system'
+import { Button, BpsDatePicker, StatusBadge } from '@bpsprovkaltara/design-system'
 
 export function Example() {
   return (

@@ -1,11 +1,15 @@
 import * as React from "react";
-interface BpsDataTableProps extends React.HTMLAttributes<HTMLDivElement> {
-    data: Record<string, any>[];
-    columns: {
-        key: string;
-        label: string;
-        render?: (val: any, row: any) => React.ReactNode;
-    }[];
+interface BpsDataTableColumn<T extends Record<string, unknown>> {
+    key: string;
+    label: string;
+    getValue?: (row: T) => unknown;
+    render?: {
+        bivarianceHack: (val: unknown, row: T) => React.ReactNode;
+    }["bivarianceHack"];
 }
-export declare function BpsDataTable({ data, columns, className, ...props }: BpsDataTableProps): import("react/jsx-runtime").JSX.Element;
+interface BpsDataTableProps<T extends Record<string, unknown>> extends React.HTMLAttributes<HTMLDivElement> {
+    data: T[];
+    columns: BpsDataTableColumn<T>[];
+}
+export declare function BpsDataTable<T extends Record<string, unknown>>({ data, columns, className, ...props }: BpsDataTableProps<T>): import("react/jsx-runtime").JSX.Element;
 export {};

@@ -18,6 +18,12 @@ import {
   Menu,
   GalleryHorizontal,
   PanelBottomClose,
+  ClipboardCheck,
+  DatabaseZap,
+  MessageSquareWarning,
+  List,
+  FileText,
+  Settings,
 } from 'lucide-react'
 
 const navGroups = [
@@ -46,6 +52,13 @@ const navGroups = [
       { id: '/components/navigation-menu', label: 'Navigation Menu', icon: Menu },
       { id: '/components/carousel', label: 'Carousel', icon: GalleryHorizontal },
       { id: '/components/drawer', label: 'Drawer', icon: PanelBottomClose },
+      { id: '/components/bps-form-workflow', label: 'BPS Form Workflow', icon: ClipboardCheck },
+      { id: '/components/bps-data-management', label: 'BPS Data Management', icon: DatabaseZap },
+      {
+        id: '/components/bps-feedback-status',
+        label: 'BPS Feedback & Status',
+        icon: MessageSquareWarning,
+      },
     ],
   },
   {
@@ -53,6 +66,9 @@ const navGroups = [
     items: [
       { id: '/prototypes/dashboard', label: 'Dashboard', icon: LayoutDashboard },
       { id: '/prototypes/auth', label: 'Auth Flow', icon: Lock },
+      { id: '/prototypes/list', label: 'List Page', icon: List },
+      { id: '/prototypes/detail', label: 'Detail Page', icon: FileText },
+      { id: '/prototypes/settings', label: 'Settings Page', icon: Settings },
     ],
   },
 ]

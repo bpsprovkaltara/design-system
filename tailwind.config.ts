@@ -2,7 +2,7 @@
  * BPS Kaltara Design System — Tailwind Config v3.0.0
  * "Civic Editorial × Data-First Swiss"
  *
- * Consumers: import bpsPreset from '@bpskaltara/design-system/tailwind-preset'
+ * Consumers: import bpsPreset from '@bpsprovkaltara/design-system/tailwind-preset'
  * and add to your tailwind.config.ts: presets: [bpsPreset]
  */
 

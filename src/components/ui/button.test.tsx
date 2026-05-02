@@ -17,7 +17,7 @@ describe('Button', () => {
 
   it('applies destructive variant', () => {
     render(<Button variant="destructive">Hapus</Button>)
-    expect(screen.getByRole('button')).toHaveClass('bg-feedback-danger')
+    expect(screen.getByRole('button')).toHaveClass('bg-destructive')
   })
 
   it('applies size xs', () => {
@@ -46,7 +46,11 @@ describe('Button', () => {
 
   it('does not call onClick when disabled', async () => {
     const handler = vi.fn()
-    render(<Button disabled onClick={handler}>Klik</Button>)
+    render(
+      <Button disabled onClick={handler}>
+        Klik
+      </Button>
+    )
     await userEvent.click(screen.getByRole('button'))
     expect(handler).not.toHaveBeenCalled()
   })

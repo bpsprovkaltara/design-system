@@ -1,5 +1,5 @@
 {
-  "name": "@bpskaltara/design-system",
+  "name": "@bpsprovkaltara/design-system",
   "version": "3.0.0",
   "description": "BPS Provinsi Kalimantan Utara — internal design system (React + Tailwind + shadcn/ui).",
   "license": "UNLICENSED",
@@ -43,7 +43,8 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
     "typecheck": "tsc --noEmit",
-    "prepare": "husky"
+    "prepare": "npm run build:lib",
+    "prepare:hooks": "husky"
   },
   "engines": {
     "node": ">=18"
@@ -130,5 +131,15 @@
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.1.4"
   },
-  "packageManager": "pnpm@10.30.0+sha512.2b5753de015d480eeb88f5b5b61e0051f05b4301808a82ec8b840c9d2adf7748eb352c83f5c1593ca703ff1017295bc3fdd3119abb9686efc96b9fcb18200937"
+  "packageManager": "pnpm@10.30.0+sha512.2b5753de015d480eeb88f5b5b61e0051f05b4301808a82ec8b840c9d2adf7748eb352c83f5c1593ca703ff1017295bc3fdd3119abb9686efc96b9fcb18200937",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bpsprovkaltara/design-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/bpsprovkaltara/design-system/issues"
+  },
+  "homepage": "https://github.com/bpsprovkaltara/design-system#readme"
 }

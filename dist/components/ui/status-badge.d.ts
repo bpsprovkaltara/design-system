@@ -1,5 +1,5 @@
 import { VariantProps } from 'class-variance-authority';
-import * as React from "react";
+import * as React from 'react';
 declare const badgeVariants: (props?: ({
     variant?: "default" | "secondary" | "destructive" | "outline" | "draft" | "pending" | "revised" | "approved" | null | undefined;
 } & import('class-variance-authority/dist/types').ClassProp) | undefined) => string;

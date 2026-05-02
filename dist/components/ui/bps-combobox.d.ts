@@ -12,5 +12,5 @@ interface BpsComboboxProps {
     className?: string;
     disabled?: boolean;
 }
-export declare function BpsCombobox({ options, value, onChange, placeholder, searchPlaceholder, emptyText, className, disabled }: BpsComboboxProps): import("react/jsx-runtime").JSX.Element;
+export declare function BpsCombobox({ options, value, onChange, placeholder, searchPlaceholder, emptyText, className, disabled, }: BpsComboboxProps): import("react/jsx-runtime").JSX.Element;
 export {};

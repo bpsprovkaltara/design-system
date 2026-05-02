@@ -6,5 +6,5 @@ interface BpsDatePickerProps {
     disabled?: boolean;
     clearable?: boolean;
 }
-export declare function BpsDatePicker({ date, onChange, placeholder, className, disabled, clearable }: BpsDatePickerProps): import("react/jsx-runtime").JSX.Element;
+export declare function BpsDatePicker({ date, onChange, placeholder, className, disabled, clearable, }: BpsDatePickerProps): import("react/jsx-runtime").JSX.Element;
 export {};

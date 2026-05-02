@@ -16,10 +16,16 @@ import { ToastPage } from '@/pages/components/ToastPage'
 import { LoadingPage } from '@/pages/components/LoadingPage'
 import { DashboardPage } from '@/pages/prototypes/DashboardPage'
 import { AuthPage } from '@/pages/prototypes/AuthPage'
+import { ListPage } from '@/pages/prototypes/ListPage'
+import { DetailPage } from '@/pages/prototypes/DetailPage'
+import { SettingsPage } from '@/pages/prototypes/SettingsPage'
 
 import { NavigationMenuPage } from '@/pages/components/NavigationMenuPage'
 import { CarouselPage } from '@/pages/components/CarouselPage'
 import { DrawerPage } from '@/pages/components/DrawerPage'
+import { BpsFormWorkflowPage } from '@/pages/components/BpsFormWorkflowPage'
+import { BpsDataManagementPage } from '@/pages/components/BpsDataManagementPage'
+import { BpsFeedbackStatusPage } from '@/pages/components/BpsFeedbackStatusPage'
 
 function App() {
   return (
@@ -47,12 +53,18 @@ function App() {
             <Route path="navigation-menu" element={<NavigationMenuPage />} />
             <Route path="carousel" element={<CarouselPage />} />
             <Route path="drawer" element={<DrawerPage />} />
+            <Route path="bps-form-workflow" element={<BpsFormWorkflowPage />} />
+            <Route path="bps-data-management" element={<BpsDataManagementPage />} />
+            <Route path="bps-feedback-status" element={<BpsFeedbackStatusPage />} />
           </Route>
 
           {/* Prototypes */}
           <Route path="prototypes">
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="auth" element={<AuthPage />} />
+            <Route path="list" element={<ListPage />} />
+            <Route path="detail" element={<DetailPage />} />
+            <Route path="settings" element={<SettingsPage />} />
           </Route>
         </Route>
       </Routes>

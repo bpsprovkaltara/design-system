@@ -1,5 +1,5 @@
 import { Drawer as DrawerPrimitive } from 'vaul';
-import * as React from "react";
+import * as React from 'react';
 declare const Drawer: {
     ({ shouldScaleBackground, ...props }: React.ComponentProps<typeof DrawerPrimitive.Root>): import("react/jsx-runtime").JSX.Element;
     displayName: string;

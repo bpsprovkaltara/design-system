@@ -1,5 +1,5 @@
 /* ============================================================
-   @bpskaltara/design-system — Public API
+   @bpsprovkaltara/design-system — Public API
    Version 3.0.0
    ============================================================ */
 import '../colors_and_type.css'
@@ -159,8 +159,19 @@ export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 
 /* === BPS Custom Components === */
 export { BpsCombobox } from '@/components/ui/bps-combobox'
+export { BpsAppTopbar } from '@/components/ui/bps-app-topbar'
+export { BpsConfirmActionDialog } from '@/components/ui/bps-confirm-action-dialog'
+export { BpsBulkActionBar } from '@/components/ui/bps-bulk-action-bar'
+export { BpsDataStatePanel } from '@/components/ui/bps-data-state-panel'
 export { BpsDataTable } from '@/components/ui/bps-data-table'
 export { BpsDatePicker } from '@/components/ui/bps-date-picker'
+export { BpsFilterBar } from '@/components/ui/bps-filter-bar'
+export { BpsFormSection } from '@/components/ui/bps-form-section'
+export { BpsKpiCard } from '@/components/ui/bps-kpi-card'
+export { BpsPageHeader } from '@/components/ui/bps-page-header'
+export { BpsProgressAudit } from '@/components/ui/bps-progress-audit'
+export { BpsReviewTimeline } from '@/components/ui/bps-review-timeline'
+export { BpsValidationSummary } from '@/components/ui/bps-validation-summary'
 
 /* === Patterns === */
 export { EmptyState } from '@/components/patterns/empty-state'
