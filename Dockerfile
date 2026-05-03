@@ -5,8 +5,9 @@ WORKDIR /app
 # Copy package files
 COPY package.json package-lock.json* ./
 
-# Install dependencies using Bun (very fast)
-RUN bun install
+# Skip lifecycle scripts: `prepare` runs `build:lib` which needs vite.lib.config.ts
+# and full source — those are not in the image until the next COPY.
+RUN bun install --ignore-scripts
 
 # Copy all source files
 COPY . .

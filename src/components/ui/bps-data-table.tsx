@@ -38,12 +38,12 @@ export function BpsDataTable<T extends Record<string, unknown>>({
             {columns.map((col) => (
               <th
                 key={col.key}
-                className="h-12 px-4 text-left align-middle font-extrabold text-foreground uppercase tracking-widest text-[9.5px]"
+                className="h-12 px-4 text-left align-middle text-sm font-semibold text-muted-foreground"
               >
                 {col.label}
               </th>
             ))}
-            <th className="h-12 px-4 text-right align-middle font-extrabold text-foreground uppercase tracking-widest text-[9.5px]">
+            <th className="h-12 px-4 text-right align-middle text-sm font-semibold text-muted-foreground">
               Aksi
             </th>
           </tr>

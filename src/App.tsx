@@ -26,6 +26,7 @@ import { DrawerPage } from '@/pages/components/DrawerPage'
 import { BpsFormWorkflowPage } from '@/pages/components/BpsFormWorkflowPage'
 import { BpsDataManagementPage } from '@/pages/components/BpsDataManagementPage'
 import { BpsFeedbackStatusPage } from '@/pages/components/BpsFeedbackStatusPage'
+import { BpsPerformanceCardPage } from '@/pages/components/BpsPerformanceCardPage'
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
             <Route path="bps-form-workflow" element={<BpsFormWorkflowPage />} />
             <Route path="bps-data-management" element={<BpsDataManagementPage />} />
             <Route path="bps-feedback-status" element={<BpsFeedbackStatusPage />} />
+            <Route path="bps-performance-card" element={<BpsPerformanceCardPage />} />
           </Route>
 
           {/* Prototypes */}

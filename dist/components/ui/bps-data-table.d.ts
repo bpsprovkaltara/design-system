@@ -1,11 +1,11 @@
-import * as React from "react";
+import * as React from 'react';
 interface BpsDataTableColumn<T extends Record<string, unknown>> {
     key: string;
     label: string;
     getValue?: (row: T) => unknown;
     render?: {
         bivarianceHack: (val: unknown, row: T) => React.ReactNode;
-    }["bivarianceHack"];
+    }['bivarianceHack'];
 }
 interface BpsDataTableProps<T extends Record<string, unknown>> extends React.HTMLAttributes<HTMLDivElement> {
     data: T[];
