@@ -25,12 +25,16 @@ import {
   List,
   FileText,
   Settings,
+  PackagePlus,
 } from 'lucide-react'
 
 const navGroups = [
   {
     title: 'Overview',
-    items: [{ id: '/', label: 'Get Started', icon: Home }],
+    items: [
+      { id: '/', label: 'Get Started', icon: Home },
+      { id: '/installation', label: 'Instalasi', icon: PackagePlus },
+    ],
   },
   {
     title: 'Foundations',

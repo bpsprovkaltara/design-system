@@ -6,6 +6,7 @@ import { ColorsPage } from '@/pages/foundations/ColorsPage'
 import { TypographyPage } from '@/pages/foundations/TypographyPage'
 import { SpacingPage } from '@/pages/foundations/SpacingPage'
 import { OverviewPage } from '@/pages/overview/OverviewPage'
+import { InstallationPage } from '@/pages/overview/InstallationPage'
 import { ButtonsPage } from '@/pages/components/ButtonsPage'
 
 import { BadgesPage } from '@/pages/components/BadgesPage'
@@ -34,6 +35,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ShowcaseLayout />}>
           <Route index element={<OverviewPage />} />
+          <Route path="installation" element={<InstallationPage />} />
 
           {/* Foundations */}
           <Route path="foundations">
