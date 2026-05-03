@@ -29,6 +29,5 @@ COPY --from=builder /app/dist ./dist
 # Expose port 8081
 EXPOSE 8081
 
-# Serve the 'dist' folder with SPA support
-# --spa ensures that all non-file requests are redirected to index.html
-CMD ["bun", "x", "serve", "dist", "--port", "8081", "--spa"]
+# serve (vercel): -l = listen port, -s = SPA fallback to index.html, -n = no clipboard (containers)
+CMD ["bun", "x", "serve", "dist", "-l", "8081", "-s", "-n"]
