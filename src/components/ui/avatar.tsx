@@ -27,7 +27,11 @@ type AvatarProps = React.ComponentProps<typeof AvatarPrimitive.Root> &
 
 function Avatar({ className, size, ref, ...props }: AvatarProps) {
   return (
-    <AvatarPrimitive.Root ref={ref} className={cn(avatarVariants({ size }), className)} {...props} />
+    <AvatarPrimitive.Root
+      ref={ref}
+      className={cn(avatarVariants({ size }), className)}
+      {...props}
+    />
   )
 }
 

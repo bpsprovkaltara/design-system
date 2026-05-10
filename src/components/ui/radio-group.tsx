@@ -8,9 +8,7 @@ import { cn } from '@/lib/utils'
 
 function RadioGroup(props: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {
   const { className, ref, ...rest } = props
-  return (
-    <RadioGroupPrimitive.Root className={cn('grid gap-2', className)} {...rest} ref={ref} />
-  )
+  return <RadioGroupPrimitive.Root className={cn('grid gap-2', className)} {...rest} ref={ref} />
 }
 
 RadioGroup.displayName = RadioGroupPrimitive.Root.displayName

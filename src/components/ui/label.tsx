@@ -14,9 +14,7 @@ function Label(
   props: React.ComponentProps<typeof LabelPrimitive.Root> & VariantProps<typeof labelVariants>
 ) {
   const { className, ref, ...rest } = props
-  return (
-    <LabelPrimitive.Root ref={ref} className={cn(labelVariants(), className)} {...rest} />
-  )
+  return <LabelPrimitive.Root ref={ref} className={cn(labelVariants(), className)} {...rest} />
 }
 
 Label.displayName = LabelPrimitive.Root.displayName

@@ -20,12 +20,12 @@ export function InstallationPage() {
         <ul className="list-disc pl-5 space-y-2 text-sm text-foreground">
           <li>Node.js 20 atau lebih baru (disarankan)</li>
           <li>React 19 dan React DOM 19</li>
-          <li>Tailwind CSS 4 dan tooling untuk stack Anda (misalnya @tailwindcss/vite untuk Vite)</li>
+          <li>
+            Tailwind CSS 4 dan tooling untuk stack Anda (misalnya @tailwindcss/vite untuk Vite)
+          </li>
           <li>
             Impor{' '}
-            <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
-              styles.css
-            </code>{' '}
+            <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">styles.css</code>{' '}
             paket; ekspor{' '}
             <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
               tailwind-preset
@@ -86,8 +86,8 @@ pnpm add git+ssh://git@github.com/ORG/REPO.git#v4.0.0`}
         <p className="text-muted-foreground mb-4">
           Token dan utilitas komponen design system sudah termasuk dalam{' '}
           <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">styles.css</code>.
-          Untuk kelas Tailwind pada kode aplikasi Anda, konfigurasikan Tailwind v4 mengikuti dokumentasi
-          resmi (plugin Vite, PostCSS, atau framework lain).
+          Untuk kelas Tailwind pada kode aplikasi Anda, konfigurasikan Tailwind v4 mengikuti
+          dokumentasi resmi (plugin Vite, PostCSS, atau framework lain).
         </p>
         <p className="text-sm text-muted-foreground mb-4">
           Ekspor{' '}
@@ -95,7 +95,8 @@ pnpm add git+ssh://git@github.com/ORG/REPO.git#v4.0.0`}
             @bpsprovkaltara/design-system/tailwind-preset
           </code>{' '}
           deprecated di v4.0.0 dan akan dihapus di v5; gunakan impor stylesheet di atas. Rincian
-          migrasi: <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">UPGRADE_NOTES.md</code>{' '}
+          migrasi:{' '}
+          <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">UPGRADE_NOTES.md</code>{' '}
           di repository.
         </p>
         <CodeBlock language="ts">

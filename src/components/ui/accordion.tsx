@@ -8,7 +8,11 @@ import { cn } from '@/lib/utils'
 
 const Accordion = AccordionPrimitive.Root
 
-function AccordionItem({ className, ref, ...props }: React.ComponentPropsWithRef<typeof AccordionPrimitive.Item>) {
+function AccordionItem({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithRef<typeof AccordionPrimitive.Item>) {
   return (
     <AccordionPrimitive.Item
       ref={ref}
@@ -19,7 +23,12 @@ function AccordionItem({ className, ref, ...props }: React.ComponentPropsWithRef
 }
 AccordionItem.displayName = 'AccordionItem'
 
-function AccordionTrigger({ className, children, ref, ...props }: React.ComponentPropsWithRef<typeof AccordionPrimitive.Trigger>) {
+function AccordionTrigger({
+  className,
+  children,
+  ref,
+  ...props
+}: React.ComponentPropsWithRef<typeof AccordionPrimitive.Trigger>) {
   return (
     <AccordionPrimitive.Header className="flex">
       <AccordionPrimitive.Trigger
@@ -44,7 +53,12 @@ function AccordionTrigger({ className, children, ref, ...props }: React.Componen
 }
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
 
-function AccordionContent({ className, children, ref, ...props }: React.ComponentPropsWithRef<typeof AccordionPrimitive.Content>) {
+function AccordionContent({
+  className,
+  children,
+  ref,
+  ...props
+}: React.ComponentPropsWithRef<typeof AccordionPrimitive.Content>) {
   return (
     <AccordionPrimitive.Content
       ref={ref}

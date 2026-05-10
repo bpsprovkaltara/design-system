@@ -71,7 +71,11 @@ function FormItem({ className, ref, ...props }: React.ComponentPropsWithRef<'div
 }
 FormItem.displayName = 'FormItem'
 
-function FormLabel({ className, ref, ...props }: React.ComponentPropsWithRef<typeof LabelPrimitive.Root>) {
+function FormLabel({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithRef<typeof LabelPrimitive.Root>) {
   const { error, formItemId } = useFormField()
   return (
     <Label
@@ -121,7 +125,10 @@ function FormMessage({ className, children, ref, ...props }: React.ComponentProp
       ref={ref}
       id={formMessageId}
       role="alert"
-      className={cn('text-caption font-medium text-feedback-danger flex items-center gap-1', className)}
+      className={cn(
+        'text-caption font-medium text-feedback-danger flex items-center gap-1',
+        className
+      )}
       {...props}
     >
       {body}
@@ -130,4 +137,13 @@ function FormMessage({ className, children, ref, ...props }: React.ComponentProp
 }
 FormMessage.displayName = 'FormMessage'
 
-export { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage, useFormField }
+export {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+  FormMessage,
+  useFormField,
+}

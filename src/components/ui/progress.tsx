@@ -17,17 +17,20 @@ const progressTrackVariants = cva('relative w-full overflow-hidden rounded-full 
   defaultVariants: { size: 'default' },
 })
 
-const progressIndicatorVariants = cva('h-full w-full flex-1 transition-all duration-slow ease-out', {
-  variants: {
-    intent: {
-      default: 'bg-primary',
-      success: 'bg-feedback-success',
-      warning: 'bg-feedback-warning',
-      danger: 'bg-feedback-danger',
+const progressIndicatorVariants = cva(
+  'h-full w-full flex-1 transition-all duration-slow ease-out',
+  {
+    variants: {
+      intent: {
+        default: 'bg-primary',
+        success: 'bg-feedback-success',
+        warning: 'bg-feedback-warning',
+        danger: 'bg-feedback-danger',
+      },
     },
-  },
-  defaultVariants: { intent: 'default' },
-})
+    defaultVariants: { intent: 'default' },
+  }
+)
 
 type ProgressProps = React.ComponentProps<typeof ProgressPrimitive.Root> &
   VariantProps<typeof progressTrackVariants> &

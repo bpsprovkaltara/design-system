@@ -11,9 +11,9 @@ const alertVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-surface-raised border-border-default text-content-primary [&>svg]:text-content-secondary',
-        info:
-          'bg-feedback-info-bg border-feedback-info/30 text-content-primary [&>svg]:text-feedback-info',
+        default:
+          'bg-surface-raised border-border-default text-content-primary [&>svg]:text-content-secondary',
+        info: 'bg-feedback-info-bg border-feedback-info/30 text-content-primary [&>svg]:text-feedback-info',
         success:
           'bg-feedback-success-bg border-feedback-success/30 text-content-primary [&>svg]:text-feedback-success',
         warning:
@@ -39,15 +39,17 @@ type AlertProps = React.ComponentPropsWithRef<'div'> &
     showIcon?: boolean
   }
 
-function Alert({ className, variant = 'default', showIcon = true, children, ref, ...props }: AlertProps) {
+function Alert({
+  className,
+  variant = 'default',
+  showIcon = true,
+  children,
+  ref,
+  ...props
+}: AlertProps) {
   const Icon = alertIcons[variant ?? 'default']
   return (
-    <div
-      ref={ref}
-      role="alert"
-      className={cn(alertVariants({ variant }), className)}
-      {...props}
-    >
+    <div ref={ref} role="alert" className={cn(alertVariants({ variant }), className)} {...props}>
       {showIcon && <Icon className="h-4 w-4" aria-hidden="true" />}
       {children}
     </div>
@@ -69,7 +71,9 @@ function AlertTitle({ className, ref, ...props }: React.ComponentPropsWithRef<'h
 AlertTitle.displayName = 'AlertTitle'
 
 function AlertDescription({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
-  return <div ref={ref} className={cn('text-body-sm text-content-secondary', className)} {...props} />
+  return (
+    <div ref={ref} className={cn('text-body-sm text-content-secondary', className)} {...props} />
+  )
 }
 
 AlertDescription.displayName = 'AlertDescription'

@@ -15,9 +15,7 @@ function Card({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) 
 Card.displayName = 'Card'
 
 function CardHeader({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
-  return (
-    <div ref={ref} className={cn('flex flex-col space-y-1.5 p-6', className)} {...props} />
-  )
+  return <div ref={ref} className={cn('flex flex-col space-y-1.5 p-6', className)} {...props} />
 }
 
 CardHeader.displayName = 'CardHeader'
@@ -35,9 +33,7 @@ function CardTitle({ className, ref, ...props }: React.ComponentPropsWithRef<'di
 CardTitle.displayName = 'CardTitle'
 
 function CardDescription({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
-  return (
-    <div ref={ref} className={cn('text-sm text-muted-foreground', className)} {...props} />
-  )
+  return <div ref={ref} className={cn('text-sm text-muted-foreground', className)} {...props} />
 }
 
 CardDescription.displayName = 'CardDescription'
@@ -49,9 +45,7 @@ function CardContent({ className, ref, ...props }: React.ComponentPropsWithRef<'
 CardContent.displayName = 'CardContent'
 
 function CardFooter({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
-  return (
-    <div ref={ref} className={cn('flex items-center p-6 pt-0', className)} {...props} />
-  )
+  return <div ref={ref} className={cn('flex items-center p-6 pt-0', className)} {...props} />
 }
 
 CardFooter.displayName = 'CardFooter'

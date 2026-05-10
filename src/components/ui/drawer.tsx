@@ -17,7 +17,11 @@ const DrawerPortal = DrawerPrimitive.Portal
 
 const DrawerClose = DrawerPrimitive.Close
 
-function DrawerOverlay({ className, ref, ...props }: React.ComponentPropsWithRef<typeof DrawerPrimitive.Overlay>) {
+function DrawerOverlay({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithRef<typeof DrawerPrimitive.Overlay>) {
   return (
     <DrawerPrimitive.Overlay
       ref={ref}
@@ -28,7 +32,12 @@ function DrawerOverlay({ className, ref, ...props }: React.ComponentPropsWithRef
 }
 DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName
 
-function DrawerContent({ className, children, ref, ...props }: React.ComponentPropsWithRef<typeof DrawerPrimitive.Content>) {
+function DrawerContent({
+  className,
+  children,
+  ref,
+  ...props
+}: React.ComponentPropsWithRef<typeof DrawerPrimitive.Content>) {
   return (
     <DrawerPortal>
       <DrawerOverlay />
@@ -58,7 +67,11 @@ const DrawerFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 )
 DrawerFooter.displayName = 'DrawerFooter'
 
-function DrawerTitle({ className, ref, ...props }: React.ComponentPropsWithRef<typeof DrawerPrimitive.Title>) {
+function DrawerTitle({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithRef<typeof DrawerPrimitive.Title>) {
   return (
     <DrawerPrimitive.Title
       ref={ref}
@@ -72,7 +85,11 @@ function DrawerTitle({ className, ref, ...props }: React.ComponentPropsWithRef<t
 }
 DrawerTitle.displayName = DrawerPrimitive.Title.displayName
 
-function DrawerDescription({ className, ref, ...props }: React.ComponentPropsWithRef<typeof DrawerPrimitive.Description>) {
+function DrawerDescription({
+  className,
+  ref,
+  ...props
+}: React.ComponentPropsWithRef<typeof DrawerPrimitive.Description>) {
   return (
     <DrawerPrimitive.Description
       ref={ref}
