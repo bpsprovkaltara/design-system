@@ -5,14 +5,15 @@ import { ChevronRight, MoreHorizontal } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
-const Breadcrumb = React.forwardRef<
-  HTMLElement,
-  React.ComponentPropsWithoutRef<'nav'> & { separator?: React.ReactNode }
->(({ ...props }, ref) => <nav ref={ref} aria-label="breadcrumb" {...props} />)
+type BreadcrumbProps = React.ComponentPropsWithRef<'nav'> & { separator?: React.ReactNode }
+
+function Breadcrumb({ ref, ...props }: BreadcrumbProps) {
+  return <nav ref={ref} aria-label="breadcrumb" {...props} />
+}
 Breadcrumb.displayName = 'Breadcrumb'
 
-const BreadcrumbList = React.forwardRef<HTMLOListElement, React.ComponentPropsWithoutRef<'ol'>>(
-  ({ className, ...props }, ref) => (
+function BreadcrumbList({ className, ref, ...props }: React.ComponentPropsWithRef<'ol'>) {
+  return (
     <ol
       ref={ref}
       className={cn(
@@ -22,34 +23,33 @@ const BreadcrumbList = React.forwardRef<HTMLOListElement, React.ComponentPropsWi
       {...props}
     />
   )
-)
+}
 BreadcrumbList.displayName = 'BreadcrumbList'
 
-const BreadcrumbItem = React.forwardRef<HTMLLIElement, React.ComponentPropsWithoutRef<'li'>>(
-  ({ className, ...props }, ref) => (
-    <li ref={ref} className={cn('inline-flex items-center gap-1.5', className)} {...props} />
-  )
-)
+function BreadcrumbItem({ className, ref, ...props }: React.ComponentPropsWithRef<'li'>) {
+  return <li ref={ref} className={cn('inline-flex items-center gap-1.5', className)} {...props} />
+}
 BreadcrumbItem.displayName = 'BreadcrumbItem'
 
-const BreadcrumbLink = React.forwardRef<
-  HTMLAnchorElement,
-  React.ComponentPropsWithoutRef<'a'> & { asChild?: boolean }
->(({ asChild: _asChild, className, ...props }, ref) => (
-  <a
-    ref={ref}
-    className={cn(
-      'hover:text-content-primary transition-colors duration-fast',
-      'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-xs',
-      className
-    )}
-    {...props}
-  />
-))
+type BreadcrumbLinkProps = React.ComponentPropsWithRef<'a'> & { asChild?: boolean }
+
+function BreadcrumbLink({ asChild: _asChild, className, ref, ...props }: BreadcrumbLinkProps) {
+  return (
+    <a
+      ref={ref}
+      className={cn(
+        'hover:text-content-primary transition-colors duration-fast',
+        'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-xs',
+        className
+      )}
+      {...props}
+    />
+  )
+}
 BreadcrumbLink.displayName = 'BreadcrumbLink'
 
-const BreadcrumbPage = React.forwardRef<HTMLSpanElement, React.ComponentPropsWithoutRef<'span'>>(
-  ({ className, ...props }, ref) => (
+function BreadcrumbPage({ className, ref, ...props }: React.ComponentPropsWithRef<'span'>) {
+  return (
     <span
       ref={ref}
       role="link"
@@ -59,7 +59,7 @@ const BreadcrumbPage = React.forwardRef<HTMLSpanElement, React.ComponentPropsWit
       {...props}
     />
   )
-)
+}
 BreadcrumbPage.displayName = 'BreadcrumbPage'
 
 const BreadcrumbSeparator = ({ children, className, ...props }: React.ComponentProps<'li'>) => (

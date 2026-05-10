@@ -61,50 +61,45 @@ const buttonVariants = cva(
   }
 )
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
-  asChild?: boolean
-  loading?: boolean
-  iconLeft?: React.ReactNode
-  iconRight?: React.ReactNode
-}
-
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      className,
-      variant,
-      size,
-      asChild = false,
-      loading = false,
-      iconLeft,
-      iconRight,
-      children,
-      disabled,
-      ...props
-    },
-    ref
-  ) => {
-    const Comp = asChild ? Slot : 'button'
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        disabled={disabled || loading}
-        aria-disabled={disabled || loading}
-        {...props}
-      >
-        {loading ? (
-          <Loader2 className="animate-spin" aria-hidden="true" />
-        ) : (
-          iconLeft && <span aria-hidden="true">{iconLeft}</span>
-        )}
-        {children}
-        {!loading && iconRight && <span aria-hidden="true">{iconRight}</span>}
-      </Comp>
-    )
+export type ButtonProps = VariantProps<typeof buttonVariants> &
+  React.ComponentPropsWithRef<'button'> & {
+    asChild?: boolean
+    loading?: boolean
+    iconLeft?: React.ReactNode
+    iconRight?: React.ReactNode
   }
-)
-Button.displayName = 'Button'
+
+function Button({
+  className,
+  variant,
+  size,
+  asChild = false,
+  loading = false,
+  iconLeft,
+  iconRight,
+  children,
+  disabled,
+  ref,
+  ...props
+}: ButtonProps) {
+  const Comp = asChild ? Slot : 'button'
+  return (
+    <Comp
+      className={cn(buttonVariants({ variant, size, className }))}
+      ref={ref}
+      disabled={disabled || loading}
+      aria-disabled={disabled || loading}
+      {...props}
+    >
+      {loading ? (
+        <Loader2 className="animate-spin" aria-hidden="true" />
+      ) : (
+        iconLeft && <span aria-hidden="true">{iconLeft}</span>
+      )}
+      {children}
+      {!loading && iconRight && <span aria-hidden="true">{iconRight}</span>}
+    </Comp>
+  )
+}
 
 export { Button, buttonVariants }

@@ -17,39 +17,37 @@ The design system showcase app is deployed as a Docker container behind a Traefi
 
 ## Docker build
 
-The `Dockerfile` uses a multi-stage Bun build:
+The `Dockerfile` memakai **multi-stage build Node.js 20** + **pnpm** (selaras `engines` dan `packageManager` di `package.json`).
 
 **Stage 1 — builder**
 
-1. Base image: `oven/bun:latest`
-2. Copies `package.json` and installs dependencies with `--ignore-scripts` (skips the `prepare` hook which runs `build:lib` — source files are not yet copied at that point)
-3. Copies all source files
-4. Runs `bun run build` (Vite showcase app build — produces `dist/`)
+1. Base image: `node:20-bookworm-slim`
+2. `corepack enable` lalu `COPY package.json pnpm-lock.yaml` dan `pnpm install --frozen-lockfile --ignore-scripts` (melewati `prepare` / `build:lib` sampai source lengkap tersalin)
+3. Menyalin seluruh source
+4. Menjalankan `pnpm run build` (showcase: `tsc && vite build` → `dist/`)
 
 **Stage 2 — runtime**
 
-1. Base image: `oven/bun:latest`
-2. Copies only `dist/` from the builder stage
-3. Exposes port 8081
-4. Starts `bun x serve dist -l 8081 -s -n`
-   - `-l 8081`: listen on port 8081
-   - `-s`: SPA fallback (all paths serve `index.html`)
-   - `-n`: no clipboard (required in container environments)
+1. Base image: `node:20-bookworm-slim`
+2. Menginstal `serve` secara global (`npm install -g serve`)
+3. Menyalin hanya `dist/` dari builder
+4. Port **8081**, user non-root `node`, perintah: `serve dist -l 8081 -s -n`
+   - `-l 8081`: listen pada 8081
+   - `-s`: fallback SPA (`index.html`)
+   - `-n`: tanpa clipboard (cocok untuk container)
 
-**Build the image:**
+**Build image:**
 
 ```bash
 docker build -t design-system:latest .
 ```
 
-**Run locally to verify:**
+**Jalankan lokal untuk verifikasi:**
 
 ```bash
 docker run --rm -p 8081:8081 design-system:latest
-# Visit http://localhost:8081
+# Buka http://localhost:8081
 ```
-
-> [!warning] Known issue: the `Dockerfile` has `COPY package.json package-lock.json* ./` on line 6. This project uses pnpm (`pnpm-lock.yaml`), not npm (`package-lock.json`). The npm lockfile does not exist. Bun can install from `package.json` alone so this works at runtime, but the lockfile copy line is misleading and should be changed to `COPY package.json pnpm-lock.yaml ./` with a corresponding `RUN bun install --frozen-lockfile --ignore-scripts` for reproducible builds.
 
 ---
 
@@ -96,8 +94,6 @@ The relevant Traefik labels in `docker-compose.yml`:
 
 > [!todo] Need input from team: confirm whether the Traefik entrypoint should be `web` (HTTP) or `websecure` (HTTPS with TLS termination). The comment in `docker-compose.yml` suggests `websecure` may be the intended value.
 
-> [!warning] The `docker-compose.yml` uses the deprecated top-level `version: '3.8'` key. This is harmless but should be removed in a future cleanup — Docker Compose v2 ignores it.
-
 ---
 
 ## Rollback procedure
@@ -116,14 +112,19 @@ docker tag design-system:previous design-system:latest
 docker compose up -d
 ```
 
-> [!todo] Need input from team: establish a tagging convention for Docker images (e.g. `design-system:3.0.0`) so rollbacks have a specific target rather than relying on `previous`.
+> [!todo] Need input from team: establish a tagging convention for Docker images (e.g. `design-system:4.0.0`) so rollbacks have a specific target rather than relying on `previous`.
 
 ---
 
-## No CI/CD pipeline
+## CI (GitHub Actions)
 
-There is currently no `.github/workflows/` directory. Builds and deploys are manual. Consider adding a GitHub Actions workflow that:
+Workflow `.github/workflows/ci.yml` berjalan pada **push** dan **pull request** ke `main`:
 
-1. Runs `pnpm lint` and `pnpm test` on pull requests
-2. Builds and pushes the Docker image on merge to `main`
-3. SSHes into the production server and runs `docker compose up -d`
+1. `pnpm install --frozen-lockfile`
+2. `pnpm run typecheck`
+3. `pnpm run lint`
+4. `pnpm run test`
+5. `pnpm run build:lib`
+6. `pnpm run build`
+
+Build dan deploy Docker ke server produksi tetap dapat dilakukan manual (`docker compose up -d --build`) atau diotomatisasi terpisah (mis. workflow kedua yang push image ke registry).

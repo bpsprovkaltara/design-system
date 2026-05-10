@@ -4,10 +4,10 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
-export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
+export type TextareaProps = React.ComponentPropsWithRef<'textarea'>
 
-const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, ...props }, ref) => (
+function Textarea({ className, ref, ...props }: TextareaProps) {
+  return (
     <textarea
       className={cn(
         'flex min-h-[80px] w-full rounded-md border border-border-default bg-[hsl(var(--input-bg))]',
@@ -24,7 +24,6 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       {...props}
     />
   )
-)
-Textarea.displayName = 'Textarea'
+}
 
 export { Textarea }

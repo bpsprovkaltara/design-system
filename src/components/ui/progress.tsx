@@ -23,19 +23,18 @@ const progressIndicatorVariants = cva('h-full w-full flex-1 transition-all durat
       default: 'bg-primary',
       success: 'bg-feedback-success',
       warning: 'bg-feedback-warning',
-      danger:  'bg-feedback-danger',
+      danger: 'bg-feedback-danger',
     },
   },
   defaultVariants: { intent: 'default' },
 })
 
-interface ProgressProps
-  extends React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>,
-    VariantProps<typeof progressTrackVariants>,
-    VariantProps<typeof progressIndicatorVariants> {}
+type ProgressProps = React.ComponentProps<typeof ProgressPrimitive.Root> &
+  VariantProps<typeof progressTrackVariants> &
+  VariantProps<typeof progressIndicatorVariants>
 
-const Progress = React.forwardRef<React.ElementRef<typeof ProgressPrimitive.Root>, ProgressProps>(
-  ({ className, value, size, intent, ...props }, ref) => (
+function Progress({ className, value, size, intent, ref, ...props }: ProgressProps) {
+  return (
     <ProgressPrimitive.Root
       ref={ref}
       className={cn(progressTrackVariants({ size }), className)}
@@ -47,7 +46,8 @@ const Progress = React.forwardRef<React.ElementRef<typeof ProgressPrimitive.Root
       />
     </ProgressPrimitive.Root>
   )
-)
+}
+
 Progress.displayName = ProgressPrimitive.Root.displayName
 
 export { Progress }

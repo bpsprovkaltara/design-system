@@ -1,6 +1,6 @@
 /* ============================================================
    BPS Kaltara Design System — Colors & Typography Tokens
-   Version 3.0.0 — "Civic Editorial × Data-First Swiss"
+   Version 4.0.0 — "Civic Editorial × Data-First Swiss"
    ============================================================
    TOKEN LAYERS:
      Layer A — Primitive  : raw scale values (--navy-*, --amber-*, etc.)
@@ -15,9 +15,8 @@
 /* --- Google Fonts (fallback CDN; self-host in production via public/fonts/) --- */
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "./tailwind.config.ts";
 
 /* ============================================================
    LAYER A — PRIMITIVE SCALES

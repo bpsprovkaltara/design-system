@@ -6,6 +6,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- GitHub Actions CI (`.github/workflows/ci.yml`): typecheck, lint, test, `build:lib`, `build` pada push/PR ke `main`
+- `docs/releases/v4.0.0-github.md` — teks siap tempel untuk halaman rilis GitHub
+
+### Changed
+
+- `Dockerfile`: builder/runtime **Node 20** + **pnpm** + `pnpm-lock.yaml` (menggantikan image Bun)
+- `docker-compose.yml`: menghapus kunci `version` yang sudah usang
+- Dokumentasi: `docs/deployment.md`, `docs/development.md`, `docs/runbook.md` diselaraskan dengan v4 / Node 20
+- `UPGRADE_NOTES.md`: panduan konsumen diperluas (Vite, `@source`, checklist)
+
+## [4.0.0] - 2026-05-10
+
+### Added
+
+- `UPGRADE_NOTES.md` untuk panduan migrasi v3 → v4
+
+### Changed
+
+- **Breaking:** Peer dependencies — `react` dan `react-dom` **≥ 19**, `tailwindcss` **≥ 4**
+- **Breaking:** `engines.node` **≥ 20**
+- Stack showcase dan library: React 19, Tailwind CSS 4, Vite 8, TypeScript 6
+- Komponen UI: migrasi dari `forwardRef` ke pola `ref` sebagai prop (React 19)
+- Ekspor `tailwind-preset`: shim deprecation dengan peringatan runtime; migrasi konsumen ke impor `styles.css` + konfigurasi Tailwind 4 mandiri
+
 ## [3.0.0] - 2025-04-15
 
 ### Added
@@ -43,7 +69,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [2.x] - legacy
 
-Version 2.x is no longer maintained. No migration guide is available. Upgrade directly to 3.0.0.
+Version 2.x is no longer maintained. No migration guide is available. Upgrade directly to 4.0.0 (lihat `UPGRADE_NOTES.md` jika dari v3).
 
-[Unreleased]: https://github.com/bpsprovkaltara/design-system/compare/v3.0.0...HEAD
+[Unreleased]: https://github.com/bpsprovkaltara/design-system/compare/v4.0.0...HEAD
+[4.0.0]: https://github.com/bpsprovkaltara/design-system/releases/tag/v4.0.0
 [3.0.0]: https://github.com/bpsprovkaltara/design-system/releases/tag/v3.0.0

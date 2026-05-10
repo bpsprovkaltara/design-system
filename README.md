@@ -1,8 +1,10 @@
-![version](https://img.shields.io/badge/version-3.0.0-blue) ![license](https://img.shields.io/badge/license-UNLICENSED-lightgrey) ![node](https://img.shields.io/badge/node-%3E%3D18-green)
+![version](https://img.shields.io/badge/version-4.0.0-blue) ![license](https://img.shields.io/badge/license-UNLICENSED-lightgrey) ![node](https://img.shields.io/badge/node-%3E%3D20-green)
 
 # BPS Kaltara design system
 
-Internal design system for BPS Provinsi Kalimantan Utara. Built on React 18, TypeScript, Tailwind CSS 3, and shadcn/ui (new-york style). Ships as an npm-installable library (`@bpsprovkaltara/design-system`) and as a live interactive showcase at [design.kaltarastats.id](https://design.kaltarastats.id).
+Internal design system for BPS Provinsi Kalimantan Utara. Built on React 19, TypeScript, Tailwind CSS 4, and shadcn/ui (new-york style). Ships as an npm-installable library (`@bpsprovkaltara/design-system`) and as a live interactive showcase at [design.kaltarastats.id](https://design.kaltarastats.id).
+
+Migrasi dari v3: lihat [UPGRADE_NOTES.md](./UPGRADE_NOTES.md).
 
 The visual theme is **"Civic Editorial x Data-First Swiss"** — navy-primary (#1e3a5f), amber accent (#f59e0b), Fraunces display type, and IBM Plex Sans/Mono for body and code.
 
@@ -19,7 +21,8 @@ pnpm add @bpsprovkaltara/design-system
 Peer dependencies (install in the consumer app if not already present):
 
 ```bash
-pnpm add react@^18 react-dom@^18 tailwindcss@^3.4
+pnpm add react@^19 react-dom@^19 tailwindcss@^4
+# proyek Vite: tambahkan @tailwindcss/vite sesuai dokumentasi Tailwind v4
 ```
 
 **Import styles** — once, at app root:
@@ -28,19 +31,15 @@ pnpm add react@^18 react-dom@^18 tailwindcss@^3.4
 import '@bpsprovkaltara/design-system/styles.css'
 ```
 
-**Configure Tailwind** (`tailwind.config.ts`):
+**Tailwind 4 di aplikasi Anda** — ikuti [dokumentasi Tailwind v4](https://tailwindcss.com/docs/installation) untuk stack Anda (misalnya tambahkan plugin `@tailwindcss/vite` pada `vite.config.ts`). Ekspor `tailwind-preset` dari paket ini **deprecated**; gunakan impor `styles.css` di atas dan konfigurasi Tailwind mandiri untuk source file aplikasi.
 
-```ts
-import preset from '@bpsprovkaltara/design-system/tailwind-preset'
+Contoh minimal entry CSS aplikasi (Vite):
 
-export default {
-  presets: [preset],
-  content: [
-    './src/**/*.{ts,tsx}',
-    './node_modules/@bpsprovkaltara/design-system/dist/**/*.js',
-  ],
-}
+```css
+@import "tailwindcss";
 ```
+
+Pastikan `content` / `@source` mencakup `./src/**/*` dan, bila perlu, path ke `node_modules/@bpsprovkaltara/design-system/dist` agar kelas dari paket ikut discan.
 
 **Use components**:
 
@@ -63,10 +62,10 @@ export function Example() {
 
 | Layer | Technology |
 |---|---|
-| Framework | React 18 |
-| Language | TypeScript 5.4 |
-| Build tool | Vite 5 |
-| Styling | Tailwind CSS 3 |
+| Framework | React 19 |
+| Language | TypeScript 6 |
+| Build tool | Vite 8 |
+| Styling | Tailwind CSS 4 |
 | Component primitives | shadcn/ui (new-york) + Radix UI |
 | Forms | react-hook-form + zod |
 | Command palette | cmdk |
@@ -153,5 +152,4 @@ The library is for internal BPS use only (`"license": "UNLICENSED"`). There is n
 - Architecture: `docs/architecture.md`
 - Development guide: `docs/development.md`
 - Deployment: `docs/deployment.md`
-
-> [!todo] Need input from team: `CLAUDE.md` references the package as `@bpskaltara/design-system` but `package.json` is authoritative at `@bpsprovkaltara/design-system`. Update `CLAUDE.md` to align.
+- Catatan rilis GitHub (salin tempel): `docs/releases/v4.0.0-github.md`
