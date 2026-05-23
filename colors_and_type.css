@@ -23,9 +23,7 @@
 
 @theme inline {
   /* Fonts */
-  --font-display: var(--font-display);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
 
   /* shadcn/ui semantic compatibility */
   --color-background: hsl(var(--background));
@@ -164,24 +162,13 @@
   --color-warm-100: var(--warm-100);
   --color-warm-200: var(--warm-200);
 
-  /* Radius and elevation */
-  --radius-xs: var(--radius-xs);
-  --radius-sm: var(--radius-sm);
-  --radius-md: var(--radius-md);
-  --radius-lg: var(--radius-lg);
-  --radius-xl: var(--radius-xl);
+  /* Elevation */
   --shadow-elevation-0: var(--elevation-0);
   --shadow-elevation-1: var(--elevation-1);
   --shadow-elevation-2: var(--elevation-2);
   --shadow-elevation-3: var(--elevation-3);
   --shadow-elevation-4: var(--elevation-4);
   --shadow-elevation-5: var(--elevation-5);
-  --shadow-xs: var(--shadow-xs);
-  --shadow-sm: var(--shadow-sm);
-  --shadow-md: var(--shadow-md);
-  --shadow-lg: var(--shadow-lg);
-  --shadow-xl: var(--shadow-xl);
-  --shadow-inner: var(--shadow-inner);
 
   /* Easing and animation */
   --ease-out: var(--motion-ease-out);
