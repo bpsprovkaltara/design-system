@@ -36,12 +36,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
-- BPS app shell components: `BpsAppTopbar`, `BpsPageHeader`, `BpsFilterBar`, `BpsBulkActionBar`
-- Data-management components: `BpsDataTable` (with sorting, pagination, column visibility), `BpsDataStatePanel`, `BpsConfirmActionDialog`
-- Form workflow components: `BpsFormSection`, `BpsDatePicker`, `BpsCombobox`
-- Feedback and status components: `BpsProgressAudit`, `BpsReviewTimeline`, `BpsValidationSummary`
-- `BpsPerformanceCard` with sparkline, delta badge, and target percentage display
-- `BpsKpiCard` for KPI metric display
+- BPS app shell components: `AppTopbar`, `PageHeader`, `FilterBar`, `BulkActionBar`
+- Data-management components: `DataTable` (with sorting, pagination, column visibility), `DataStatePanel`, `ConfirmActionDialog`
+- Form workflow components: `FormSection`, `DatePicker`, `Combobox`
+- Feedback and status components: `ProgressAudit`, `ReviewTimeline`, `ValidationSummary`
+- `PerformanceCard` with sparkline, delta badge, and target percentage display
+- `KpiCard` for KPI metric display
 - `EmptyState` pattern component with three built-in inline SVG illustrations (`empty`, `search`, `error`)
 - `StatusBadge` with four workflow variants: `draft`, `pending`, `revised`, `approved`
 - `Spinner` component

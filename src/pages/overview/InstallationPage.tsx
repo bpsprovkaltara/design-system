@@ -199,8 +199,8 @@ export function ContohHalaman() {
             Skeleton, Slider, Spinner, Switch, Table, Tabs, Textarea, Toast, Tooltip, dan lainnya.
           </li>
           <li>
-            <strong>Komponen BPS</strong> — BpsCombobox, BpsDataTable, BpsDatePicker, BpsPageHeader,
-            BpsFilterBar, StatusBadge, serta komponen alur kerja data lainnya.
+            <strong>Komponen BPS</strong> — Combobox, DataTable, DatePicker, PageHeader, FilterBar,
+            StatusBadge, serta komponen alur kerja data lainnya.
           </li>
           <li>
             <strong>Pola</strong> — EmptyState untuk keadaan kosong yang konsisten.

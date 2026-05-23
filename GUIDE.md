@@ -74,7 +74,7 @@ cp /path/to/bpskaltara-design-system/colors_and_type.css ./src/app/bps-tokens.cs
 Lalu di `src/app/globals.css`, tambahkan di bagian paling atas:
 ```css
 @import "tailwindcss";
-@import './bps-tokens.css';
+@import './tokens.css';
 @source "../app";
 @source "../components";
 @custom-variant dark (&:where(.dark, .dark *));
@@ -224,7 +224,7 @@ cp /path/to/bpskaltara-design-system/colors_and_type.css ./resources/css/bps-tok
 ```css
 /* resources/css/app.css */
 @import 'tailwindcss';
-@import './bps-tokens.css';
+@import './tokens.css';
 @source "../views";
 @source "../js";
 @custom-variant dark (&:where(.dark, .dark *));

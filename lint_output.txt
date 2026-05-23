@@ -19,7 +19,7 @@
 /Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/badge.tsx
   27:32  error  'HTMLDivElement' is not defined  no-undef
 
-/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/bps-data-table.tsx
+/Users/fachri/Development/Projects/bpskaltara-design-system/src/components/ui/data-table.tsx
    5:58  error    'HTMLDivElement' is not defined           no-undef
    6:24  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
   10:20  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any

@@ -62,13 +62,14 @@ The showcase app starts at http://localhost:5173. Hot reload is enabled for all 
 | `/components/table` | `TablePage` |
 | `/components/toast` | `ToastPage` |
 | `/components/loading` | `LoadingPage` |
+| `/components/essentials` | `EssentialsPage` |
 | `/components/navigation-menu` | `NavigationMenuPage` |
 | `/components/carousel` | `CarouselPage` |
 | `/components/drawer` | `DrawerPage` |
-| `/components/bps-form-workflow` | `BpsFormWorkflowPage` |
-| `/components/bps-data-management` | `BpsDataManagementPage` |
-| `/components/bps-feedback-status` | `BpsFeedbackStatusPage` |
-| `/components/bps-performance-card` | `BpsPerformanceCardPage` |
+| `/components/form-workflow` | `FormWorkflowPage` |
+| `/components/data-management` | `DataManagementPage` |
+| `/components/feedback-status` | `FeedbackStatusPage` |
+| `/components/performance-card` | `PerformanceCardPage` |
 | `/prototypes/dashboard` | `DashboardPage` |
 | `/prototypes/auth` | `AuthPage` |
 | `/prototypes/list` | `ListPage` |
@@ -171,7 +172,7 @@ The `CommandInput` from cmdk renders a native `<input>` that gets the browser's 
 <CommandInput className="focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0" />
 ```
 
-This is already applied in `bps-combobox.tsx`. Apply it to any other custom `CommandInput` usage.
+This is already applied in `combobox.tsx`. Apply it to any other custom `CommandInput` usage.
 
 ### warm-* token produces invalid CSS
 

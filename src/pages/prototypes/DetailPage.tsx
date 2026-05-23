@@ -1,17 +1,17 @@
 import React from 'react'
 import { FileText } from 'lucide-react'
-import { BpsAppTopbar } from '@/components/ui/bps-app-topbar'
-import { BpsPageHeader } from '@/components/ui/bps-page-header'
-import { BpsFormSection } from '@/components/ui/bps-form-section'
-import { BpsReviewTimeline } from '@/components/ui/bps-review-timeline'
-import { BpsProgressAudit } from '@/components/ui/bps-progress-audit'
+import { AppTopbar } from '@/components/ui/app-topbar'
+import { PageHeader } from '@/components/ui/page-header'
+import { FormSection } from '@/components/ui/form-section'
+import { ReviewTimeline } from '@/components/ui/review-timeline'
+import { ProgressAudit } from '@/components/ui/progress-audit'
 import { Button } from '@/components/ui/button'
 
 export function DetailPage() {
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <BpsAppTopbar appTitle="Portal Statistik Internal" />
-      <BpsPageHeader
+      <AppTopbar appTitle="Portal Statistik Internal" />
+      <PageHeader
         title="Detail Dokumen"
         description="Template halaman detail untuk pemeriksaan metadata, lampiran, dan riwayat review."
         action={<Button variant="outline">Unduh Lampiran</Button>}
@@ -19,7 +19,7 @@ export function DetailPage() {
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
-          <BpsFormSection title="Metadata Dokumen" description="Informasi utama dokumen statistik.">
+          <FormSection title="Metadata Dokumen" description="Informasi utama dokumen statistik.">
             <div className="grid gap-3 md:grid-cols-2">
               <div>
                 <p className="text-xs text-muted-foreground">Nomor Dokumen</p>
@@ -34,9 +34,9 @@ export function DetailPage() {
                 <p className="text-sm font-medium">Analisis Kesejahteraan Rumah Tangga 2026</p>
               </div>
             </div>
-          </BpsFormSection>
+          </FormSection>
 
-          <BpsReviewTimeline
+          <ReviewTimeline
             items={[
               {
                 id: '1',
@@ -66,7 +66,7 @@ export function DetailPage() {
               lampiran-ringkasan.xlsx
             </div>
           </div>
-          <BpsProgressAudit totalChecklist={8} completedChecklist={7} />
+          <ProgressAudit totalChecklist={8} completedChecklist={7} />
         </div>
       </div>
     </div>

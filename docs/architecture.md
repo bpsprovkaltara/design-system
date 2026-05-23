@@ -51,7 +51,7 @@ All token values are bare HSL components — no `hsl()` wrapper. Usage: `hsl(var
 flowchart LR
     radix["Radix UI primitives"]
     shadcn["shadcn/ui components\n(owned source in src/components/ui/)"]
-    custom["BPS custom components\n(BpsCombobox, BpsDataTable, etc.)"]
+    custom["BPS custom components\n(Combobox, DataTable, etc.)"]
     patterns["Patterns\n(EmptyState)"]
     pages["Showcase pages\n(src/pages/)"]
     consumer["Consumer app"]

@@ -79,6 +79,13 @@ export {
   DropdownMenuRadioGroup,
 } from '@/components/ui/dropdown-menu'
 export {
+  DescriptionList,
+  DescriptionListItem,
+  DescriptionTerm,
+  DescriptionDetails,
+} from '@/components/ui/description-list'
+export { FileUpload } from '@/components/ui/file-upload'
+export {
   Form,
   FormField,
   FormItem,
@@ -145,6 +152,10 @@ export {
 } from '@/components/ui/table'
 export { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 export { Textarea } from '@/components/ui/textarea'
+export { Toggle, toggleVariants } from '@/components/ui/toggle'
+export type { ToggleProps } from '@/components/ui/toggle'
+export { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+export type { ToggleGroupProps, ToggleGroupItemProps } from '@/components/ui/toggle-group'
 export {
   Toast,
   ToastAction,
@@ -158,22 +169,22 @@ export { Toaster } from '@/components/ui/toaster'
 export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 /* === BPS Custom Components === */
-export { BpsCombobox } from '@/components/ui/bps-combobox'
-export { BpsAppTopbar } from '@/components/ui/bps-app-topbar'
-export { BpsConfirmActionDialog } from '@/components/ui/bps-confirm-action-dialog'
-export { BpsBulkActionBar } from '@/components/ui/bps-bulk-action-bar'
-export { BpsDataStatePanel } from '@/components/ui/bps-data-state-panel'
-export { BpsDataTable } from '@/components/ui/bps-data-table'
-export { BpsDatePicker } from '@/components/ui/bps-date-picker'
-export { BpsFilterBar } from '@/components/ui/bps-filter-bar'
-export { BpsFormSection } from '@/components/ui/bps-form-section'
-export { BpsKpiCard } from '@/components/ui/bps-kpi-card'
-export { BpsPageHeader } from '@/components/ui/bps-page-header'
-export { BpsPerformanceCard } from '@/components/ui/bps-performance-card'
-export type { BpsPerformanceCardProps } from '@/components/ui/bps-performance-card'
-export { BpsProgressAudit } from '@/components/ui/bps-progress-audit'
-export { BpsReviewTimeline } from '@/components/ui/bps-review-timeline'
-export { BpsValidationSummary } from '@/components/ui/bps-validation-summary'
+export { Combobox } from '@/components/ui/combobox'
+export { AppTopbar } from '@/components/ui/app-topbar'
+export { ConfirmActionDialog } from '@/components/ui/confirm-action-dialog'
+export { BulkActionBar } from '@/components/ui/bulk-action-bar'
+export { DataStatePanel } from '@/components/ui/data-state-panel'
+export { DataTable } from '@/components/ui/data-table'
+export { DatePicker } from '@/components/ui/date-picker'
+export { FilterBar } from '@/components/ui/filter-bar'
+export { FormSection } from '@/components/ui/form-section'
+export { KpiCard } from '@/components/ui/kpi-card'
+export { PageHeader } from '@/components/ui/page-header'
+export { PerformanceCard } from '@/components/ui/performance-card'
+export type { PerformanceCardProps } from '@/components/ui/performance-card'
+export { ProgressAudit } from '@/components/ui/progress-audit'
+export { ReviewTimeline } from '@/components/ui/review-timeline'
+export { ValidationSummary } from '@/components/ui/validation-summary'
 
 /* === Patterns === */
 export { EmptyState } from '@/components/patterns/empty-state'

@@ -26,6 +26,7 @@ import {
   FileText,
   Settings,
   PackagePlus,
+  SlidersHorizontal,
 } from 'lucide-react'
 
 const navGroups = [
@@ -54,19 +55,20 @@ const navGroups = [
       { id: '/components/table', label: 'Data Table', icon: Table },
       { id: '/components/toast', label: 'Toast', icon: Bell },
       { id: '/components/loading', label: 'Loading', icon: Loader },
+      { id: '/components/essentials', label: 'Essential UI', icon: SlidersHorizontal },
       { id: '/components/navigation-menu', label: 'Navigation Menu', icon: Menu },
       { id: '/components/carousel', label: 'Carousel', icon: GalleryHorizontal },
       { id: '/components/drawer', label: 'Drawer', icon: PanelBottomClose },
-      { id: '/components/bps-form-workflow', label: 'BPS Form Workflow', icon: ClipboardCheck },
-      { id: '/components/bps-data-management', label: 'BPS Data Management', icon: DatabaseZap },
+      { id: '/components/form-workflow', label: 'Form Workflow', icon: ClipboardCheck },
+      { id: '/components/data-management', label: 'Data Management', icon: DatabaseZap },
       {
-        id: '/components/bps-feedback-status',
-        label: 'BPS Feedback & Status',
+        id: '/components/feedback-status',
+        label: 'Feedback & Status',
         icon: MessageSquareWarning,
       },
       {
-        id: '/components/bps-performance-card',
-        label: 'BPS Performance Card',
+        id: '/components/performance-card',
+        label: 'Performance Card',
         icon: Gauge,
       },
     ],

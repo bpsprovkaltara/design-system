@@ -1,6 +1,6 @@
 import React from 'react'
 import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHeader'
-import { BpsDataTable } from '@/components/ui/bps-data-table'
+import { DataTable } from '@/components/ui/data-table'
 import { StatusBadge } from '@/components/ui/status-badge'
 
 export function TablePage() {
@@ -39,7 +39,7 @@ export function TablePage() {
 
       <ShowcaseSection title="BPS Data Table">
         <div className="border rounded-lg bg-card">
-          <BpsDataTable data={sampleData} columns={columns} />
+          <DataTable data={sampleData} columns={columns} />
         </div>
       </ShowcaseSection>
     </div>

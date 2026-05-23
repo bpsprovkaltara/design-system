@@ -44,13 +44,14 @@ Jika stylesheet design system diimpor dari CSS aplikasi, gunakan `@source` untuk
 **Use components**:
 
 ```tsx
-import { Button, StatusBadge, BpsKpiCard } from '@bpsprovkaltara/design-system'
+import { Button, KpiCard, StatusBadge } from '@bpsprovkaltara/design-system'
 
 export function Example() {
   return (
     <div className="space-y-4">
       <StatusBadge variant="approved" />
       <Button>Simpan</Button>
+      <KpiCard title="Responden" value="1.240" helper="+8% bulan ini" />
     </div>
   )
 }
@@ -91,7 +92,7 @@ src/
   pages/
     overview/    — OverviewPage, InstallationPage
     foundations/ — ColorsPage, TypographyPage, SpacingPage
-    components/  — per-component showcase pages
+    components/  — per-component showcase pages, including Essential UI controls
     prototypes/  — full-page prototypes (Dashboard, Auth, List, Detail, Settings)
   test/          — setup.ts
   index.ts       — public library API
