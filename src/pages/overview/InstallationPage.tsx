@@ -26,11 +26,11 @@ export function InstallationPage() {
           <li>
             Impor{' '}
             <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">styles.css</code>{' '}
-            paket; ekspor{' '}
+            paket. Token Tailwind v4 sudah CSS-first; ekspor{' '}
             <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
               tailwind-preset
             </code>{' '}
-            deprecated di v4 (shim dengan peringatan)
+            hanya shim deprecated untuk kompatibilitas v3
           </li>
           <li>Akun GitHub sudah tergabung di organization internal</li>
           <li>Akun memiliki akses ke repository private design system</li>
@@ -84,10 +84,14 @@ pnpm add git+ssh://git@github.com/ORG/REPO.git#v4.0.0`}
 
       <ShowcaseSection title="Tailwind CSS 4 di aplikasi konsumen">
         <p className="text-muted-foreground mb-4">
-          Token dan utilitas komponen design system sudah termasuk dalam{' '}
+          Token dan utilitas komponen design system sudah dikonfigurasi langsung di{' '}
           <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">styles.css</code>.
           Untuk kelas Tailwind pada kode aplikasi Anda, konfigurasikan Tailwind v4 mengikuti
-          dokumentasi resmi (plugin Vite, PostCSS, atau framework lain).
+          dokumentasi resmi (plugin Vite, PostCSS, atau framework lain); tidak perlu
+          <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
+            tailwind.config.ts
+          </code>{' '}
+          dari paket ini.
         </p>
         <p className="text-sm text-muted-foreground mb-4">
           Ekspor{' '}
@@ -106,16 +110,18 @@ import tailwindcss from '@tailwindcss/vite'
         </CodeBlock>
         <CodeBlock language="css">
           {`/* app.css konsumen — contoh */
-@import "tailwindcss";`}
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+@source "../src";
+
+/* Opsional bila stylesheet paket diimpor dari CSS aplikasi */
+@source "../node_modules/@bpsprovkaltara/design-system/dist";`}
         </CodeBlock>
         <p className="text-sm text-muted-foreground mt-4">
-          Pastikan sumber scan Tailwind mencakup{' '}
-          <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">./src/**/*</code> dan
-          bila perlu{' '}
-          <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
-            node_modules/@bpsprovkaltara/design-system/dist
-          </code>
-          .
+          Jika <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">styles.css</code>{' '}
+          diimpor langsung dari entry TypeScript, CSS library sudah prebuilt. Tambahkan{' '}
+          <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">@source</code> paket
+          hanya bila Anda memproses stylesheet paket dari CSS aplikasi.
         </p>
       </ShowcaseSection>
 

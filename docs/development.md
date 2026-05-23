@@ -187,16 +187,10 @@ background: hsl(var(--warm-50-hsl));  /* correct when you need opacity modifier 
 
 ### Skeleton shimmer animation not working
 
-The `Skeleton` component uses `animate-shimmer`, a custom keyframe animation defined in `tailwind.config.ts`. If the animation is not running, the consumer app's Tailwind config is not including the design system preset:
+The `Skeleton` component uses `animate-shimmer`, a custom keyframe animation defined in `colors_and_type.css`. If the animation is not running, verify the consumer app imports the design system stylesheet:
 
 ```ts
-// tailwind.config.ts — consumer app
-import preset from '@bpsprovkaltara/design-system/tailwind-preset'
-
-export default {
-  presets: [preset],  // required — registers animate-shimmer keyframes
-  // ...
-}
+import '@bpsprovkaltara/design-system/styles.css'
 ```
 
 ### Fonts not loading
@@ -207,4 +201,4 @@ Google Fonts are loaded via CDN in `colors_and_type.css`:
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:...')
 ```
 
-In environments where Google Fonts CDN is blocked (e.g. internal networks with restricted outbound traffic), the fonts fall back to the system stack. The `font-sans` fallback is defined in `tailwind-preset.ts`. A self-hosted font setup is not yet configured. See `docs/runbook.md` for the mitigation steps.
+In environments where Google Fonts CDN is blocked (e.g. internal networks with restricted outbound traffic), the fonts fall back to the system stack defined in `colors_and_type.css`. A self-hosted font setup is not yet configured. See `docs/runbook.md` for the mitigation steps.

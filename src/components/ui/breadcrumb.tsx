@@ -39,7 +39,7 @@ function BreadcrumbLink({ asChild: _asChild, className, ref, ...props }: Breadcr
       ref={ref}
       className={cn(
         'hover:text-content-primary transition-colors duration-fast',
-        'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-xs',
+        'focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring rounded-xs',
         className
       )}
       {...props}

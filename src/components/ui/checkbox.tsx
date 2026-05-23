@@ -18,7 +18,7 @@ function Checkbox({ className, indeterminate, ref, ...props }: CheckboxProps) {
         'peer h-4 w-4 shrink-0 rounded-sm border border-border-strong',
         'bg-surface-raised ring-offset-background',
         'transition-colors duration-fast',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+        'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
         'disabled:cursor-not-allowed disabled:opacity-50',
         'data-[state=checked]:bg-primary data-[state=checked]:border-primary data-[state=checked]:text-primary-foreground',
         'data-[state=indeterminate]:bg-primary data-[state=indeterminate]:border-primary data-[state=indeterminate]:text-primary-foreground',

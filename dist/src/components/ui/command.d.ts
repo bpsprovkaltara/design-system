@@ -1,6 +1,6 @@
 import { DialogProps } from '@radix-ui/react-dialog';
 import { Command as CommandPrimitive } from 'cmdk';
-import * as React from "react";
+import * as React from 'react';
 declare function Command({ className, ref, ...props }: React.ComponentPropsWithRef<typeof CommandPrimitive>): import("react/jsx-runtime").JSX.Element;
 declare namespace Command {
     var displayName: string | undefined;

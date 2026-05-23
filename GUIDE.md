@@ -29,8 +29,7 @@ File utama yang dibutuhkan dari repo ini:
 
 | File | Wajib | Kegunaan |
 |---|---|---|
-| `colors_and_type.css` | ✅ | Semua token CSS (warna, tipografi, spacing) |
-| `tailwind.config.ts` | Jika pakai Tailwind | Konfigurasi Tailwind yang sudah di-wire |
+| `colors_and_type.css` | ✅ | Semua token CSS + konfigurasi Tailwind 4 CSS-first |
 | `components.json` | Jika pakai shadcn/ui | Konfigurasi shadcn/ui |
 
 **Font yang digunakan:**
@@ -61,21 +60,24 @@ npx shadcn-ui@latest init
 
 ### Langkah 3 — Inject Design System BPS Kaltara
 
-Setelah inisialisasi selesai, timpa file konfigurasi default dengan file dari Design System ini:
+Setelah inisialisasi selesai, tambahkan stylesheet design system ke aplikasi:
 
-1. **Konfigurasi Tailwind:** Copy `tailwind.config.ts` dan `components.json` dari repo Design System ke root project baru Anda.
-2. **Token CSS:** Copy `colors_and_type.css` ke folder `src/app/` dan import di `globals.css`.
+1. **Token + Tailwind v4:** Copy `colors_and_type.css` ke folder `src/app/` dan import di `globals.css`.
+2. **shadcn/ui:** Copy `components.json` hanya bila Anda ingin menyamakan konfigurasi generator shadcn/ui.
 
 **Contoh Perintah Terminal:**
 ```bash
-cp /path/to/bpskaltara-design-system/tailwind.config.ts ./tailwind.config.ts
 cp /path/to/bpskaltara-design-system/components.json ./components.json
 cp /path/to/bpskaltara-design-system/colors_and_type.css ./src/app/bps-tokens.css
 ```
 
 Lalu di `src/app/globals.css`, tambahkan di bagian paling atas:
 ```css
-@import url('./bps-tokens.css');
+@import "tailwindcss";
+@import './bps-tokens.css';
+@source "../app";
+@source "../components";
+@custom-variant dark (&:where(.dark, .dark *));
 ```
 
 ### Langkah 3 — Setup font di `layout.tsx`
@@ -125,16 +127,7 @@ Karena font sudah di-load via `next/font`, hapus baris berikut dari `globals.css
 
 ### Langkah 5 — Verifikasi Tailwind
 
-Pastikan `tailwind.config.ts` menunjuk ke file CSS yang benar:
-
-```ts
-// tailwind.config.ts
-content: [
-  './src/**/*.{js,ts,jsx,tsx,mdx}',
-  './app/**/*.{js,ts,jsx,tsx,mdx}',
-  './components/**/*.{js,ts,jsx,tsx,mdx}',
-],
-```
+Pastikan CSS aplikasi memuat `@import "tailwindcss";`, import token BPS, dan `@source` untuk folder aplikasi. Di Tailwind 4, konfigurasi token paket ini ada di CSS, bukan di `tailwind.config.ts`.
 
 ### Langkah 6 — Test
 
@@ -230,36 +223,16 @@ cp /path/to/bpskaltara-design-system/colors_and_type.css ./resources/css/bps-tok
 
 ```css
 /* resources/css/app.css */
+@import 'tailwindcss';
 @import './bps-tokens.css';
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@source "../views";
+@source "../js";
+@custom-variant dark (&:where(.dark, .dark *));
 ```
 
-### Langkah 3 — Merge `tailwind.config.js`
+### Langkah 3 — Konfigurasi Vite/Tailwind
 
-Salin blok `theme.extend` dari `tailwind.config.ts` repo ini ke `tailwind.config.js` project Laravel kamu:
-
-```js
-// tailwind.config.js
-export default {
-  darkMode: 'class',
-  content: [
-    './resources/**/*.blade.php',
-    './resources/**/*.js',
-    './resources/**/*.vue',
-  ],
-  theme: {
-    extend: {
-      // Paste seluruh blok extend dari tailwind.config.ts design system
-      colors: { /* ... */ },
-      borderRadius: { /* ... */ },
-      boxShadow: { /* ... */ },
-      fontFamily: { /* ... */ },
-    },
-  },
-}
-```
+Gunakan plugin resmi Tailwind v4 untuk Vite sesuai stack Laravel Anda. Tidak perlu merge `theme.extend`; token BPS sudah ada di `bps-tokens.css`.
 
 ### Langkah 4 — Load font di Blade layout
 
@@ -740,9 +713,9 @@ Gunakan checklist ini setiap kali mengintegrasikan design system ke project baru
 
 ### Setup Awal
 - [ ] Copy `colors_and_type.css` ke project
+- [ ] Import `@import "tailwindcss";` dan `@source` aplikasi di CSS entry
 - [ ] Hapus `@import` Google Fonts dari CSS jika menggunakan `next/font`
 - [ ] Setup font IBM Plex Sans + Mono
-- [ ] Copy `tailwind.config.ts` (jika pakai Tailwind)
 - [ ] Copy `components.json` (jika pakai shadcn/ui)
 
 ### Verifikasi Token

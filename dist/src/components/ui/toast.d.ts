@@ -1,6 +1,6 @@
 import { VariantProps } from 'class-variance-authority';
-import * as React from "react";
-import * as ToastPrimitives from "@radix-ui/react-toast";
+import * as React from 'react';
+import * as ToastPrimitives from '@radix-ui/react-toast';
 declare const ToastProvider: React.FC<ToastPrimitives.ToastProviderProps>;
 declare function ToastViewport({ className, ref, ...props }: React.ComponentPropsWithRef<typeof ToastPrimitives.Viewport>): import("react/jsx-runtime").JSX.Element;
 declare namespace ToastViewport {

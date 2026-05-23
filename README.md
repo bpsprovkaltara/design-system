@@ -31,7 +31,7 @@ pnpm add react@^19 react-dom@^19 tailwindcss@^4
 import '@bpsprovkaltara/design-system/styles.css'
 ```
 
-**Tailwind 4 di aplikasi Anda** — ikuti [dokumentasi Tailwind v4](https://tailwindcss.com/docs/installation) untuk stack Anda (misalnya tambahkan plugin `@tailwindcss/vite` pada `vite.config.ts`). Ekspor `tailwind-preset` dari paket ini **deprecated**; gunakan impor `styles.css` di atas dan konfigurasi Tailwind mandiri untuk source file aplikasi.
+**Tailwind 4 di aplikasi Anda** — ikuti [dokumentasi Tailwind v4](https://tailwindcss.com/docs/installation) untuk stack Anda (misalnya tambahkan plugin `@tailwindcss/vite` pada `vite.config.ts`). Paket ini sudah CSS-first; ekspor `tailwind-preset` **deprecated** dan hanya shim kosong untuk kompatibilitas v3.
 
 Contoh minimal entry CSS aplikasi (Vite):
 
@@ -39,7 +39,7 @@ Contoh minimal entry CSS aplikasi (Vite):
 @import "tailwindcss";
 ```
 
-Pastikan `content` / `@source` mencakup `./src/**/*` dan, bila perlu, path ke `node_modules/@bpsprovkaltara/design-system/dist` agar kelas dari paket ikut discan.
+Jika stylesheet design system diimpor dari CSS aplikasi, gunakan `@source` untuk source aplikasi Anda dan path paket bila perlu.
 
 **Use components**:
 
@@ -96,8 +96,8 @@ src/
   test/          — setup.ts
   index.ts       — public library API
   main.tsx       — showcase app entry
-  tailwind-preset.ts  — exported Tailwind preset
-colors_and_type.css   — all design tokens + Tailwind directives
+  tailwind-preset.ts  — deprecated compatibility shim
+colors_and_type.css   — design tokens + Tailwind 4 CSS-first directives
 design/
   DESIGN.md          — design reference
   design-tokens.json — token export

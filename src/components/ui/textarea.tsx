@@ -14,7 +14,7 @@ function Textarea({ className, ref, ...props }: TextareaProps) {
         'px-3 py-2 text-body-sm text-content-primary',
         'placeholder:text-content-tertiary',
         'transition-colors duration-fast',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:border-border-brand',
+        'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:border-border-brand',
         'disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-surface-sunken',
         'read-only:bg-surface-sunken read-only:text-content-secondary',
         'resize-y',

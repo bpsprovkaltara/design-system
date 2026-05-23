@@ -86,12 +86,13 @@ Operational procedures for diagnosing and resolving common issues with the BPS K
    ```
    Without this import, all tokens are undefined and components render unstyled.
 
-4. Verify the Tailwind preset is registered in the consumer's `tailwind.config.ts`:
-   ```ts
-   import preset from '@bpsprovkaltara/design-system/tailwind-preset'
-   export default { presets: [preset], content: [...] }
+4. Verify the consumer app is using Tailwind 4 tooling and imports the design system stylesheet once:
+   ```css
+   @import "tailwindcss";
+   @source "../src";
+   @source "../node_modules/@bpsprovkaltara/design-system/dist";
    ```
-   Without the preset, the consumer's Tailwind output will not include design system utility classes.
+   The package no longer requires a Tailwind preset; `tailwind-preset` is a deprecated shim.
 
 5. If styles are still stale after the above steps, clear the consumer's Tailwind cache:
    ```bash
@@ -109,7 +110,7 @@ Operational procedures for diagnosing and resolving common issues with the BPS K
 
 **Mitigation:**
 
-The `font-sans` stack in `tailwind-preset.ts` includes a system font fallback (`ui-sans-serif, system-ui, sans-serif`), so the app remains functional and readable.
+The `font-sans` stack in `colors_and_type.css` includes system font fallbacks, so the app remains functional and readable.
 
 **Long-term fix (not yet implemented):**
 

@@ -29,7 +29,7 @@ Di entry aplikasi (mis. `main.tsx`):
 import '@bpsprovkaltara/design-system/styles.css'
 ```
 
-Ini memuat token + utilitas yang dipakai komponen library.
+Ini memuat token + utilitas yang dipakai komponen library. Di v4, token Tailwind paket ini dikonfigurasi langsung di CSS (`@theme`, `@utility`, `@source`, `@plugin`), bukan melalui `tailwind.config.ts`.
 
 ## 3) Tailwind 4 di aplikasi Anda
 
@@ -59,7 +59,7 @@ Pastikan file CSS itu diimpor dari `main.tsx`. Ikuti [instalasi Tailwind v4 + Vi
 
 ### Memindahkan `content` / `@source`
 
-Agar kelas Tailwind di **kode Anda** dan di **prebuilt** library ikut discan:
+Agar kelas Tailwind di **kode Anda** ikut discan:
 
 - Tailwind v4: gunakan `@source` di CSS aplikasi, misalnya:
 
@@ -69,7 +69,7 @@ Agar kelas Tailwind di **kode Anda** dan di **prebuilt** library ikut discan:
 @source "../node_modules/@bpsprovkaltara/design-system/dist";
 ```
 
-Sesuaikan path relatif terhadap file CSS Anda.
+Baris `node_modules` hanya diperlukan bila Anda mengimpor stylesheet paket dari CSS aplikasi dan ingin Tailwind memproses source paket saat build aplikasi. Jika Anda mengimpor `@bpsprovkaltara/design-system/styles.css` langsung dari entry TypeScript, CSS library sudah prebuilt.
 
 ### Sebelum / sesudah (preset lama)
 
@@ -83,11 +83,19 @@ export default { presets: [preset], content: [...] }
 
 **Sesudah (v4):** tidak perlu `presets` dari paket ini; konfigurasi Tailwind mengikuti dokumentasi v4 + impor `styles.css` di atas.
 
-## 4) Komponen React (`ref`)
+## 4) Utility Tailwind yang berubah
 
-Komponen library tidak lagi memakai `React.forwardRef`; `ref` diteruskan sebagai prop biasa (polar React 19). Pemakaian JSX `<Button ref={r} />` tetap sama.
+Jika aplikasi Anda masih memakai pola v3, sesuaikan dengan Tailwind v4:
 
-## 5) TypeScript
+- `outline-none` untuk focus ring lama menjadi `outline-hidden`.
+- Shorthand variable arbitrary seperti `h-[--cell-size]` menjadi `h-(--cell-size)`.
+- Konfigurasi `darkMode: 'class'` diganti dengan CSS: `@custom-variant dark (&:where(.dark, .dark *));`.
+
+## 5) Komponen React (`ref`)
+
+Komponen library tidak lagi memakai `React.forwardRef`; `ref` diteruskan sebagai prop biasa (pola React 19). Pemakaian JSX `<Button ref={r} />` tetap sama.
+
+## 6) TypeScript
 
 Repositori design system memakai TypeScript 6.x; konsumen disarankan memakai TypeScript yang kompatibel dengan React 19.
 

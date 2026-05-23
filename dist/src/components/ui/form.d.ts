@@ -35,4 +35,4 @@ declare function FormMessage({ className, children, ref, ...props }: React.Compo
 declare namespace FormMessage {
     var displayName: string;
 }
-export { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage, useFormField };
+export { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage, useFormField, };

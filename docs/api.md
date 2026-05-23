@@ -179,22 +179,13 @@ toast({
 
 ---
 
-## Tailwind preset
+## Stylesheet
 
 ```ts
-// tailwind.config.ts
-import preset from '@bpsprovkaltara/design-system/tailwind-preset'
-
-export default {
-  presets: [preset],
-  content: [
-    './src/**/*.{ts,tsx}',
-    './node_modules/@bpsprovkaltara/design-system/dist/**/*.js',
-  ],
-}
+import '@bpsprovkaltara/design-system/styles.css'
 ```
 
-The preset registers all design token CSS variables, custom font families (`font-display`, `font-sans`, `font-mono`), custom keyframes (`animate-shimmer` used by `Skeleton`), and the full extended color palette.
+The stylesheet registers design token CSS variables, Tailwind 4 `@theme` values, custom utilities, `tailwindcss-animate`, and keyframes such as `animate-shimmer`. The `tailwind-preset` export is deprecated and only kept as a compatibility shim.
 
 ---
 

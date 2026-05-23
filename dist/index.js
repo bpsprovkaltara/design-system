@@ -2566,7 +2566,7 @@ function cr({ className: e, children: t, ref: n, ...r }) {
 		className: "flex",
 		children: /* @__PURE__ */ m(Dn, {
 			ref: n,
-			className: H("flex flex-1 items-center justify-between py-4 text-body-sm font-semibold text-content-primary", "transition-all duration-fast hover:text-content-brand", "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm", "[&[data-state=open]>svg]:rotate-180", e),
+			className: H("flex flex-1 items-center justify-between py-4 text-body-sm font-semibold text-content-primary", "transition-all duration-fast hover:text-content-brand", "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm", "[&[data-state=open]>svg]:rotate-180", e),
 			...r,
 			children: [t, /* @__PURE__ */ p(Wn, {
 				className: "h-4 w-4 shrink-0 text-content-secondary transition-transform duration-base ease-out",
@@ -3042,7 +3042,7 @@ var ni = ({ children: t, max: n, size: r = "default", className: i }) => {
 ni.displayName = "AvatarGroup";
 //#endregion
 //#region src/components/ui/badge.tsx
-var ri = fr("inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2", {
+var ri = fr("inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2", {
 	variants: { variant: {
 		default: "border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80",
 		secondary: "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -3086,7 +3086,7 @@ si.displayName = "BreadcrumbItem";
 function ci({ asChild: e, className: t, ref: n, ...r }) {
 	return /* @__PURE__ */ p("a", {
 		ref: n,
-		className: H("hover:text-content-primary transition-colors duration-fast", "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-xs", t),
+		className: H("hover:text-content-primary transition-colors duration-fast", "focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring rounded-xs", t),
 		...r
 	});
 }
@@ -3126,7 +3126,7 @@ di.displayName = "BreadcrumbElipssis";
 var fi = fr([
 	"inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium",
 	"transition-all duration-fast ease-out",
-	"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+	"focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
 	"disabled:pointer-events-none disabled:opacity-50",
 	"[&_svg]:pointer-events-none [&_svg]:shrink-0",
 	"select-none"
@@ -6680,10 +6680,10 @@ function Dc({ className: e, classNames: t, showOutsideDays: n = !0, captionLayou
 			months: H("relative flex flex-col gap-4 md:flex-row", c.months),
 			month: H("flex w-full flex-col gap-4", c.month),
 			nav: H("absolute inset-x-0 top-0 flex w-full items-center justify-between gap-1", c.nav),
-			button_previous: H(fi({ variant: i }), "h-[--cell-size] w-[--cell-size] select-none p-0 aria-disabled:opacity-50", c.button_previous),
-			button_next: H(fi({ variant: i }), "h-[--cell-size] w-[--cell-size] select-none p-0 aria-disabled:opacity-50", c.button_next),
-			month_caption: H("flex h-[--cell-size] w-full items-center justify-center px-[--cell-size]", c.month_caption),
-			dropdowns: H("flex h-[--cell-size] w-full items-center justify-center gap-1.5 text-sm font-medium", c.dropdowns),
+			button_previous: H(fi({ variant: i }), "h-(--cell-size) w-(--cell-size) select-none p-0 aria-disabled:opacity-50", c.button_previous),
+			button_next: H(fi({ variant: i }), "h-(--cell-size) w-(--cell-size) select-none p-0 aria-disabled:opacity-50", c.button_next),
+			month_caption: H("flex h-(--cell-size) w-full items-center justify-center px-(--cell-size)", c.month_caption),
+			dropdowns: H("flex h-(--cell-size) w-full items-center justify-center gap-1.5 text-sm font-medium", c.dropdowns),
 			dropdown_root: H("has-focus:border-ring border-input shadow-xs has-focus:ring-ring/50 has-focus:ring-[3px] relative rounded-md border", c.dropdown_root),
 			dropdown: H("bg-popover absolute inset-0 opacity-0", c.dropdown),
 			caption_label: H("select-none font-medium", r === "label" ? "text-sm" : "[&>svg]:text-muted-foreground flex h-8 items-center gap-1 rounded-md pl-2 pr-1 text-sm [&>svg]:size-3.5", c.caption_label),
@@ -6691,7 +6691,7 @@ function Dc({ className: e, classNames: t, showOutsideDays: n = !0, captionLayou
 			weekdays: H("flex", c.weekdays),
 			weekday: H("text-muted-foreground flex-1 select-none rounded-md text-[0.8rem] font-normal", c.weekday),
 			week: H("mt-2 flex w-full", c.week),
-			week_number_header: H("w-[--cell-size] select-none", c.week_number_header),
+			week_number_header: H("w-(--cell-size) select-none", c.week_number_header),
 			week_number: H("text-muted-foreground select-none text-[0.8rem]", c.week_number),
 			day: H("group/day relative aspect-square h-full w-full select-none p-0 text-center [&:first-child[data-selected=true]_button]:rounded-l-md [&:last-child[data-selected=true]_button]:rounded-r-md", c.day),
 			range_start: H("bg-accent rounded-l-md", c.range_start),
@@ -6718,7 +6718,7 @@ function Dc({ className: e, classNames: t, showOutsideDays: n = !0, captionLayou
 			WeekNumber: ({ children: e, ...t }) => /* @__PURE__ */ p("td", {
 				...t,
 				children: /* @__PURE__ */ p("div", {
-					className: "flex size-[--cell-size] items-center justify-center text-center",
+					className: "flex size-(--cell-size) items-center justify-center text-center",
 					children: e
 				})
 			}),
@@ -6740,7 +6740,7 @@ function Oc({ className: t, day: n, modifiers: r, ...i }) {
 		"data-range-start": r.range_start,
 		"data-range-end": r.range_end,
 		"data-range-middle": r.range_middle,
-		className: H("data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground data-[range-middle=true]:bg-accent data-[range-middle=true]:text-accent-foreground data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 flex aspect-square h-auto w-full min-w-[--cell-size] flex-col gap-1 font-normal leading-none data-[range-end=true]:rounded-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] [&>span]:text-xs [&>span]:opacity-70", a.day, t),
+		className: H("data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground data-[range-middle=true]:bg-accent data-[range-middle=true]:text-accent-foreground data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 flex aspect-square h-auto w-full min-w-(--cell-size) flex-col gap-1 font-normal leading-none data-[range-end=true]:rounded-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] [&>span]:text-xs [&>span]:opacity-70", a.day, t),
 		...i
 	});
 }
@@ -6980,7 +6980,7 @@ function Qc(e) {
 function $c({ className: e, indeterminate: t, ref: n, ...r }) {
 	return /* @__PURE__ */ p(Gc, {
 		ref: n,
-		className: H("peer h-4 w-4 shrink-0 rounded-sm border border-border-strong", "bg-surface-raised ring-offset-background", "transition-colors duration-fast", "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2", "disabled:cursor-not-allowed disabled:opacity-50", "data-[state=checked]:bg-primary data-[state=checked]:border-primary data-[state=checked]:text-primary-foreground", "data-[state=indeterminate]:bg-primary data-[state=indeterminate]:border-primary data-[state=indeterminate]:text-primary-foreground", e),
+		className: H("peer h-4 w-4 shrink-0 rounded-sm border border-border-strong", "bg-surface-raised ring-offset-background", "transition-colors duration-fast", "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2", "disabled:cursor-not-allowed disabled:opacity-50", "data-[state=checked]:bg-primary data-[state=checked]:border-primary data-[state=checked]:text-primary-foreground", "data-[state=indeterminate]:bg-primary data-[state=indeterminate]:border-primary data-[state=indeterminate]:text-primary-foreground", e),
 		checked: t ? "indeterminate" : r.checked,
 		...r,
 		children: /* @__PURE__ */ p(qc, {
@@ -8474,7 +8474,7 @@ function Wf({ className: e, children: t, ref: n, ...r }) {
 		className: H("fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg", e),
 		...r,
 		children: [t, /* @__PURE__ */ m(rf, {
-			className: "absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground",
+			className: "absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground",
 			children: [/* @__PURE__ */ p(ar, { className: "h-4 w-4" }), /* @__PURE__ */ p("span", {
 				className: "sr-only",
 				children: "Close"
@@ -8535,7 +8535,7 @@ function Zf({ className: e, ref: t, ...n }) {
 		"cmdk-input-wrapper": "",
 		children: [/* @__PURE__ */ p(nr, { className: "mr-2 h-4 w-4 shrink-0 opacity-50" }), /* @__PURE__ */ p(Df.Input, {
 			ref: t,
-			className: H("flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50", e),
+			className: H("flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden focus:outline-hidden focus:ring-0 focus-visible:outline-hidden focus-visible:ring-0 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50", e),
 			...n
 		})]
 	});
@@ -8576,7 +8576,7 @@ tp.displayName = Df.Separator.displayName;
 function np({ className: e, ref: t, ...n }) {
 	return /* @__PURE__ */ p(Df.Item, {
 		ref: t,
-		className: H("relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0", e),
+		className: H("relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-hidden data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0", e),
 		...n
 	});
 }
@@ -10747,7 +10747,7 @@ var Ev = X_, Dv = Q_, Ov = ev, kv = nv, Av = iv, jv = ov, Mv = cv, Nv = uv, Pv =
 function qv({ className: e, inset: t, children: n, ref: r, ...i }) {
 	return /* @__PURE__ */ m(zv, {
 		ref: r,
-		className: H("flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent data-[state=open]:bg-accent [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0", t && "pl-8", e),
+		className: H("flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden focus:bg-accent data-[state=open]:bg-accent [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0", t && "pl-8", e),
 		...i,
 		children: [n, /* @__PURE__ */ p(Kn, { className: "ml-auto" })]
 	});
@@ -10756,7 +10756,7 @@ qv.displayName = zv.displayName;
 function Jv({ className: e, ref: t, ...n }) {
 	return /* @__PURE__ */ p(Bv, {
 		ref: t,
-		className: H("z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-dropdown-menu-content-transform-origin]", e),
+		className: H("z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-(--radix-dropdown-menu-content-transform-origin)", e),
 		...n
 	});
 }
@@ -10765,7 +10765,7 @@ function Yv({ className: e, sideOffset: t = 4, ref: n, ...r }) {
 	return /* @__PURE__ */ p(Ov, { children: /* @__PURE__ */ p(kv, {
 		ref: n,
 		sideOffset: t,
-		className: H("z-50 max-h-[var(--radix-dropdown-menu-content-available-height)] min-w-[8rem] overflow-y-auto overflow-x-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md", "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-dropdown-menu-content-transform-origin]", e),
+		className: H("z-50 max-h-[var(--radix-dropdown-menu-content-available-height)] min-w-[8rem] overflow-y-auto overflow-x-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md", "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-(--radix-dropdown-menu-content-transform-origin)", e),
 		...r
 	}) });
 }
@@ -10773,7 +10773,7 @@ Yv.displayName = kv.displayName;
 function Xv({ className: e, inset: t, ref: n, ...r }) {
 	return /* @__PURE__ */ p(Mv, {
 		ref: n,
-		className: H("relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&>svg]:size-4 [&>svg]:shrink-0", t && "pl-8", e),
+		className: H("relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&>svg]:size-4 [&>svg]:shrink-0", t && "pl-8", e),
 		...r
 	});
 }
@@ -10781,7 +10781,7 @@ Xv.displayName = Mv.displayName;
 function Zv({ className: e, children: t, checked: n, ref: r, ...i }) {
 	return /* @__PURE__ */ m(Nv, {
 		ref: r,
-		className: H("relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", e),
+		className: H("relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-hidden transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", e),
 		checked: n,
 		...i,
 		children: [/* @__PURE__ */ p("span", {
@@ -10794,7 +10794,7 @@ Zv.displayName = Nv.displayName;
 function Qv({ className: e, children: t, ref: n, ...r }) {
 	return /* @__PURE__ */ m(Fv, {
 		ref: n,
-		className: H("relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", e),
+		className: H("relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-hidden transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", e),
 		...r,
 		children: [/* @__PURE__ */ p("span", {
 			className: "absolute left-2 flex h-3.5 w-3.5 items-center justify-center",
@@ -11241,7 +11241,7 @@ Zy.displayName = "FormMessage";
 function Qy({ className: e, type: t, ref: n, ...r }) {
 	return /* @__PURE__ */ p("input", {
 		type: t,
-		className: H("flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm", e),
+		className: H("flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm", e),
 		ref: n,
 		...r
 	});
@@ -11492,7 +11492,7 @@ function Rb(e) {
 		ref: i,
 		align: n,
 		sideOffset: r,
-		className: H("z-popover w-72 rounded-md border border-border-default bg-popover p-4 text-popover-foreground shadow-elevation-4 outline-none", "data-[state=open]:animate-in data-[state=closed]:animate-out", "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0", "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95", "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2", "data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2", t),
+		className: H("z-popover w-72 rounded-md border border-border-default bg-popover p-4 text-popover-foreground shadow-elevation-4 outline-hidden", "data-[state=open]:animate-in data-[state=closed]:animate-out", "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0", "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95", "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2", "data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2", t),
 		...a
 	}) });
 }
@@ -11768,7 +11768,7 @@ function Px(e) {
 	let { className: t, ref: n, ...r } = e;
 	return /* @__PURE__ */ p(jx, {
 		ref: n,
-		className: H("aspect-square h-4 w-4 rounded-full border border-border-strong", "bg-surface-raised ring-offset-background", "transition-colors duration-fast", "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2", "disabled:cursor-not-allowed disabled:opacity-50", "data-[state=checked]:border-primary data-[state=checked]:text-primary", t),
+		className: H("aspect-square h-4 w-4 rounded-full border border-border-strong", "bg-surface-raised ring-offset-background", "transition-colors duration-fast", "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2", "disabled:cursor-not-allowed disabled:opacity-50", "data-[state=checked]:border-primary data-[state=checked]:text-primary", t),
 		...r,
 		children: /* @__PURE__ */ p(Mx, {
 			className: "flex items-center justify-center",
@@ -12983,7 +12983,7 @@ var BC = BS, VC = HS, HC = WS, UC = KS, WC = JS, GC = XS, KC = uC, qC = mC, JC =
 function iw({ className: e, children: t, ref: n, ...r }) {
 	return /* @__PURE__ */ m(VC, {
 		ref: n,
-		className: H("flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1", e),
+		className: H("flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background data-[placeholder]:text-muted-foreground focus:outline-hidden focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1", e),
 		...r,
 		children: [t, /* @__PURE__ */ p(UC, {
 			asChild: !0,
@@ -13013,7 +13013,7 @@ ow.displayName = $C.displayName;
 function sw({ className: e, children: t, position: n = "popper", ref: r, ...i }) {
 	return /* @__PURE__ */ p(WC, { children: /* @__PURE__ */ m(GC, {
 		ref: r,
-		className: H("relative z-50 max-h-[--radix-select-content-available-height] min-w-[8rem] overflow-y-auto overflow-x-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-select-content-transform-origin]", n === "popper" && "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1", e),
+		className: H("relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] overflow-y-auto overflow-x-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-(--radix-select-content-transform-origin)", n === "popper" && "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1", e),
 		position: n,
 		...i,
 		children: [
@@ -13038,7 +13038,7 @@ cw.displayName = JC.displayName;
 function lw({ className: e, children: t, ref: n, ...r }) {
 	return /* @__PURE__ */ m(YC, {
 		ref: n,
-		className: H("relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", e),
+		className: H("relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm outline-hidden focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50", e),
 		...r,
 		children: [/* @__PURE__ */ p("span", {
 			className: "absolute right-2 flex h-3.5 w-3.5 items-center justify-center",
@@ -13113,7 +13113,7 @@ function ww({ side: e = "right", className: t, children: n, ref: r, ...i }) {
 		className: H(Cw({ side: e }), t),
 		...i,
 		children: [/* @__PURE__ */ m(rf, {
-			className: "absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary",
+			className: "absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary",
 			children: [/* @__PURE__ */ p(ar, { className: "h-4 w-4" }), /* @__PURE__ */ p("span", {
 				className: "sr-only",
 				children: "Close"
@@ -13517,7 +13517,7 @@ function gT(e) {
 		children: [/* @__PURE__ */ p(pT, {
 			className: "relative h-1.5 w-full grow overflow-hidden rounded-full bg-border-default",
 			children: /* @__PURE__ */ p(mT, { className: "absolute h-full bg-primary" })
-		}), (r.value ?? r.defaultValue ?? [0]).map((e, t) => /* @__PURE__ */ p(hT, { className: H("block h-4 w-4 rounded-full border border-primary/50 bg-surface-raised shadow-elevation-2", "ring-offset-background transition-all duration-fast", "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2", "disabled:pointer-events-none disabled:opacity-50", "hover:shadow-elevation-3 hover:scale-110") }, t))]
+		}), (r.value ?? r.defaultValue ?? [0]).map((e, t) => /* @__PURE__ */ p(hT, { className: H("block h-4 w-4 rounded-full border border-primary/50 bg-surface-raised shadow-elevation-2", "ring-offset-background transition-all duration-fast", "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2", "disabled:pointer-events-none disabled:opacity-50", "hover:shadow-elevation-3 hover:scale-110") }, t))]
 	});
 }
 gT.displayName = fT.displayName;
@@ -13542,7 +13542,7 @@ function vT({ size: e, className: t, label: n = "Loading..." }) {
 }
 //#endregion
 //#region src/components/ui/status-badge.tsx
-var yT = fr("inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2", {
+var yT = fr("inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2", {
 	variants: { variant: {
 		default: "border-transparent bg-primary text-primary-foreground",
 		secondary: "border-transparent bg-secondary text-secondary-foreground",
@@ -13654,7 +13654,7 @@ function PT(e) {
 	let { className: t, ref: n, ...r } = e;
 	return /* @__PURE__ */ p(MT, {
 		ref: n,
-		className: H("peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent", "bg-border-strong transition-colors duration-base ease-out", "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background", "disabled:cursor-not-allowed disabled:opacity-50", "data-[state=checked]:bg-primary", t),
+		className: H("peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent", "bg-border-strong transition-colors duration-base ease-out", "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background", "disabled:cursor-not-allowed disabled:opacity-50", "data-[state=checked]:bg-primary", t),
 		...r,
 		children: /* @__PURE__ */ p(NT, { className: H("pointer-events-none block h-4 w-4 rounded-full bg-white shadow-elevation-1", "ring-0 transition-transform duration-base ease-spring", "data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0") })
 	});
@@ -13848,7 +13848,7 @@ lE.displayName = aE.displayName;
 function uE({ className: e, ref: t, ...n }) {
 	return /* @__PURE__ */ p(oE, {
 		ref: t,
-		className: H("inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow", e),
+		className: H("inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow", e),
 		...n
 	});
 }
@@ -13856,7 +13856,7 @@ uE.displayName = oE.displayName;
 function dE({ className: e, ref: t, ...n }) {
 	return /* @__PURE__ */ p(sE, {
 		ref: t,
-		className: H("mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2", e),
+		className: H("mt-2 ring-offset-background focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2", e),
 		...n
 	});
 }
@@ -13865,7 +13865,7 @@ dE.displayName = sE.displayName;
 //#region src/components/ui/textarea.tsx
 function fE({ className: e, ref: t, ...n }) {
 	return /* @__PURE__ */ p("textarea", {
-		className: H("flex min-h-[80px] w-full rounded-md border border-border-default bg-[hsl(var(--input-bg))]", "px-3 py-2 text-body-sm text-content-primary", "placeholder:text-content-tertiary", "transition-colors duration-fast", "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:border-border-brand", "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-surface-sunken", "read-only:bg-surface-sunken read-only:text-content-secondary", "resize-y", e),
+		className: H("flex min-h-[80px] w-full rounded-md border border-border-default bg-[hsl(var(--input-bg))]", "px-3 py-2 text-body-sm text-content-primary", "placeholder:text-content-tertiary", "transition-colors duration-fast", "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:border-border-brand", "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-surface-sunken", "read-only:bg-surface-sunken read-only:text-content-secondary", "resize-y", e),
 		ref: t,
 		...n
 	});
@@ -14262,7 +14262,7 @@ dD.displayName = rD.displayName;
 function fD({ className: e, ref: t, ...n }) {
 	return /* @__PURE__ */ p(oD, {
 		ref: t,
-		className: H("inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 text-sm font-medium transition-colors hover:bg-secondary focus:outline-none focus:ring-1 focus:ring-ring disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:border-muted/40 group-[.destructive]:hover:border-destructive/30 group-[.destructive]:hover:bg-destructive group-[.destructive]:hover:text-destructive-foreground group-[.destructive]:focus:ring-destructive", e),
+		className: H("inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 text-sm font-medium transition-colors hover:bg-secondary focus:outline-hidden focus:ring-1 focus:ring-ring disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:border-muted/40 group-[.destructive]:hover:border-destructive/30 group-[.destructive]:hover:bg-destructive group-[.destructive]:hover:text-destructive-foreground group-[.destructive]:focus:ring-destructive", e),
 		...n
 	});
 }
@@ -14270,7 +14270,7 @@ fD.displayName = oD.displayName;
 function pD({ className: e, ref: t, ...n }) {
 	return /* @__PURE__ */ p(sD, {
 		ref: t,
-		className: H("absolute right-1 top-1 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-none focus:ring-1 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600", e),
+		className: H("absolute right-1 top-1 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 focus:outline-hidden focus:ring-1 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600", e),
 		"toast-close": "",
 		...n,
 		children: /* @__PURE__ */ p(ar, { className: "h-4 w-4" })
