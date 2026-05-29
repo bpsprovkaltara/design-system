@@ -1,34 +1,16 @@
 import { VariantProps } from 'class-variance-authority';
+import { Toast as ToastPrimitives } from 'radix-ui';
 import * as React from 'react';
-import * as ToastPrimitives from '@radix-ui/react-toast';
-declare const ToastProvider: React.FC<ToastPrimitives.ToastProviderProps>;
-declare function ToastViewport({ className, ref, ...props }: React.ComponentPropsWithRef<typeof ToastPrimitives.Viewport>): import("react/jsx-runtime").JSX.Element;
-declare namespace ToastViewport {
-    var displayName: string | undefined;
-}
+declare function ToastProvider({ ...props }: React.ComponentProps<typeof ToastPrimitives.Provider>): import("react/jsx-runtime").JSX.Element;
+declare function ToastViewport({ className, ...props }: React.ComponentProps<typeof ToastPrimitives.Viewport>): import("react/jsx-runtime").JSX.Element;
 declare const toastVariants: (props?: ({
     variant?: "default" | "destructive" | null | undefined;
 } & import('class-variance-authority/types').ClassProp) | undefined) => string;
-declare function Toast({ className, variant, ref, ...props }: React.ComponentPropsWithRef<typeof ToastPrimitives.Root> & VariantProps<typeof toastVariants>): import("react/jsx-runtime").JSX.Element;
-declare namespace Toast {
-    var displayName: string | undefined;
-}
-declare function ToastAction({ className, ref, ...props }: React.ComponentPropsWithRef<typeof ToastPrimitives.Action>): import("react/jsx-runtime").JSX.Element;
-declare namespace ToastAction {
-    var displayName: string | undefined;
-}
-declare function ToastClose({ className, ref, ...props }: React.ComponentPropsWithRef<typeof ToastPrimitives.Close>): import("react/jsx-runtime").JSX.Element;
-declare namespace ToastClose {
-    var displayName: string | undefined;
-}
-declare function ToastTitle({ className, ref, ...props }: React.ComponentPropsWithRef<typeof ToastPrimitives.Title>): import("react/jsx-runtime").JSX.Element;
-declare namespace ToastTitle {
-    var displayName: string | undefined;
-}
-declare function ToastDescription({ className, ref, ...props }: React.ComponentPropsWithRef<typeof ToastPrimitives.Description>): import("react/jsx-runtime").JSX.Element;
-declare namespace ToastDescription {
-    var displayName: string | undefined;
-}
-type ToastProps = React.ComponentPropsWithRef<typeof Toast>;
+declare function Toast({ className, variant, ...props }: React.ComponentProps<typeof ToastPrimitives.Root> & VariantProps<typeof toastVariants>): import("react/jsx-runtime").JSX.Element;
+declare function ToastAction({ className, ...props }: React.ComponentProps<typeof ToastPrimitives.Action>): import("react/jsx-runtime").JSX.Element;
+declare function ToastClose({ className, ...props }: React.ComponentProps<typeof ToastPrimitives.Close>): import("react/jsx-runtime").JSX.Element;
+declare function ToastTitle({ className, ...props }: React.ComponentProps<typeof ToastPrimitives.Title>): import("react/jsx-runtime").JSX.Element;
+declare function ToastDescription({ className, ...props }: React.ComponentProps<typeof ToastPrimitives.Description>): import("react/jsx-runtime").JSX.Element;
+type ToastProps = React.ComponentProps<typeof Toast>;
 type ToastActionElement = React.ReactElement<typeof ToastAction>;
 export { type ToastProps, type ToastActionElement, ToastProvider, ToastViewport, Toast, ToastTitle, ToastDescription, ToastClose, ToastAction, };

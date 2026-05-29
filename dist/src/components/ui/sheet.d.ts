@@ -1,37 +1,16 @@
-import { VariantProps } from 'class-variance-authority';
+import { Dialog as SheetPrimitive } from 'radix-ui';
 import * as React from 'react';
-import * as SheetPrimitive from '@radix-ui/react-dialog';
-declare const Sheet: React.FC<SheetPrimitive.DialogProps>;
-declare const SheetTrigger: React.ForwardRefExoticComponent<SheetPrimitive.DialogTriggerProps & React.RefAttributes<HTMLButtonElement>>;
-declare const SheetClose: React.ForwardRefExoticComponent<SheetPrimitive.DialogCloseProps & React.RefAttributes<HTMLButtonElement>>;
-declare const SheetPortal: React.FC<SheetPrimitive.DialogPortalProps>;
-declare function SheetOverlay({ className, ref, ...props }: React.ComponentPropsWithRef<typeof SheetPrimitive.Overlay>): import("react/jsx-runtime").JSX.Element;
-declare namespace SheetOverlay {
-    var displayName: string | undefined;
-}
-declare const sheetVariants: (props?: ({
-    side?: "left" | "right" | "top" | "bottom" | null | undefined;
-} & import('class-variance-authority/types').ClassProp) | undefined) => string;
-interface SheetContentProps extends React.ComponentPropsWithRef<typeof SheetPrimitive.Content>, VariantProps<typeof sheetVariants> {
-}
-declare function SheetContent({ side, className, children, ref, ...props }: SheetContentProps): import("react/jsx-runtime").JSX.Element;
-declare namespace SheetContent {
-    var displayName: string | undefined;
-}
-declare const SheetHeader: {
-    ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>): import("react/jsx-runtime").JSX.Element;
-    displayName: string;
-};
-declare const SheetFooter: {
-    ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>): import("react/jsx-runtime").JSX.Element;
-    displayName: string;
-};
-declare function SheetTitle({ className, ref, ...props }: React.ComponentPropsWithRef<typeof SheetPrimitive.Title>): import("react/jsx-runtime").JSX.Element;
-declare namespace SheetTitle {
-    var displayName: string | undefined;
-}
-declare function SheetDescription({ className, ref, ...props }: React.ComponentPropsWithRef<typeof SheetPrimitive.Description>): import("react/jsx-runtime").JSX.Element;
-declare namespace SheetDescription {
-    var displayName: string | undefined;
-}
-export { Sheet, SheetPortal, SheetOverlay, SheetTrigger, SheetClose, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetDescription, };
+declare function Sheet({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>): import("react/jsx-runtime").JSX.Element;
+declare function SheetTrigger({ ...props }: React.ComponentProps<typeof SheetPrimitive.Trigger>): import("react/jsx-runtime").JSX.Element;
+declare function SheetClose({ ...props }: React.ComponentProps<typeof SheetPrimitive.Close>): import("react/jsx-runtime").JSX.Element;
+declare function SheetPortal({ ...props }: React.ComponentProps<typeof SheetPrimitive.Portal>): import("react/jsx-runtime").JSX.Element;
+declare function SheetOverlay({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Overlay>): import("react/jsx-runtime").JSX.Element;
+declare function SheetContent({ className, children, side, showCloseButton, ...props }: React.ComponentProps<typeof SheetPrimitive.Content> & {
+    side?: 'top' | 'right' | 'bottom' | 'left';
+    showCloseButton?: boolean;
+}): import("react/jsx-runtime").JSX.Element;
+declare function SheetHeader({ className, ...props }: React.ComponentProps<'div'>): import("react/jsx-runtime").JSX.Element;
+declare function SheetFooter({ className, ...props }: React.ComponentProps<'div'>): import("react/jsx-runtime").JSX.Element;
+declare function SheetTitle({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Title>): import("react/jsx-runtime").JSX.Element;
+declare function SheetDescription({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Description>): import("react/jsx-runtime").JSX.Element;
+export { Sheet, SheetTrigger, SheetClose, SheetPortal, SheetOverlay, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetDescription, };

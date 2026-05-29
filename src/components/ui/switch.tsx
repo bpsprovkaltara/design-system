@@ -1,15 +1,14 @@
 'use client'
 
 import * as React from 'react'
-import * as SwitchPrimitive from '@radix-ui/react-switch'
+import { Switch as SwitchPrimitive } from 'radix-ui'
 
 import { cn } from '@/lib/utils'
 
-function Switch(props: React.ComponentProps<typeof SwitchPrimitive.Root>) {
-  const { className, ref, ...rest } = props
+function Switch({ className, ...props }: React.ComponentProps<typeof SwitchPrimitive.Root>) {
   return (
     <SwitchPrimitive.Root
-      ref={ref}
+      data-slot="switch"
       className={cn(
         'peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent',
         'bg-border-strong transition-colors duration-base ease-out',
@@ -18,11 +17,12 @@ function Switch(props: React.ComponentProps<typeof SwitchPrimitive.Root>) {
         'data-[state=checked]:bg-primary',
         className
       )}
-      {...rest}
+      {...props}
     >
       <SwitchPrimitive.Thumb
+        data-slot="switch-thumb"
         className={cn(
-          'pointer-events-none block h-4 w-4 rounded-full bg-white shadow-elevation-1',
+          'pointer-events-none block h-4 w-4 rounded-full bg-background shadow-elevation-1',
           'ring-0 transition-transform duration-base ease-spring',
           'data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0'
         )}
@@ -30,7 +30,5 @@ function Switch(props: React.ComponentProps<typeof SwitchPrimitive.Root>) {
     </SwitchPrimitive.Root>
   )
 }
-
-Switch.displayName = SwitchPrimitive.Root.displayName
 
 export { Switch }

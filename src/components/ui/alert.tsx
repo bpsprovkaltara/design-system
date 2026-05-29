@@ -34,7 +34,7 @@ const alertIcons = {
   danger: AlertCircle,
 }
 
-type AlertProps = React.ComponentPropsWithRef<'div'> &
+type AlertProps = React.ComponentProps<'div'> &
   VariantProps<typeof alertVariants> & {
     showIcon?: boolean
   }
@@ -44,38 +44,41 @@ function Alert({
   variant = 'default',
   showIcon = true,
   children,
-  ref,
   ...props
 }: AlertProps) {
   const Icon = alertIcons[variant ?? 'default']
   return (
-    <div ref={ref} role="alert" className={cn(alertVariants({ variant }), className)} {...props}>
+    <div
+      data-slot="alert"
+      data-variant={variant}
+      role="alert"
+      className={cn(alertVariants({ variant }), className)}
+      {...props}
+    >
       {showIcon && <Icon className="h-4 w-4" aria-hidden="true" />}
       {children}
     </div>
   )
 }
 
-Alert.displayName = 'Alert'
-
-function AlertTitle({ className, ref, ...props }: React.ComponentPropsWithRef<'h5'>) {
+function AlertTitle({ className, ...props }: React.ComponentProps<'h5'>) {
   return (
     <h5
-      ref={ref}
+      data-slot="alert-title"
       className={cn('mb-1 font-semibold text-body-sm leading-none tracking-tight', className)}
       {...props}
     />
   )
 }
 
-AlertTitle.displayName = 'AlertTitle'
-
-function AlertDescription({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
+function AlertDescription({ className, ...props }: React.ComponentProps<'div'>) {
   return (
-    <div ref={ref} className={cn('text-body-sm text-content-secondary', className)} {...props} />
+    <div
+      data-slot="alert-description"
+      className={cn('text-body-sm text-content-secondary', className)}
+      {...props}
+    />
   )
 }
-
-AlertDescription.displayName = 'AlertDescription'
 
 export { Alert, AlertTitle, AlertDescription }

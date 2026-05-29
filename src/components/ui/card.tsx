@@ -2,52 +2,71 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
-function Card({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
+function Card({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
-      ref={ref}
-      className={cn('rounded-xl border bg-card text-card-foreground shadow', className)}
+      data-slot="card"
+      className={cn(
+        'rounded-xl border border-border-default bg-card text-card-foreground shadow-sm',
+        className
+      )}
       {...props}
     />
   )
 }
 
-Card.displayName = 'Card'
-
-function CardHeader({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
-  return <div ref={ref} className={cn('flex flex-col space-y-1.5 p-6', className)} {...props} />
-}
-
-CardHeader.displayName = 'CardHeader'
-
-function CardTitle({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
+function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
-      ref={ref}
+      data-slot="card-header"
+      className={cn('flex flex-col space-y-1.5 p-6', className)}
+      {...props}
+    />
+  )
+}
+
+function CardTitle({ className, ...props }: React.ComponentProps<'div'>) {
+  return (
+    <div
+      data-slot="card-title"
       className={cn('font-semibold leading-none tracking-tight', className)}
       {...props}
     />
   )
 }
 
-CardTitle.displayName = 'CardTitle'
-
-function CardDescription({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
-  return <div ref={ref} className={cn('text-sm text-muted-foreground', className)} {...props} />
+function CardDescription({ className, ...props }: React.ComponentProps<'div'>) {
+  return (
+    <div
+      data-slot="card-description"
+      className={cn('text-body-sm text-content-secondary', className)}
+      {...props}
+    />
+  )
 }
 
-CardDescription.displayName = 'CardDescription'
-
-function CardContent({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
-  return <div ref={ref} className={cn('p-6 pt-0', className)} {...props} />
+function CardAction({ className, ...props }: React.ComponentProps<'div'>) {
+  return (
+    <div
+      data-slot="card-action"
+      className={cn('flex items-center justify-end', className)}
+      {...props}
+    />
+  )
 }
 
-CardContent.displayName = 'CardContent'
-
-function CardFooter({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
-  return <div ref={ref} className={cn('flex items-center p-6 pt-0', className)} {...props} />
+function CardContent({ className, ...props }: React.ComponentProps<'div'>) {
+  return <div data-slot="card-content" className={cn('p-6 pt-0', className)} {...props} />
 }
 
-CardFooter.displayName = 'CardFooter'
+function CardFooter({ className, ...props }: React.ComponentProps<'div'>) {
+  return (
+    <div
+      data-slot="card-footer"
+      className={cn('flex items-center p-6 pt-0', className)}
+      {...props}
+    />
+  )
+}
 
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
+export { Card, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent }

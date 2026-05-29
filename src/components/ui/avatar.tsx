@@ -1,12 +1,12 @@
 'use client'
 
 import * as React from 'react'
-import * as AvatarPrimitive from '@radix-ui/react-avatar'
 import { cva, type VariantProps } from 'class-variance-authority'
+import { Avatar as AvatarPrimitive } from 'radix-ui'
 
 import { cn } from '@/lib/utils'
 
-const avatarVariants = cva('relative flex shrink-0 overflow-hidden rounded-full', {
+const avatarVariants = cva('relative flex shrink-0 overflow-hidden rounded-full select-none', {
   variants: {
     size: {
       xs: 'h-6 w-6 text-[10px]',
@@ -20,52 +20,44 @@ const avatarVariants = cva('relative flex shrink-0 overflow-hidden rounded-full'
 })
 
 type AvatarProps = React.ComponentProps<typeof AvatarPrimitive.Root> &
-  VariantProps<typeof avatarVariants> & {
-    children?: React.ReactNode
-    className?: string
-  }
+  VariantProps<typeof avatarVariants>
 
-function Avatar({ className, size, ref, ...props }: AvatarProps) {
+function Avatar({ className, size, ...props }: AvatarProps) {
   return (
     <AvatarPrimitive.Root
-      ref={ref}
+      data-slot="avatar"
       className={cn(avatarVariants({ size }), className)}
       {...props}
     />
   )
 }
 
-Avatar.displayName = AvatarPrimitive.Root.displayName
-
-function AvatarImage(props: React.ComponentProps<typeof AvatarPrimitive.Image>) {
-  const { className, ref, ...rest } = props
+function AvatarImage({ className, ...props }: React.ComponentProps<typeof AvatarPrimitive.Image>) {
   return (
     <AvatarPrimitive.Image
-      ref={ref}
+      data-slot="avatar-image"
       className={cn('aspect-square h-full w-full object-cover', className)}
-      {...rest}
+      {...props}
     />
   )
 }
 
-AvatarImage.displayName = AvatarPrimitive.Image.displayName
-
-function AvatarFallback(props: React.ComponentProps<typeof AvatarPrimitive.Fallback>) {
-  const { className, ref, ...rest } = props
+function AvatarFallback({
+  className,
+  ...props
+}: React.ComponentProps<typeof AvatarPrimitive.Fallback>) {
   return (
     <AvatarPrimitive.Fallback
-      ref={ref}
+      data-slot="avatar-fallback"
       className={cn(
         'flex h-full w-full items-center justify-center rounded-full',
         'bg-primary text-primary-foreground font-semibold uppercase tracking-wide',
         className
       )}
-      {...rest}
+      {...props}
     />
   )
 }
-
-AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName
 
 interface AvatarGroupProps {
   children: React.ReactNode
@@ -74,13 +66,13 @@ interface AvatarGroupProps {
   className?: string
 }
 
-const AvatarGroup = ({ children, max, size = 'default', className }: AvatarGroupProps) => {
+function AvatarGroup({ children, max, size = 'default', className }: AvatarGroupProps) {
   const childArray = React.Children.toArray(children)
   const visible = max ? childArray.slice(0, max) : childArray
   const overflow = max ? childArray.length - max : 0
 
   return (
-    <div className={cn('flex -space-x-2', className)} role="group">
+    <div data-slot="avatar-group" className={cn('flex -space-x-2', className)} role="group">
       {visible.map((child, i) =>
         React.cloneElement(child as React.ReactElement<AvatarProps & { key?: React.Key }>, {
           key: i,
@@ -99,6 +91,5 @@ const AvatarGroup = ({ children, max, size = 'default', className }: AvatarGroup
     </div>
   )
 }
-AvatarGroup.displayName = 'AvatarGroup'
 
 export { Avatar, AvatarImage, AvatarFallback, AvatarGroup }

@@ -29,6 +29,11 @@ import { FormWorkflowPage } from '@/pages/components/FormWorkflowPage'
 import { DataManagementPage } from '@/pages/components/DataManagementPage'
 import { FeedbackStatusPage } from '@/pages/components/FeedbackStatusPage'
 import { PerformanceCardPage } from '@/pages/components/PerformanceCardPage'
+import { FormControlsPage } from '@/pages/components/FormControlsPage'
+import { OverlaysPage } from '@/pages/components/OverlaysPage'
+import { DisclosurePage } from '@/pages/components/DisclosurePage'
+import { DataDisplayPage } from '@/pages/components/DataDisplayPage'
+import { NavigationPage } from '@/pages/components/NavigationPage'
 
 function App() {
   return (
@@ -62,6 +67,11 @@ function App() {
             <Route path="data-management" element={<DataManagementPage />} />
             <Route path="feedback-status" element={<FeedbackStatusPage />} />
             <Route path="performance-card" element={<PerformanceCardPage />} />
+            <Route path="form-controls" element={<FormControlsPage />} />
+            <Route path="overlays" element={<OverlaysPage />} />
+            <Route path="disclosure" element={<DisclosurePage />} />
+            <Route path="data-display" element={<DataDisplayPage />} />
+            <Route path="navigation" element={<NavigationPage />} />
           </Route>
 
           {/* Prototypes */}

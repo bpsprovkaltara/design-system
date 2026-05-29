@@ -12,10 +12,24 @@ The visual theme is **"Civic Editorial x Data-First Swiss"** — navy-primary (#
 
 ## Quick start
 
-**Install**
+**Pilih versi** — dua jalur rilis di-maintain paralel (detail di [DESIGN.md](./DESIGN.md)):
+
+| Versi | dist-tag | Untuk app | Branch |
+|---|---|---|---|
+| v4 (latest) | `latest` / `@^4` | Tailwind 4 + React 19 | `main` |
+| v3 (LTS) | `legacy` / `@^3` | Tailwind 3 + React 18 | `v3` |
+
+**Install** — paket dipublikasikan ke **GitHub Packages** (registry privat). Tambahkan
+`.npmrc` di app konsumen lalu install:
+
+```
+@bpsprovkaltara:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+```
 
 ```bash
-pnpm add @bpsprovkaltara/design-system
+pnpm add @bpsprovkaltara/design-system@latest   # v4
+# atau: pnpm add @bpsprovkaltara/design-system@legacy   # v3
 ```
 
 Peer dependencies (install in the consumer app if not already present):
@@ -141,12 +155,19 @@ pnpm build:lib
 #   dist/tailwind-preset.js / .cjs / .d.ts
 ```
 
-The library is for internal BPS use only (`"license": "UNLICENSED"`). There is no public npm registry publish.
+The library is for internal BPS use only (`"license": "UNLICENSED"`) and is published to
+**GitHub Packages** (`https://npm.pkg.github.com`), not the public npm registry.
+
+Rilis berjalan otomatis lewat `.github/workflows/release.yml` saat push tag `v*`: tag `v4.*`
+dari branch `main` dipublikasikan dengan dist-tag `latest`, tag `v3.*` dari branch `v3`
+dengan dist-tag `legacy`. Workflow memverifikasi `version` di `package.json` cocok dengan tag
+sebelum publish. Bump versi `package.json` dilakukan manual sebelum membuat tag.
 
 ---
 
 ## Links
 
+- Panduan AI agent konsumen: [DESIGN.md](./DESIGN.md)
 - Showcase: https://design.kaltarastats.id
 - Repository: https://github.com/bpsprovkaltara/design-system
 - Issues: https://github.com/bpsprovkaltara/design-system/issues

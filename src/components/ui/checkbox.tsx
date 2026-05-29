@@ -1,8 +1,8 @@
 'use client'
 
 import * as React from 'react'
-import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import { Check, Minus } from 'lucide-react'
+import { Checkbox as CheckboxPrimitive } from 'radix-ui'
 
 import { cn } from '@/lib/utils'
 
@@ -10,16 +10,17 @@ type CheckboxProps = React.ComponentProps<typeof CheckboxPrimitive.Root> & {
   indeterminate?: boolean
 }
 
-function Checkbox({ className, indeterminate, ref, ...props }: CheckboxProps) {
+function Checkbox({ className, indeterminate, ...props }: CheckboxProps) {
   return (
     <CheckboxPrimitive.Root
-      ref={ref}
+      data-slot="checkbox"
       className={cn(
         'peer h-4 w-4 shrink-0 rounded-sm border border-border-strong',
-        'bg-surface-raised ring-offset-background',
-        'transition-colors duration-fast',
-        'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+        'bg-surface-raised ring-offset-background shadow-xs',
+        'transition-colors duration-fast outline-none',
+        'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
         'disabled:cursor-not-allowed disabled:opacity-50',
+        'aria-invalid:border-destructive aria-invalid:ring-destructive/20',
         'data-[state=checked]:bg-primary data-[state=checked]:border-primary data-[state=checked]:text-primary-foreground',
         'data-[state=indeterminate]:bg-primary data-[state=indeterminate]:border-primary data-[state=indeterminate]:text-primary-foreground',
         className
@@ -27,7 +28,10 @@ function Checkbox({ className, indeterminate, ref, ...props }: CheckboxProps) {
       checked={indeterminate ? 'indeterminate' : props.checked}
       {...props}
     >
-      <CheckboxPrimitive.Indicator className="flex items-center justify-center text-current">
+      <CheckboxPrimitive.Indicator
+        data-slot="checkbox-indicator"
+        className="grid place-content-center text-current transition-none"
+      >
         {indeterminate ? (
           <Minus className="h-3 w-3" strokeWidth={2.5} />
         ) : (
@@ -37,7 +41,5 @@ function Checkbox({ className, indeterminate, ref, ...props }: CheckboxProps) {
     </CheckboxPrimitive.Root>
   )
 }
-
-Checkbox.displayName = CheckboxPrimitive.Root.displayName
 
 export { Checkbox }

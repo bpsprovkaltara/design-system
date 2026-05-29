@@ -46,9 +46,8 @@ function ToggleGroup<T extends ToggleGroupType = 'single'>({
   size = 'default',
   onValueChange,
   children,
-  ref,
   ...props
-}: ToggleGroupProps<T> & { ref?: React.Ref<HTMLDivElement> }) {
+}: ToggleGroupProps<T>) {
   const [internalValue, setInternalValue] = React.useState<string[]>(toArray(defaultValue))
   const selectedValue = value === undefined ? internalValue : toArray(value)
 
@@ -77,7 +76,7 @@ function ToggleGroup<T extends ToggleGroupType = 'single'>({
   return (
     <ToggleGroupContext.Provider value={contextValue}>
       <div
-        ref={ref}
+        data-slot="toggle-group"
         role={type === 'single' ? 'radiogroup' : 'group'}
         className={cn(
           'inline-flex items-center rounded-md border border-border-default bg-surface-raised p-0.5',
@@ -102,7 +101,6 @@ function ToggleGroupItem({
   variant,
   size,
   onClick,
-  ref,
   ...props
 }: ToggleGroupItemProps) {
   const context = React.useContext(ToggleGroupContext)
@@ -116,7 +114,7 @@ function ToggleGroupItem({
 
   return (
     <Toggle
-      ref={ref}
+      data-slot="toggle-group-item"
       role={context?.type === 'single' ? 'radio' : undefined}
       aria-checked={context?.type === 'single' ? pressed : undefined}
       pressed={pressed}

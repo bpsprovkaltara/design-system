@@ -1,34 +1,10 @@
 import * as React from 'react';
-declare function Table({ className, ref, ...props }: React.ComponentPropsWithRef<'table'>): import("react/jsx-runtime").JSX.Element;
-declare namespace Table {
-    var displayName: string;
-}
-declare function TableHeader({ className, ref, ...props }: React.ComponentPropsWithRef<'thead'>): import("react/jsx-runtime").JSX.Element;
-declare namespace TableHeader {
-    var displayName: string;
-}
-declare function TableBody({ className, ref, ...props }: React.ComponentPropsWithRef<'tbody'>): import("react/jsx-runtime").JSX.Element;
-declare namespace TableBody {
-    var displayName: string;
-}
-declare function TableFooter({ className, ref, ...props }: React.ComponentPropsWithRef<'tfoot'>): import("react/jsx-runtime").JSX.Element;
-declare namespace TableFooter {
-    var displayName: string;
-}
-declare function TableRow({ className, ref, ...props }: React.ComponentPropsWithRef<'tr'>): import("react/jsx-runtime").JSX.Element;
-declare namespace TableRow {
-    var displayName: string;
-}
-declare function TableHead({ className, ref, ...props }: React.ComponentPropsWithRef<'th'>): import("react/jsx-runtime").JSX.Element;
-declare namespace TableHead {
-    var displayName: string;
-}
-declare function TableCell({ className, ref, ...props }: React.ComponentPropsWithRef<'td'>): import("react/jsx-runtime").JSX.Element;
-declare namespace TableCell {
-    var displayName: string;
-}
-declare function TableCaption({ className, ref, ...props }: React.ComponentPropsWithRef<'caption'>): import("react/jsx-runtime").JSX.Element;
-declare namespace TableCaption {
-    var displayName: string;
-}
+declare function Table({ className, ...props }: React.ComponentProps<'table'>): import("react/jsx-runtime").JSX.Element;
+declare function TableHeader({ className, ...props }: React.ComponentProps<'thead'>): import("react/jsx-runtime").JSX.Element;
+declare function TableBody({ className, ...props }: React.ComponentProps<'tbody'>): import("react/jsx-runtime").JSX.Element;
+declare function TableFooter({ className, ...props }: React.ComponentProps<'tfoot'>): import("react/jsx-runtime").JSX.Element;
+declare function TableRow({ className, ...props }: React.ComponentProps<'tr'>): import("react/jsx-runtime").JSX.Element;
+declare function TableHead({ className, ...props }: React.ComponentProps<'th'>): import("react/jsx-runtime").JSX.Element;
+declare function TableCell({ className, ...props }: React.ComponentProps<'td'>): import("react/jsx-runtime").JSX.Element;
+declare function TableCaption({ className, ...props }: React.ComponentProps<'caption'>): import("react/jsx-runtime").JSX.Element;
 export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption };

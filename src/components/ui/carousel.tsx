@@ -45,9 +45,8 @@ function Carousel({
   plugins,
   className,
   children,
-  ref,
   ...props
-}: React.ComponentPropsWithRef<'div'> & CarouselProps) {
+}: React.ComponentProps<'div'> & CarouselProps) {
   const [carouselRef, api] = useEmblaCarousel(
     {
       ...opts,
@@ -124,7 +123,7 @@ function Carousel({
       }}
     >
       <div
-        ref={ref}
+        data-slot="carousel"
         onKeyDownCapture={handleKeyDown}
         className={cn('relative font-sans', className)}
         role="region"
@@ -136,29 +135,26 @@ function Carousel({
     </CarouselContext.Provider>
   )
 }
-Carousel.displayName = 'Carousel'
 
-function CarouselContent({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
+function CarouselContent({ className, ...props }: React.ComponentProps<'div'>) {
   const { carouselRef, orientation } = useCarousel()
 
   return (
-    <div ref={carouselRef} className="overflow-hidden">
+    <div ref={carouselRef} data-slot="carousel-content" className="overflow-hidden">
       <div
-        ref={ref}
         className={cn('flex', orientation === 'horizontal' ? '-ml-4' : '-mt-4 flex-col', className)}
         {...props}
       />
     </div>
   )
 }
-CarouselContent.displayName = 'CarouselContent'
 
-function CarouselItem({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>) {
+function CarouselItem({ className, ...props }: React.ComponentProps<'div'>) {
   const { orientation } = useCarousel()
 
   return (
     <div
-      ref={ref}
+      data-slot="carousel-item"
       role="group"
       aria-roledescription="slide"
       className={cn(
@@ -170,24 +166,22 @@ function CarouselItem({ className, ref, ...props }: React.ComponentPropsWithRef<
     />
   )
 }
-CarouselItem.displayName = 'CarouselItem'
 
 function CarouselPrevious({
   className,
   variant = 'outline',
   size = 'icon',
-  ref,
   ...props
-}: React.ComponentPropsWithRef<typeof Button>) {
+}: React.ComponentProps<typeof Button>) {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel()
 
   return (
     <Button
-      ref={ref}
+      data-slot="carousel-previous"
       variant={variant}
       size={size}
       className={cn(
-        'absolute  h-8 w-8 rounded-full border-border-subtle bg-surface-raised text-content-primary hover:bg-surface-sunken',
+        'absolute h-8 w-8 rounded-full border-border-subtle bg-surface-raised text-content-primary hover:bg-surface-sunken',
         orientation === 'horizontal'
           ? '-left-12 top-1/2 -translate-y-1/2'
           : '-top-12 left-1/2 -translate-x-1/2 rotate-90',
@@ -198,24 +192,22 @@ function CarouselPrevious({
       {...props}
     >
       <ArrowLeft className="h-4 w-4" />
-      <span className="sr-only">Previous slide</span>
+      <span className="sr-only">Slide sebelumnya</span>
     </Button>
   )
 }
-CarouselPrevious.displayName = 'CarouselPrevious'
 
 function CarouselNext({
   className,
   variant = 'outline',
   size = 'icon',
-  ref,
   ...props
-}: React.ComponentPropsWithRef<typeof Button>) {
+}: React.ComponentProps<typeof Button>) {
   const { orientation, scrollNext, canScrollNext } = useCarousel()
 
   return (
     <Button
-      ref={ref}
+      data-slot="carousel-next"
       variant={variant}
       size={size}
       className={cn(
@@ -230,10 +222,9 @@ function CarouselNext({
       {...props}
     >
       <ArrowRight className="h-4 w-4" />
-      <span className="sr-only">Next slide</span>
+      <span className="sr-only">Slide berikutnya</span>
     </Button>
   )
 }
-CarouselNext.displayName = 'CarouselNext'
 
 export { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext }

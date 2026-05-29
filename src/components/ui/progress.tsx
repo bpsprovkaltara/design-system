@@ -1,8 +1,8 @@
 'use client'
 
 import * as React from 'react'
-import * as ProgressPrimitive from '@radix-ui/react-progress'
 import { cva, type VariantProps } from 'class-variance-authority'
+import { Progress as ProgressPrimitive } from 'radix-ui'
 
 import { cn } from '@/lib/utils'
 
@@ -36,21 +36,20 @@ type ProgressProps = React.ComponentProps<typeof ProgressPrimitive.Root> &
   VariantProps<typeof progressTrackVariants> &
   VariantProps<typeof progressIndicatorVariants>
 
-function Progress({ className, value, size, intent, ref, ...props }: ProgressProps) {
+function Progress({ className, value, size, intent, ...props }: ProgressProps) {
   return (
     <ProgressPrimitive.Root
-      ref={ref}
+      data-slot="progress"
       className={cn(progressTrackVariants({ size }), className)}
       {...props}
     >
       <ProgressPrimitive.Indicator
+        data-slot="progress-indicator"
         className={cn(progressIndicatorVariants({ intent }))}
         style={{ transform: `translateX(-${100 - (value ?? 0)}%)` }}
       />
     </ProgressPrimitive.Root>
   )
 }
-
-Progress.displayName = ProgressPrimitive.Root.displayName
 
 export { Progress }

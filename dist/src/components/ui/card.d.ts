@@ -1,26 +1,9 @@
 import * as React from 'react';
-declare function Card({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>): import("react/jsx-runtime").JSX.Element;
-declare namespace Card {
-    var displayName: string;
-}
-declare function CardHeader({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>): import("react/jsx-runtime").JSX.Element;
-declare namespace CardHeader {
-    var displayName: string;
-}
-declare function CardTitle({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>): import("react/jsx-runtime").JSX.Element;
-declare namespace CardTitle {
-    var displayName: string;
-}
-declare function CardDescription({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>): import("react/jsx-runtime").JSX.Element;
-declare namespace CardDescription {
-    var displayName: string;
-}
-declare function CardContent({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>): import("react/jsx-runtime").JSX.Element;
-declare namespace CardContent {
-    var displayName: string;
-}
-declare function CardFooter({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>): import("react/jsx-runtime").JSX.Element;
-declare namespace CardFooter {
-    var displayName: string;
-}
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent };
+declare function Card({ className, ...props }: React.ComponentProps<'div'>): import("react/jsx-runtime").JSX.Element;
+declare function CardHeader({ className, ...props }: React.ComponentProps<'div'>): import("react/jsx-runtime").JSX.Element;
+declare function CardTitle({ className, ...props }: React.ComponentProps<'div'>): import("react/jsx-runtime").JSX.Element;
+declare function CardDescription({ className, ...props }: React.ComponentProps<'div'>): import("react/jsx-runtime").JSX.Element;
+declare function CardAction({ className, ...props }: React.ComponentProps<'div'>): import("react/jsx-runtime").JSX.Element;
+declare function CardContent({ className, ...props }: React.ComponentProps<'div'>): import("react/jsx-runtime").JSX.Element;
+declare function CardFooter({ className, ...props }: React.ComponentProps<'div'>): import("react/jsx-runtime").JSX.Element;
+export { Card, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent };

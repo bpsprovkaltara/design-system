@@ -1,31 +1,15 @@
+import { Dialog as DialogPrimitive } from 'radix-ui';
 import * as React from 'react';
-import * as DialogPrimitive from '@radix-ui/react-dialog';
-declare const Dialog: React.FC<DialogPrimitive.DialogProps>;
-declare const DialogTrigger: React.ForwardRefExoticComponent<DialogPrimitive.DialogTriggerProps & React.RefAttributes<HTMLButtonElement>>;
-declare const DialogPortal: React.FC<DialogPrimitive.DialogPortalProps>;
-declare const DialogClose: React.ForwardRefExoticComponent<DialogPrimitive.DialogCloseProps & React.RefAttributes<HTMLButtonElement>>;
-declare function DialogOverlay({ className, ref, ...props }: React.ComponentPropsWithRef<typeof DialogPrimitive.Overlay>): import("react/jsx-runtime").JSX.Element;
-declare namespace DialogOverlay {
-    var displayName: string | undefined;
-}
-declare function DialogContent({ className, children, ref, ...props }: React.ComponentPropsWithRef<typeof DialogPrimitive.Content>): import("react/jsx-runtime").JSX.Element;
-declare namespace DialogContent {
-    var displayName: string | undefined;
-}
-declare const DialogHeader: {
-    ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>): import("react/jsx-runtime").JSX.Element;
-    displayName: string;
-};
-declare const DialogFooter: {
-    ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>): import("react/jsx-runtime").JSX.Element;
-    displayName: string;
-};
-declare function DialogTitle({ className, ref, ...props }: React.ComponentPropsWithRef<typeof DialogPrimitive.Title>): import("react/jsx-runtime").JSX.Element;
-declare namespace DialogTitle {
-    var displayName: string | undefined;
-}
-declare function DialogDescription({ className, ref, ...props }: React.ComponentPropsWithRef<typeof DialogPrimitive.Description>): import("react/jsx-runtime").JSX.Element;
-declare namespace DialogDescription {
-    var displayName: string | undefined;
-}
-export { Dialog, DialogPortal, DialogOverlay, DialogTrigger, DialogClose, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription, };
+declare function Dialog({ ...props }: React.ComponentProps<typeof DialogPrimitive.Root>): import("react/jsx-runtime").JSX.Element;
+declare function DialogTrigger({ ...props }: React.ComponentProps<typeof DialogPrimitive.Trigger>): import("react/jsx-runtime").JSX.Element;
+declare function DialogPortal({ ...props }: React.ComponentProps<typeof DialogPrimitive.Portal>): import("react/jsx-runtime").JSX.Element;
+declare function DialogClose({ ...props }: React.ComponentProps<typeof DialogPrimitive.Close>): import("react/jsx-runtime").JSX.Element;
+declare function DialogOverlay({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Overlay>): import("react/jsx-runtime").JSX.Element;
+declare function DialogContent({ className, children, showCloseButton, ...props }: React.ComponentProps<typeof DialogPrimitive.Content> & {
+    showCloseButton?: boolean;
+}): import("react/jsx-runtime").JSX.Element;
+declare function DialogHeader({ className, ...props }: React.ComponentProps<'div'>): import("react/jsx-runtime").JSX.Element;
+declare function DialogFooter({ className, ...props }: React.ComponentProps<'div'>): import("react/jsx-runtime").JSX.Element;
+declare function DialogTitle({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Title>): import("react/jsx-runtime").JSX.Element;
+declare function DialogDescription({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Description>): import("react/jsx-runtime").JSX.Element;
+export { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogOverlay, DialogPortal, DialogTitle, DialogTrigger, };

@@ -11,24 +11,9 @@ type CarouselProps = {
     orientation?: 'horizontal' | 'vertical';
     setApi?: (api: CarouselApi) => void;
 };
-declare function Carousel({ orientation, opts, setApi, plugins, className, children, ref, ...props }: React.ComponentPropsWithRef<'div'> & CarouselProps): import("react/jsx-runtime").JSX.Element;
-declare namespace Carousel {
-    var displayName: string;
-}
-declare function CarouselContent({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>): import("react/jsx-runtime").JSX.Element;
-declare namespace CarouselContent {
-    var displayName: string;
-}
-declare function CarouselItem({ className, ref, ...props }: React.ComponentPropsWithRef<'div'>): import("react/jsx-runtime").JSX.Element;
-declare namespace CarouselItem {
-    var displayName: string;
-}
-declare function CarouselPrevious({ className, variant, size, ref, ...props }: React.ComponentPropsWithRef<typeof Button>): import("react/jsx-runtime").JSX.Element;
-declare namespace CarouselPrevious {
-    var displayName: string;
-}
-declare function CarouselNext({ className, variant, size, ref, ...props }: React.ComponentPropsWithRef<typeof Button>): import("react/jsx-runtime").JSX.Element;
-declare namespace CarouselNext {
-    var displayName: string;
-}
+declare function Carousel({ orientation, opts, setApi, plugins, className, children, ...props }: React.ComponentProps<'div'> & CarouselProps): import("react/jsx-runtime").JSX.Element;
+declare function CarouselContent({ className, ...props }: React.ComponentProps<'div'>): import("react/jsx-runtime").JSX.Element;
+declare function CarouselItem({ className, ...props }: React.ComponentProps<'div'>): import("react/jsx-runtime").JSX.Element;
+declare function CarouselPrevious({ className, variant, size, ...props }: React.ComponentProps<typeof Button>): import("react/jsx-runtime").JSX.Element;
+declare function CarouselNext({ className, variant, size, ...props }: React.ComponentProps<typeof Button>): import("react/jsx-runtime").JSX.Element;
 export { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext };

@@ -10,11 +10,9 @@ export type ToggleGroupProps<T extends ToggleGroupType = ToggleGroupType> = Omit
     disabled?: boolean;
     onValueChange?: (value: ToggleGroupValue<T>) => void;
 };
-declare function ToggleGroup<T extends ToggleGroupType = 'single'>({ className, type, value, defaultValue, disabled, variant, size, onValueChange, children, ref, ...props }: ToggleGroupProps<T> & {
-    ref?: React.Ref<HTMLDivElement>;
-}): import("react/jsx-runtime").JSX.Element;
+declare function ToggleGroup<T extends ToggleGroupType = 'single'>({ className, type, value, defaultValue, disabled, variant, size, onValueChange, children, ...props }: ToggleGroupProps<T>): import("react/jsx-runtime").JSX.Element;
 export type ToggleGroupItemProps = Omit<ToggleProps, 'pressed' | 'defaultPressed' | 'value'> & {
     value: string;
 };
-declare function ToggleGroupItem({ className, value, disabled, variant, size, onClick, ref, ...props }: ToggleGroupItemProps): import("react/jsx-runtime").JSX.Element;
+declare function ToggleGroupItem({ className, value, disabled, variant, size, onClick, ...props }: ToggleGroupItemProps): import("react/jsx-runtime").JSX.Element;
 export { ToggleGroup, ToggleGroupItem };

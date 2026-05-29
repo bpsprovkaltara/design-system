@@ -13,7 +13,7 @@ const cardVariants = cva(
     variants: {
       variant: {
         default: 'border bg-card',
-        glass: 'border-white/40 bg-white/60 shadow-sm backdrop-blur-md',
+        glass: 'border-background/40 bg-background/60 shadow-sm backdrop-blur-md',
         gradient: 'border-l-4 border-l-primary bg-card',
       },
     },

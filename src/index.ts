@@ -1,6 +1,6 @@
 /* ============================================================
    @bpsprovkaltara/design-system — Public API
-   Version 3.0.0
+   Version 4.0.0
    ============================================================ */
 import '../colors_and_type.css'
 
@@ -29,6 +29,14 @@ export {
 export { Button, buttonVariants } from '@/components/ui/button'
 export type { ButtonProps } from '@/components/ui/button'
 export { Calendar } from '@/components/ui/calendar'
+export {
+  type CarouselApi,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from '@/components/ui/carousel'
 export {
   Card,
   CardHeader,
@@ -79,6 +87,18 @@ export {
   DropdownMenuRadioGroup,
 } from '@/components/ui/dropdown-menu'
 export {
+  Drawer,
+  DrawerPortal,
+  DrawerOverlay,
+  DrawerTrigger,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerFooter,
+  DrawerTitle,
+  DrawerDescription,
+} from '@/components/ui/drawer'
+export {
   DescriptionList,
   DescriptionListItem,
   DescriptionTerm,
@@ -97,6 +117,17 @@ export {
 } from '@/components/ui/form'
 export { Input } from '@/components/ui/input'
 export { Label } from '@/components/ui/label'
+export {
+  navigationMenuTriggerStyle,
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuContent,
+  NavigationMenuTrigger,
+  NavigationMenuLink,
+  NavigationMenuIndicator,
+  NavigationMenuViewport,
+} from '@/components/ui/navigation-menu'
 export {
   Pagination,
   PaginationContent,
