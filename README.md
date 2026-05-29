@@ -10,10 +10,19 @@ The visual theme is **"Civic Editorial x Data-First Swiss"** — navy-primary (#
 
 ## Quick start
 
-**Install**
+> Ini branch **v3 (LTS)** — Tailwind 3 + React 18. Untuk Tailwind 4 + React 19 pakai **v4**
+> (branch `main`, dist-tag `latest`). Panduan konsumen: [DESIGN.md](./DESIGN.md).
+
+**Install** — paket dipublikasikan ke **GitHub Packages** (registry privat). Tambahkan
+`.npmrc` di app konsumen lalu install versi v3:
+
+```
+@bpsprovkaltara:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+```
 
 ```bash
-pnpm add @bpsprovkaltara/design-system
+pnpm add @bpsprovkaltara/design-system@legacy   # atau: @^3
 ```
 
 Peer dependencies (install in the consumer app if not already present):
@@ -141,7 +150,12 @@ pnpm build:lib
 #   dist/tailwind-preset.js / .cjs / .d.ts
 ```
 
-The library is for internal BPS use only (`"license": "UNLICENSED"`). There is no public npm registry publish.
+The library is for internal BPS use only (`"license": "UNLICENSED"`) and is published to
+**GitHub Packages** (`https://npm.pkg.github.com`), not the public npm registry.
+
+Rilis v3 berjalan otomatis lewat `.github/workflows/release.yml` saat push tag `v3.*` dari
+branch `v3`, dipublikasikan dengan dist-tag `legacy`. Workflow memverifikasi `version` di
+`package.json` cocok dengan tag sebelum publish.
 
 ---
 
