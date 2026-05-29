@@ -11,9 +11,9 @@ const alertVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-surface-raised border-border-default text-content-primary [&>svg]:text-content-secondary',
-        info:
-          'bg-feedback-info-bg border-feedback-info/30 text-content-primary [&>svg]:text-feedback-info',
+        default:
+          'bg-surface-raised border-border-default text-content-primary [&>svg]:text-content-secondary',
+        info: 'bg-feedback-info-bg border-feedback-info/30 text-content-primary [&>svg]:text-feedback-info',
         success:
           'bg-feedback-success-bg border-feedback-success/30 text-content-primary [&>svg]:text-feedback-success',
         warning:
@@ -34,47 +34,51 @@ const alertIcons = {
   danger: AlertCircle,
 }
 
-interface AlertProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof alertVariants> {
-  showIcon?: boolean
+type AlertProps = React.ComponentProps<'div'> &
+  VariantProps<typeof alertVariants> & {
+    showIcon?: boolean
+  }
+
+function Alert({
+  className,
+  variant = 'default',
+  showIcon = true,
+  children,
+  ...props
+}: AlertProps) {
+  const Icon = alertIcons[variant ?? 'default']
+  return (
+    <div
+      data-slot="alert"
+      data-variant={variant}
+      role="alert"
+      className={cn(alertVariants({ variant }), className)}
+      {...props}
+    >
+      {showIcon && <Icon className="h-4 w-4" aria-hidden="true" />}
+      {children}
+    </div>
+  )
 }
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
-  ({ className, variant = 'default', showIcon = true, children, ...props }, ref) => {
-    const Icon = alertIcons[variant ?? 'default']
-    return (
-      <div
-        ref={ref}
-        role="alert"
-        className={cn(alertVariants({ variant }), className)}
-        {...props}
-      >
-        {showIcon && <Icon className="h-4 w-4" aria-hidden="true" />}
-        {children}
-      </div>
-    )
-  }
-)
-Alert.displayName = 'Alert'
-
-const AlertTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
-  ({ className, ...props }, ref) => (
+function AlertTitle({ className, ...props }: React.ComponentProps<'h5'>) {
+  return (
     <h5
-      ref={ref}
+      data-slot="alert-title"
       className={cn('mb-1 font-semibold text-body-sm leading-none tracking-tight', className)}
       {...props}
     />
   )
-)
-AlertTitle.displayName = 'AlertTitle'
+}
 
-const AlertDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn('text-body-sm text-content-secondary', className)} {...props} />
-))
-AlertDescription.displayName = 'AlertDescription'
+function AlertDescription({ className, ...props }: React.ComponentProps<'div'>) {
+  return (
+    <div
+      data-slot="alert-description"
+      className={cn('text-body-sm text-content-secondary', className)}
+      {...props}
+    />
+  )
+}
 
 export { Alert, AlertTitle, AlertDescription }

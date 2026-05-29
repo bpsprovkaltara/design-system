@@ -1,9 +1,9 @@
 import React from 'react'
 import { Plus } from 'lucide-react'
-import { BpsAppTopbar } from '@/components/ui/bps-app-topbar'
-import { BpsPageHeader } from '@/components/ui/bps-page-header'
-import { BpsFilterBar } from '@/components/ui/bps-filter-bar'
-import { BpsDataTable } from '@/components/ui/bps-data-table'
+import { AppTopbar } from '@/components/ui/app-topbar'
+import { PageHeader } from '@/components/ui/page-header'
+import { FilterBar } from '@/components/ui/filter-bar'
+import { DataTable } from '@/components/ui/data-table'
 import { StatusBadge } from '@/components/ui/status-badge'
 import { Button } from '@/components/ui/button'
 
@@ -15,8 +15,8 @@ const listRows = [
 export function ListPage() {
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <BpsAppTopbar appTitle="Portal Statistik Internal" />
-      <BpsPageHeader
+      <AppTopbar appTitle="Portal Statistik Internal" />
+      <PageHeader
         title="Daftar Dokumen Statistik"
         description="Template halaman list untuk kebutuhan monitoring dan tindak lanjut dokumen."
         action={
@@ -26,12 +26,12 @@ export function ListPage() {
           </Button>
         }
       />
-      <BpsFilterBar
+      <FilterBar
         value={{ keyword: '', status: 'all', unitKerja: 'all' }}
         onChange={() => undefined}
         onReset={() => undefined}
       />
-      <BpsDataTable
+      <DataTable
         data={listRows}
         columns={[
           { key: 'nomor', label: 'Nomor Dokumen' },

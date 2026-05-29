@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { BpsDataTable } from '@/components/ui/bps-data-table'
+import { DataTable } from '@/components/ui/data-table'
 import { StatusBadge } from '@/components/ui/status-badge'
 import { Users, TrendingUp, Download } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -96,7 +96,7 @@ export function DashboardPage() {
       <div className="pt-6">
         <h3 className="h3 mb-4">Sebaran Data per Kabupaten/Kota</h3>
         <div className="bg-card border rounded-lg overflow-hidden shadow-sm">
-          <BpsDataTable data={tableData} columns={columns} />
+          <DataTable data={tableData} columns={columns} />
         </div>
       </div>
     </div>

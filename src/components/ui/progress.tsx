@@ -1,8 +1,8 @@
 'use client'
 
 import * as React from 'react'
-import * as ProgressPrimitive from '@radix-ui/react-progress'
 import { cva, type VariantProps } from 'class-variance-authority'
+import { Progress as ProgressPrimitive } from 'radix-ui'
 
 import { cn } from '@/lib/utils'
 
@@ -17,37 +17,39 @@ const progressTrackVariants = cva('relative w-full overflow-hidden rounded-full 
   defaultVariants: { size: 'default' },
 })
 
-const progressIndicatorVariants = cva('h-full w-full flex-1 transition-all duration-slow ease-out', {
-  variants: {
-    intent: {
-      default: 'bg-primary',
-      success: 'bg-feedback-success',
-      warning: 'bg-feedback-warning',
-      danger:  'bg-feedback-danger',
+const progressIndicatorVariants = cva(
+  'h-full w-full flex-1 transition-all duration-slow ease-out',
+  {
+    variants: {
+      intent: {
+        default: 'bg-primary',
+        success: 'bg-feedback-success',
+        warning: 'bg-feedback-warning',
+        danger: 'bg-feedback-danger',
+      },
     },
-  },
-  defaultVariants: { intent: 'default' },
-})
+    defaultVariants: { intent: 'default' },
+  }
+)
 
-interface ProgressProps
-  extends React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>,
-    VariantProps<typeof progressTrackVariants>,
-    VariantProps<typeof progressIndicatorVariants> {}
+type ProgressProps = React.ComponentProps<typeof ProgressPrimitive.Root> &
+  VariantProps<typeof progressTrackVariants> &
+  VariantProps<typeof progressIndicatorVariants>
 
-const Progress = React.forwardRef<React.ElementRef<typeof ProgressPrimitive.Root>, ProgressProps>(
-  ({ className, value, size, intent, ...props }, ref) => (
+function Progress({ className, value, size, intent, ...props }: ProgressProps) {
+  return (
     <ProgressPrimitive.Root
-      ref={ref}
+      data-slot="progress"
       className={cn(progressTrackVariants({ size }), className)}
       {...props}
     >
       <ProgressPrimitive.Indicator
+        data-slot="progress-indicator"
         className={cn(progressIndicatorVariants({ intent }))}
         style={{ transform: `translateX(-${100 - (value ?? 0)}%)` }}
       />
     </ProgressPrimitive.Root>
   )
-)
-Progress.displayName = ProgressPrimitive.Root.displayName
+}
 
 export { Progress }

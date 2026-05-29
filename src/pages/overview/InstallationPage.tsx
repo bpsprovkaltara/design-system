@@ -18,15 +18,19 @@ export function InstallationPage() {
           Pastikan lingkungan proyek konsumen memenuhi kebutuhan minimum berikut.
         </p>
         <ul className="list-disc pl-5 space-y-2 text-sm text-foreground">
-          <li>Node.js 18 atau lebih baru</li>
-          <li>React 18+ dan React DOM 18+</li>
-          <li>Tailwind CSS 3.4+</li>
+          <li>Node.js 20 atau lebih baru (disarankan)</li>
+          <li>React 19 dan React DOM 19</li>
           <li>
-            Paket{' '}
+            Tailwind CSS 4 dan tooling untuk stack Anda (misalnya @tailwindcss/vite untuk Vite)
+          </li>
+          <li>
+            Impor{' '}
+            <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">styles.css</code>{' '}
+            paket. Token Tailwind v4 sudah CSS-first; ekspor{' '}
             <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
-              tailwindcss-animate
+              tailwind-preset
             </code>{' '}
-            (dipakai oleh preset Tailwind design system)
+            hanya shim deprecated untuk kompatibilitas v3
           </li>
           <li>Akun GitHub sudah tergabung di organization internal</li>
           <li>Akun memiliki akses ke repository private design system</li>
@@ -40,9 +44,9 @@ export function InstallationPage() {
           Metode utama untuk tim internal adalah instalasi langsung dari repository private.
         </p>
         <CodeBlock language="bash">
-          {`npm install git+ssh://git@github.com/ORG/REPO.git#v3.0.0 tailwindcss-animate
+          {`npm install git+ssh://git@github.com/ORG/REPO.git#v4.0.0
 # atau
-pnpm add git+ssh://git@github.com/ORG/REPO.git#v3.0.0 tailwindcss-animate`}
+pnpm add git+ssh://git@github.com/ORG/REPO.git#v4.0.0`}
         </CodeBlock>
         <p className="text-sm text-muted-foreground mt-4">
           Ganti <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">ORG/REPO</code>{' '}
@@ -78,32 +82,46 @@ pnpm add git+ssh://git@github.com/ORG/REPO.git#v3.0.0 tailwindcss-animate`}
         <CodeBlock>{`import '@bpsprovkaltara/design-system/styles.css'`}</CodeBlock>
       </ShowcaseSection>
 
-      <ShowcaseSection title="Konfigurasi Tailwind">
+      <ShowcaseSection title="Tailwind CSS 4 di aplikasi konsumen">
         <p className="text-muted-foreground mb-4">
-          Gunakan preset resmi agar token warna, radius, tipografi, dan utilitas lainnya tetap
-          konsisten.
+          Token dan utilitas komponen design system sudah dikonfigurasi langsung di{' '}
+          <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">styles.css</code>.
+          Untuk kelas Tailwind pada kode aplikasi Anda, konfigurasikan Tailwind v4 mengikuti
+          dokumentasi resmi (plugin Vite, PostCSS, atau framework lain); tidak perlu
+          <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
+            tailwind.config.ts
+          </code>{' '}
+          dari paket ini.
+        </p>
+        <p className="text-sm text-muted-foreground mb-4">
+          Ekspor{' '}
+          <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
+            @bpsprovkaltara/design-system/tailwind-preset
+          </code>{' '}
+          deprecated di v4.0.0 dan akan dihapus di v5; gunakan impor stylesheet di atas. Rincian
+          migrasi:{' '}
+          <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">UPGRADE_NOTES.md</code>{' '}
+          di repository.
         </p>
         <CodeBlock language="ts">
-          {`// tailwind.config.ts
-import type { Config } from 'tailwindcss'
-import bpsPreset from '@bpsprovkaltara/design-system/tailwind-preset'
+          {`// vite.config.ts (contoh)
+import tailwindcss from '@tailwindcss/vite'
+// plugins: [react(), tailwindcss()]`}
+        </CodeBlock>
+        <CodeBlock language="css">
+          {`/* app.css konsumen — contoh */
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+@source "../src";
 
-export default {
-  presets: [bpsPreset],
-  content: [
-    './index.html',
-    './src/**/*.{ts,tsx,js,jsx}',
-    './node_modules/@bpsprovkaltara/design-system/dist/**/*.{js,cjs}',
-  ],
-} satisfies Config`}
+/* Opsional bila stylesheet paket diimpor dari CSS aplikasi */
+@source "../node_modules/@bpsprovkaltara/design-system/dist";`}
         </CodeBlock>
         <p className="text-sm text-muted-foreground mt-4">
-          Sertakan path{' '}
-          <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
-            node_modules/.../dist
-          </code>{' '}
-          di <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">content</code> agar
-          kelas yang dipakai dari paket ikut di-scan Tailwind.
+          Jika <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">styles.css</code>{' '}
+          diimpor langsung dari entry TypeScript, CSS library sudah prebuilt. Tambahkan{' '}
+          <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">@source</code> paket
+          hanya bila Anda memproses stylesheet paket dari CSS aplikasi.
         </p>
       </ShowcaseSection>
 
@@ -181,8 +199,8 @@ export function ContohHalaman() {
             Skeleton, Slider, Spinner, Switch, Table, Tabs, Textarea, Toast, Tooltip, dan lainnya.
           </li>
           <li>
-            <strong>Komponen BPS</strong> — BpsCombobox, BpsDataTable, BpsDatePicker, BpsPageHeader,
-            BpsFilterBar, StatusBadge, serta komponen alur kerja data lainnya.
+            <strong>Komponen BPS</strong> — Combobox, DataTable, DatePicker, PageHeader, FilterBar,
+            StatusBadge, serta komponen alur kerja data lainnya.
           </li>
           <li>
             <strong>Pola</strong> — EmptyState untuk keadaan kosong yang konsisten.
@@ -208,7 +226,7 @@ export function ContohHalaman() {
           paket belum terbentuk otomatis saat install, jalankan build berikut dari repository design
           system.
         </p>
-        <CodeBlock language="bash">{`npm run build:lib`}</CodeBlock>
+        <CodeBlock language="bash">{`pnpm run build:lib`}</CodeBlock>
       </ShowcaseSection>
 
       <ShowcaseSection title="Troubleshooting">

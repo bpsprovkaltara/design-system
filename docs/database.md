@@ -106,4 +106,4 @@ Dark mode overrides all Layer B and Layer C tokens under a `.dark { }` selector 
 
 ## Authoritative source
 
-`colors_and_type.css` at the repository root is the single source of truth for all token values. The `tailwind-preset.ts` reads these values via CSS variable references in the Tailwind theme extension. Do not define color values in `tailwind.config.ts` directly — define them in `colors_and_type.css` and reference via CSS variables.
+`colors_and_type.css` at the repository root is the single source of truth for all token values and Tailwind 4 CSS-first configuration. Define design tokens there with CSS variables, then expose Tailwind utilities through `@theme` or `@utility`. The `tailwind-preset.ts` export is only a deprecated compatibility shim.

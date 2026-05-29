@@ -13,7 +13,7 @@ C4Context
   Person(dev, "BPS Developer", "Builds internal BPS apps")
   Person(designer, "BPS Designer", "Reviews tokens and components")
 
-  System(ds, "@bpsprovkaltara/design-system", "React component library + Tailwind preset. Exports components, tokens, and types.")
+  System(ds, "@bpsprovkaltara/design-system", "React component library + Tailwind 4 CSS-first tokens. Exports components, styles, and types.")
   System(showcase, "Showcase app", "Deployed at design.kaltarastats.id. Interactive component reference.")
   System_Ext(consumer, "BPS internal app", "Any internal BPS application that installs the library")
 
@@ -51,7 +51,7 @@ All token values are bare HSL components — no `hsl()` wrapper. Usage: `hsl(var
 flowchart LR
     radix["Radix UI primitives"]
     shadcn["shadcn/ui components\n(owned source in src/components/ui/)"]
-    custom["BPS custom components\n(BpsCombobox, BpsDataTable, etc.)"]
+    custom["BPS custom components\n(Combobox, DataTable, etc.)"]
     patterns["Patterns\n(EmptyState)"]
     pages["Showcase pages\n(src/pages/)"]
     consumer["Consumer app"]
@@ -89,9 +89,9 @@ Separating primitive scales (Layer A) from semantic roles (Layer B) from compone
 
 `vite.lib.config.ts` produces dual ESM (`dist/index.js`) and CJS (`dist/index.cjs`) outputs from a single build. `vite-plugin-dts` generates `dist/index.d.ts`. This covers both modern bundlers (ESM) and older toolchains (CJS require) without a separate Rollup configuration.
 
-### Tailwind preset export pattern
+### Tailwind CSS-first styling pattern
 
-The library exports a Tailwind preset at `@bpsprovkaltara/design-system/tailwind-preset`. Consumer apps add this as a `presets` entry in their `tailwind.config.ts`. This ensures all design tokens, custom scales, keyframes (`animate-shimmer`), and font families are available in the consumer without copy-pasting configuration.
+The library exposes Tailwind 4 tokens and utilities from `colors_and_type.css` using `@theme`, `@utility`, `@source`, `@plugin`, and `@custom-variant`. Consumer apps import `@bpsprovkaltara/design-system/styles.css`; the old `@bpsprovkaltara/design-system/tailwind-preset` export remains only as a deprecated shim until v5.
 
 ---
 

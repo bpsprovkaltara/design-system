@@ -43,7 +43,7 @@ Allowed types:
 Examples:
 
 ```
-feat(bps-combobox): add clearable prop
+feat(combobox): add clearable prop
 fix(status-badge): correct approved variant border color
 chore: upgrade vitest to 4.2.0
 docs: add deployment runbook

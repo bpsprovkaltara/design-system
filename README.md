@@ -1,8 +1,10 @@
-![version](https://img.shields.io/badge/version-3.0.0-blue) ![license](https://img.shields.io/badge/license-UNLICENSED-lightgrey) ![node](https://img.shields.io/badge/node-%3E%3D18-green)
+![version](https://img.shields.io/badge/version-4.0.0-blue) ![license](https://img.shields.io/badge/license-UNLICENSED-lightgrey) ![node](https://img.shields.io/badge/node-%3E%3D20-green)
 
 # BPS Kaltara design system
 
-Internal design system for BPS Provinsi Kalimantan Utara. Built on React 18, TypeScript, Tailwind CSS 3, and shadcn/ui (new-york style). Ships as an npm-installable library (`@bpsprovkaltara/design-system`) and as a live interactive showcase at [design.kaltarastats.id](https://design.kaltarastats.id).
+Internal design system for BPS Provinsi Kalimantan Utara. Built on React 19, TypeScript, Tailwind CSS 4, and shadcn/ui (new-york style). Ships as an npm-installable library (`@bpsprovkaltara/design-system`) and as a live interactive showcase at [design.kaltarastats.id](https://design.kaltarastats.id).
+
+Migrasi dari v3: lihat [UPGRADE_NOTES.md](./UPGRADE_NOTES.md).
 
 The visual theme is **"Civic Editorial x Data-First Swiss"** — navy-primary (#1e3a5f), amber accent (#f59e0b), Fraunces display type, and IBM Plex Sans/Mono for body and code.
 
@@ -10,16 +12,31 @@ The visual theme is **"Civic Editorial x Data-First Swiss"** — navy-primary (#
 
 ## Quick start
 
-**Install**
+**Pilih versi** — dua jalur rilis di-maintain paralel (detail di [DESIGN.md](./DESIGN.md)):
+
+| Versi | dist-tag | Untuk app | Branch |
+|---|---|---|---|
+| v4 (latest) | `latest` / `@^4` | Tailwind 4 + React 19 | `main` |
+| v3 (LTS) | `legacy` / `@^3` | Tailwind 3 + React 18 | `v3` |
+
+**Install** — paket dipublikasikan ke **GitHub Packages** (registry privat). Tambahkan
+`.npmrc` di app konsumen lalu install:
+
+```
+@bpsprovkaltara:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+```
 
 ```bash
-pnpm add @bpsprovkaltara/design-system
+pnpm add @bpsprovkaltara/design-system@latest   # v4
+# atau: pnpm add @bpsprovkaltara/design-system@legacy   # v3
 ```
 
 Peer dependencies (install in the consumer app if not already present):
 
 ```bash
-pnpm add react@^18 react-dom@^18 tailwindcss@^3.4
+pnpm add react@^19 react-dom@^19 tailwindcss@^4
+# proyek Vite: tambahkan @tailwindcss/vite sesuai dokumentasi Tailwind v4
 ```
 
 **Import styles** — once, at app root:
@@ -28,30 +45,27 @@ pnpm add react@^18 react-dom@^18 tailwindcss@^3.4
 import '@bpsprovkaltara/design-system/styles.css'
 ```
 
-**Configure Tailwind** (`tailwind.config.ts`):
+**Tailwind 4 di aplikasi Anda** — ikuti [dokumentasi Tailwind v4](https://tailwindcss.com/docs/installation) untuk stack Anda (misalnya tambahkan plugin `@tailwindcss/vite` pada `vite.config.ts`). Paket ini sudah CSS-first; ekspor `tailwind-preset` **deprecated** dan hanya shim kosong untuk kompatibilitas v3.
 
-```ts
-import preset from '@bpsprovkaltara/design-system/tailwind-preset'
+Contoh minimal entry CSS aplikasi (Vite):
 
-export default {
-  presets: [preset],
-  content: [
-    './src/**/*.{ts,tsx}',
-    './node_modules/@bpsprovkaltara/design-system/dist/**/*.js',
-  ],
-}
+```css
+@import "tailwindcss";
 ```
+
+Jika stylesheet design system diimpor dari CSS aplikasi, gunakan `@source` untuk source aplikasi Anda dan path paket bila perlu.
 
 **Use components**:
 
 ```tsx
-import { Button, StatusBadge, BpsKpiCard } from '@bpsprovkaltara/design-system'
+import { Button, KpiCard, StatusBadge } from '@bpsprovkaltara/design-system'
 
 export function Example() {
   return (
     <div className="space-y-4">
       <StatusBadge variant="approved" />
       <Button>Simpan</Button>
+      <KpiCard title="Responden" value="1.240" helper="+8% bulan ini" />
     </div>
   )
 }
@@ -63,10 +77,10 @@ export function Example() {
 
 | Layer | Technology |
 |---|---|
-| Framework | React 18 |
-| Language | TypeScript 5.4 |
-| Build tool | Vite 5 |
-| Styling | Tailwind CSS 3 |
+| Framework | React 19 |
+| Language | TypeScript 6 |
+| Build tool | Vite 8 |
+| Styling | Tailwind CSS 4 |
 | Component primitives | shadcn/ui (new-york) + Radix UI |
 | Forms | react-hook-form + zod |
 | Command palette | cmdk |
@@ -92,13 +106,13 @@ src/
   pages/
     overview/    — OverviewPage, InstallationPage
     foundations/ — ColorsPage, TypographyPage, SpacingPage
-    components/  — per-component showcase pages
+    components/  — per-component showcase pages, including Essential UI controls
     prototypes/  — full-page prototypes (Dashboard, Auth, List, Detail, Settings)
   test/          — setup.ts
   index.ts       — public library API
   main.tsx       — showcase app entry
-  tailwind-preset.ts  — exported Tailwind preset
-colors_and_type.css   — all design tokens + Tailwind directives
+  tailwind-preset.ts  — deprecated compatibility shim
+colors_and_type.css   — design tokens + Tailwind 4 CSS-first directives
 design/
   DESIGN.md          — design reference
   design-tokens.json — token export
@@ -141,17 +155,23 @@ pnpm build:lib
 #   dist/tailwind-preset.js / .cjs / .d.ts
 ```
 
-The library is for internal BPS use only (`"license": "UNLICENSED"`). There is no public npm registry publish.
+The library is for internal BPS use only (`"license": "UNLICENSED"`) and is published to
+**GitHub Packages** (`https://npm.pkg.github.com`), not the public npm registry.
+
+Rilis berjalan otomatis lewat `.github/workflows/release.yml` saat push tag `v*`: tag `v4.*`
+dari branch `main` dipublikasikan dengan dist-tag `latest`, tag `v3.*` dari branch `v3`
+dengan dist-tag `legacy`. Workflow memverifikasi `version` di `package.json` cocok dengan tag
+sebelum publish. Bump versi `package.json` dilakukan manual sebelum membuat tag.
 
 ---
 
 ## Links
 
+- Panduan AI agent konsumen: [DESIGN.md](./DESIGN.md)
 - Showcase: https://design.kaltarastats.id
 - Repository: https://github.com/bpsprovkaltara/design-system
 - Issues: https://github.com/bpsprovkaltara/design-system/issues
 - Architecture: `docs/architecture.md`
 - Development guide: `docs/development.md`
 - Deployment: `docs/deployment.md`
-
-> [!todo] Need input from team: `CLAUDE.md` references the package as `@bpskaltara/design-system` but `package.json` is authoritative at `@bpsprovkaltara/design-system`. Update `CLAUDE.md` to align.
+- Catatan rilis GitHub (salin tempel): `docs/releases/v4.0.0-github.md`

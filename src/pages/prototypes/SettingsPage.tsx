@@ -1,8 +1,8 @@
 import React from 'react'
 import { Save } from 'lucide-react'
-import { BpsAppTopbar } from '@/components/ui/bps-app-topbar'
-import { BpsPageHeader } from '@/components/ui/bps-page-header'
-import { BpsFormSection } from '@/components/ui/bps-form-section'
+import { AppTopbar } from '@/components/ui/app-topbar'
+import { PageHeader } from '@/components/ui/page-header'
+import { FormSection } from '@/components/ui/form-section'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
 import { Button } from '@/components/ui/button'
@@ -10,14 +10,14 @@ import { Button } from '@/components/ui/button'
 export function SettingsPage() {
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <BpsAppTopbar appTitle="Portal Statistik Internal" />
-      <BpsPageHeader
+      <AppTopbar appTitle="Portal Statistik Internal" />
+      <PageHeader
         title="Pengaturan Aplikasi"
         description="Template halaman pengaturan untuk preferensi notifikasi dan kebijakan dokumen."
       />
 
       <div className="space-y-4">
-        <BpsFormSection
+        <FormSection
           title="Preferensi Notifikasi"
           description="Atur notifikasi proses verifikasi dokumen."
         >
@@ -39,9 +39,9 @@ export function SettingsPage() {
               <Switch />
             </div>
           </div>
-        </BpsFormSection>
+        </FormSection>
 
-        <BpsFormSection
+        <FormSection
           title="Kebijakan Approval"
           description="Aturan dasar sebelum dokumen disetujui."
         >
@@ -59,7 +59,7 @@ export function SettingsPage() {
               <Input id="sla" defaultValue="3" />
             </div>
           </div>
-        </BpsFormSection>
+        </FormSection>
       </div>
 
       <div className="flex justify-end">

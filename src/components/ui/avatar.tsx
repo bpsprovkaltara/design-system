@@ -1,12 +1,12 @@
 'use client'
 
 import * as React from 'react'
-import * as AvatarPrimitive from '@radix-ui/react-avatar'
 import { cva, type VariantProps } from 'class-variance-authority'
+import { Avatar as AvatarPrimitive } from 'radix-ui'
 
 import { cn } from '@/lib/utils'
 
-const avatarVariants = cva('relative flex shrink-0 overflow-hidden rounded-full', {
+const avatarVariants = cva('relative flex shrink-0 overflow-hidden rounded-full select-none', {
   variants: {
     size: {
       xs: 'h-6 w-6 text-[10px]',
@@ -19,54 +19,46 @@ const avatarVariants = cva('relative flex shrink-0 overflow-hidden rounded-full'
   defaultVariants: { size: 'default' },
 })
 
-interface AvatarProps
-  extends
-    React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>,
-    VariantProps<typeof avatarVariants> {
-  children?: React.ReactNode
-  className?: string
-}
+type AvatarProps = React.ComponentProps<typeof AvatarPrimitive.Root> &
+  VariantProps<typeof avatarVariants>
 
-const Avatar = React.forwardRef<React.ElementRef<typeof AvatarPrimitive.Root>, AvatarProps>(
-  ({ className, size, ...props }, ref) => (
+function Avatar({ className, size, ...props }: AvatarProps) {
+  return (
     <AvatarPrimitive.Root
-      ref={ref}
+      data-slot="avatar"
       className={cn(avatarVariants({ size }), className)}
       {...props}
     />
   )
-)
-Avatar.displayName = AvatarPrimitive.Root.displayName
+}
 
-const AvatarImage = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Image>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Image
-    ref={ref}
-    className={cn('aspect-square h-full w-full object-cover', className)}
-    {...props}
-  />
-))
-AvatarImage.displayName = AvatarPrimitive.Image.displayName
+function AvatarImage({ className, ...props }: React.ComponentProps<typeof AvatarPrimitive.Image>) {
+  return (
+    <AvatarPrimitive.Image
+      data-slot="avatar-image"
+      className={cn('aspect-square h-full w-full object-cover', className)}
+      {...props}
+    />
+  )
+}
 
-const AvatarFallback = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Fallback>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Fallback
-    ref={ref}
-    className={cn(
-      'flex h-full w-full items-center justify-center rounded-full',
-      'bg-primary text-primary-foreground font-semibold uppercase tracking-wide',
-      className
-    )}
-    {...props}
-  />
-))
-AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName
+function AvatarFallback({
+  className,
+  ...props
+}: React.ComponentProps<typeof AvatarPrimitive.Fallback>) {
+  return (
+    <AvatarPrimitive.Fallback
+      data-slot="avatar-fallback"
+      className={cn(
+        'flex h-full w-full items-center justify-center rounded-full',
+        'bg-primary text-primary-foreground font-semibold uppercase tracking-wide',
+        className
+      )}
+      {...props}
+    />
+  )
+}
 
-/* Avatar Group — stacked avatars */
 interface AvatarGroupProps {
   children: React.ReactNode
   max?: number
@@ -74,13 +66,13 @@ interface AvatarGroupProps {
   className?: string
 }
 
-const AvatarGroup = ({ children, max, size = 'default', className }: AvatarGroupProps) => {
+function AvatarGroup({ children, max, size = 'default', className }: AvatarGroupProps) {
   const childArray = React.Children.toArray(children)
   const visible = max ? childArray.slice(0, max) : childArray
   const overflow = max ? childArray.length - max : 0
 
   return (
-    <div className={cn('flex -space-x-2', className)} role="group">
+    <div data-slot="avatar-group" className={cn('flex -space-x-2', className)} role="group">
       {visible.map((child, i) =>
         React.cloneElement(child as React.ReactElement<AvatarProps & { key?: React.Key }>, {
           key: i,
@@ -99,6 +91,5 @@ const AvatarGroup = ({ children, max, size = 'default', className }: AvatarGroup
     </div>
   )
 }
-AvatarGroup.displayName = 'AvatarGroup'
 
 export { Avatar, AvatarImage, AvatarFallback, AvatarGroup }

@@ -15,7 +15,7 @@ pnpm add @bpsprovkaltara/design-system
 import '@bpsprovkaltara/design-system/styles.css'
 
 // Components and hooks
-import { Button, BpsDataTable, useToast } from '@bpsprovkaltara/design-system'
+import { Button, DataTable, useToast } from '@bpsprovkaltara/design-system'
 ```
 
 ---
@@ -76,15 +76,15 @@ import { StatusBadge } from '@bpsprovkaltara/design-system'
 
 ---
 
-## BpsPerformanceCard
+## PerformanceCard
 
 KPI performance card with optional sparkline trend, delta badge, and target percentage.
 
 ```tsx
-import { BpsPerformanceCard } from '@bpsprovkaltara/design-system'
+import { PerformanceCard } from '@bpsprovkaltara/design-system'
 import { Users } from 'lucide-react'
 
-<BpsPerformanceCard
+<PerformanceCard
   title="Jumlah Penduduk"
   value={694000}
   unit="jiwa"
@@ -96,7 +96,7 @@ import { Users } from 'lucide-react'
 />
 ```
 
-### BpsPerformanceCardProps
+### PerformanceCardProps
 
 | Prop | Type | Required | Default | Description |
 |---|---|---|---|---|
@@ -113,19 +113,43 @@ import { Users } from 'lucide-react'
 
 ---
 
-## BpsCombobox
+## Combobox
 
 Searchable select built on Popover + Command (cmdk).
 
-> [!todo] Need input from team: full props table for `BpsCombobox` — review `src/components/ui/bps-combobox.tsx` and document `options`, `value`, `onChange`, `placeholder`, `searchPlaceholder`, `emptyText`, and any async-loading props.
+> [!todo] Need input from team: full props table for `Combobox` — review `src/components/ui/combobox.tsx` and document `options`, `value`, `onChange`, `placeholder`, `searchPlaceholder`, `emptyText`, and any async-loading props.
 
 ---
 
-## BpsDataTable
+## DataTable
 
 Data table with column sorting, pagination, and column visibility toggle. Built on `@tanstack/react-table`.
 
-> [!todo] Need input from team: full props table for `BpsDataTable` — document `columns`, `data`, `pageSize`, `onRowClick`, and any server-side pagination props from `src/components/ui/bps-data-table.tsx`.
+> [!todo] Need input from team: full props table for `DataTable` — document `columns`, `data`, `pageSize`, `onRowClick`, and any server-side pagination props from `src/components/ui/data-table.tsx`.
+
+---
+
+## Essential UI
+
+Additional primitives for common application screens:
+
+```tsx
+import {
+  DescriptionDetails,
+  DescriptionList,
+  DescriptionListItem,
+  DescriptionTerm,
+  FileUpload,
+  Toggle,
+  ToggleGroup,
+  ToggleGroupItem,
+} from '@bpsprovkaltara/design-system'
+```
+
+- `Toggle` renders a controlled or uncontrolled pressed button.
+- `ToggleGroup` and `ToggleGroupItem` support single or multiple selection for compact toolbars.
+- `DescriptionList` renders key/value metadata in detail pages.
+- `FileUpload` wraps a native file input with drag-and-drop styling and selected-file preview.
 
 ---
 
@@ -179,22 +203,13 @@ toast({
 
 ---
 
-## Tailwind preset
+## Stylesheet
 
 ```ts
-// tailwind.config.ts
-import preset from '@bpsprovkaltara/design-system/tailwind-preset'
-
-export default {
-  presets: [preset],
-  content: [
-    './src/**/*.{ts,tsx}',
-    './node_modules/@bpsprovkaltara/design-system/dist/**/*.js',
-  ],
-}
+import '@bpsprovkaltara/design-system/styles.css'
 ```
 
-The preset registers all design token CSS variables, custom font families (`font-display`, `font-sans`, `font-mono`), custom keyframes (`animate-shimmer` used by `Skeleton`), and the full extended color palette.
+The stylesheet registers design token CSS variables, Tailwind 4 `@theme` values, custom utilities, `tailwindcss-animate`, and keyframes such as `animate-shimmer`. The `tailwind-preset` export is deprecated and only kept as a compatibility shim.
 
 ---
 

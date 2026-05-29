@@ -15,6 +15,7 @@ import { InputsPage } from '@/pages/components/InputsPage'
 import { TablePage } from '@/pages/components/TablePage'
 import { ToastPage } from '@/pages/components/ToastPage'
 import { LoadingPage } from '@/pages/components/LoadingPage'
+import { EssentialsPage } from '@/pages/components/EssentialsPage'
 import { DashboardPage } from '@/pages/prototypes/DashboardPage'
 import { AuthPage } from '@/pages/prototypes/AuthPage'
 import { ListPage } from '@/pages/prototypes/ListPage'
@@ -24,10 +25,15 @@ import { SettingsPage } from '@/pages/prototypes/SettingsPage'
 import { NavigationMenuPage } from '@/pages/components/NavigationMenuPage'
 import { CarouselPage } from '@/pages/components/CarouselPage'
 import { DrawerPage } from '@/pages/components/DrawerPage'
-import { BpsFormWorkflowPage } from '@/pages/components/BpsFormWorkflowPage'
-import { BpsDataManagementPage } from '@/pages/components/BpsDataManagementPage'
-import { BpsFeedbackStatusPage } from '@/pages/components/BpsFeedbackStatusPage'
-import { BpsPerformanceCardPage } from '@/pages/components/BpsPerformanceCardPage'
+import { FormWorkflowPage } from '@/pages/components/FormWorkflowPage'
+import { DataManagementPage } from '@/pages/components/DataManagementPage'
+import { FeedbackStatusPage } from '@/pages/components/FeedbackStatusPage'
+import { PerformanceCardPage } from '@/pages/components/PerformanceCardPage'
+import { FormControlsPage } from '@/pages/components/FormControlsPage'
+import { OverlaysPage } from '@/pages/components/OverlaysPage'
+import { DisclosurePage } from '@/pages/components/DisclosurePage'
+import { DataDisplayPage } from '@/pages/components/DataDisplayPage'
+import { NavigationPage } from '@/pages/components/NavigationPage'
 
 function App() {
   return (
@@ -53,13 +59,19 @@ function App() {
             <Route path="table" element={<TablePage />} />
             <Route path="toast" element={<ToastPage />} />
             <Route path="loading" element={<LoadingPage />} />
+            <Route path="essentials" element={<EssentialsPage />} />
             <Route path="navigation-menu" element={<NavigationMenuPage />} />
             <Route path="carousel" element={<CarouselPage />} />
             <Route path="drawer" element={<DrawerPage />} />
-            <Route path="bps-form-workflow" element={<BpsFormWorkflowPage />} />
-            <Route path="bps-data-management" element={<BpsDataManagementPage />} />
-            <Route path="bps-feedback-status" element={<BpsFeedbackStatusPage />} />
-            <Route path="bps-performance-card" element={<BpsPerformanceCardPage />} />
+            <Route path="form-workflow" element={<FormWorkflowPage />} />
+            <Route path="data-management" element={<DataManagementPage />} />
+            <Route path="feedback-status" element={<FeedbackStatusPage />} />
+            <Route path="performance-card" element={<PerformanceCardPage />} />
+            <Route path="form-controls" element={<FormControlsPage />} />
+            <Route path="overlays" element={<OverlaysPage />} />
+            <Route path="disclosure" element={<DisclosurePage />} />
+            <Route path="data-display" element={<DataDisplayPage />} />
+            <Route path="navigation" element={<NavigationPage />} />
           </Route>
 
           {/* Prototypes */}
