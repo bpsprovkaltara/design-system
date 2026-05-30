@@ -18,6 +18,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Dokumentasi: `docs/deployment.md`, `docs/development.md`, `docs/runbook.md` diselaraskan dengan v4 / Node 20
 - `UPGRADE_NOTES.md`: panduan konsumen diperluas (Vite, `@source`, checklist)
 
+## [4.1.0] - 2026-05-30
+
+Rilis kualitas CSS terdistribusi. Tidak ada perubahan perilaku JS/komponen; tampilan
+`styles.css` tetap sama (backward-compatible).
+
+### Added
+
+- **`@bpsprovkaltara/design-system/tokens.css`** — entry CSS berisi token (`:root`/`.dark`) +
+  `@theme` + utilitas DS **tanpa preflight/base Tailwind**. Untuk konsumen yang sudah
+  menjalankan Tailwind v4 agar tidak menggandakan preflight (double-reset). Dipakai bersama
+  `@import "tailwindcss"` + `@source` ke `dist` paket.
+- **`@bpsprovkaltara/design-system/fonts.css`** — jalur **opt-in** memuat Google Fonts (IBM Plex
+  Sans/Mono, Fraunces) via CDN. Bukan default; tidak diimpor oleh `styles.css`.
+
+### Changed
+
+- Token DS dipindah ke sumber tunggal `tokens.css`; `colors_and_type.css` kini meng-`@import`-nya
+  (output `dist/styles.css` byte-identik dengan hasil build sebelumnya — diverifikasi).
+- README/GUIDE/UPGRADE_NOTES: dokumentasi cara memuat font sendiri + cara menghindari
+  double-preflight (pakai `tokens.css`) + entry CSS baru.
+
+### Notes
+
+- Konsumen **non-Tailwind**: tetap pakai `styles.css` (all-in-one, termasuk preflight).
+- `styles.css` tidak memuat Google Fonts sejak v4.0.1 — konsumen memuat font sendiri
+  (`next/font`, `<link>`, atau `fonts.css` opt-in). Token punya fallback system.
+
 ## [4.0.1] - 2026-05-30
 
 Rilis perbaikan packaging. **4.0.0 tidak dapat dikonsumsi di Next.js App Router (RSC)
@@ -104,7 +131,8 @@ maupun bundler ESM browser** — segera upgrade ke 4.0.1.
 
 Version 2.x is no longer maintained. No migration guide is available. Upgrade directly to 4.0.0 (lihat `UPGRADE_NOTES.md` jika dari v3).
 
-[Unreleased]: https://github.com/bpsprovkaltara/design-system/compare/v4.0.1...HEAD
+[Unreleased]: https://github.com/bpsprovkaltara/design-system/compare/v4.1.0...HEAD
+[4.1.0]: https://github.com/bpsprovkaltara/design-system/compare/v4.0.1...v4.1.0
 [4.0.1]: https://github.com/bpsprovkaltara/design-system/compare/v4.0.0...v4.0.1
 [4.0.0]: https://github.com/bpsprovkaltara/design-system/releases/tag/v4.0.0
 [3.0.0]: https://github.com/bpsprovkaltara/design-system/releases/tag/v3.0.0

@@ -1,6 +1,6 @@
 {
   "name": "@bpsprovkaltara/design-system",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "BPS Provinsi Kalimantan Utara — internal design system (React + Tailwind + shadcn/ui).",
   "license": "UNLICENSED",
   "type": "module",
@@ -28,6 +28,8 @@
       "require": "./dist/tailwind-preset.cjs"
     },
     "./styles.css": "./dist/styles.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./fonts.css": "./dist/fonts.css",
     "./patterns/*": {
       "types": "./dist/components/patterns/*.d.ts",
       "import": "./dist/components/patterns/*.js",
@@ -48,7 +50,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "build:lib": "vite build --config vite.lib.config.ts",
+    "build:lib": "vite build --config vite.lib.config.ts && node scripts/copy-css-assets.mjs",
     "preview": "vite preview",
     "prepublishOnly": "pnpm run build:lib",
     "test": "vitest run",

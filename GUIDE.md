@@ -146,6 +146,33 @@ export default function TestPage() {
 }
 ```
 
+### CSS yang dipublikasikan paket (pilih satu entry)
+
+Sejak **v4.1.0** paket mengekspor tiga entry CSS. Pilih sesuai stack:
+
+| Entry | Isi | Untuk |
+|---|---|---|
+| `@bpsprovkaltara/design-system/styles.css` | Preflight Tailwind **+** utilities **+** token DS (all-in-one) | App **non-Tailwind** / "import sekali, jadi" |
+| `@bpsprovkaltara/design-system/tokens.css` | Token + `@theme` + utilitas DS, **TANPA** preflight | App yang **sudah** menjalankan Tailwind v4 |
+| `@bpsprovkaltara/design-system/fonts.css` | `@import` Google Fonts CDN (opt-in) | Jalur cepat memuat font (non-produksi) |
+
+**Hindari double-preflight (penting untuk konsumen Tailwind).** Jika app Anda sudah punya
+`@import "tailwindcss"`, jangan tambahkan `styles.css` (preflight-nya akan dobel → reset/base
+tergandakan). Pakai `tokens.css`:
+
+```css
+@import "tailwindcss";                                  /* preflight app Anda — satu-satunya */
+@import "@bpsprovkaltara/design-system/tokens.css";     /* token + tema DS, tanpa preflight */
+@source "../node_modules/@bpsprovkaltara/design-system/dist";  /* generate kelas komponen DS */
+```
+
+`tokens.css` adalah CSS **sumber** (berisi directive `@theme`/`@utility`) yang diproses oleh
+Tailwind milik Anda — sama seperti cara `tw-animate-css` di-`@import`. Integrasi tema penuh
+(mis. `bg-brand-primary`) ikut aktif tanpa perlu `tailwind-preset` (yang kini deprecated).
+
+> Trade-off `styles.css`: praktis untuk non-Tailwind, tetapi membawa preflight penuh (~satu set
+> base/reset). Untuk app Tailwind, `tokens.css` lebih ramping dan bebas duplikasi.
+
 ---
 
 ## 3. Setup Plain HTML / CSS

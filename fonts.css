@@ -1,0 +1,15 @@
+/* ============================================================
+   BPS Kaltara Design System — Fonts (opt-in, CDN)
+   ============================================================
+   Jalur KEMUDAHAN opsional: memuat IBM Plex Sans, IBM Plex Mono, dan
+   Fraunces dari Google Fonts CDN. BUKAN default (tidak diimpor styles.css).
+
+   Disarankan untuk produksi: self-host atau next/font (lebih cepat & privat).
+   Pemakaian: @import "@bpsprovkaltara/design-system/fonts.css";
+
+   Family + weight yang dibutuhkan DS:
+     - IBM Plex Sans : 400, 500, 600, 700      (--font-sans)
+     - IBM Plex Mono : 400, 500                (--font-mono)
+     - Fraunces      : 300..900 (opsz 9..144)  (--font-display)
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');

@@ -1,4 +1,4 @@
-![version](https://img.shields.io/badge/version-4.0.0-blue) ![license](https://img.shields.io/badge/license-UNLICENSED-lightgrey) ![node](https://img.shields.io/badge/node-%3E%3D20-green)
+![version](https://img.shields.io/badge/version-4.1.0-blue) ![license](https://img.shields.io/badge/license-UNLICENSED-lightgrey) ![node](https://img.shields.io/badge/node-%3E%3D20-green)
 
 # BPS Kaltara design system
 
@@ -54,6 +54,43 @@ Contoh minimal entry CSS aplikasi (Vite):
 ```
 
 Jika stylesheet design system diimpor dari CSS aplikasi, gunakan `@source` untuk source aplikasi Anda dan path paket bila perlu.
+
+**Fonts** — sejak v4.0.1, `styles.css` **tidak** lagi memuat Google Fonts (menghindari
+render-blocking + masalah privasi). Konsumen memuat font sendiri. Family + weight yang dipakai:
+
+| Token | Family | Weight |
+|---|---|---|
+| `--font-sans` | IBM Plex Sans | 400, 500, 600, 700 |
+| `--font-mono` | IBM Plex Mono | 400, 500 |
+| `--font-display` | Fraunces | 300–900 (opsz 9–144) |
+
+Pilih salah satu:
+
+```ts
+// Next.js (disarankan — self-host otomatis, tanpa render-block)
+import { IBM_Plex_Sans, IBM_Plex_Mono, Fraunces } from 'next/font/google'
+```
+
+```css
+/* Atau jalur CDN opt-in (paling mudah, bukan default) */
+@import "@bpsprovkaltara/design-system/fonts.css";
+```
+
+Token sudah punya fallback system (`system-ui`, `serif`, `monospace`), jadi teks tetap tampil
+saat font kustom belum termuat.
+
+**Konsumen Tailwind — hindari double preflight** — jika app Anda **sudah** menjalankan
+Tailwind v4, mengimpor `styles.css` (yang berisi preflight Tailwind penuh) akan menggandakan
+base/reset. Impor `tokens.css` (token + `@theme` + utilitas DS, **tanpa** preflight) sebagai
+gantinya:
+
+```css
+@import "tailwindcss";                                  /* preflight app Anda (satu kali) */
+@import "@bpsprovkaltara/design-system/tokens.css";     /* token + tema DS, tanpa preflight */
+@source "../node_modules/@bpsprovkaltara/design-system/dist";  /* generate kelas komponen DS */
+```
+
+Konsumen **non-Tailwind** tetap memakai `styles.css` (all-in-one, sudah termasuk preflight).
 
 **Use components**:
 
@@ -148,11 +185,13 @@ Test files live next to components with the `.test.tsx` suffix. Coverage targets
 ```bash
 pnpm build:lib
 # outputs:
-#   dist/index.js        (ESM)
+#   dist/index.js        (ESM, per-module)
 #   dist/index.cjs       (CJS)
 #   dist/index.d.ts      (types)
-#   dist/styles.css
-#   dist/tailwind-preset.js / .cjs / .d.ts
+#   dist/styles.css      (all-in-one: preflight + utilities + token, untuk non-Tailwind)
+#   dist/tokens.css      (token + @theme + utilitas DS, TANPA preflight, untuk konsumen Tailwind)
+#   dist/fonts.css       (opsional, @import Google Fonts CDN — opt-in)
+#   dist/tailwind-preset.js / .cjs / .d.ts  (deprecated shim)
 ```
 
 The library is for internal BPS use only (`"license": "UNLICENSED"`) and is published to
