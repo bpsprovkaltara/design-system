@@ -1,0 +1,2 @@
+import{cn as e}from"../../lib/utils.js";import"react";import{jsx as t}from"react/jsx-runtime";function n({className:n,...r}){return t(`div`,{"data-slot":`skeleton`,"aria-busy":`true`,"aria-label":`Memuat...`,className:e(`animate-shimmer rounded-md bg-border-subtle`,n),style:{backgroundImage:`linear-gradient(90deg, hsl(var(--warm-200-hsl)) 25%, hsl(var(--warm-100-hsl)) 50%, hsl(var(--warm-200-hsl)) 75%)`,backgroundSize:`1000px 100%`},...r})}export{n as Skeleton};
+//# sourceMappingURL=skeleton.js.map

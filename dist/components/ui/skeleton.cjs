@@ -1,0 +1,2 @@
+const e=require(`../../_virtual/_rolldown/runtime.cjs`),t=require(`../../lib/utils.cjs`);let n=require(`react`);n=e.__toESM(n,1);let r=require(`react/jsx-runtime`);function i({className:e,...n}){return(0,r.jsx)(`div`,{"data-slot":`skeleton`,"aria-busy":`true`,"aria-label":`Memuat...`,className:t.cn(`animate-shimmer rounded-md bg-border-subtle`,e),style:{backgroundImage:`linear-gradient(90deg, hsl(var(--warm-200-hsl)) 25%, hsl(var(--warm-100-hsl)) 50%, hsl(var(--warm-200-hsl)) 75%)`,backgroundSize:`1000px 100%`},...n})}exports.Skeleton=i;
+//# sourceMappingURL=skeleton.cjs.map

@@ -18,6 +18,39 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Dokumentasi: `docs/deployment.md`, `docs/development.md`, `docs/runbook.md` diselaraskan dengan v4 / Node 20
 - `UPGRADE_NOTES.md`: panduan konsumen diperluas (Vite, `@source`, checklist)
 
+## [4.0.1] - 2026-05-30
+
+Rilis perbaikan packaging. **4.0.0 tidak dapat dikonsumsi di Next.js App Router (RSC)
+maupun bundler ESM browser** — segera upgrade ke 4.0.1.
+
+### Fixed
+
+- **Bundle ESM crash `require is not defined` di browser.** Dependensi CJS
+  (`react-day-picker`, `vaul`, `cmdk`, `embla-carousel-react`, `date-fns`) tidak lagi
+  di-inline di balik shim runtime `typeof require`. Semua runtime + peer dependency kini
+  di-`external`-kan sehingga bundle memakai `import` murni; dep tetap di `dependencies`
+  agar otomatis terpasang di konsumen.
+- **Directive `"use client"` hilang dari output.** Build memakai `output.preserveModules`
+  sehingga tiap file komponen mempertahankan directive-nya sendiri. Impor komponen di
+  Server Component tidak lagi memicu `(0,createContext) is not a function`.
+- **`types`/`exports` menunjuk file yang tidak ada.** Deklarasi kini di-emit ke
+  `dist/index.d.ts` (root) lewat `entryRoot: 'src'`, cocok dengan `package.json`.
+
+### Added
+
+- **Subpath exports per-komponen** untuk tree-shaking & isolasi RSC:
+  `@bpsprovkaltara/design-system/button`, `/data-table`, `/patterns/empty-state`,
+  `/hooks/use-toast`, dst. Impor barrel (`from '@bpsprovkaltara/design-system'`) tetap didukung.
+
+### Changed
+
+- **`@import` Google Fonts dikeluarkan dari `dist/styles.css`** (render-blocking + privasi).
+  Konsumen menyediakan font sendiri (Next.js: `next/font`; lainnya: `<link>`/self-host).
+  Showcase dev memuat font lewat `<link>` di `index.html`.
+- Build library (`vite.lib.config.ts`) keluar dari Vite "lib mode" ke konfigurasi
+  `rollupOptions` eksplisit (`preserveModules` + `preserveEntrySignatures: 'strict'`),
+  menghasilkan output per-modul `dist/**`.
+
 ## [4.0.0] - 2026-05-10
 
 ### Added
@@ -71,6 +104,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 Version 2.x is no longer maintained. No migration guide is available. Upgrade directly to 4.0.0 (lihat `UPGRADE_NOTES.md` jika dari v3).
 
-[Unreleased]: https://github.com/bpsprovkaltara/design-system/compare/v4.0.0...HEAD
+[Unreleased]: https://github.com/bpsprovkaltara/design-system/compare/v4.0.1...HEAD
+[4.0.1]: https://github.com/bpsprovkaltara/design-system/compare/v4.0.0...v4.0.1
 [4.0.0]: https://github.com/bpsprovkaltara/design-system/releases/tag/v4.0.0
 [3.0.0]: https://github.com/bpsprovkaltara/design-system/releases/tag/v3.0.0

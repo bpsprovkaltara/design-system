@@ -31,6 +31,42 @@ import '@bpsprovkaltara/design-system/styles.css'
 
 Ini memuat token + utilitas yang dipakai komponen library. Di v4, token Tailwind paket ini dikonfigurasi langsung di CSS (`@theme`, `@utility`, `@source`, `@plugin`), bukan melalui `tailwind.config.ts`.
 
+## 2b) Font (wajib mulai 4.0.1)
+
+Mulai **4.0.1**, `styles.css` paket **tidak lagi** me-`@import` Google Fonts (CDN dalam
+CSS library bersifat render-blocking dan memaksa request pihak ketiga tanpa kontrol
+konsumen). Anda **wajib** menyediakan tiga font sendiri agar tipografi sesuai desain:
+**Fraunces**, **IBM Plex Sans**, **IBM Plex Mono**.
+
+### Next.js (disarankan — `next/font`, self-host otomatis)
+
+```ts
+import { Fraunces, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google'
+// daftarkan, lalu pasang CSS variable / className di <html> atau <body>
+```
+
+### Stack lain (`<link>` atau self-host)
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" />
+```
+
+## 2c) Impor per-komponen (opsional, 4.0.1+)
+
+Untuk tree-shaking lebih ketat dan isolasi RSC, komponen bisa diimpor lewat subpath:
+
+```ts
+import { Button } from '@bpsprovkaltara/design-system/button'
+import { DataTable } from '@bpsprovkaltara/design-system/data-table'
+import { EmptyState } from '@bpsprovkaltara/design-system/patterns/empty-state'
+import { useToast } from '@bpsprovkaltara/design-system/hooks/use-toast'
+```
+
+Impor barrel (`from '@bpsprovkaltara/design-system'`) tetap didukung penuh.
+
 ## 3) Tailwind 4 di aplikasi Anda
 
 **Hapus** dependensi pada preset paket ini. Ekspor `@bpsprovkaltara/design-system/tailwind-preset` **deprecated** (shim + `console.warn`); akan dihapus di v5.

@@ -1,0 +1,2 @@
+"use client";import{cn as e}from"../../lib/utils.js";import"react";import{Separator as t}from"radix-ui";import{jsx as n}from"react/jsx-runtime";function r({className:r,orientation:i=`horizontal`,decorative:a=!0,...o}){return n(t.Root,{"data-slot":`separator`,decorative:a,orientation:i,className:e(`shrink-0 bg-border-subtle data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px`,r),...o})}export{r as Separator};
+//# sourceMappingURL=separator.js.map

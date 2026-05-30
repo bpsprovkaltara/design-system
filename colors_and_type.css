@@ -12,8 +12,13 @@
    With opacity: hsl(var(--token) / 0.5) or Tailwind: bg-primary/50
    ============================================================ */
 
-/* --- Google Fonts (fallback CDN; self-host in production via public/fonts/) --- */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+/* --- Fonts (Fraunces, IBM Plex Sans, IBM Plex Mono) ---
+   Sengaja TIDAK di-@import di sini: @import CDN dalam CSS library bersifat
+   render-blocking dan memaksa konsumen mengambil font pihak ketiga tanpa kontrol
+   (privasi). Konsumen menyediakan font sendiri:
+     - Next.js: next/font (disarankan, self-host otomatis)
+     - lainnya: <link> ke Google Fonts atau self-host di /public/fonts
+   Showcase dev memuat font lewat <link> di index.html. */
 
 @import "tailwindcss";
 @import "tw-animate-css";

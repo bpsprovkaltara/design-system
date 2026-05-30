@@ -1,0 +1,2 @@
+"use client";import{cn as e}from"../../lib/utils.js";import"react";import{Label as t}from"radix-ui";import{jsx as n}from"react/jsx-runtime";function r({className:r,...i}){return n(t.Root,{"data-slot":`label`,className:e(`flex items-center gap-2 text-body-sm leading-none font-medium text-content-primary select-none`,`group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-60`,`peer-disabled:cursor-not-allowed peer-disabled:opacity-60`,r),...i})}export{r as Label};
+//# sourceMappingURL=label.js.map
