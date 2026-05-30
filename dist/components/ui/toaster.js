@@ -1,0 +1,2 @@
+"use client";import{Toast as e,ToastClose as t,ToastDescription as n,ToastProvider as r,ToastTitle as i,ToastViewport as a}from"./toast.js";import{useToast as o}from"../../hooks/use-toast.js";import{jsx as s,jsxs as c}from"react/jsx-runtime";function l(){let{toasts:l}=o();return c(r,{children:[l.map(function({id:r,title:a,description:o,action:l,...u}){return c(e,{...u,children:[c(`div`,{className:`grid gap-1`,children:[a&&s(i,{children:a}),o&&s(n,{children:o})]}),l,s(t,{})]},r)}),s(a,{})]})}export{l as Toaster};
+//# sourceMappingURL=toaster.js.map

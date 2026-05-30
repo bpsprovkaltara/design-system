@@ -1,2 +1,2 @@
-console.warn('[@bpsprovkaltara/design-system] Export `tailwind-preset` is deprecated in v4.0.0. Migrate to: @import "@bpsprovkaltara/design-system/styles.css" in your CSS. This shim will be removed in v5.0.0.');var e={};module.exports=e;
+Object.defineProperties(exports,{__esModule:{value:!0},[Symbol.toStringTag]:{value:`Module`}}),console.warn('[@bpsprovkaltara/design-system] Export `tailwind-preset` is deprecated in v4.0.0. Migrate to: @import "@bpsprovkaltara/design-system/styles.css" in your CSS. This shim will be removed in v5.0.0.');var e={};exports.default=e;
 //# sourceMappingURL=tailwind-preset.cjs.map

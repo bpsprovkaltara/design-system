@@ -1,6 +1,6 @@
 {
   "name": "@bpsprovkaltara/design-system",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "BPS Provinsi Kalimantan Utara — internal design system (React + Tailwind + shadcn/ui).",
   "license": "UNLICENSED",
   "type": "module",
@@ -28,6 +28,21 @@
       "require": "./dist/tailwind-preset.cjs"
     },
     "./styles.css": "./dist/styles.css",
+    "./patterns/*": {
+      "types": "./dist/components/patterns/*.d.ts",
+      "import": "./dist/components/patterns/*.js",
+      "require": "./dist/components/patterns/*.cjs"
+    },
+    "./hooks/*": {
+      "types": "./dist/hooks/*.d.ts",
+      "import": "./dist/hooks/*.js",
+      "require": "./dist/hooks/*.cjs"
+    },
+    "./*": {
+      "types": "./dist/components/ui/*.d.ts",
+      "import": "./dist/components/ui/*.js",
+      "require": "./dist/components/ui/*.cjs"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {

@@ -1,0 +1,2 @@
+import{Progress as e}from"./progress.js";import"react";import{jsx as t,jsxs as n}from"react/jsx-runtime";function r({totalChecklist:r,completedChecklist:i}){let a=Math.max(r,1),o=Math.min(Math.round(i/a*100),100);return n(`div`,{className:`rounded-lg border bg-card p-4 space-y-2`,children:[t(`p`,{className:`text-sm font-medium text-foreground`,children:`Progress Kelengkapan Dokumen`}),t(e,{value:o}),n(`p`,{className:`text-xs text-muted-foreground`,children:[i,`/`,a,` indikator terpenuhi (`,o,`%)`]})]})}export{r as ProgressAudit};
+//# sourceMappingURL=progress-audit.js.map
