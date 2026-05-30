@@ -54,6 +54,34 @@ import { Fraunces, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google'
   href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" />
 ```
 
+### Jalur CDN opt-in (`fonts.css`, 4.1.0+)
+
+Bila ingin cepat tanpa setup, impor file font opsional (bukan default — tidak ditarik
+`styles.css`):
+
+```css
+@import "@bpsprovkaltara/design-system/fonts.css";
+```
+
+Weight yang dibutuhkan: IBM Plex Sans `400/500/600/700`, IBM Plex Mono `400/500`,
+Fraunces `300–900`. Token punya fallback system (`system-ui`/`serif`/`monospace`).
+
+## 2bb) Hindari double-preflight: `tokens.css` (4.1.0+)
+
+`styles.css` berisi **preflight Tailwind penuh**. Jika app Anda **sudah** menjalankan
+Tailwind v4, mengimpornya akan menggandakan base/reset. Sejak **4.1.0** tersedia
+`tokens.css` (token + `@theme` + utilitas DS, **tanpa** preflight):
+
+```css
+@import "tailwindcss";                                  /* preflight app Anda (satu kali) */
+@import "@bpsprovkaltara/design-system/tokens.css";     /* token + tema DS, tanpa preflight */
+@source "../node_modules/@bpsprovkaltara/design-system/dist";  /* generate kelas komponen DS */
+```
+
+`tokens.css` diproses oleh Tailwind milik Anda (mengandung directive `@theme`/`@utility`),
+jadi integrasi tema penuh aktif tanpa `tailwind-preset` (deprecated). Konsumen
+**non-Tailwind** tetap memakai `styles.css` (all-in-one).
+
 ## 2c) Impor per-komponen (opsional, 4.0.1+)
 
 Untuk tree-shaking lebih ketat dan isolasi RSC, komponen bisa diimpor lewat subpath:
