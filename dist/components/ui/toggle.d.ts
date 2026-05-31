@@ -1,9 +1,6 @@
 import { VariantProps } from 'class-variance-authority';
+import { toggleVariants } from './toggle-variants';
 import * as React from 'react';
-declare const toggleVariants: (props?: ({
-    variant?: "default" | "outline" | "ghost" | null | undefined;
-    size?: "default" | "sm" | "lg" | "icon" | null | undefined;
-} & import('class-variance-authority/types').ClassProp) | undefined) => string;
 export type ToggleProps = Omit<React.ComponentProps<'button'>, 'value'> & VariantProps<typeof toggleVariants> & {
     pressed?: boolean;
     defaultPressed?: boolean;

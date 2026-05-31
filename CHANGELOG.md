@@ -18,6 +18,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Dokumentasi: `docs/deployment.md`, `docs/development.md`, `docs/runbook.md` diselaraskan dengan v4 / Node 20
 - `UPGRADE_NOTES.md`: panduan konsumen diperluas (Vite, `@source`, checklist)
 
+## [4.2.0] - 2026-05-31
+
+Rilis kompatibilitas Next.js App Router (React Server Components). Tidak ada perubahan
+pada API props komponen, nama kelas, maupun output visual.
+
+### Added
+
+- **`@bpsprovkaltara/design-system/utils`** — subpath entry **tanpa `"use client"`** berisi
+  fungsi murni: `cn`, `buttonVariants`, `toggleVariants`, `navigationMenuTriggerStyle`. Aman
+  diimpor langsung di React Server Component. Sebelumnya fungsi-fungsi ini ikut ter-tandai
+  client karena berada di file komponen ber-`"use client"`, sehingga tidak bisa dipakai di RSC.
+- `typesVersions` untuk resolusi tipe subpath `utils`/`tailwind-preset` pada `moduleResolution: node` lama.
+
+### Fixed
+
+- **`Button asChild` crash `React.Children.only`.** `Button` kini membungkus `children` dengan
+  `Slot.Slottable` sehingga `iconLeft`/`iconRight`/spinner tetap menjadi sibling dan Slot dapat
+  menggabungkan elemen yang di-slot. `NavigationMenuTrigger` diberi perlakuan sama untuk
+  pemakaian `asChild`. Perilaku saat `asChild` tidak dipakai tidak berubah (Slottable ter-render
+  sebagai fragment).
+
+### Changed
+
+- Definisi cva murni dipindah ke file tanpa directive: `button-variants.ts`, `toggle-variants.ts`,
+  `navigation-menu-variants.ts`. File komponen mengimpor + me-re-export-nya (kompatibel mundur).
+  Build (`vite.lib.config.ts`) menambah entry `utils` -> `dist/utils.{js,cjs,d.ts}`.
+
 ## [4.1.0] - 2026-05-30
 
 Rilis kualitas CSS terdistribusi. Tidak ada perubahan perilaku JS/komponen; tampilan
@@ -131,7 +158,8 @@ maupun bundler ESM browser** — segera upgrade ke 4.0.1.
 
 Version 2.x is no longer maintained. No migration guide is available. Upgrade directly to 4.0.0 (lihat `UPGRADE_NOTES.md` jika dari v3).
 
-[Unreleased]: https://github.com/bpsprovkaltara/design-system/compare/v4.1.0...HEAD
+[Unreleased]: https://github.com/bpsprovkaltara/design-system/compare/v4.2.0...HEAD
+[4.2.0]: https://github.com/bpsprovkaltara/design-system/compare/v4.1.0...v4.2.0
 [4.1.0]: https://github.com/bpsprovkaltara/design-system/compare/v4.0.1...v4.1.0
 [4.0.1]: https://github.com/bpsprovkaltara/design-system/compare/v4.0.0...v4.0.1
 [4.0.0]: https://github.com/bpsprovkaltara/design-system/releases/tag/v4.0.0

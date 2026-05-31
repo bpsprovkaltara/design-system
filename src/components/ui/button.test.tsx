@@ -54,4 +54,17 @@ describe('Button', () => {
     await userEvent.click(screen.getByRole('button'))
     expect(handler).not.toHaveBeenCalled()
   })
+
+  it('renders asChild with iconLeft without throwing React.Children.only', () => {
+    render(
+      <Button asChild iconLeft={<svg data-testid="icon" />}>
+        <a href="/foo">Tautan</a>
+      </Button>
+    )
+    const link = screen.getByRole('link', { name: 'Tautan' })
+    expect(link).toBeInTheDocument()
+    expect(link).toHaveAttribute('href', '/foo')
+    expect(link).toHaveAttribute('data-slot', 'button')
+    expect(screen.getByTestId('icon')).toBeInTheDocument()
+  })
 })

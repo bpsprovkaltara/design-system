@@ -62,6 +62,9 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: path.resolve(__dirname, 'src/index.ts'),
+        // Entri murni tanpa "use client" -> dist/utils.{js,cjs}. Subpath
+        // "@bpsprovkaltara/design-system/utils" yang aman untuk RSC.
+        utils: path.resolve(__dirname, 'src/utils.ts'),
         'tailwind-preset': path.resolve(__dirname, 'src/tailwind-preset.ts'),
       },
       external: isExternal,
