@@ -1,16 +1,13 @@
-import React from 'react';
-import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHeader';
-import { Button } from '@/components/ui/button';
-import { CodeBlock } from '@/components/showcase/CodeBlock';
-import { Download, Search, MoreHorizontal } from 'lucide-react';
+import React from 'react'
+import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHeader'
+import { Button } from '@/components/ui/button'
+import { CodeBlock } from '@/components/showcase/CodeBlock'
+import { Download, Search, MoreHorizontal } from 'lucide-react'
 
 export function ButtonsPage() {
   return (
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <SectionHeader 
-        title="Buttons" 
-        description="Komponen interaktif untuk pemicu aksi."
-      />
+      <SectionHeader title="Buttons" description="Komponen interaktif untuk pemicu aksi." />
 
       <ShowcaseSection title="Variants">
         <div className="flex flex-wrap gap-4 border rounded-lg p-8 bg-card items-center">
@@ -34,7 +31,7 @@ export function ButtonsPage() {
             <Button size="default">Default</Button>
             <Button size="lg">Large</Button>
           </div>
-          
+
           <div className="flex items-center gap-4">
             <Button>
               <Download className="mr-2 h-4 w-4" />
@@ -62,5 +59,5 @@ export function ButtonsPage() {
         </CodeBlock>
       </ShowcaseSection>
     </div>
-  );
+  )
 }

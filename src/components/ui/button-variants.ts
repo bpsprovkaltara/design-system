@@ -4,7 +4,7 @@ import { cva } from 'class-variance-authority'
 // Server Component lewat subpath "@bpsprovkaltara/design-system/utils".
 export const buttonVariants = cva(
   [
-    'inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap font-medium rounded-md',
+    'inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap font-medium rounded-md cursor-pointer',
     'transition-all duration-fast ease-out outline-none',
     'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
     'disabled:pointer-events-none disabled:opacity-50',

@@ -1,13 +1,13 @@
-import React from 'react';
-import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHeader';
-import { ColorSwatch, HexColorSwatch } from '@/components/showcase/ColorSwatch';
-import { CodeBlock } from '@/components/showcase/CodeBlock';
+import React from 'react'
+import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHeader'
+import { ColorSwatch, HexColorSwatch } from '@/components/showcase/ColorSwatch'
+import { CodeBlock } from '@/components/showcase/CodeBlock'
 
 export function ColorsPage() {
   return (
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <SectionHeader 
-        title="Colors" 
+      <SectionHeader
+        title="Colors"
         description="Palet warna utama dan pendukung untuk BPS Kaltara Design System."
       />
 
@@ -15,7 +15,13 @@ export function ColorsPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           <ColorSwatch name="Primary (BPS Blue)" variable="primary" value="196 100% 40%" />
           <ColorSwatch name="Accent (BPS Orange)" variable="accent" value="35 93% 54%" darkText />
-          <ColorSwatch name="Background" variable="background" value="0 0% 100%" darkText className="border" />
+          <ColorSwatch
+            name="Background"
+            variable="background"
+            value="0 0% 100%"
+            darkText
+            className="border"
+          />
           <ColorSwatch name="Foreground" variable="foreground" value="220 26% 14%" />
         </div>
         <CodeBlock>
@@ -35,9 +41,10 @@ export function ColorsPage() {
 
       <ShowcaseSection title="Extended Palettes (Enterprise)">
         <p className="text-muted-foreground mb-4 text-sm">
-          Warna ini disediakan via konfigurasi Tailwind kustom untuk panel administratif yang padat data.
+          Warna ini disediakan via konfigurasi Tailwind kustom untuk panel administratif yang padat
+          data.
         </p>
-        
+
         <h4 className="text-sm font-semibold mb-3 mt-6">Navy Scale</h4>
         <div className="grid grid-cols-5 md:grid-cols-10 gap-2">
           <HexColorSwatch name="50" variable="navy-50" hexValue="#f0f4f8" darkText />
@@ -54,11 +61,29 @@ export function ColorsPage() {
 
         <h4 className="text-sm font-semibold mb-3 mt-8">Warm (Neutral) Scale</h4>
         <div className="flex gap-4">
-          <HexColorSwatch name="50" variable="warm-50" hexValue="#faf8f5" darkText className="w-24" />
-          <HexColorSwatch name="100" variable="warm-100" hexValue="#f5f0ea" darkText className="w-24" />
-          <HexColorSwatch name="200" variable="warm-200" hexValue="#ebe4da" darkText className="w-24" />
+          <HexColorSwatch
+            name="50"
+            variable="warm-50"
+            hexValue="#faf8f5"
+            darkText
+            className="w-24"
+          />
+          <HexColorSwatch
+            name="100"
+            variable="warm-100"
+            hexValue="#f5f0ea"
+            darkText
+            className="w-24"
+          />
+          <HexColorSwatch
+            name="200"
+            variable="warm-200"
+            hexValue="#ebe4da"
+            darkText
+            className="w-24"
+          />
         </div>
       </ShowcaseSection>
     </div>
-  );
+  )
 }

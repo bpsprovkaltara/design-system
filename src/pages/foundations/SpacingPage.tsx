@@ -1,5 +1,5 @@
-import React from 'react';
-import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHeader';
+import React from 'react'
+import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHeader'
 
 export function SpacingPage() {
   const spacings = [
@@ -12,7 +12,7 @@ export function SpacingPage() {
     { name: 'space-8', value: '32px', rem: '2rem' },
     { name: 'space-12', value: '48px', rem: '3rem' },
     { name: 'space-16', value: '64px', rem: '4rem' },
-  ];
+  ]
 
   const radii = [
     { name: 'sm', value: '4px', class: 'rounded-sm' },
@@ -20,12 +20,12 @@ export function SpacingPage() {
     { name: 'lg', value: '8px', class: 'rounded-lg' },
     { name: 'xl', value: '12px', class: 'rounded-xl' },
     { name: 'full', value: '9999px', class: 'rounded-full w-24' },
-  ];
+  ]
 
   return (
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <SectionHeader 
-        title="Spacing, Radius, & Layout" 
+      <SectionHeader
+        title="Spacing, Radius, & Layout"
         description="Sistem jarak, sudut, dan bayangan untuk membangun layout yang konsisten."
       />
 
@@ -55,5 +55,5 @@ export function SpacingPage() {
         </div>
       </ShowcaseSection>
     </div>
-  );
+  )
 }

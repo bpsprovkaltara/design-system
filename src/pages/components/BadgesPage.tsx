@@ -1,14 +1,14 @@
-import React from 'react';
-import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHeader';
-import { CodeBlock } from '@/components/showcase/CodeBlock';
-import { StatusBadge } from '@/components/ui/status-badge';
-import { Badge } from '@/components/ui/badge';
+import React from 'react'
+import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHeader'
+import { CodeBlock } from '@/components/showcase/CodeBlock'
+import { StatusBadge } from '@/components/ui/status-badge'
+import { Badge } from '@/components/ui/badge'
 
 export function BadgesPage() {
   return (
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <SectionHeader 
-        title="Badges & Tags" 
+      <SectionHeader
+        title="Badges & Tags"
         description="Komponen indikator status dan label kategorikal."
       />
 
@@ -19,9 +19,7 @@ export function BadgesPage() {
           <StatusBadge variant="revised">REVISED</StatusBadge>
           <StatusBadge variant="approved">APPROVED</StatusBadge>
         </div>
-        <CodeBlock>
-          {`<StatusBadge variant="approved">APPROVED</StatusBadge>`}
-        </CodeBlock>
+        <CodeBlock>{`<StatusBadge variant="approved">APPROVED</StatusBadge>`}</CodeBlock>
       </ShowcaseSection>
 
       <ShowcaseSection title="Standard Badges (shadcn/ui)">
@@ -31,10 +29,8 @@ export function BadgesPage() {
           <Badge variant="outline">Outline</Badge>
           <Badge variant="destructive">Destructive</Badge>
         </div>
-        <CodeBlock>
-          {`<Badge variant="outline">Kategori</Badge>`}
-        </CodeBlock>
+        <CodeBlock>{`<Badge variant="outline">Kategori</Badge>`}</CodeBlock>
       </ShowcaseSection>
     </div>
-  );
+  )
 }

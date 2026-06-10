@@ -1,8 +1,15 @@
-import React from 'react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Lock } from 'lucide-react';
+import React from 'react'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Lock } from 'lucide-react'
 
 export function AuthPage() {
   return (
@@ -13,9 +20,7 @@ export function AuthPage() {
             <Lock className="w-6 h-6 text-primary" />
           </div>
           <CardTitle className="text-2xl font-bold tracking-tight">Login Portal BPS</CardTitle>
-          <CardDescription>
-            Silakan masuk menggunakan kredensial SSO BPS
-          </CardDescription>
+          <CardDescription>Silakan masuk menggunakan kredensial SSO BPS</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
@@ -25,18 +30,22 @@ export function AuthPage() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <label className="text-sm font-semibold text-foreground">Password</label>
-              <a href="#" className="text-xs text-primary hover:underline">Lupa password?</a>
+              <a href="#" className="text-xs text-primary hover:underline">
+                Lupa password?
+              </a>
             </div>
             <Input id="password" type="password" />
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-4 mt-4">
-          <Button className="w-full" size="lg">Masuk ke Sistem</Button>
+          <Button className="w-full" size="lg">
+            Masuk ke Sistem
+          </Button>
           <p className="text-xs text-center text-muted-foreground">
             Akses terbatas hanya untuk pegawai BPS Provinsi Kalimantan Utara.
           </p>
         </CardFooter>
       </Card>
     </div>
-  );
+  )
 }

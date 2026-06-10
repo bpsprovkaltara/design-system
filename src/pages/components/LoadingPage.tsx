@@ -1,8 +1,8 @@
-import React from 'react';
-import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHeader';
-import { CodeBlock } from '@/components/showcase/CodeBlock';
-import { Spinner } from '@/components/ui/spinner';
-import { Skeleton } from '@/components/ui/skeleton';
+import React from 'react'
+import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHeader'
+import { CodeBlock } from '@/components/showcase/CodeBlock'
+import { Spinner } from '@/components/ui/spinner'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export function LoadingPage() {
   return (
@@ -141,7 +141,9 @@ export function LoadingPage() {
         <div className="border rounded-lg bg-card overflow-hidden max-w-2xl">
           <div className="grid grid-cols-4 gap-4 px-4 py-3 border-b bg-muted/30">
             {['Nama', 'Jabatan', 'Satuan', 'Status'].map((h) => (
-              <span key={h} className="text-xs font-semibold text-muted-foreground">{h}</span>
+              <span key={h} className="text-xs font-semibold text-muted-foreground">
+                {h}
+              </span>
             ))}
           </div>
           {Array.from({ length: 4 }).map((_, i) => (
@@ -165,5 +167,5 @@ export function LoadingPage() {
         </CodeBlock>
       </ShowcaseSection>
     </div>
-  );
+  )
 }
