@@ -18,6 +18,13 @@ export default defineConfig({
       reporter: ['text', 'lcov'],
       include: ['src/components/**'],
       exclude: ['src/test/**', 'src/**/*.stories.*'],
+      // Floor set just below current coverage; ratchet up as more components gain tests
+      thresholds: {
+        statements: 34,
+        branches: 42,
+        functions: 26,
+        lines: 34,
+      },
     },
   },
   resolve: {
