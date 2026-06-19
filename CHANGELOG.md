@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - GitHub Actions CI (`.github/workflows/ci.yml`): typecheck, lint, test, `build:lib`, `build` pada push/PR ke `main`
 - `docs/releases/v4.0.0-github.md` — teks siap tempel untuk halaman rilis GitHub
+- **`Sparkline`** & **`BarChart`** — primitif visualisasi data berbasis SVG ringan (tanpa dependensi baru), warna lewat token `--chart-*`. `PerformanceCard` kini memakai `Sparkline` yang sama (satu sumber)
+- **`Stepper`** — indikator alur langkah horizontal untuk workflow dokumen (status `complete | current | upcoming | error`)
+- **`DateRangePicker`** — pemilih rentang tanggal (Calendar mode `range`, format locale `id-ID`)
+- Toggle dark mode pada showcase (footer sidebar) + skrip inline anti-FOUC di `index.html` untuk memverifikasi tema gelap yang sudah terdefinisi di token
 
 ### Changed
 
@@ -18,6 +22,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Dokumentasi: `docs/deployment.md`, `docs/development.md`, `docs/runbook.md` diselaraskan dengan v4 / Node 24
 - GitHub Actions CI: runtime diperbarui ke **Node 24** (commit `1861196`)
 - `UPGRADE_NOTES.md`: panduan konsumen diperluas (Vite, `@source`, checklist)
+
+### Fixed
+
+- **`Alert`**: judul (`<h5>`) tidak lagi menimpa ikon — selector offset diperbaiki dari `[&>svg+div]` ke `[&>svg~*]` sehingga judul ikut ter-offset
+- **`AvatarGroup`**: inisial avatar yang bertumpuk kini terbaca penuh (overlap dilonggarkan, ring `ring-background`, z-order diperbaiki)
+- `Sidebar`: label versi footer disamakan ke `v4.2.0`
 
 ## [4.2.0] - 2026-05-31
 

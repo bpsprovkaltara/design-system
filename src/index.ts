@@ -207,6 +207,7 @@ export { BulkActionBar } from '@/components/ui/bulk-action-bar'
 export { DataStatePanel } from '@/components/ui/data-state-panel'
 export { DataTable } from '@/components/ui/data-table'
 export { DatePicker } from '@/components/ui/date-picker'
+export { DateRangePicker } from '@/components/ui/date-range-picker'
 export { FilterBar } from '@/components/ui/filter-bar'
 export { FormSection } from '@/components/ui/form-section'
 export { KpiCard } from '@/components/ui/kpi-card'
@@ -216,6 +217,14 @@ export type { PerformanceCardProps } from '@/components/ui/performance-card'
 export { ProgressAudit } from '@/components/ui/progress-audit'
 export { ReviewTimeline } from '@/components/ui/review-timeline'
 export { ValidationSummary } from '@/components/ui/validation-summary'
+
+/* === Charts === */
+export { Sparkline, BarChart } from '@/components/ui/chart'
+export type { SparklineProps, BarChartProps, BarChartItem } from '@/components/ui/chart'
+
+/* === Stepper === */
+export { Stepper } from '@/components/ui/stepper'
+export type { StepperProps, Step, StepStatus } from '@/components/ui/stepper'
 
 /* === Patterns === */
 export { EmptyState } from '@/components/patterns/empty-state'

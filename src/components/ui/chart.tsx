@@ -1,6 +1,5 @@
 'use client'
 
-import * as React from 'react'
 import { cn } from '@/lib/utils'
 
 const numberFormatter = new Intl.NumberFormat('id-ID')
@@ -73,11 +72,7 @@ function BarChart({ data, className, showValues = true }: BarChartProps) {
   ] as const
 
   return (
-    <div
-      className={cn('flex items-end gap-2', className)}
-      role="img"
-      aria-label="Bar chart"
-    >
+    <div className={cn('flex items-end gap-2', className)} role="img" aria-label="Bar chart">
       {data.map((item, i) => {
         const pct = max > 0 ? (item.value / max) * 100 : 0
         const colorClass = chartColors[i % chartColors.length]
@@ -88,10 +83,13 @@ function BarChart({ data, className, showValues = true }: BarChartProps) {
                 {numberFormatter.format(item.value)}
               </span>
             )}
-            <div className="w-full bg-warm-200 rounded-sm overflow-hidden" style={{ height: 80 }}>
+            <div
+              className="flex w-full items-end overflow-hidden rounded-sm bg-warm-200"
+              style={{ height: 80 }}
+            >
               <div
                 className={cn('w-full rounded-sm transition-all duration-300', colorClass)}
-                style={{ height: `${pct}%`, marginTop: `${100 - pct}%` }}
+                style={{ height: `${pct}%` }}
               />
             </div>
             <span className="text-[10px] text-content-tertiary text-center leading-tight line-clamp-2">
