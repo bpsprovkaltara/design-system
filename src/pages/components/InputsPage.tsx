@@ -12,6 +12,7 @@ import {
 import { Search } from 'lucide-react'
 import { Combobox } from '@/components/ui/combobox'
 import { DatePicker } from '@/components/ui/date-picker'
+import { DateRangePicker } from '@/components/ui/date-range-picker'
 
 export function InputsPage() {
   const regions = [
@@ -97,6 +98,32 @@ export function InputsPage() {
             </p>
           </div>
         </div>
+      </ShowcaseSection>
+
+      <ShowcaseSection title="Date Range Picker">
+        <div className="grid md:grid-cols-2 gap-6 border rounded-lg p-8 bg-card">
+          <div className="space-y-2">
+            <label className="label">Rentang Periode Survei</label>
+            <DateRangePicker placeholder="Pilih rentang tanggal" />
+            <p className="text-xs text-muted-foreground mt-1">
+              Pilih dua tanggal untuk menentukan rentang. Format: dd MMM – dd MMM yyyy.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <label className="label">Periode (Dinonaktifkan)</label>
+            <DateRangePicker placeholder="Tidak dapat dipilih" disabled />
+          </div>
+        </div>
+        <CodeBlock>{`<DateRangePicker
+  placeholder="Pilih rentang tanggal"
+  onChange={(range) => console.log(range)}
+/>
+
+// Dengan nilai terkontrol
+<DateRangePicker
+  range={{ from: new Date(2026, 0, 1), to: new Date(2026, 2, 31) }}
+  onChange={(range) => setRange(range)}
+/>`}</CodeBlock>
       </ShowcaseSection>
     </div>
   )

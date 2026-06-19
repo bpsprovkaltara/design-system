@@ -9,6 +9,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { FormSection } from '@/components/ui/form-section'
 import { ValidationSummary, type ValidationItem } from '@/components/ui/validation-summary'
+import { Stepper } from '@/components/ui/stepper'
 import {
   Form,
   FormControl,
@@ -54,6 +55,52 @@ export function FormWorkflowPage() {
         title="Form Workflow"
         description="Pola form bertahap untuk pengajuan dokumen statistik internal."
       />
+
+      <ShowcaseSection title="Stepper — Indikator Alur Dokumen">
+        <div className="rounded-lg border bg-card p-8 space-y-8">
+          <div className="space-y-3">
+            <div className="text-sm text-muted-foreground">Langkah aktif: 2 (Verifikasi)</div>
+            <Stepper
+              steps={[
+                { label: 'Draft', description: 'Pengisian awal' },
+                { label: 'Verifikasi', description: 'Tinjauan data' },
+                { label: 'Revisi', description: 'Perbaikan' },
+                { label: 'Disetujui', description: 'Final' },
+              ]}
+              current={1}
+            />
+          </div>
+          <div className="space-y-3">
+            <div className="text-sm text-muted-foreground">Dengan status per langkah (error)</div>
+            <Stepper
+              steps={[
+                { label: 'Draft' },
+                { label: 'Verifikasi' },
+                { label: 'Revisi' },
+                { label: 'Disetujui' },
+              ]}
+              current={2}
+              statuses={['complete', 'error', 'current', 'upcoming']}
+            />
+          </div>
+        </div>
+        <CodeBlock>{`<Stepper
+  steps={[
+    { label: 'Draft', description: 'Pengisian awal' },
+    { label: 'Verifikasi', description: 'Tinjauan data' },
+    { label: 'Revisi' },
+    { label: 'Disetujui' },
+  ]}
+  current={1}
+/>
+
+// Dengan status eksplisit per langkah
+<Stepper
+  steps={steps}
+  current={2}
+  statuses={['complete', 'error', 'current', 'upcoming']}
+/>`}</CodeBlock>
+      </ShowcaseSection>
 
       <ShowcaseSection title="Workflow Pengisian dan Validasi">
         <div className="space-y-4">
@@ -191,10 +238,7 @@ function RhfFormDemo() {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit((values) => setSubmitted(values))}
-        className="space-y-4"
-      >
+      <form onSubmit={form.handleSubmit((values) => setSubmitted(values))} className="space-y-4">
         <FormField
           control={form.control}
           name="judul"
