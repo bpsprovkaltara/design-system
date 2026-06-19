@@ -3,6 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { ArrowDownRight, ArrowUpRight, type LucideIcon } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
+import { Sparkline } from '@/components/ui/chart'
 import { cn } from '@/lib/utils'
 
 const numberFormatter = new Intl.NumberFormat('id-ID')
@@ -39,44 +40,6 @@ export interface PerformanceCardProps
 
 function formatValue(value: string | number): string {
   return typeof value === 'number' ? numberFormatter.format(value) : value
-}
-
-function Sparkline({ data, className }: { data: number[]; className?: string }) {
-  if (data.length < 2) return null
-
-  const width = 120
-  const height = 36
-  const min = Math.min(...data)
-  const max = Math.max(...data)
-  const range = max - min || 1
-  const stepX = width / (data.length - 1)
-
-  const points = data
-    .map((v, i) => {
-      const x = i * stepX
-      const y = height - ((v - min) / range) * height
-      return `${x.toFixed(2)},${y.toFixed(2)}`
-    })
-    .join(' ')
-
-  return (
-    <svg
-      viewBox={`0 0 ${width} ${height}`}
-      preserveAspectRatio="none"
-      className={cn('h-9 w-full text-primary', className)}
-      role="presentation"
-      aria-hidden="true"
-    >
-      <polyline
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        points={points}
-      />
-    </svg>
-  )
 }
 
 export function PerformanceCard({
