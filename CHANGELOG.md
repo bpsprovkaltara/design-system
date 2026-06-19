@@ -13,9 +13,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- `Dockerfile`: builder/runtime **Node 20** + **pnpm** + `pnpm-lock.yaml` (menggantikan image Bun)
+- `Dockerfile`: builder/runtime **Node 24** + **pnpm** + `pnpm-lock.yaml` (menggantikan image Bun)
 - `docker-compose.yml`: menghapus kunci `version` yang sudah usang
-- Dokumentasi: `docs/deployment.md`, `docs/development.md`, `docs/runbook.md` diselaraskan dengan v4 / Node 20
+- Dokumentasi: `docs/deployment.md`, `docs/development.md`, `docs/runbook.md` diselaraskan dengan v4 / Node 24
+- GitHub Actions CI: runtime diperbarui ke **Node 24** (commit `1861196`)
 - `UPGRADE_NOTES.md`: panduan konsumen diperluas (Vite, `@source`, checklist)
 
 ## [4.2.0] - 2026-05-31
