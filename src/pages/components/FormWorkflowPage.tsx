@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHeader'
 import { CodeBlock } from '@/components/showcase/CodeBlock'
 import { Input } from '@/components/ui/input'
@@ -6,6 +9,15 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { FormSection } from '@/components/ui/form-section'
 import { ValidationSummary, type ValidationItem } from '@/components/ui/validation-summary'
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
 
 export function FormWorkflowPage() {
   const [formState, setFormState] = useState({
@@ -135,6 +147,88 @@ export function FormWorkflowPage() {
   {/* form fields */}
 </FormSection>`}</CodeBlock>
       </ShowcaseSection>
+
+      <ShowcaseSection title="Form RHF + Zod">
+        <div className="border rounded-lg p-8 bg-card">
+          <RhfFormDemo />
+        </div>
+        <CodeBlock>{`const schema = z.object({
+  judul: z.string().min(1, 'Judul dokumen wajib diisi'),
+})
+const form = useForm({ resolver: zodResolver(schema), defaultValues: { judul: '' } })
+
+<Form {...form}>
+  <form onSubmit={form.handleSubmit(onSubmit)}>
+    <FormField
+      control={form.control}
+      name="judul"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Judul Dokumen</FormLabel>
+          <FormControl><Input {...field} /></FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  </form>
+</Form>`}</CodeBlock>
+      </ShowcaseSection>
     </div>
+  )
+}
+
+const rhfSchema = z.object({
+  judul: z.string().min(1, 'Judul dokumen wajib diisi'),
+  nomor: z.string().min(1, 'Nomor dokumen wajib diisi'),
+})
+
+function RhfFormDemo() {
+  const form = useForm<z.infer<typeof rhfSchema>>({
+    resolver: zodResolver(rhfSchema),
+    defaultValues: { judul: '', nomor: '' },
+  })
+  const [submitted, setSubmitted] = useState<z.infer<typeof rhfSchema> | null>(null)
+
+  return (
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit((values) => setSubmitted(values))}
+        className="space-y-4"
+      >
+        <FormField
+          control={form.control}
+          name="judul"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Judul Dokumen</FormLabel>
+              <FormControl>
+                <Input placeholder="Contoh: Statistik Kesejahteraan 2026" {...field} />
+              </FormControl>
+              <FormDescription>Judul resmi dokumen yang diajukan.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="nomor"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nomor Dokumen</FormLabel>
+              <FormControl>
+                <Input placeholder="BPS-KALTARA/2026/001" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Validasi dan Kirim</Button>
+        {submitted ? (
+          <p className="text-sm text-muted-foreground">
+            Terkirim: {submitted.judul} ({submitted.nomor})
+          </p>
+        ) : null}
+      </form>
+    </Form>
   )
 }
