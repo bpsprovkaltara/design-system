@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { cn } from '@/lib/utils'
+import { ThemeToggle } from '@/components/showcase/ThemeToggle'
 import {
   Home,
   Palette,
@@ -172,7 +173,10 @@ export function Sidebar() {
       <div className="px-6 py-4 border-t border-border-subtle">
         <div className="flex items-center justify-between font-mono text-[9px] uppercase tracking-[0.18em] text-content-tertiary">
           <span>v4.2.0</span>
-          <span>Internal</span>
+          <div className="flex items-center gap-2">
+            <span>Internal</span>
+            <ThemeToggle />
+          </div>
         </div>
       </div>
     </aside>
