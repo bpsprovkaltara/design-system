@@ -118,7 +118,7 @@ export function FormWorkflowPage() {
             completedCount={[formState.judul, formState.nomor].filter(Boolean).length}
           >
             <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 <label className="label" htmlFor="judul">
                   Judul Dokumen <span className="text-destructive">*</span>
                 </label>
@@ -131,7 +131,7 @@ export function FormWorkflowPage() {
                   placeholder="Contoh: Statistik Kesejahteraan 2026"
                 />
               </div>
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 <label className="label" htmlFor="nomor">
                   Nomor Dokumen <span className="text-destructive">*</span>
                 </label>
@@ -159,7 +159,7 @@ export function FormWorkflowPage() {
             }
           >
             <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 <label className="label" htmlFor="unit">
                   Unit Kerja <span className="text-destructive">*</span>
                 </label>
@@ -172,7 +172,7 @@ export function FormWorkflowPage() {
                   placeholder="Contoh: Statistik Sosial"
                 />
               </div>
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 <label className="label" htmlFor="catatan">
                   Catatan Internal
                 </label>

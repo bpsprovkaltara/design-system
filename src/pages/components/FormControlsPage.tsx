@@ -41,7 +41,7 @@ export function FormControlsPage() {
 
       <ShowcaseSection title="Radio Group">
         <div className="rounded-lg border bg-card p-8">
-          <RadioGroup defaultValue="bulanan" className="space-y-3">
+          <RadioGroup defaultValue="bulanan" className="space-y-2.5">
             <div className="flex items-center gap-2">
               <RadioGroupItem value="harian" id="r-harian" />
               <Label htmlFor="r-harian">Harian</Label>
@@ -81,11 +81,11 @@ export function FormControlsPage() {
 
       <ShowcaseSection title="Slider">
         <div className="rounded-lg border bg-card p-8 space-y-6">
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             <Label>Tingkat kualitas data: {volume[0]}%</Label>
             <Slider value={volume} onValueChange={setVolume} max={100} step={1} />
           </div>
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             <Label>Rentang nilai (min–max)</Label>
             <Slider defaultValue={[20, 80]} max={100} step={5} />
           </div>

@@ -32,7 +32,7 @@ export function InputsPage() {
 
       <ShowcaseSection title="Advanced Filters (Phase 6)">
         <div className="grid md:grid-cols-2 gap-6 border rounded-lg p-8 bg-card mb-6">
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             <label className="label">Filter Wilayah (Combobox)</label>
             <Combobox
               options={regions}
@@ -43,7 +43,7 @@ export function InputsPage() {
               Gunakan untuk list yang panjang dengan kemampuan pencarian.
             </p>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             <label className="label">Periode Rilis (Date Picker)</label>
             <DatePicker placeholder="Pilih tanggal rilis" />
             <p className="text-xs text-muted-foreground mt-1">
@@ -59,13 +59,13 @@ export function InputsPage() {
 
       <ShowcaseSection title="Text Inputs & Standard Select">
         <div className="grid md:grid-cols-2 gap-6 border rounded-lg p-8 bg-card">
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             <label className="label">
               Nama Subjek <span className="text-destructive">*</span>
             </label>
             <Input placeholder="Contoh: Kependudukan" />
           </div>
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             <label className="label">Tahun Referensi</label>
             <Input
               type="number"
@@ -74,14 +74,14 @@ export function InputsPage() {
             />
             <p className="text-xs text-destructive">Tahun harus berada antara 2000-2024</p>
           </div>
-          <div className="space-y-3 md:col-span-2">
+          <div className="space-y-2.5 md:col-span-2">
             <label className="label">Pencarian Data (Input Kustom)</label>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input placeholder="Ketik kata kunci dokumen..." className="pl-10" />
             </div>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             <label className="label">Kategori Statistik (Standard Select)</label>
             <Select>
               <SelectTrigger>
@@ -102,14 +102,14 @@ export function InputsPage() {
 
       <ShowcaseSection title="Date Range Picker">
         <div className="grid md:grid-cols-2 gap-6 border rounded-lg p-8 bg-card">
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             <label className="label">Rentang Periode Survei</label>
             <DateRangePicker placeholder="Pilih rentang tanggal" />
             <p className="text-xs text-muted-foreground mt-1">
               Pilih dua tanggal untuk menentukan rentang. Format: dd MMM – dd MMM yyyy.
             </p>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             <label className="label">Periode (Dinonaktifkan)</label>
             <DateRangePicker placeholder="Tidak dapat dipilih" disabled />
           </div>

@@ -27,7 +27,7 @@ export function FilterBar({ value, onChange, onReset }: FilterBarProps) {
   return (
     <div className="rounded-lg border bg-card p-4">
       <div className="grid gap-4 md:grid-cols-3">
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           <Label htmlFor="filter-keyword">Pencarian</Label>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -40,7 +40,7 @@ export function FilterBar({ value, onChange, onReset }: FilterBarProps) {
             />
           </div>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           <Label>Status</Label>
           <Select value={value.status} onValueChange={(status) => onChange({ ...value, status })}>
             <SelectTrigger>
@@ -55,7 +55,7 @@ export function FilterBar({ value, onChange, onReset }: FilterBarProps) {
             </SelectContent>
           </Select>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           <Label>Unit Kerja</Label>
           <Select
             value={value.unitKerja}
