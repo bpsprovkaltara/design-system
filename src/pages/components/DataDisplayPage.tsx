@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from '@/components/u
 import { KpiCard } from '@/components/ui/kpi-card'
 import { Progress } from '@/components/ui/progress'
 import { Calendar } from '@/components/ui/calendar'
+import { Sparkline, BarChart } from '@/components/ui/chart'
 import { Users, FileBarChart, Database, ShieldCheck } from 'lucide-react'
 
 export function DataDisplayPage() {
@@ -128,6 +129,38 @@ export function DataDisplayPage() {
         <CodeBlock>{`<Progress value={62} />
 <Progress value={45} intent="warning" />
 <Progress value={80} size="lg" />`}</CodeBlock>
+      </ShowcaseSection>
+
+      <ShowcaseSection title="Chart & Sparkline">
+        <div className="rounded-lg border bg-card p-8 space-y-8">
+          <div className="space-y-2">
+            <div className="text-sm font-medium">Sparkline — tren data deret waktu</div>
+            <div className="w-48">
+              <Sparkline data={[12, 18, 14, 22, 19, 27, 24, 30, 28, 35]} />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <div className="text-sm font-medium">Bar Chart — perbandingan kategori</div>
+            <BarChart
+              data={[
+                { label: 'Bulungan', value: 182340 },
+                { label: 'Tarakan', value: 261785 },
+                { label: 'Malinau', value: 78412 },
+                { label: 'Nunukan', value: 194231 },
+                { label: 'Tana Tidung', value: 26891 },
+              ]}
+              className="h-40"
+            />
+          </div>
+        </div>
+        <CodeBlock>{`<Sparkline data={[12, 18, 14, 22, 27, 30]} />
+
+<BarChart
+  data={[
+    { label: 'Bulungan', value: 182340 },
+    { label: 'Tarakan', value: 261785 },
+  ]}
+/>`}</CodeBlock>
       </ShowcaseSection>
 
       <ShowcaseSection title="Calendar">

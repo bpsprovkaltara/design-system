@@ -1,7 +1,17 @@
 import React from 'react'
 import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHeader'
+import { CodeBlock } from '@/components/showcase/CodeBlock'
 import { DataTable } from '@/components/ui/data-table'
 import { StatusBadge } from '@/components/ui/status-badge'
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 
 export function TablePage() {
   type DataStatus = 'approved' | 'pending' | 'revised'
@@ -41,6 +51,56 @@ export function TablePage() {
         <div className="border rounded-lg bg-card">
           <DataTable data={sampleData} columns={columns} />
         </div>
+      </ShowcaseSection>
+
+      <ShowcaseSection title="Table Primitif">
+        <div className="border rounded-lg bg-card">
+          <Table>
+            <TableCaption>Realisasi anggaran per program, 2025.</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Program</TableHead>
+                <TableHead className="text-right">Pagu (Rp)</TableHead>
+                <TableHead className="text-right">Realisasi (Rp)</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell>Sensus Ekonomi</TableCell>
+                <TableCell className="text-right">
+                  {(1250000000).toLocaleString('id-ID')}
+                </TableCell>
+                <TableCell className="text-right">
+                  {(980000000).toLocaleString('id-ID')}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Survei Sosial Ekonomi</TableCell>
+                <TableCell className="text-right">
+                  {(840000000).toLocaleString('id-ID')}
+                </TableCell>
+                <TableCell className="text-right">
+                  {(720000000).toLocaleString('id-ID')}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+        <CodeBlock>{`<Table>
+  <TableCaption>Realisasi anggaran per program, 2025.</TableCaption>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Program</TableHead>
+      <TableHead className="text-right">Pagu (Rp)</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Sensus Ekonomi</TableCell>
+      <TableCell className="text-right">1.250.000.000</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>`}</CodeBlock>
       </ShowcaseSection>
     </div>
   )

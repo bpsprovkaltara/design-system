@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHeader'
 import { CodeBlock } from '@/components/showcase/CodeBlock'
 import { Input } from '@/components/ui/input'
@@ -6,6 +9,16 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { FormSection } from '@/components/ui/form-section'
 import { ValidationSummary, type ValidationItem } from '@/components/ui/validation-summary'
+import { Stepper } from '@/components/ui/stepper'
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
 
 export function FormWorkflowPage() {
   const [formState, setFormState] = useState({
@@ -43,6 +56,52 @@ export function FormWorkflowPage() {
         description="Pola form bertahap untuk pengajuan dokumen statistik internal."
       />
 
+      <ShowcaseSection title="Stepper — Indikator Alur Dokumen">
+        <div className="rounded-lg border bg-card p-8 space-y-8">
+          <div className="space-y-3">
+            <div className="text-sm text-muted-foreground">Langkah aktif: 2 (Verifikasi)</div>
+            <Stepper
+              steps={[
+                { label: 'Draft', description: 'Pengisian awal' },
+                { label: 'Verifikasi', description: 'Tinjauan data' },
+                { label: 'Revisi', description: 'Perbaikan' },
+                { label: 'Disetujui', description: 'Final' },
+              ]}
+              current={1}
+            />
+          </div>
+          <div className="space-y-3">
+            <div className="text-sm text-muted-foreground">Dengan status per langkah (error)</div>
+            <Stepper
+              steps={[
+                { label: 'Draft' },
+                { label: 'Verifikasi' },
+                { label: 'Revisi' },
+                { label: 'Disetujui' },
+              ]}
+              current={2}
+              statuses={['complete', 'error', 'current', 'upcoming']}
+            />
+          </div>
+        </div>
+        <CodeBlock>{`<Stepper
+  steps={[
+    { label: 'Draft', description: 'Pengisian awal' },
+    { label: 'Verifikasi', description: 'Tinjauan data' },
+    { label: 'Revisi' },
+    { label: 'Disetujui' },
+  ]}
+  current={1}
+/>
+
+// Dengan status eksplisit per langkah
+<Stepper
+  steps={steps}
+  current={2}
+  statuses={['complete', 'error', 'current', 'upcoming']}
+/>`}</CodeBlock>
+      </ShowcaseSection>
+
       <ShowcaseSection title="Workflow Pengisian dan Validasi">
         <div className="space-y-4">
           <ValidationSummary
@@ -59,7 +118,7 @@ export function FormWorkflowPage() {
             completedCount={[formState.judul, formState.nomor].filter(Boolean).length}
           >
             <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 <label className="label" htmlFor="judul">
                   Judul Dokumen <span className="text-destructive">*</span>
                 </label>
@@ -72,7 +131,7 @@ export function FormWorkflowPage() {
                   placeholder="Contoh: Statistik Kesejahteraan 2026"
                 />
               </div>
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 <label className="label" htmlFor="nomor">
                   Nomor Dokumen <span className="text-destructive">*</span>
                 </label>
@@ -100,7 +159,7 @@ export function FormWorkflowPage() {
             }
           >
             <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 <label className="label" htmlFor="unit">
                   Unit Kerja <span className="text-destructive">*</span>
                 </label>
@@ -113,7 +172,7 @@ export function FormWorkflowPage() {
                   placeholder="Contoh: Statistik Sosial"
                 />
               </div>
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 <label className="label" htmlFor="catatan">
                   Catatan Internal
                 </label>
@@ -135,6 +194,85 @@ export function FormWorkflowPage() {
   {/* form fields */}
 </FormSection>`}</CodeBlock>
       </ShowcaseSection>
+
+      <ShowcaseSection title="Form RHF + Zod">
+        <div className="border rounded-lg p-8 bg-card">
+          <RhfFormDemo />
+        </div>
+        <CodeBlock>{`const schema = z.object({
+  judul: z.string().min(1, 'Judul dokumen wajib diisi'),
+})
+const form = useForm({ resolver: zodResolver(schema), defaultValues: { judul: '' } })
+
+<Form {...form}>
+  <form onSubmit={form.handleSubmit(onSubmit)}>
+    <FormField
+      control={form.control}
+      name="judul"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Judul Dokumen</FormLabel>
+          <FormControl><Input {...field} /></FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  </form>
+</Form>`}</CodeBlock>
+      </ShowcaseSection>
     </div>
+  )
+}
+
+const rhfSchema = z.object({
+  judul: z.string().min(1, 'Judul dokumen wajib diisi'),
+  nomor: z.string().min(1, 'Nomor dokumen wajib diisi'),
+})
+
+function RhfFormDemo() {
+  const form = useForm<z.infer<typeof rhfSchema>>({
+    resolver: zodResolver(rhfSchema),
+    defaultValues: { judul: '', nomor: '' },
+  })
+  const [submitted, setSubmitted] = useState<z.infer<typeof rhfSchema> | null>(null)
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit((values) => setSubmitted(values))} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="judul"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Judul Dokumen</FormLabel>
+              <FormControl>
+                <Input placeholder="Contoh: Statistik Kesejahteraan 2026" {...field} />
+              </FormControl>
+              <FormDescription>Judul resmi dokumen yang diajukan.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="nomor"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nomor Dokumen</FormLabel>
+              <FormControl>
+                <Input placeholder="BPS-KALTARA/2026/001" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Validasi dan Kirim</Button>
+        {submitted ? (
+          <p className="text-sm text-muted-foreground">
+            Terkirim: {submitted.judul} ({submitted.nomor})
+          </p>
+        ) : null}
+      </form>
+    </Form>
   )
 }

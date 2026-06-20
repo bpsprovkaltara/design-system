@@ -72,19 +72,20 @@ function AvatarGroup({ children, max, size = 'default', className }: AvatarGroup
   const overflow = max ? childArray.length - max : 0
 
   return (
-    <div data-slot="avatar-group" className={cn('flex -space-x-2', className)} role="group">
+    <div data-slot="avatar-group" className={cn('flex -space-x-1.5', className)} role="group">
       {visible.map((child, i) =>
         React.cloneElement(child as React.ReactElement<AvatarProps & { key?: React.Key }>, {
           key: i,
           size,
           className: cn(
-            'ring-2 ring-surface-raised',
+            'ring-2 ring-background',
+            `z-[${visible.length - i}]`,
             (child as React.ReactElement<AvatarProps>).props?.className ?? ''
           ),
         })
       )}
       {overflow > 0 && (
-        <Avatar size={size} className="ring-2 ring-surface-raised">
+        <Avatar size={size} className="ring-2 ring-background z-0">
           <AvatarFallback>+{overflow}</AvatarFallback>
         </Avatar>
       )}
