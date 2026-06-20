@@ -46,13 +46,13 @@ export function SettingsPage() {
           description="Aturan dasar sebelum dokumen disetujui."
         >
           <div className="grid gap-4 md:grid-cols-2">
-            <div className="space-y-2">
+            <div className="space-y-3">
               <label className="label" htmlFor="min-reviewer">
                 Minimum reviewer
               </label>
               <Input id="min-reviewer" defaultValue="2" />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-3">
               <label className="label" htmlFor="sla">
                 SLA verifikasi (hari kerja)
               </label>

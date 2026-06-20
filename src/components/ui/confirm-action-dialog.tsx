@@ -55,7 +55,7 @@ export function ConfirmActionDialog({
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
-        <div className="space-y-2">
+        <div className="space-y-3">
           <Label htmlFor="confirm-reason">
             Alasan tindakan {reasonRequired ? <span className="text-destructive">*</span> : null}
           </Label>
