@@ -86,7 +86,7 @@ export function OverviewPage() {
           return (
             <article
               key={pilar.n}
-              className="col-span-12 md:col-span-4 bg-background p-7 flex flex-col gap-3 hover:bg-warm-100 transition-colors duration-base"
+              className="col-span-12 md:col-span-4 bg-background p-7 flex flex-col gap-3 hover:bg-muted transition-colors duration-base"
             >
               <div className="flex items-baseline justify-between">
                 <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-amber-700">
@@ -125,7 +125,7 @@ export function OverviewPage() {
       {/* Colophon — bottom rule */}
       <footer className="pt-8 border-t border-border-default">
         <div className="flex items-center justify-between gap-4 font-mono text-[10px] uppercase tracking-[0.22em] text-content-tertiary">
-          <span>v4.0.0</span>
+          <span>v4.2.0</span>
           <span className="text-center hidden sm:inline">
             Dikembangkan untuk BPS&nbsp;Provinsi&nbsp;Kalimantan&nbsp;Utara
           </span>
