@@ -92,7 +92,7 @@ export function Sidebar() {
   const location = useLocation()
 
   return (
-    <aside className="w-72 flex-shrink-0 border-r border-border-subtle bg-warm-100 flex flex-col h-screen overflow-y-auto">
+    <aside className="w-72 flex-shrink-0 border-r border-border-subtle bg-card flex flex-col h-screen overflow-y-auto">
       {/* Masthead — editorial newspaper style */}
       <div className="px-6 pt-7 pb-5 border-b border-border-default">
         <div className="flex items-center justify-between mb-2">
