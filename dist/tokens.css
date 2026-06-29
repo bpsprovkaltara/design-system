@@ -969,7 +969,7 @@
 .micro     { font-size: var(--text-micro-size);   font-weight: var(--text-micro-weight);   line-height: var(--text-micro-lh); letter-spacing: var(--text-micro-ls); }
 
 /* Legacy */
-.label { font-size: var(--label-size); font-weight: var(--label-weight); line-height: var(--label-lh); }
+.label { display: block; font-size: var(--label-size); font-weight: var(--label-weight); line-height: var(--label-lh); }
 .code  { font-family: var(--font-mono); font-size: var(--text-mono-size); font-weight: var(--text-mono-weight); line-height: var(--text-mono-lh); }
 
 /* === Data & Tabular Styles === */

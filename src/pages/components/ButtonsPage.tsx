@@ -1,8 +1,9 @@
 import React from 'react'
 import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHeader'
 import { Button } from '@/components/ui/button'
+import { LinkButton } from '@/components/ui/link-button'
 import { CodeBlock } from '@/components/showcase/CodeBlock'
-import { Download, Search, MoreHorizontal } from 'lucide-react'
+import { Download, Search, MoreHorizontal, Pencil } from 'lucide-react'
 
 export function ButtonsPage() {
   return (
@@ -55,6 +56,56 @@ export function ButtonsPage() {
 // Icon-only button
 <Button variant="outline" size="icon">
   <Search className="h-4 w-4" />
+</Button>`}
+        </CodeBlock>
+      </ShowcaseSection>
+
+      <ShowcaseSection title="As link / navigation">
+        <div className="space-y-5 border rounded-lg p-8 bg-card">
+          <div className="flex flex-wrap gap-4 items-center">
+            <LinkButton
+              href="/pegawai/1/edit"
+              variant="outline"
+              size="sm"
+              iconLeft={<Pencil className="h-4 w-4" />}
+            >
+              Edit
+            </LinkButton>
+            <LinkButton
+              href="/laporan"
+              variant="ghost"
+              iconRight={<Download className="h-4 w-4" />}
+            >
+              Buka laporan
+            </LinkButton>
+            <Button asChild variant="outline" size="sm">
+              <a href="/advanced-trigger">Advanced asChild</a>
+            </Button>
+          </div>
+          <p className="text-body-sm text-content-secondary max-w-2xl">
+            Untuk navigasi, prefer <code>LinkButton</code>. Gunakan <code>Button asChild</code>{' '}
+            untuk kasus advanced seperti <code>DialogTrigger</code>, <code>SheetTrigger</code>, atau
+            komposisi Radix lain.
+          </p>
+        </div>
+        <CodeBlock>
+          {`import Link from 'next/link'
+import { LinkButton, Button } from '@bpsprovkaltara/design-system'
+import { Pencil } from 'lucide-react'
+
+// Navigasi anchor standar
+<LinkButton href="/pegawai/1/edit" variant="outline" size="sm" iconLeft={<Pencil />}>
+  Edit
+</LinkButton>
+
+// Next.js App Router: gunakan LinkButton asChild agar Next <Link> tetap mengatur routing
+<LinkButton asChild variant="outline" size="sm" iconLeft={<Pencil />}>
+  <Link href="/pegawai/1/edit">Edit</Link>
+</LinkButton>
+
+// Advanced composition, bukan pola utama navigasi
+<Button asChild variant="outline" size="sm">
+  <a href="/advanced-trigger">Advanced asChild</a>
 </Button>`}
         </CodeBlock>
       </ShowcaseSection>

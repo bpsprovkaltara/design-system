@@ -6,8 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [4.3.0] - 2026-06-29
+
 ### Added
 
+- **`LinkButton`** — komponen navigasi first-class bergaya tombol yang memakai
+  `buttonVariants()` langsung, mendukung `variant`, `size`, `iconLeft`, `iconRight`, dan
+  `asChild` untuk integrasi Next.js `<Link>`.
 - GitHub Actions CI (`.github/workflows/ci.yml`): typecheck, lint, test, `build:lib`, `build` pada push/PR ke `main`
 - `docs/releases/v4.0.0-github.md` — teks siap tempel untuk halaman rilis GitHub
 - **`Sparkline`** & **`BarChart`** — primitif visualisasi data berbasis SVG ringan (tanpa dependensi baru), warna lewat token `--chart-*`. `PerformanceCard` kini memakai `Sparkline` yang sama (satu sumber)
@@ -25,6 +30,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 
+- **`Button asChild` untuk navigasi**: test coverage diperluas untuk pola `<a>`/Next Link
+  dengan icon inline, `iconLeft`, `iconRight`, dan `loading`; build library kini memastikan
+  output `dist/components/ui/button.js` tetap memakai `Slot.Slottable`.
 - **`Alert`**: judul (`<h5>`) tidak lagi menimpa ikon — selector offset diperbaiki dari `[&>svg+div]` ke `[&>svg~*]` sehingga judul ikut ter-offset
 - **`AvatarGroup`**: inisial avatar yang bertumpuk kini terbaca penuh (overlap dilonggarkan, ring `ring-background`, z-order diperbaiki)
 - `Sidebar`: label versi footer disamakan ke `v4.2.0`
@@ -169,7 +177,8 @@ maupun bundler ESM browser** — segera upgrade ke 4.0.1.
 
 Version 2.x is no longer maintained. No migration guide is available. Upgrade directly to 4.0.0 (lihat `UPGRADE_NOTES.md` jika dari v3).
 
-[Unreleased]: https://github.com/bpsprovkaltara/design-system/compare/v4.2.0...HEAD
+[Unreleased]: https://github.com/bpsprovkaltara/design-system/compare/v4.3.0...HEAD
+[4.3.0]: https://github.com/bpsprovkaltara/design-system/compare/v4.2.0...v4.3.0
 [4.2.0]: https://github.com/bpsprovkaltara/design-system/compare/v4.1.0...v4.2.0
 [4.1.0]: https://github.com/bpsprovkaltara/design-system/compare/v4.0.1...v4.1.0
 [4.0.1]: https://github.com/bpsprovkaltara/design-system/compare/v4.0.0...v4.0.1
