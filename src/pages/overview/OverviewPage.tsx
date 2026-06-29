@@ -125,7 +125,7 @@ export function OverviewPage() {
       {/* Colophon — bottom rule */}
       <footer className="pt-8 border-t border-border-default">
         <div className="flex items-center justify-between gap-4 font-mono text-[10px] uppercase tracking-[0.22em] text-content-tertiary">
-          <span>v4.2.0</span>
+          <span>v4.3.0</span>
           <span className="text-center hidden sm:inline">
             Dikembangkan untuk BPS&nbsp;Provinsi&nbsp;Kalimantan&nbsp;Utara
           </span>

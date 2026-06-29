@@ -4,6 +4,62 @@
 
 Versi 4 memerlukan **React 19**, **Tailwind CSS 4**, dan disarankan **Node.js 20+**. Build toolchain konsumen mengikuti dokumentasi resmi Tailwind v4 (misalnya plugin `@tailwindcss/vite` untuk proyek Vite).
 
+## v4.3.0 — Button sebagai link / navigasi
+
+Untuk navigasi bergaya tombol, gunakan **`LinkButton`**. Komponen ini memakai
+`buttonVariants()` dari design system sehingga konsumen tidak perlu menyalin class
+manual dari `Button`.
+
+```tsx
+import { LinkButton } from '@bpsprovkaltara/design-system'
+import { Pencil } from 'lucide-react'
+
+export function EditPegawaiLink() {
+  return (
+    <LinkButton href="/pegawai/1/edit" variant="outline" size="sm" iconLeft={<Pencil />}>
+      Edit
+    </LinkButton>
+  )
+}
+```
+
+Jika aplikasi Next.js App Router membutuhkan perilaku `<Link>` seperti prefetch dan
+client-side navigation, gunakan `LinkButton asChild`:
+
+```tsx
+import Link from 'next/link'
+import { LinkButton } from '@bpsprovkaltara/design-system'
+import { Pencil } from 'lucide-react'
+
+export function EditPegawaiLink() {
+  return (
+    <LinkButton asChild variant="outline" size="sm" iconLeft={<Pencil />}>
+      <Link href="/pegawai/1/edit">Edit</Link>
+    </LinkButton>
+  )
+}
+```
+
+`Button asChild` tetap didukung untuk komposisi advanced seperti `DialogTrigger`,
+`SheetTrigger`, atau trigger Radix lain. Untuk navigasi biasa, prefer `LinkButton`.
+
+Migrasi dari pola lama:
+
+```tsx
+// Sebelum
+<Button asChild>
+  <Link href="/pegawai/1/edit">
+    <Pencil />
+    Edit
+  </Link>
+</Button>
+
+// Sesudah
+<LinkButton href="/pegawai/1/edit" variant="outline" size="sm" iconLeft={<Pencil />}>
+  Edit
+</LinkButton>
+```
+
 ## Peer dependencies
 
 | Paket           | v3.x    | v4.0.0   |

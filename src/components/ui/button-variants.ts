@@ -8,6 +8,7 @@ export const buttonVariants = cva(
     'transition-all duration-fast ease-out outline-none',
     'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
     'disabled:pointer-events-none disabled:opacity-50',
+    'aria-disabled:pointer-events-none aria-disabled:opacity-50',
     'aria-invalid:border-destructive aria-invalid:ring-destructive/20',
     '[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=size-])]:size-4',
     'select-none',

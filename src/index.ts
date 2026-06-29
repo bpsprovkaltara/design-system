@@ -1,6 +1,6 @@
 /* ============================================================
    @bpsprovkaltara/design-system — Public API
-   Version 4.2.0
+   Version 4.3.0
    ============================================================ */
 import '../colors_and_type.css'
 
@@ -28,6 +28,8 @@ export {
 } from '@/components/ui/breadcrumb'
 export { Button, buttonVariants } from '@/components/ui/button'
 export type { ButtonProps } from '@/components/ui/button'
+export { LinkButton } from '@/components/ui/link-button'
+export type { LinkButtonProps } from '@/components/ui/link-button'
 export { Calendar } from '@/components/ui/calendar'
 export {
   type CarouselApi,
