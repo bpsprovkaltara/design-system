@@ -7,8 +7,7 @@ export interface ReviewTimelineItem {
     date: string;
     status: 'draft' | 'pending' | 'revised' | 'approved';
 }
-interface ReviewTimelineProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ReviewTimelineProps extends React.HTMLAttributes<HTMLDivElement> {
     items: ReviewTimelineItem[];
 }
 export declare function ReviewTimeline({ items, className, ...props }: ReviewTimelineProps): import("react/jsx-runtime").JSX.Element;
-export {};

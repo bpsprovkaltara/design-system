@@ -1,6 +1,8 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { DataTable } from './data-table'
+import { Button } from './button'
 
 type Row = { id: number; nama: string; nilai: number }
 
@@ -53,27 +55,95 @@ describe('DataTable', () => {
     expect(screen.getByTestId('custom')).toHaveTextContent('Tarakan (custom)')
   })
 
-  it('renders the Aksi column header', () => {
+  it('does not render Aksi column when renderRowActions is omitted', () => {
     render(<DataTable data={data} columns={columns} />)
-    expect(screen.getByText('Aksi')).toBeInTheDocument()
+    expect(screen.queryByText('Aksi')).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Edit' })).not.toBeInTheDocument()
   })
 
-  it('renders an Edit button for each row', () => {
-    render(<DataTable data={data} columns={columns} />)
+  it('renders row actions when renderRowActions is provided', async () => {
+    const user = userEvent.setup()
+    const onEdit = vi.fn()
+    render(
+      <DataTable
+        data={data}
+        columns={columns}
+        getRowKey={(row) => row.id}
+        renderRowActions={(row) => (
+          <Button variant="ghost" size="sm" onClick={() => onEdit(row.id)}>
+            Edit
+          </Button>
+        )}
+      />
+    )
+    expect(screen.getByText('Aksi')).toBeInTheDocument()
     const editButtons = screen.getAllByRole('button', { name: 'Edit' })
     expect(editButtons).toHaveLength(data.length)
+    await user.click(editButtons[0])
+    expect(onEdit).toHaveBeenCalledWith(1)
   })
 
-  it('renders empty tbody when data is empty', () => {
-    const { container } = render(<DataTable data={[]} columns={columns} />)
-    const tbody = container.querySelector('tbody')
-    expect(tbody).toBeInTheDocument()
-    expect(tbody?.querySelectorAll('tr')).toHaveLength(0)
+  it('renders empty state when data is empty', () => {
+    render(<DataTable data={[]} columns={columns} emptyTitle="Kosong" />)
+    expect(screen.getByText('Kosong')).toBeInTheDocument()
+    expect(screen.queryByRole('table')).not.toBeInTheDocument()
+  })
+
+  it('shows loading overlay', () => {
+    render(<DataTable data={data} columns={columns} loading loadingLabel="Sedang memuat" />)
+    expect(screen.getByText('Sedang memuat')).toBeInTheDocument()
+    expect(screen.getByRole('table')).toBeInTheDocument()
+  })
+
+  it('supports server pagination', async () => {
+    const user = userEvent.setup()
+    const onPageChange = vi.fn()
+    render(
+      <DataTable
+        data={data.slice(0, 2)}
+        columns={columns}
+        pagination={{ page: 0, pageSize: 2, total: 5, onPageChange }}
+      />
+    )
+    expect(screen.getByText(/Menampilkan 1–2 dari 5/)).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Berikutnya' }))
+    expect(onPageChange).toHaveBeenCalledWith(1)
   })
 
   it('falls back to dash when value is null/undefined', () => {
     const sparseData = [{ id: 1, nama: null as unknown as string, nilai: 0 }]
     render(<DataTable data={sparseData} columns={[{ key: 'nama', label: 'Nama' }]} />)
     expect(screen.getByText('-')).toBeInTheDocument()
+  })
+
+  it('sorts sortable columns', async () => {
+    const user = userEvent.setup()
+    render(
+      <DataTable
+        data={data}
+        columns={[
+          { key: 'nama', label: 'Nama', sortable: true },
+          { key: 'nilai', label: 'Nilai', sortable: true },
+        ]}
+      />
+    )
+    await user.click(screen.getByRole('button', { name: /Nilai/i }))
+    const rows = screen.getAllByRole('row')
+    expect(rows[1]).toHaveTextContent('Tarakan')
+    await user.click(screen.getByRole('button', { name: /Nilai/i }))
+    const rowsDesc = screen.getAllByRole('row')
+    expect(rowsDesc[1]).toHaveTextContent('Bulungan')
+  })
+
+  it('paginates when pageSize is set', async () => {
+    const user = userEvent.setup()
+    render(<DataTable data={data} columns={columns} pageSize={2} />)
+    expect(screen.getByText('Tarakan')).toBeInTheDocument()
+    expect(screen.getByText('Nunukan')).toBeInTheDocument()
+    expect(screen.queryByText('Bulungan')).not.toBeInTheDocument()
+    expect(screen.getByText(/Menampilkan 1–2 dari 3/)).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Berikutnya' }))
+    expect(screen.getByText('Bulungan')).toBeInTheDocument()
+    expect(screen.queryByText('Tarakan')).not.toBeInTheDocument()
   })
 })

@@ -67,13 +67,14 @@ Displays a workflow status as a styled badge.
 ```tsx
 import { StatusBadge } from '@bpsprovkaltara/design-system'
 
-<StatusBadge variant="approved" />
+<StatusBadge variant="approved">Disetujui</StatusBadge>
 ```
 
 | Prop | Type | Required | Description |
 |---|---|---|---|
-| `variant` | `'draft' \| 'pending' \| 'revised' \| 'approved'` | Yes | Visual and semantic status variant |
-
+| `variant` | `'default' \| 'secondary' \| 'destructive' \| 'outline' \| 'draft' \| 'pending' \| 'revised' \| 'approved'` | No | Visual variant (`default` jika dihilangkan) |
+| `children` | `ReactNode` | Yes | Teks status yang ditampilkan |
+| `className` | `string` | No | Kelas tambahan |
 ---
 
 ## PerformanceCard
@@ -117,15 +118,72 @@ import { Users } from 'lucide-react'
 
 Searchable select built on Popover + Command (cmdk).
 
-> [!todo] Need input from team: full props table for `Combobox` — review `src/components/ui/combobox.tsx` and document `options`, `value`, `onChange`, `placeholder`, `searchPlaceholder`, `emptyText`, and any async-loading props.
+```tsx
+import { Combobox } from '@bpsprovkaltara/design-system'
+
+<Combobox
+  options={[
+    { value: 'tarakan', label: 'Kota Tarakan' },
+    { value: 'nunukan', label: 'Kab. Nunukan' },
+  ]}
+  value={value}
+  onChange={setValue}
+  placeholder="Pilih wilayah..."
+  searchPlaceholder="Cari..."
+  emptyText="Tidak ditemukan."
+/>
+```
+
+### ComboboxProps
+
+| Prop | Type | Required | Default | Description |
+|---|---|---|---|---|
+| `options` | `{ value: string; label: string }[]` | Yes | — | Daftar opsi yang dapat dicari |
+| `value` | `string` | No | — | Nilai terkontrol |
+| `onChange` | `(value: string) => void` | No | — | Dipanggil saat opsi dipilih (klik ulang opsi yang sama mengosongkan) |
+| `placeholder` | `string` | No | `'Pilih item...'` | Teks trigger saat kosong |
+| `searchPlaceholder` | `string` | No | `'Cari...'` | Placeholder di `CommandInput` |
+| `emptyText` | `string` | No | `'Tidak ditemukan.'` | Teks saat hasil pencarian kosong |
+| `className` | `string` | No | — | Kelas tambahan pada trigger |
+| `disabled` | `boolean` | No | `false` | Nonaktifkan kontrol |
 
 ---
 
 ## DataTable
 
-Data table with column sorting, pagination, and column visibility toggle. Built on `@tanstack/react-table`.
+Tabel data ringan (bukan `@tanstack/react-table`). Mendukung render sel kustom, aksi baris opsional, sorting kolom client-side, dan pagination client-side.
 
-> [!todo] Need input from team: full props table for `DataTable` — document `columns`, `data`, `pageSize`, `onRowClick`, and any server-side pagination props from `src/components/ui/data-table.tsx`.
+```tsx
+import { DataTable, Button } from '@bpsprovkaltara/design-system'
+
+<DataTable
+  data={rows}
+  columns={[
+    { key: 'nama', label: 'Nama', sortable: true },
+    { key: 'nilai', label: 'Nilai', sortable: true },
+  ]}
+  pageSize={10}
+  getRowKey={(row) => row.id}
+  renderRowActions={(row) => (
+    <Button size="sm" variant="ghost" onClick={() => edit(row)}>
+      Edit
+    </Button>
+  )}
+/>
+```
+
+### DataTableProps
+
+| Prop | Type | Required | Default | Description |
+|---|---|---|---|---|
+| `data` | `T[]` | Yes | — | Baris data (`T extends Record<string, unknown>`) |
+| `columns` | `DataTableColumn<T>[]` | Yes | — | Definisi kolom (`key`, `label`, `getValue?`, `render?`, `sortable?`) |
+| `renderRowActions` | `(row: T, index: number) => ReactNode` | No | — | Jika diisi, menampilkan kolom aksi |
+| `actionsLabel` | `string` | No | `'Aksi'` | Label header kolom aksi |
+| `getRowKey` | `(row: T, index: number) => string \| number` | No | index | Kunci React per baris |
+| `pageSize` | `number` | No | — | Jika diisi, mengaktifkan pagination client-side |
+
+Tidak ada column visibility toggle dan tidak ada server-side pagination bawaan. Untuk kontrol penuh, gunakan primitif `Table`.
 
 ---
 
@@ -179,6 +237,29 @@ import { EmptyState } from '@bpsprovkaltara/design-system'
 | `secondaryAction` | `{ label: string; onClick: () => void }` | No | — | Secondary ghost button |
 | `compact` | `boolean` | No | `false` | Reduces padding and illustration size for use inside panels |
 | `className` | `string` | No | — | Additional classes on the wrapper |
+
+---
+
+## YearSelect / NumberField / MapLegend / SkipLink (4.4.0)
+
+```tsx
+import {
+  YearSelect,
+  NumberField,
+  MapLegend,
+  SkipLink,
+} from '@bpsprovkaltara/design-system'
+
+<YearSelect value={2025} onChange={setYear} fromYear={2018} toYear={2026} />
+<NumberField label="PDRB" value={pdrb} onChange={setPdrb} unit="Miliar" />
+<MapLegend />
+<SkipLink href="#main-content" />
+```
+
+- **`YearSelect`**: daftar tahun descending; props `fromYear` / `toYear` / `label`.
+- **`NumberField`**: format tampilan `id-ID`; parse titik ribuan saat blur; `unit` opsional.
+- **`MapLegend`**: legenda `map-tier-0`…`5` + `active`; `orientation` `vertical` | `horizontal`.
+- **`SkipLink`**: tautan fokus keyboard ke `#main-content` (default).
 
 ---
 

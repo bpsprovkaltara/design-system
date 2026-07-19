@@ -34,6 +34,7 @@ import { OverlaysPage } from '@/pages/components/OverlaysPage'
 import { DisclosurePage } from '@/pages/components/DisclosurePage'
 import { DataDisplayPage } from '@/pages/components/DataDisplayPage'
 import { NavigationPage } from '@/pages/components/NavigationPage'
+import { EmptyStatePage } from '@/pages/components/EmptyStatePage'
 
 function App() {
   return (
@@ -72,6 +73,7 @@ function App() {
             <Route path="disclosure" element={<DisclosurePage />} />
             <Route path="data-display" element={<DataDisplayPage />} />
             <Route path="navigation" element={<NavigationPage />} />
+            <Route path="empty-state" element={<EmptyStatePage />} />
           </Route>
 
           {/* Prototypes */}

@@ -1,4 +1,4 @@
-interface SparklineProps {
+export interface SparklineProps {
     data: number[];
     className?: string;
     width?: number;
@@ -9,11 +9,11 @@ interface BarChartItem {
     label: string;
     value: number;
 }
-interface BarChartProps {
+export interface BarChartProps {
     data: BarChartItem[];
     className?: string;
     showValues?: boolean;
 }
 declare function BarChart({ data, className, showValues }: BarChartProps): import("react/jsx-runtime").JSX.Element | null;
 export { Sparkline, BarChart };
-export type { SparklineProps, BarChartProps, BarChartItem };
+export type { BarChartItem };

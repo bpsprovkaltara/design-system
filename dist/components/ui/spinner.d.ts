@@ -2,7 +2,7 @@ import { VariantProps } from 'class-variance-authority';
 declare const spinnerVariants: (props?: ({
     size?: "default" | "xs" | "sm" | "lg" | "xl" | null | undefined;
 } & import('class-variance-authority/types').ClassProp) | undefined) => string;
-interface SpinnerProps extends VariantProps<typeof spinnerVariants> {
+export interface SpinnerProps extends VariantProps<typeof spinnerVariants> {
     className?: string;
     label?: string;
 }

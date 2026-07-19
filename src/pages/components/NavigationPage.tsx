@@ -122,6 +122,30 @@ export function NavigationPage() {
 </Pagination>`}</CodeBlock>
       </ShowcaseSection>
 
+      <ShowcaseSection title="Pagination — renderLink (Next.js / TanStack Router)">
+        <div className="rounded-lg border bg-card p-8">
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationLink href="/halaman/1" isActive renderLink={(props) => <a {...props} />}>
+                  1
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="/halaman/2" renderLink={(props) => <a {...props} />}>
+                  2
+                </PaginationLink>
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+        <CodeBlock>{`// Konsumen framework router merender Link miliknya sendiri lewat renderLink,
+// props (className, href, aria-current, isActive, dll) sudah lengkap:
+<PaginationLink href="/halaman/2" renderLink={(props) => <Link {...props} />}>
+  2
+</PaginationLink>`}</CodeBlock>
+      </ShowcaseSection>
+
       <ShowcaseSection title="Page Header">
         <div className="rounded-lg border bg-card p-8 space-y-8">
           <PageHeader
@@ -135,12 +159,20 @@ export function NavigationPage() {
             }
           />
           <PageHeader title="Pengaturan Sistem" description="Konfigurasi global aplikasi." />
+          <PageHeader
+            title="Judul dengan Font Kustom"
+            description="titleClassName memungkinkan app mengganti font judul tanpa wrapper."
+            titleClassName="font-serif"
+          />
         </div>
         <CodeBlock>{`<PageHeader
   title="Daftar Pegawai"
   description="Kelola data pegawai aktif ..."
   action={<Button>Tambah Pegawai</Button>}
-/>`}</CodeBlock>
+/>
+
+// App bisa mengganti font judul langsung tanpa wrapper komponen:
+<PageHeader title="..." titleClassName="font-display" />`}</CodeBlock>
       </ShowcaseSection>
     </div>
   )

@@ -1,5 +1,5 @@
 import { DateRange } from 'react-day-picker';
-interface DateRangePickerProps {
+export interface DateRangePickerProps {
     range?: DateRange;
     onChange?: (range?: DateRange) => void;
     placeholder?: string;
@@ -8,4 +8,3 @@ interface DateRangePickerProps {
     clearable?: boolean;
 }
 export declare function DateRangePicker({ range, onChange, placeholder, className, disabled, clearable, }: DateRangePickerProps): import("react/jsx-runtime").JSX.Element;
-export {};

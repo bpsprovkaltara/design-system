@@ -1,4 +1,4 @@
-![version](https://img.shields.io/badge/version-4.3.0-blue) ![license](https://img.shields.io/badge/license-UNLICENSED-lightgrey) ![node](https://img.shields.io/badge/node-%3E%3D20-green)
+![version](https://img.shields.io/badge/version-4.5.0-blue) ![license](https://img.shields.io/badge/license-UNLICENSED-lightgrey) ![node](https://img.shields.io/badge/node-%3E%3D20-green)
 
 # BPS Kaltara design system
 
@@ -36,9 +36,19 @@ Peer dependencies (install in the consumer app if not already present):
 
 ```bash
 pnpm add react@^19 react-dom@^19 tailwindcss@^4
+# Form (opsional — hanya jika memakai Form + RHF/Zod):
+pnpm add react-hook-form zod @hookform/resolvers
 # proyek Vite: tambahkan @tailwindcss/vite sesuai dokumentasi Tailwind v4
 ```
 
+**Matriks import**
+
+| Import | Kegunaan |
+|---|---|
+| `@bpsprovkaltara/design-system` | Komponen + CSS all-in-one |
+| `@bpsprovkaltara/design-system/components/ui/button` (dll) | Subpath per komponen UI |
+| `@bpsprovkaltara/design-system/tokens.css` | Token + `@theme` tanpa preflight |
+| `@bpsprovkaltara/design-system/utils` | `cn` RSC-safe |
 **Import styles** — once, at app root:
 
 ```ts

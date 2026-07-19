@@ -6,6 +6,7 @@ import { KpiCard } from '@/components/ui/kpi-card'
 import { Progress } from '@/components/ui/progress'
 import { Calendar } from '@/components/ui/calendar'
 import { Sparkline, BarChart } from '@/components/ui/chart'
+import { MapLegend } from '@/components/ui/map-legend'
 import { Users, FileBarChart, Database, ShieldCheck } from 'lucide-react'
 
 export function DataDisplayPage() {
@@ -159,6 +160,32 @@ export function DataDisplayPage() {
   data={[
     { label: 'Bulungan', value: 182340 },
     { label: 'Tarakan', value: 261785 },
+  ]}
+/>`}</CodeBlock>
+      </ShowcaseSection>
+
+      <ShowcaseSection title="Map Legend">
+        <div className="grid gap-4 md:grid-cols-2">
+          <MapLegend />
+          <MapLegend
+            orientation="horizontal"
+            title="Indeks pembangunan"
+            items={[
+              { tier: 1, label: 'Rendah' },
+              { tier: 3, label: 'Sedang' },
+              { tier: 5, label: 'Tinggi' },
+              { tier: 'active', label: 'Fokus' },
+            ]}
+          />
+        </div>
+        <CodeBlock>{`<MapLegend />
+
+<MapLegend
+  orientation="horizontal"
+  title="Indeks pembangunan"
+  items={[
+    { tier: 1, label: 'Rendah' },
+    { tier: 5, label: 'Tinggi' },
   ]}
 />`}</CodeBlock>
       </ShowcaseSection>

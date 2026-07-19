@@ -8,7 +8,7 @@ type AvatarProps = React.ComponentProps<typeof AvatarPrimitive.Root> & VariantPr
 declare function Avatar({ className, size, ...props }: AvatarProps): import("react/jsx-runtime").JSX.Element;
 declare function AvatarImage({ className, ...props }: React.ComponentProps<typeof AvatarPrimitive.Image>): import("react/jsx-runtime").JSX.Element;
 declare function AvatarFallback({ className, ...props }: React.ComponentProps<typeof AvatarPrimitive.Fallback>): import("react/jsx-runtime").JSX.Element;
-interface AvatarGroupProps {
+export interface AvatarGroupProps {
     children: React.ReactNode;
     max?: number;
     size?: VariantProps<typeof avatarVariants>['size'];

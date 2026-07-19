@@ -4,9 +4,8 @@ export interface ValidationItem {
     section: string;
     message: string;
 }
-interface ValidationSummaryProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ValidationSummaryProps extends React.HTMLAttributes<HTMLDivElement> {
     items: ValidationItem[];
     onNavigate?: (id: string) => void;
 }
 export declare function ValidationSummary({ items, onNavigate, className, ...props }: ValidationSummaryProps): import("react/jsx-runtime").JSX.Element;
-export {};

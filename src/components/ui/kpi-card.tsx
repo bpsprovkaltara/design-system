@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 
-interface KpiCardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface KpiCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string
   value: string
   helper?: string

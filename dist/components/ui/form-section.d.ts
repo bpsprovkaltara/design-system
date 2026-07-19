@@ -1,5 +1,5 @@
 import * as React from 'react';
-interface FormSectionProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface FormSectionProps extends React.HTMLAttributes<HTMLDivElement> {
     title: string;
     description?: string;
     requiredCount?: number;
@@ -7,4 +7,3 @@ interface FormSectionProps extends React.HTMLAttributes<HTMLDivElement> {
     action?: React.ReactNode;
 }
 export declare function FormSection({ title, description, requiredCount, completedCount, action, className, children, ...props }: FormSectionProps): import("react/jsx-runtime").JSX.Element;
-export {};

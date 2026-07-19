@@ -3,6 +3,9 @@ import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHea
 import { CodeBlock } from '@/components/showcase/CodeBlock'
 import { DataTable } from '@/components/ui/data-table'
 import { StatusBadge } from '@/components/ui/status-badge'
+import { Button } from '@/components/ui/button'
+import { TableEmpty } from '@/components/ui/table-empty'
+import { TablePagination } from '@/components/ui/table-pagination'
 import {
   Table,
   TableBody,
@@ -14,6 +17,7 @@ import {
 } from '@/components/ui/table'
 
 export function TablePage() {
+  const [page, setPage] = React.useState(1)
   type DataStatus = 'approved' | 'pending' | 'revised'
   const sampleData = [
     { id: 1, name: 'Tarakan', pdrb: 24500, status: 'approved' },
@@ -22,10 +26,11 @@ export function TablePage() {
   ]
 
   const columns = [
-    { key: 'name', label: 'Kabupaten/Kota' },
+    { key: 'name', label: 'Kabupaten/Kota', sortable: true },
     {
       key: 'pdrb',
       label: 'PDRB (Miliar Rp)',
+      sortable: true,
       render: (val: unknown) => (
         <span className="numeric">{Number(val).toLocaleString('id-ID')}</span>
       ),
@@ -49,8 +54,36 @@ export function TablePage() {
 
       <ShowcaseSection title="BPS Data Table">
         <div className="border rounded-lg bg-card">
-          <DataTable data={sampleData} columns={columns} />
+          <DataTable
+            data={sampleData}
+            columns={columns}
+            getRowKey={(row) => row.id}
+            pageSize={10}
+            renderRowActions={() => (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-primary hover:text-primary/80 font-bold h-7 px-2"
+              >
+                Edit
+              </Button>
+            )}
+          />
         </div>
+        <CodeBlock>{`<DataTable
+  data={rows}
+  columns={[
+    { key: 'name', label: 'Kabupaten/Kota', sortable: true },
+    { key: 'pdrb', label: 'PDRB', sortable: true },
+  ]}
+  pageSize={10}
+  getRowKey={(row) => row.id}
+  renderRowActions={(row) => (
+    <Button variant="ghost" size="sm" onClick={() => edit(row)}>
+      Edit
+    </Button>
+  )}
+/>`}</CodeBlock>
       </ShowcaseSection>
 
       <ShowcaseSection title="Table Primitif">
@@ -67,21 +100,13 @@ export function TablePage() {
             <TableBody>
               <TableRow>
                 <TableCell>Sensus Ekonomi</TableCell>
-                <TableCell className="text-right">
-                  {(1250000000).toLocaleString('id-ID')}
-                </TableCell>
-                <TableCell className="text-right">
-                  {(980000000).toLocaleString('id-ID')}
-                </TableCell>
+                <TableCell className="text-right">{(1250000000).toLocaleString('id-ID')}</TableCell>
+                <TableCell className="text-right">{(980000000).toLocaleString('id-ID')}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell>Survei Sosial Ekonomi</TableCell>
-                <TableCell className="text-right">
-                  {(840000000).toLocaleString('id-ID')}
-                </TableCell>
-                <TableCell className="text-right">
-                  {(720000000).toLocaleString('id-ID')}
-                </TableCell>
+                <TableCell className="text-right">{(840000000).toLocaleString('id-ID')}</TableCell>
+                <TableCell className="text-right">{(720000000).toLocaleString('id-ID')}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -101,6 +126,50 @@ export function TablePage() {
     </TableRow>
   </TableBody>
 </Table>`}</CodeBlock>
+      </ShowcaseSection>
+
+      <ShowcaseSection title="Table Empty State">
+        <div className="border rounded-lg bg-card">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Kabupaten/Kota</TableHead>
+                <TableHead className="text-right">PDRB (Miliar Rp)</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableEmpty
+                colSpan={2}
+                title="Belum ada data"
+                description="Data akan tampil setelah diinput."
+              />
+            </TableBody>
+          </Table>
+        </div>
+        <CodeBlock>{`<TableBody>
+  <TableEmpty colSpan={2} title="Belum ada data" description="Data akan tampil setelah diinput." />
+</TableBody>`}</CodeBlock>
+      </ShowcaseSection>
+
+      <ShowcaseSection title="Table Pagination">
+        <div className="border rounded-lg bg-card p-4">
+          <TablePagination page={page} pageSize={10} total={45} onPageChange={setPage} />
+        </div>
+        <CodeBlock>{`<TablePagination
+  page={page}
+  pageSize={10}
+  total={total}
+  onPageChange={setPage}
+/>
+
+// Mode SSR/link (Next.js, TanStack Router, dll):
+<TablePagination
+  page={page}
+  pageSize={10}
+  total={total}
+  hrefForPage={(p) => \`/data?page=\${p}\`}
+  renderLink={(props) => <Link {...props} />}
+/>`}</CodeBlock>
       </ShowcaseSection>
     </div>
   )

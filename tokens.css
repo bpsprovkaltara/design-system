@@ -23,6 +23,8 @@
 @theme inline {
   /* Fonts */
   --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'JetBrains Mono', 'Cascadia Code', monospace;
 
   /* shadcn/ui semantic compatibility */
   --color-background: hsl(var(--background));
@@ -160,6 +162,28 @@
   --color-warm-50: var(--warm-50);
   --color-warm-100: var(--warm-100);
   --color-warm-200: var(--warm-200);
+
+  /* Slate primitive scale */
+  --color-slate-50: hsl(var(--slate-50));
+  --color-slate-100: hsl(var(--slate-100));
+  --color-slate-200: hsl(var(--slate-200));
+  --color-slate-300: hsl(var(--slate-300));
+  --color-slate-400: hsl(var(--slate-400));
+  --color-slate-500: hsl(var(--slate-500));
+  --color-slate-600: hsl(var(--slate-600));
+  --color-slate-700: hsl(var(--slate-700));
+  --color-slate-800: hsl(var(--slate-800));
+  --color-slate-900: hsl(var(--slate-900));
+  --color-slate-950: hsl(var(--slate-950));
+
+  /* Map choropleth tiers */
+  --color-map-tier-0: hsl(var(--map-tier-0));
+  --color-map-tier-1: hsl(var(--map-tier-1));
+  --color-map-tier-2: hsl(var(--map-tier-2));
+  --color-map-tier-3: hsl(var(--map-tier-3));
+  --color-map-tier-4: hsl(var(--map-tier-4));
+  --color-map-tier-5: hsl(var(--map-tier-5));
+  --color-map-tier-active: hsl(var(--map-tier-active));
 
   /* Elevation */
   --shadow-elevation-0: var(--elevation-0);
@@ -363,7 +387,7 @@
 @utility z-sticky { z-index: var(--z-sticky); }
 @utility z-overlay { z-index: var(--z-overlay); }
 @utility z-modal { z-index: var(--z-modal); }
-@utility z-popover { z-index: var(--z-dropdown); }
+@utility z-popover { z-index: var(--z-popover); }
 @utility z-toast { z-index: var(--z-toast); }
 
 /* ============================================================
@@ -565,29 +589,8 @@
   --info-bg:    var(--feedback-info-bg);
 }
 
-/* ============================================================
-   LAYER C — COMPONENT TOKENS (LIGHT MODE)
-   ============================================================ */
-
-:root {
-  /* Button */
-  --button-primary-bg:       var(--navy-800);
-  --button-primary-fg:       0 0% 100%;
-  --button-primary-bg-hover: var(--navy-900);
-  --button-primary-shadow:   var(--navy-800);
-
-  /* Input */
-  --input-bg:           0 0% 100%;
-  --input-border:       var(--border-default);
-  --input-border-focus: var(--border-focus);
-  --input-placeholder:  var(--content-tertiary);
-
-  /* Table */
-  --table-header-bg:   var(--warm-100-hsl);
-  --table-row-hover:   var(--warm-50-hsl);
-  --table-border:      var(--border-subtle);
-  --table-row-stripe:  var(--warm-50-hsl);
-}
+/* Layer C (component-specific tokens) removed — components use Layer B /
+   shadcn semantic tokens. Reintroduce only when wired into Button/Input/Table. */
 
 /* ============================================================
    DARK MODE — SEMANTIC TOKEN OVERRIDES
@@ -626,6 +629,28 @@
   --feedback-danger-bg:   var(--crimson-950);
   --feedback-info:        214 89% 60%;
   --feedback-info-bg:     214 70% 10%;
+
+  /* Brand */
+  --brand-primary:     var(--navy-300);
+  --brand-primary-fg:  var(--navy-950);
+  --brand-accent:      var(--amber-400);
+  --brand-accent-fg:   var(--navy-950);
+
+  /* Data / viz */
+  --data-positive:        var(--emerald-400);
+  --data-negative:        var(--crimson-400);
+  --data-neutral:         var(--slate-400);
+  --data-warning:         var(--amber-400);
+  --data-highlight:       var(--amber-300);
+
+  /* Map choropleth */
+  --map-tier-0:      var(--navy-900);
+  --map-tier-1:      var(--navy-800);
+  --map-tier-2:      var(--navy-600);
+  --map-tier-3:      var(--navy-400);
+  --map-tier-4:      var(--navy-300);
+  --map-tier-5:      var(--navy-200);
+  --map-tier-active: var(--amber-400);
 
   /* shadcn/ui compat */
   --background:          var(--surface-canvas);
@@ -691,17 +716,6 @@
   --shadow-lg:    0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
   --shadow-xl:    0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
   --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.4);
-
-  /* Component */
-  --button-primary-bg:       var(--navy-300);
-  --button-primary-fg:       var(--navy-950);
-  --button-primary-bg-hover: var(--navy-200);
-  --input-bg:                var(--navy-900);
-  --input-border:            var(--border-default);
-  --input-border-focus:      var(--border-focus);
-  --table-header-bg:         var(--navy-900);
-  --table-row-hover:         var(--navy-800);
-  --table-border:            var(--border-subtle);
 }
 
 /* ============================================================
@@ -893,6 +907,7 @@
   --z-base:     0;
   --z-raised:   10;
   --z-dropdown: 100;
+  --z-popover:  150;
   --z-sticky:   200;
   --z-overlay:  300;
   --z-modal:    400;

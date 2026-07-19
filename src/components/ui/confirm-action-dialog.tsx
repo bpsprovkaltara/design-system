@@ -1,3 +1,5 @@
+'use client'
+
 import * as React from 'react'
 import {
   Dialog,
@@ -12,7 +14,162 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 
-interface ConfirmActionDialogProps {
+export interface ConfirmDialogProps {
+  title: string
+  description?: React.ReactNode
+  confirmLabel?: string
+  cancelLabel?: string
+  /** When true, confirm uses destructive styling. */
+  variant?: 'default' | 'destructive'
+  /** Controlled open state. */
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  /** Uncontrolled trigger. Ignored when `open` is controlled without a trigger. */
+  trigger?: React.ReactNode
+  /** @deprecated Use `trigger` ReactNode instead. */
+  triggerLabel?: string
+  reasonRequired?: boolean
+  reasonLabel?: string
+  reasonPlaceholder?: string
+  /** Hide the reason field entirely. */
+  showReason?: boolean
+  busy?: boolean
+  busyLabel?: string
+  onConfirm: (reason: string) => void | Promise<void>
+  onCancel?: () => void
+}
+
+/**
+ * Flexible confirm dialog — controlled or trigger-based, optional reason, async-safe.
+ * Prefer this over the legacy `ConfirmActionDialog` wrapper.
+ */
+export function ConfirmDialog({
+  title,
+  description,
+  confirmLabel = 'Konfirmasi',
+  cancelLabel = 'Batal',
+  variant = 'default',
+  open: openProp,
+  onOpenChange,
+  trigger,
+  triggerLabel,
+  reasonRequired = false,
+  reasonLabel = 'Alasan tindakan',
+  reasonPlaceholder = 'Tuliskan alasan atau catatan tindak lanjut...',
+  showReason = true,
+  busy = false,
+  busyLabel = 'Memproses…',
+  onConfirm,
+  onCancel,
+}: ConfirmDialogProps) {
+  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(false)
+  const isControlled = openProp !== undefined
+  const open = isControlled ? openProp : uncontrolledOpen
+  const setOpen = (next: boolean) => {
+    if (!isControlled) setUncontrolledOpen(next)
+    onOpenChange?.(next)
+  }
+
+  const [reason, setReason] = React.useState('')
+  const [hasError, setHasError] = React.useState(false)
+  const [internalBusy, setInternalBusy] = React.useState(false)
+  const isBusy = busy || internalBusy
+
+  const handleOpenChange = (next: boolean) => {
+    if (isBusy && !next) return
+    setOpen(next)
+    if (!next) {
+      setReason('')
+      setHasError(false)
+      onCancel?.()
+    }
+  }
+
+  const handleConfirm = async () => {
+    if (showReason && reasonRequired && reason.trim().length === 0) {
+      setHasError(true)
+      return
+    }
+
+    try {
+      setInternalBusy(true)
+      await onConfirm(showReason ? reason.trim() : '')
+      setReason('')
+      setHasError(false)
+      setOpen(false)
+    } finally {
+      setInternalBusy(false)
+    }
+  }
+
+  const triggerNode =
+    trigger ??
+    (triggerLabel ? (
+      <Button variant="outline" type="button">
+        {triggerLabel}
+      </Button>
+    ) : null)
+
+  return (
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      {triggerNode ? <DialogTrigger asChild>{triggerNode}</DialogTrigger> : null}
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+          {description ? (
+            typeof description === 'string' ? (
+              <DialogDescription>{description}</DialogDescription>
+            ) : (
+              <div className="text-sm text-muted-foreground">{description}</div>
+            )
+          ) : null}
+        </DialogHeader>
+        {showReason ? (
+          <div className="space-y-2.5">
+            <Label htmlFor="confirm-reason">
+              {reasonLabel}{' '}
+              {reasonRequired ? <span className="text-destructive">*</span> : null}
+            </Label>
+            <Textarea
+              id="confirm-reason"
+              value={reason}
+              disabled={isBusy}
+              onChange={(event) => {
+                setReason(event.target.value)
+                if (hasError) setHasError(false)
+              }}
+              placeholder={reasonPlaceholder}
+            />
+            {hasError ? (
+              <p className="text-xs text-destructive">Alasan wajib diisi sebelum melanjutkan.</p>
+            ) : null}
+          </div>
+        ) : null}
+        <DialogFooter>
+          <Button
+            type="button"
+            variant="ghost"
+            disabled={isBusy}
+            onClick={() => handleOpenChange(false)}
+          >
+            {cancelLabel}
+          </Button>
+          <Button
+            type="button"
+            variant={variant === 'destructive' ? 'destructive' : 'default'}
+            disabled={isBusy}
+            onClick={() => void handleConfirm()}
+          >
+            {isBusy ? busyLabel : confirmLabel}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+/** @deprecated Use `ConfirmDialog` with `triggerLabel` / `trigger`. */
+export interface ConfirmActionDialogProps {
   triggerLabel: string
   title: string
   description: string
@@ -21,6 +178,7 @@ interface ConfirmActionDialogProps {
   onConfirm: (reason: string) => void
 }
 
+/** @deprecated Prefer `ConfirmDialog`. */
 export function ConfirmActionDialog({
   triggerLabel,
   title,
@@ -29,56 +187,15 @@ export function ConfirmActionDialog({
   reasonRequired = false,
   onConfirm,
 }: ConfirmActionDialogProps) {
-  const [open, setOpen] = React.useState(false)
-  const [reason, setReason] = React.useState('')
-  const [hasError, setHasError] = React.useState(false)
-
-  const handleConfirm = () => {
-    if (reasonRequired && reason.trim().length === 0) {
-      setHasError(true)
-      return
-    }
-
-    onConfirm(reason.trim())
-    setReason('')
-    setHasError(false)
-    setOpen(false)
-  }
-
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline">{triggerLabel}</Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
-        </DialogHeader>
-        <div className="space-y-2.5">
-          <Label htmlFor="confirm-reason">
-            Alasan tindakan {reasonRequired ? <span className="text-destructive">*</span> : null}
-          </Label>
-          <Textarea
-            id="confirm-reason"
-            value={reason}
-            onChange={(event) => {
-              setReason(event.target.value)
-              if (hasError) setHasError(false)
-            }}
-            placeholder="Tuliskan alasan atau catatan tindak lanjut..."
-          />
-          {hasError ? (
-            <p className="text-xs text-destructive">Alasan wajib diisi sebelum melanjutkan.</p>
-          ) : null}
-        </div>
-        <DialogFooter>
-          <Button variant="ghost" onClick={() => setOpen(false)}>
-            Batal
-          </Button>
-          <Button onClick={handleConfirm}>{confirmLabel}</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <ConfirmDialog
+      triggerLabel={triggerLabel}
+      title={title}
+      description={description}
+      confirmLabel={confirmLabel}
+      reasonRequired={reasonRequired}
+      showReason
+      onConfirm={onConfirm}
+    />
   )
 }

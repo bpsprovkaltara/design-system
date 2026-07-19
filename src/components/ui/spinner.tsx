@@ -14,7 +14,7 @@ const spinnerVariants = cva('animate-spin rounded-full border-current', {
   defaultVariants: { size: 'default' },
 })
 
-interface SpinnerProps extends VariantProps<typeof spinnerVariants> {
+export interface SpinnerProps extends VariantProps<typeof spinnerVariants> {
   className?: string
   label?: string
 }

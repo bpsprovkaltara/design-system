@@ -1,3 +1,5 @@
+'use client'
+
 import * as React from 'react'
 import { Check, ChevronsUpDown } from 'lucide-react'
 
@@ -13,13 +15,13 @@ import {
 } from '@/components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
-interface Option {
+export interface ComboboxOption {
   value: string
   label: string
 }
 
-interface ComboboxProps {
-  options: Option[]
+export interface ComboboxProps {
+  options: ComboboxOption[]
   value?: string
   onChange?: (value: string) => void
   placeholder?: string

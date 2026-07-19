@@ -1,6 +1,6 @@
 /* ============================================================
    @bpsprovkaltara/design-system — Public API
-   Version 4.3.0
+   Version 4.5.0
    ============================================================ */
 import '../colors_and_type.css'
 
@@ -107,6 +107,7 @@ export {
   DescriptionDetails,
 } from '@/components/ui/description-list'
 export { FileUpload } from '@/components/ui/file-upload'
+export type { FileUploadProps } from '@/components/ui/file-upload'
 export {
   Form,
   FormField,
@@ -139,6 +140,7 @@ export {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
+export type { PaginationLinkProps, PaginationLinkRenderProps } from '@/components/ui/pagination'
 export { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover'
 export { Progress } from '@/components/ui/progress'
 export { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
@@ -171,7 +173,9 @@ export {
 export { Skeleton } from '@/components/ui/skeleton'
 export { Slider } from '@/components/ui/slider'
 export { Spinner } from '@/components/ui/spinner'
-export { StatusBadge } from '@/components/ui/status-badge'
+export type { SpinnerProps } from '@/components/ui/spinner'
+export { StatusBadge, statusBadgeVariants } from '@/components/ui/status-badge'
+export type { StatusBadgeProps } from '@/components/ui/status-badge'
 export { Switch } from '@/components/ui/switch'
 export {
   Table,
@@ -203,22 +207,72 @@ export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 
 /* === BPS Custom Components === */
 export { Combobox } from '@/components/ui/combobox'
+export type { ComboboxProps, ComboboxOption } from '@/components/ui/combobox'
 export { AppTopbar } from '@/components/ui/app-topbar'
-export { ConfirmActionDialog } from '@/components/ui/confirm-action-dialog'
+export type { AppTopbarProps } from '@/components/ui/app-topbar'
+export { AppSidebar } from '@/components/ui/app-sidebar'
+export type {
+  AppSidebarProps,
+  AppSidebarNavItem,
+  AppSidebarNavGroup,
+} from '@/components/ui/app-sidebar'
+export { AppShell } from '@/components/ui/app-shell'
+export type { AppShellProps } from '@/components/ui/app-shell'
+export { ThemeToggle, useTheme } from '@/components/ui/theme-toggle'
+export type { ThemeToggleProps, ThemeMode } from '@/components/ui/theme-toggle'
+export { ConfirmActionDialog, ConfirmDialog } from '@/components/ui/confirm-action-dialog'
+export type {
+  ConfirmActionDialogProps,
+  ConfirmDialogProps,
+} from '@/components/ui/confirm-action-dialog'
 export { BulkActionBar } from '@/components/ui/bulk-action-bar'
+export type { BulkActionBarProps, BulkAction } from '@/components/ui/bulk-action-bar'
 export { DataStatePanel } from '@/components/ui/data-state-panel'
+export type { DataStatePanelProps } from '@/components/ui/data-state-panel'
 export { DataTable } from '@/components/ui/data-table'
+export type {
+  DataTableProps,
+  DataTableColumn,
+  DataTablePagination,
+} from '@/components/ui/data-table'
 export { DatePicker } from '@/components/ui/date-picker'
+export type { DatePickerProps } from '@/components/ui/date-picker'
 export { DateRangePicker } from '@/components/ui/date-range-picker'
-export { FilterBar } from '@/components/ui/filter-bar'
+export type { DateRangePickerProps } from '@/components/ui/date-range-picker'
+export { FilterBar, DocumentFilterBar } from '@/components/ui/filter-bar'
+export type {
+  FilterBarProps,
+  FilterBarValue,
+  FilterOption,
+  FilterField,
+  DocumentFilterBarProps,
+} from '@/components/ui/filter-bar'
 export { FormSection } from '@/components/ui/form-section'
+export type { FormSectionProps } from '@/components/ui/form-section'
 export { KpiCard } from '@/components/ui/kpi-card'
+export type { KpiCardProps } from '@/components/ui/kpi-card'
 export { PageHeader } from '@/components/ui/page-header'
+export type { PageHeaderProps } from '@/components/ui/page-header'
 export { PerformanceCard } from '@/components/ui/performance-card'
 export type { PerformanceCardProps } from '@/components/ui/performance-card'
 export { ProgressAudit } from '@/components/ui/progress-audit'
+export type { ProgressAuditProps } from '@/components/ui/progress-audit'
 export { ReviewTimeline } from '@/components/ui/review-timeline'
+export type { ReviewTimelineProps, ReviewTimelineItem } from '@/components/ui/review-timeline'
 export { ValidationSummary } from '@/components/ui/validation-summary'
+export type { ValidationSummaryProps, ValidationItem } from '@/components/ui/validation-summary'
+export { YearSelect } from '@/components/ui/year-select'
+export type { YearSelectProps } from '@/components/ui/year-select'
+export { NumberField } from '@/components/ui/number-field'
+export type { NumberFieldProps } from '@/components/ui/number-field'
+export { MapLegend } from '@/components/ui/map-legend'
+export type { MapLegendProps, MapLegendItem } from '@/components/ui/map-legend'
+export { SkipLink } from '@/components/ui/skip-link'
+export type { SkipLinkProps } from '@/components/ui/skip-link'
+export { TableEmpty } from '@/components/ui/table-empty'
+export type { TableEmptyProps } from '@/components/ui/table-empty'
+export { TablePagination } from '@/components/ui/table-pagination'
+export type { TablePaginationProps } from '@/components/ui/table-pagination'
 
 /* === Charts === */
 export { Sparkline, BarChart } from '@/components/ui/chart'

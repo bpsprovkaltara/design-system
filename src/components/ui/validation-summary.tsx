@@ -8,7 +8,7 @@ export interface ValidationItem {
   message: string
 }
 
-interface ValidationSummaryProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ValidationSummaryProps extends React.HTMLAttributes<HTMLDivElement> {
   items: ValidationItem[]
   onNavigate?: (id: string) => void
 }
@@ -22,6 +22,8 @@ export function ValidationSummary({
   if (items.length === 0) {
     return (
       <div
+        role="status"
+        aria-live="polite"
         className={cn(
           'rounded-lg border border-feedback-success/30 bg-feedback-success-bg p-4',
           className
@@ -35,6 +37,8 @@ export function ValidationSummary({
 
   return (
     <div
+      role="alert"
+      aria-live="assertive"
       className={cn(
         'rounded-lg border border-feedback-danger/30 bg-feedback-danger-bg p-4',
         className

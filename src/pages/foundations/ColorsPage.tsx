@@ -83,6 +83,56 @@ export function ColorsPage() {
             className="w-24"
           />
         </div>
+        <h4 className="text-sm font-semibold mb-3 mt-8">Slate Scale</h4>
+        <div className="grid grid-cols-5 md:grid-cols-11 gap-2">
+          <ColorSwatch name="50" variable="slate-50" value="210 40% 98%" darkText />
+          <ColorSwatch name="100" variable="slate-100" value="210 40% 96%" darkText />
+          <ColorSwatch name="200" variable="slate-200" value="214 32% 91%" darkText />
+          <ColorSwatch name="300" variable="slate-300" value="213 27% 84%" darkText />
+          <ColorSwatch name="400" variable="slate-400" value="215 20% 65%" />
+          <ColorSwatch name="500" variable="slate-500" value="215 16% 47%" />
+          <ColorSwatch name="600" variable="slate-600" value="215 19% 35%" />
+          <ColorSwatch name="700" variable="slate-700" value="215 25% 27%" />
+          <ColorSwatch name="800" variable="slate-800" value="217 33% 17%" />
+          <ColorSwatch name="900" variable="slate-900" value="222 47% 11%" />
+          <ColorSwatch name="950" variable="slate-950" value="229 84% 5%" />
+        </div>
+      </ShowcaseSection>
+
+      <ShowcaseSection title="Map tiers (choropleth)">
+        <p className="text-muted-foreground mb-4 text-sm">
+          Token <code className="text-xs">map-tier-*</code> untuk peta tematik. Di dark mode nilai
+          di-override agar kontras tetap terbaca.
+        </p>
+        <div className="grid grid-cols-4 md:grid-cols-7 gap-2">
+          <ColorSwatch name="Tier 0" variable="map-tier-0" value="tier-0" darkText />
+          <ColorSwatch name="Tier 1" variable="map-tier-1" value="tier-1" darkText />
+          <ColorSwatch name="Tier 2" variable="map-tier-2" value="tier-2" />
+          <ColorSwatch name="Tier 3" variable="map-tier-3" value="tier-3" />
+          <ColorSwatch name="Tier 4" variable="map-tier-4" value="tier-4" />
+          <ColorSwatch name="Tier 5" variable="map-tier-5" value="tier-5" />
+          <ColorSwatch
+            name="Active"
+            variable="map-tier-active"
+            value="active"
+            darkText
+          />
+        </div>
+        <CodeBlock>{`<div className="bg-map-tier-3 text-content-inverse">Wilayah padat</div>
+<div className="bg-map-tier-active">Wilayah aktif</div>`}</CodeBlock>
+      </ShowcaseSection>
+
+      <ShowcaseSection title="Brand & data (semantic)">
+        <p className="text-muted-foreground mb-4 text-sm">
+          Token <code className="text-xs">brand-*</code> dan <code className="text-xs">data-*</code>{' '}
+          mengikuti tema terang/gelap. Aktifkan dark mode di footer sidebar untuk memverifikasi.
+        </p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <ColorSwatch name="Brand primary" variable="brand-primary" value="brand" />
+          <ColorSwatch name="Brand accent" variable="brand-accent" value="accent" darkText />
+          <ColorSwatch name="Data positive" variable="data-positive" value="positive" />
+          <ColorSwatch name="Data negative" variable="data-negative" value="negative" />
+        </div>
       </ShowcaseSection>
     </div>
   )

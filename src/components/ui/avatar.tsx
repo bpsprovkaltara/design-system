@@ -59,7 +59,7 @@ function AvatarFallback({
   )
 }
 
-interface AvatarGroupProps {
+export interface AvatarGroupProps {
   children: React.ReactNode
   max?: number
   size?: VariantProps<typeof avatarVariants>['size']

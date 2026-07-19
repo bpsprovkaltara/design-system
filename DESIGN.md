@@ -17,7 +17,7 @@ Ada dua jalur rilis paralel. **Tentukan versi sebelum menulis kode** — API-nya
 |---|---|---|
 | Tailwind CSS | 3.4 | 4 |
 | React | 18 | 19 |
-| Node | ≥18 | ≥20 |
+| Node | ≥18 | ≥20 (CI/Docker: Node 20) |
 | Tema / styling | preset (`tailwind-preset`) | CSS-first (`import 'styles.css'`) |
 | Nama komponen custom | ber-prefix `BpsX` | tanpa prefix |
 | dist-tag | `legacy` | `latest` |
@@ -61,10 +61,25 @@ Peer dependencies (install bila belum ada):
 ```bash
 # v4
 pnpm add react@^19 react-dom@^19 tailwindcss@^4
+# Form opsional (jika memakai Form + RHF/Zod):
+pnpm add react-hook-form zod @hookform/resolvers
 # v3
 pnpm add react@^18 react-dom@^18 tailwindcss@^3.4
 ```
 
+Subpath yang didukung (v4):
+
+| Path | Isi |
+|---|---|
+| `@bpsprovkaltara/design-system` | Barrel + CSS side-effect |
+| `.../components/ui/button` (dll.) | Satu modul UI |
+| `.../patterns/empty-state` | Pattern |
+| `.../hooks/use-toast` | Hook |
+| `.../utils` | `cn` + variants RSC-safe |
+| `.../styles.css` / `tokens.css` / `fonts.css` | CSS |
+
+Jangan memakai catch-all lama `@bpsprovkaltara/design-system/button` — gunakan
+`.../components/ui/button` atau entry utama.
 ---
 
 ## 3. Setup styling
@@ -105,18 +120,24 @@ Impor semua dari entry point utama: `import { ... } from '@bpsprovkaltara/design
 **Utilities**: `cn`
 
 **Primitives (shadcn/ui + Radix)** — Accordion, Alert, Avatar (+`AvatarGroup`), Badge,
-Breadcrumb, Button (+`buttonVariants`, type `ButtonProps`), Calendar, Carousel (+type
-`CarouselApi`), Card (+`CardHeader`/`CardContent`/`CardFooter`/`CardTitle`/`CardDescription`),
-Checkbox, Command, Dialog, DropdownMenu, Drawer, DescriptionList, FileUpload, Form
+Breadcrumb, Button (+`buttonVariants`, type `ButtonProps`), LinkButton (+type `LinkButtonProps`),
+Calendar, Carousel (+type `CarouselApi`), Card (+`CardHeader`/`CardContent`/`CardFooter`/`CardTitle`/`CardDescription`),
+Checkbox, Command, Dialog, DropdownMenu, Drawer, DescriptionList, FileUpload (+type `FileUploadProps`), Form
 (+`FormField`/`FormItem`/`FormLabel`/`FormControl`/`FormDescription`/`FormMessage`/`useFormField`),
 Input, Label, NavigationMenu, Pagination, Popover, Progress, RadioGroup, ScrollArea, Select,
-Separator, Sheet, Skeleton, Slider, Spinner, StatusBadge, Switch, Table, Tabs, Textarea,
+Separator, Sheet, Skeleton, Slider, Spinner (+type `SpinnerProps`), StatusBadge (+`statusBadgeVariants`, type `StatusBadgeProps`), Switch, Table, Tabs, Textarea,
 Toggle (+type `ToggleProps`), ToggleGroup (+types), Toast (+`Toaster`), Tooltip.
 
-**Komponen custom BPS**: `Combobox`, `AppTopbar`, `ConfirmActionDialog`, `BulkActionBar`,
-`DataStatePanel`, `DataTable`, `DatePicker`, `FilterBar`, `FormSection`, `KpiCard`,
-`PageHeader`, `PerformanceCard` (+type `PerformanceCardProps`), `ProgressAudit`,
-`ReviewTimeline`, `ValidationSummary`.
+**Komponen custom BPS**: `Combobox` (+`ComboboxProps`/`ComboboxOption`), `AppTopbar`,
+`ConfirmActionDialog`, `BulkActionBar` (+`actions[]`), `DataStatePanel`, `DataTable`
+(+`renderRowActions`, `sortable`, `pageSize`), `DatePicker`, `DateRangePicker`, `FilterBar`
+(+`statusOptions`/`unitKerjaOptions`), `FormSection`, `KpiCard`, `PageHeader`,
+`PerformanceCard` (+type `PerformanceCardProps`), `ProgressAudit`, `ReviewTimeline`,
+`ValidationSummary`, `YearSelect`, `NumberField`, `MapLegend`, `SkipLink`.
+
+**Charts**: `Sparkline`, `BarChart` (+types)
+
+**Stepper**: `Stepper` (+`StepperProps`/`Step`/`StepStatus`)
 
 **Patterns**: `EmptyState` (+type `EmptyStateProps`)
 
@@ -144,13 +165,14 @@ export function Contoh() {
 ```
 
 - **Header halaman**: gunakan `PageHeader`, bukan merangkai heading manual.
-- **Tabel data**: `DataTable` sudah menangani sorting & pagination.
-- **Form**: `Form` + `react-hook-form` + `zod` (resolver via `@hookform/resolvers`).
+- **Tabel data**: `DataTable` mendukung `renderRowActions`, sorting kolom (`sortable`), dan
+  pagination client-side (`pageSize`). Untuk kontrol penuh, gunakan primitif `Table`.
+- **Form**: `Form` + `react-hook-form` + `zod` (peer opsional; resolver via `@hookform/resolvers`).
 - **Status workflow**: `StatusBadge` variant `draft` | `pending` | `revised` | `approved`
   (selain variant umum `default`/`secondary`/`destructive`/`outline`). Komponen butuh
   children sebagai teks — `<StatusBadge variant="approved">Disetujui</StatusBadge>`.
 - **Empty/loading/error state**: `EmptyState`, `DataStatePanel`, `Skeleton`, `Spinner`.
-
+- **Tahun / angka lokal**: `YearSelect`, `NumberField` (format `id-ID`).
 ### Token warna
 
 - Selalu pakai `hsl(var(--token))` atau class Tailwind (`bg-primary`, `text-muted-foreground`).
@@ -175,12 +197,14 @@ export function Contoh() {
 
 ---
 
-## 7. Pitfalls untuk AI agent
+## Pitfalls untuk AI agent
 
 - **Jangan** edit file di dalam `node_modules` — perubahan tidak persisten.
 - **Jangan** hardcode warna hex; selalu lewat token/class.
 - **Jangan** impor `tailwind-preset` di proyek v4 (deprecated, shim kosong).
+- **Jangan** memakai `design/DESIGN.md` (dokumen Kinara historis) — gunakan `DESIGN.md` root.
 - **Copy UI Bahasa Indonesia** (label, placeholder, pesan) — sesuai brand BPS.
 - **Tanpa emoji** di teks UI (brand BPS formal).
-- **Format angka** Indonesia: `new Intl.NumberFormat('id-ID').format(value)`.
+- **Format angka** Indonesia: `new Intl.NumberFormat('id-ID').format(value)` atau `NumberField`.
 - Pastikan `styles.css` diimpor **tepat sekali** di root, bukan per-komponen.
+- Subpath UI: `@bpsprovkaltara/design-system/components/ui/<name>`, bukan catch-all lama `/button`.

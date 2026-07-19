@@ -30,24 +30,47 @@ function PaginationItem({ ...props }: React.ComponentProps<'li'>) {
   return <li data-slot="pagination-item" {...props} />
 }
 
+/** Props handed to a custom `renderLink` — spread directly onto the consumer's Link. */
+export type PaginationLinkRenderProps = React.ComponentProps<'a'> & {
+  isActive?: boolean
+}
+
 type PaginationLinkProps = {
   isActive?: boolean
+  /**
+   * Render a framework link (Next.js `Link`, TanStack Router `Link`, dll) instead of
+   * a plain `<a>`. Menerima props sudah lengkap (className tombol, href, onClick,
+   * aria-current, isActive) — cukup di-spread ke komponen Link milik konsumen.
+   */
+  renderLink?: (props: PaginationLinkRenderProps) => React.ReactNode
 } & Pick<ButtonProps, 'size'> &
   React.ComponentProps<'a'>
 
-function PaginationLink({ className, isActive, size = 'icon', ...props }: PaginationLinkProps) {
+function PaginationLink({
+  className,
+  isActive,
+  size = 'icon',
+  renderLink,
+  ...props
+}: PaginationLinkProps) {
+  const linkClassName = cn(
+    buttonVariants({
+      variant: isActive ? 'outline' : 'ghost',
+      size,
+    }),
+    className
+  )
+
+  if (renderLink) {
+    return <>{renderLink({ ...props, isActive, className: linkClassName })}</>
+  }
+
   return (
     <a
       aria-current={isActive ? 'page' : undefined}
       data-slot="pagination-link"
       data-active={isActive}
-      className={cn(
-        buttonVariants({
-          variant: isActive ? 'outline' : 'ghost',
-          size,
-        }),
-        className
-      )}
+      className={linkClassName}
       {...props}
     />
   )
@@ -84,12 +107,12 @@ function PaginationNext({ className, ...props }: React.ComponentProps<typeof Pag
 function PaginationEllipsis({ className, ...props }: React.ComponentProps<'span'>) {
   return (
     <span
-      aria-hidden
+      role="presentation"
       data-slot="pagination-ellipsis"
       className={cn('flex size-9 items-center justify-center', className)}
       {...props}
     >
-      <MoreHorizontal className="size-4" />
+      <MoreHorizontal className="size-4" aria-hidden="true" />
       <span className="sr-only">Halaman lainnya</span>
     </span>
   )
@@ -104,3 +127,4 @@ export {
   PaginationNext,
   PaginationEllipsis,
 }
+export type { PaginationLinkProps }

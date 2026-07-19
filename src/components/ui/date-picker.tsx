@@ -1,3 +1,5 @@
+'use client'
+
 import * as React from 'react'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
@@ -8,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
-interface DatePickerProps {
+export interface DatePickerProps {
   date?: Date
   onChange?: (date?: Date) => void
   placeholder?: string

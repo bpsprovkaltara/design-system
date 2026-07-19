@@ -20,6 +20,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
+          # Selaras package.json engines (>=20) dan Dockerfile
           node-version: '20'
           cache: 'pnpm'
 
@@ -31,6 +32,24 @@ jobs:
 
       - name: Lint
         run: pnpm run lint
+
+      - name: Check use client directives
+        run: |
+          set -euo pipefail
+          missing=0
+          while IFS= read -r -d '' file; do
+            if ! head -n 5 "$file" | grep -qE "^['\"]use client['\"]"; then
+              echo "Missing 'use client': $file"
+              missing=1
+            fi
+          done < <(
+            find src/components/ui -type f \( -name '*.tsx' -o -name '*.ts' \) ! -name '*.test.*' -print0 |
+              xargs -0 grep -lE 'useState|useEffect|useReducer|useEmblaCarousel' || true
+          )
+          if [ "$missing" -ne 0 ]; then
+            echo "Client components that use hooks must start with 'use client'."
+            exit 1
+          fi
 
       - name: Test
         run: pnpm run test

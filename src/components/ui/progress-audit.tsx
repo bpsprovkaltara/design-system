@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Progress } from '@/components/ui/progress'
 
-interface ProgressAuditProps {
+export interface ProgressAuditProps {
   totalChecklist: number
   completedChecklist: number
 }

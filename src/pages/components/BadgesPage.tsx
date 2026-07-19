@@ -22,6 +22,17 @@ export function BadgesPage() {
         <CodeBlock>{`<StatusBadge variant="approved">APPROVED</StatusBadge>`}</CodeBlock>
       </ShowcaseSection>
 
+      <ShowcaseSection title="Status Badge — Warna Kustom (tone)">
+        <div className="flex flex-wrap gap-4 border rounded-lg p-8 bg-card items-center">
+          <StatusBadge tone="217 91% 60%">INFO PRIORITAS</StatusBadge>
+          <StatusBadge tone="0 84% 60%">URGENT</StatusBadge>
+          <StatusBadge tone="142 71% 45%">SELESAI</StatusBadge>
+        </div>
+        <CodeBlock>{`// Untuk status/prioritas domain di luar 4 variant bawaan,
+// map konfigurasi di app (mis. STATUS_CONFIG) ke prop "tone" (token HSL bar):
+<StatusBadge tone={STATUS_CONFIG[status].hsl}>{STATUS_CONFIG[status].label}</StatusBadge>`}</CodeBlock>
+      </ShowcaseSection>
+
       <ShowcaseSection title="Standard Badges (shadcn/ui)">
         <div className="flex flex-wrap gap-4 border rounded-lg p-8 bg-card items-center">
           <Badge variant="default">Default</Badge>

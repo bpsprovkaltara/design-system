@@ -1,6 +1,6 @@
 import * as React from 'react';
 type DataState = 'loading' | 'error' | 'empty' | 'ready';
-interface DataStatePanelProps {
+export interface DataStatePanelProps {
     state: DataState;
     title?: string;
     description?: string;

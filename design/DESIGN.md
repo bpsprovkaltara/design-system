@@ -1,3 +1,17 @@
+# Kinara Design System (REFERENCE ONLY — NOT THIS PACKAGE)
+
+> **Peringatan:** File ini adalah dokumen desain produk **Kinara** (sistem manajemen
+> kinerja ASN) yang tersimpan di repo secara historis. **Bukan** sumber kebenaran untuk
+> paket `@bpsprovkaltara/design-system`.
+>
+> Untuk agent/konsumen design system BPS Kaltara, gunakan:
+> - [`DESIGN.md`](../DESIGN.md) di root repo
+> - [`CLAUDE.md`](../CLAUDE.md)
+> - [`tokens.css`](../tokens.css) / `src/index.ts`
+>
+> Jangan menyalin token Geist, path `src/app/globals.css`, atau konvensi Kinara ke aplikasi
+> yang memakai `@bpsprovkaltara/design-system`.
+
 # Kinara Design System
 
 ## Overview

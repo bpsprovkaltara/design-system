@@ -72,6 +72,7 @@ function CommandInput({
         className={cn(
           'flex h-10 w-full rounded-md bg-transparent py-3 text-body-sm',
           '!outline-none focus:!outline-none focus:ring-0 focus-visible:!outline-none focus-visible:ring-0',
+          'focus-visible:shadow-[inset_0_-2px_0_0_hsl(var(--border-focus))]',
           'placeholder:text-content-tertiary',
           'disabled:cursor-not-allowed disabled:opacity-50',
           className

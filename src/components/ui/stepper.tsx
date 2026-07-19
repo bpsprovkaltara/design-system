@@ -3,14 +3,14 @@
 import { Check, AlertCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-type StepStatus = 'complete' | 'current' | 'upcoming' | 'error'
+export type StepStatus = 'complete' | 'current' | 'upcoming' | 'error'
 
-interface Step {
+export interface Step {
   label: string
   description?: string
 }
 
-interface StepperProps {
+export interface StepperProps {
   steps: Step[]
   current: number
   statuses?: StepStatus[]
@@ -94,4 +94,3 @@ function Stepper({ steps, current, statuses, className }: StepperProps) {
 }
 
 export { Stepper }
-export type { StepperProps, Step, StepStatus }

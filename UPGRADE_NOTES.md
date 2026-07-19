@@ -4,6 +4,146 @@
 
 Versi 4 memerlukan **React 19**, **Tailwind CSS 4**, dan disarankan **Node.js 20+**. Build toolchain konsumen mengikuti dokumentasi resmi Tailwind v4 (misalnya plugin `@tailwindcss/vite` untuk proyek Vite).
 
+## v4.5.0 — App shell & list-page foundations
+
+### AppShell / AppSidebar / AppTopbar
+
+Layout aplikasi kini diekspor (bukan hanya showcase):
+
+```tsx
+import { AppShell } from '@bpsprovkaltara/design-system'
+
+<AppShell
+  groups={[{ title: 'Menu', items: [{ id: 'home', label: 'Beranda', href: '/' }] }]}
+  activeId="home"
+  logo={<span>BPS</span>}
+  topbarStart={<Breadcrumb>...</Breadcrumb>}
+  topbarEnd={<UserMenu />}
+>
+  {children}
+</AppShell>
+```
+
+`AppTopbar` menerima slot `start` / `end` (prop `appTitle` tetap didukung sebagai fallback).
+
+### FilterBar composable
+
+Prefer `filters: FilterField[]` atau `children`. API lama `{ keyword, status, unitKerja }` tetap berfungsi; domain preset: `DocumentFilterBar`.
+
+### DataTable states & server pagination
+
+- `loading` / `error` / empty (`EmptyState`)
+- `pagination={{ page, pageSize, total, onPageChange }}` untuk server-driven lists
+
+### ConfirmDialog
+
+Ganti `ConfirmActionDialog` (deprecated wrapper) dengan `ConfirmDialog` — controlled `open`, `trigger` ReactNode, `busy`, `showReason`, `variant="destructive"`, `onConfirm` async.
+
+### ThemeToggle / useTheme
+
+Toggle dark mode berbasis class `.dark` kini publik (sebelumnya showcase-only).
+
+## v4.4.0 — eval-fixes & kapabilitas BPS
+
+### Peer dependencies Form (opsional)
+
+`react-hook-form`, `zod`, dan `@hookform/resolvers` kini **peer optional**. Jika aplikasi memakai `Form` + RHF/Zod, install eksplisit:
+
+```bash
+pnpm add react-hook-form zod @hookform/resolvers
+```
+
+Aplikasi yang tidak memakai Form tidak perlu menginstal ketiganya.
+
+### `prepare` tidak lagi membangun library
+
+`pnpm install` pada paket/repo ini tidak menjalankan `build:lib`. Build tetap di `prepublishOnly` dan CI. Pastikan `dist/` ada saat consume dari git/path, atau install dari registry yang sudah di-publish.
+
+### DataTable — row actions
+
+Kolom **Aksi** / tombol Edit tidak lagi otomatis. Tanpa `renderRowActions`, hanya kolom data yang dirender:
+
+```tsx
+<DataTable
+  data={rows}
+  columns={columns}
+  getRowKey={(row) => row.id}
+  renderRowActions={(row) => (
+    <Button size="sm" variant="ghost" onClick={() => edit(row)}>
+      Edit
+    </Button>
+  )}
+/>
+```
+
+Opsional: `sortable` per kolom + `pageSize` untuk pagination client-side.
+
+### BulkActionBar — actions generik
+
+```tsx
+// Sebelum
+<BulkActionBar
+  selectedCount={n}
+  onSetPending={...}
+  onSetApproved={...}
+/>
+
+// Sesudah
+<BulkActionBar
+  selectedCount={n}
+  actions={[
+    { label: 'Set menunggu verifikasi', onClick: ..., variant: 'outline' },
+    { label: 'Set disetujui', onClick: ... },
+  ]}
+/>
+```
+
+### StatusBadge — rename tipe
+
+```tsx
+// Sebelum
+import { StatusBadge, badgeVariants, type BadgeProps } from '...'
+
+// Sesudah
+import { StatusBadge, statusBadgeVariants, type StatusBadgeProps } from '...'
+```
+
+### FilterBar — options kustom
+
+```tsx
+<FilterBar
+  value={filters}
+  onChange={setFilters}
+  onReset={reset}
+  statusOptions={[
+    { value: 'all', label: 'Semua' },
+    { value: 'pending', label: 'Menunggu' },
+  ]}
+/>
+```
+
+### Subpath import UI
+
+Catch-all `./*` dihapus. Gunakan path kanonik:
+
+```tsx
+// Sebelum
+import { Button } from '@bpsprovkaltara/design-system/button'
+
+// Sesudah
+import { Button } from '@bpsprovkaltara/design-system/components/ui/button'
+// atau tetap dari entry utama:
+import { Button } from '@bpsprovkaltara/design-system'
+```
+
+Tetap tersedia: `./utils`, `./patterns/*`, `./hooks/*`, `./styles.css`, `./tokens.css`, `./fonts.css`.
+
+### Token
+
+- Layer C (`--button-primary-*`, `--input-*`, `--table-*`) dihapus — pakai Layer B / shadcn semantic.
+- Dark mode kini meng-override `--brand-*`, `--data-*`, `--map-tier-*`.
+- Util Tailwind baru: `bg-slate-*`, `bg-map-tier-*`, `font-sans` / `font-mono` dari `@theme`.
+
 ## v4.3.0 — Button sebagai link / navigasi
 
 Untuk navigasi bergaya tombol, gunakan **`LinkButton`**. Komponen ini memakai
@@ -138,18 +278,19 @@ Tailwind v4, mengimpornya akan menggandakan base/reset. Sejak **4.1.0** tersedia
 jadi integrasi tema penuh aktif tanpa `tailwind-preset` (deprecated). Konsumen
 **non-Tailwind** tetap memakai `styles.css` (all-in-one).
 
-## 2c) Impor per-komponen (opsional, 4.0.1+)
+## 2c) Impor per-komponen (opsional, 4.0.1+; path kanonik sejak 4.4.0)
 
 Untuk tree-shaking lebih ketat dan isolasi RSC, komponen bisa diimpor lewat subpath:
 
 ```ts
-import { Button } from '@bpsprovkaltara/design-system/button'
-import { DataTable } from '@bpsprovkaltara/design-system/data-table'
+import { Button } from '@bpsprovkaltara/design-system/components/ui/button'
+import { DataTable } from '@bpsprovkaltara/design-system/components/ui/data-table'
 import { EmptyState } from '@bpsprovkaltara/design-system/patterns/empty-state'
 import { useToast } from '@bpsprovkaltara/design-system/hooks/use-toast'
 ```
 
-Impor barrel (`from '@bpsprovkaltara/design-system'`) tetap didukung penuh.
+Impor barrel (`from '@bpsprovkaltara/design-system'`) tetap didukung penuh. Catch-all
+`@bpsprovkaltara/design-system/button` dihapus di **4.4.0** — lihat § v4.4.0.
 
 ## 3) Tailwind 4 di aplikasi Anda
 

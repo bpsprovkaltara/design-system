@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
-interface DateRangePickerProps {
+export interface DateRangePickerProps {
   range?: DateRange
   onChange?: (range?: DateRange) => void
   placeholder?: string

@@ -13,6 +13,8 @@ import { Search } from 'lucide-react'
 import { Combobox } from '@/components/ui/combobox'
 import { DatePicker } from '@/components/ui/date-picker'
 import { DateRangePicker } from '@/components/ui/date-range-picker'
+import { YearSelect } from '@/components/ui/year-select'
+import { NumberField } from '@/components/ui/number-field'
 
 export function InputsPage() {
   const regions = [
@@ -22,6 +24,8 @@ export function InputsPage() {
     { value: 'nunukan', label: 'Kab. Nunukan' },
     { value: 'tana-tidung', label: 'Kab. Tana Tidung' },
   ]
+  const [year, setYear] = React.useState(2025)
+  const [pdrb, setPdrb] = React.useState<number | null>(24500)
 
   return (
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -124,6 +128,27 @@ export function InputsPage() {
   range={{ from: new Date(2026, 0, 1), to: new Date(2026, 2, 31) }}
   onChange={(range) => setRange(range)}
 />`}</CodeBlock>
+      </ShowcaseSection>
+
+      <ShowcaseSection title="YearSelect & NumberField">
+        <div className="grid md:grid-cols-2 gap-6 border rounded-lg p-8 bg-card">
+          <YearSelect
+            value={year}
+            onChange={setYear}
+            fromYear={2018}
+            toYear={2026}
+            label="Tahun publikasi"
+          />
+          <NumberField
+            label="PDRB"
+            value={pdrb}
+            onChange={setPdrb}
+            unit="Miliar"
+            placeholder="0"
+          />
+        </div>
+        <CodeBlock>{`<YearSelect value={year} onChange={setYear} fromYear={2018} toYear={2026} />
+<NumberField label="PDRB" value={pdrb} onChange={setPdrb} unit="Miliar" />`}</CodeBlock>
       </ShowcaseSection>
     </div>
   )

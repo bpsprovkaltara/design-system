@@ -48,8 +48,14 @@ export default [
       react: { version: '18.3.1' },
     },
   },
+  {
+    files: ['scripts/**/*.mjs'],
+    languageOptions: {
+      globals: { console: 'readonly' },
+    },
+  },
   prettierConfig,
   {
-    ignores: ['dist/**', 'node_modules/**', '*.config.*'],
+    ignores: ['dist/**', 'node_modules/**', 'coverage/**', '*.config.*'],
   },
 ]

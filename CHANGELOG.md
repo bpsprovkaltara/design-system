@@ -6,6 +6,62 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [4.5.0] - 2026-07-19
+
+### Added
+
+- **`AppShell`**, **`AppSidebar`**, **`AppTopbar` (slot-based)** — layout aplikasi dengan collapse, mobile Sheet, dan slot topbar (`start` / `end`)
+- **`ThemeToggle`** / **`useTheme`** — toggle dark mode berbasis class `.dark` (sebelumnya hanya di showcase)
+- **`FilterBar` composable** — `filters: FilterField[]` atau `children`; domain preset baru **`DocumentFilterBar`**
+- **`DataTable`**: state `loading` / `error` / empty (`EmptyState`), pagination server (`pagination`)
+- **`ConfirmDialog`** — controlled/open, `trigger` ReactNode, `busy`, `showReason`, `variant` destructive, `onConfirm` async
+- **`Pagination`**: prop `renderLink` untuk render item sebagai `<a>` (navigasi berbasis URL, mis. Next.js `Link`)
+- **`TablePagination`** — kontrol pagination siap pakai untuk `DataTable` (halaman, total, page size)
+- **`StatusBadge`**: prop `tone` untuk override warna di luar variant status baku
+- **`TableEmpty`** — state kosong siap pakai untuk body tabel (ikon, judul, deskripsi)
+- **`PageHeader`**: prop `titleClassName` untuk override style judul halaman
+
+### Changed
+
+- **`AppTopbar`**: API stub `appTitle`-only diganti slot; `appTitle` tetap didukung sebagai fallback
+- **`FilterBar`**: API `{keyword,status,unitKerja}` ditandai deprecated (masih berfungsi); prefer `filters` / `DocumentFilterBar`
+- **`ConfirmActionDialog`**: thin wrapper deprecated di atas `ConfirmDialog`
+
+## [4.4.0] - 2026-07-19
+
+### Added
+
+- **`DataTable`**: sorting kolom (`sortable`) dan pagination client-side (`pageSize`)
+- **`BulkActionBar`**: API generik `actions[]` (menggantikan aksi hardcode)
+- **`YearSelect`** — pemilih tahun untuk survei/publikasi BPS
+- **`NumberField`** — input angka dengan format `id-ID` dan unit opsional
+- **`MapLegend`** — legenda choropleth memakai token `map-tier-*`
+- **`SkipLink`** — tautan lewati ke konten utama (a11y keyboard)
+- Export type props BPS (`ComboboxProps`, `DataTableProps`, `FilterBarProps`, `StatusBadgeProps`, dll.)
+- Showcase **Empty State**; demo FilterBar options kustom; ColorsPage untuk `slate-*`, `map-tier-*`, brand/data dark
+- CI: cek `'use client'` pada modul UI yang memakai hooks
+- Tes: FilterBar, StatusBadge, BulkActionBar, LinkButton, EmptyState, DataTable actions, MapLegend, SkipLink, ValidationSummary, PageHeader, KpiCard
+
+### Changed
+
+- **`prepare`**: hanya menjalankan husky (`prepare:hooks`); build library tetap di `prepublishOnly` / CI
+- Peer deps opsional: `react-hook-form`, `zod`, `@hookform/resolvers` (pindah dari `dependencies`)
+- **`DataTable`**: kolom Aksi tidak lagi hardcode — gunakan `renderRowActions`
+- **`FilterBar`**: `statusOptions` / `unitKerjaOptions` dapat di-override; label Select terasosiasi
+- **`StatusBadge`**: tipe `StatusBadgeProps` / `statusBadgeVariants` (bukan `BadgeProps` / `badgeVariants`)
+- Package `exports`: subpath UI kanonik `./components/ui/*` (catch-all `./*` dihapus)
+- Dark mode: override `--brand-*`, `--data-*`, `--map-tier-*`; `slate` / `map-tier` / fonts di `@theme`
+- Hapus Layer C token mati (`--button-primary-*`, `--input-*`, `--table-*` tidak terpakai)
+
+### Fixed
+
+- `CommandInput`: fokus keyboard via inset shadow (bukan tanpa indikator)
+- `PaginationEllipsis`: teks `sr-only` tidak lagi tersembunyi oleh `aria-hidden` parent
+- Sidebar showcase: collapse a11y (`aria-label` / `aria-current`), versi footer diselaraskan
+- Docs/CI: runtime resmi **Node ≥20** (Dockerfile, GitHub Actions, `engines`) — mengoreksi klaim Node 24 yang tidak selaras
+- `docs/api.md`: deskripsi `DataTable` / `Combobox` diselaraskan dengan implementasi aktual
+- Konflik export tipe `SparklineProps` / `StepperProps`
+
 ## [4.3.0] - 2026-06-29
 
 ### Added
@@ -177,7 +233,8 @@ maupun bundler ESM browser** — segera upgrade ke 4.0.1.
 
 Version 2.x is no longer maintained. No migration guide is available. Upgrade directly to 4.0.0 (lihat `UPGRADE_NOTES.md` jika dari v3).
 
-[Unreleased]: https://github.com/bpsprovkaltara/design-system/compare/v4.3.0...HEAD
+[Unreleased]: https://github.com/bpsprovkaltara/design-system/compare/v4.4.0...HEAD
+[4.4.0]: https://github.com/bpsprovkaltara/design-system/compare/v4.3.0...v4.4.0
 [4.3.0]: https://github.com/bpsprovkaltara/design-system/compare/v4.2.0...v4.3.0
 [4.2.0]: https://github.com/bpsprovkaltara/design-system/compare/v4.1.0...v4.2.0
 [4.1.0]: https://github.com/bpsprovkaltara/design-system/compare/v4.0.1...v4.1.0

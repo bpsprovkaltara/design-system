@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 
 type DataState = 'loading' | 'error' | 'empty' | 'ready'
 
-interface DataStatePanelProps {
+export interface DataStatePanelProps {
   state: DataState
   title?: string
   description?: string

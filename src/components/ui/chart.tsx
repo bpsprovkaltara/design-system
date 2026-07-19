@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 
 const numberFormatter = new Intl.NumberFormat('id-ID')
 
-interface SparklineProps {
+export interface SparklineProps {
   data: number[]
   className?: string
   width?: number
@@ -52,7 +52,7 @@ interface BarChartItem {
   value: number
 }
 
-interface BarChartProps {
+export interface BarChartProps {
   data: BarChartItem[]
   className?: string
   showValues?: boolean
@@ -103,4 +103,4 @@ function BarChart({ data, className, showValues = true }: BarChartProps) {
 }
 
 export { Sparkline, BarChart }
-export type { SparklineProps, BarChartProps, BarChartItem }
+export type { BarChartItem }

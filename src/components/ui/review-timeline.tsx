@@ -11,7 +11,7 @@ export interface ReviewTimelineItem {
   status: 'draft' | 'pending' | 'revised' | 'approved'
 }
 
-interface ReviewTimelineProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ReviewTimelineProps extends React.HTMLAttributes<HTMLDivElement> {
   items: ReviewTimelineItem[]
 }
 

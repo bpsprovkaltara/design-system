@@ -93,6 +93,18 @@ export function DataManagementPage() {
             value={filters}
             onChange={setFilters}
             onReset={() => setFilters(initialFilters)}
+            statusOptions={[
+              { value: 'all', label: 'Semua status' },
+              { value: 'pending', label: 'Antrian verifikasi' },
+              { value: 'revised', label: 'Revisi teknis' },
+              { value: 'approved', label: 'Siap publikasi' },
+            ]}
+            unitKerjaOptions={[
+              { value: 'all', label: 'Semua unit' },
+              { value: 'sosial', label: 'Sosial' },
+              { value: 'distribusi', label: 'Distribusi' },
+              { value: 'produksi', label: 'Produksi' },
+            ]}
           />
           <div className="flex gap-2">
             <button className="text-xs underline" onClick={() => setState('loading')}>
@@ -111,15 +123,29 @@ export function DataManagementPage() {
 
           <BulkActionBar
             selectedCount={selectedRows.length}
-            onSetPending={() => setSelectedRows([])}
-            onSetApproved={() => setSelectedRows([])}
+            actions={[
+              {
+                label: 'Set menunggu verifikasi',
+                variant: 'outline',
+                onClick: () => setSelectedRows([]),
+              },
+              {
+                label: 'Set disetujui',
+                onClick: () => setSelectedRows([]),
+              },
+            ]}
           />
 
           <DataStatePanel
             state={state === 'ready' && filteredData.length === 0 ? 'empty' : state}
             onRetry={() => setState('ready')}
           >
-            <DataTable data={filteredData} columns={columns} />
+            <DataTable
+              data={filteredData}
+              columns={columns}
+              getRowKey={(row) => row.id}
+              pageSize={5}
+            />
           </DataStatePanel>
         </div>
       </ShowcaseSection>
