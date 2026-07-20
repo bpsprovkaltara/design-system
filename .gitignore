@@ -4,3 +4,4 @@ CLAUDE.md
 .playwright-mcp/
 tw4-*.png
 coverage
+graphify-out/cache/

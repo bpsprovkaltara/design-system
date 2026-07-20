@@ -35,7 +35,8 @@ export interface ConfirmDialogProps {
   showReason?: boolean
   busy?: boolean
   busyLabel?: string
-  onConfirm: (reason: string) => void | Promise<void>
+  error?: React.ReactNode
+  onConfirm: (reason: string) => boolean | void | Promise<boolean | void>
   onCancel?: () => void
 }
 
@@ -59,6 +60,7 @@ export function ConfirmDialog({
   showReason = true,
   busy = false,
   busyLabel = 'Memproses…',
+  error,
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
@@ -93,7 +95,8 @@ export function ConfirmDialog({
 
     try {
       setInternalBusy(true)
-      await onConfirm(showReason ? reason.trim() : '')
+      const result = await onConfirm(showReason ? reason.trim() : '')
+      if (result === false) return
       setReason('')
       setHasError(false)
       setOpen(false)
@@ -127,8 +130,7 @@ export function ConfirmDialog({
         {showReason ? (
           <div className="space-y-2.5">
             <Label htmlFor="confirm-reason">
-              {reasonLabel}{' '}
-              {reasonRequired ? <span className="text-destructive">*</span> : null}
+              {reasonLabel} {reasonRequired ? <span className="text-destructive">*</span> : null}
             </Label>
             <Textarea
               id="confirm-reason"
@@ -143,6 +145,11 @@ export function ConfirmDialog({
             {hasError ? (
               <p className="text-xs text-destructive">Alasan wajib diisi sebelum melanjutkan.</p>
             ) : null}
+          </div>
+        ) : null}
+        {error ? (
+          <div role="alert" className="text-sm text-destructive">
+            {error}
           </div>
         ) : null}
         <DialogFooter>

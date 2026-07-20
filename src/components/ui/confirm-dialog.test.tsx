@@ -42,4 +42,24 @@ describe('ConfirmDialog', () => {
     expect(onConfirm).not.toHaveBeenCalled()
     expect(screen.getByText(/Alasan wajib diisi/)).toBeInTheDocument()
   })
+
+  it('keeps the dialog open when confirmation returns false and renders an error', async () => {
+    const user = userEvent.setup()
+    const onOpenChange = vi.fn()
+    render(
+      <ConfirmDialog
+        title="Gagal"
+        open
+        onOpenChange={onOpenChange}
+        description="Coba lagi"
+        showReason={false}
+        error={<span>Server menolak</span>}
+        onConfirm={async () => false}
+      />
+    )
+    await user.click(screen.getByRole('button', { name: 'Konfirmasi' }))
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+    expect(screen.getByText('Server menolak')).toBeInTheDocument()
+    expect(onOpenChange).not.toHaveBeenCalledWith(false)
+  })
 })

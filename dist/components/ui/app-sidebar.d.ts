@@ -27,9 +27,11 @@ export interface AppSidebarProps {
      */
     renderLink?: (item: AppSidebarNavItem, children: React.ReactNode) => React.ReactNode;
     logo?: React.ReactNode;
+    /** Compact brand mark rendered while the desktop rail is collapsed. */
+    collapsedLogo?: React.ReactNode;
     footer?: React.ReactNode;
     className?: string;
     /** Accessible label for the aside landmark. */
     'aria-label'?: string;
 }
-export declare function AppSidebar({ groups, activeId, collapsed, onCollapsedChange, onNavigate, renderLink, logo, footer, className, 'aria-label': ariaLabel, }: AppSidebarProps): import("react/jsx-runtime").JSX.Element;
+export declare function AppSidebar({ groups, activeId, collapsed, onCollapsedChange, onNavigate, renderLink, logo, collapsedLogo, footer, className, 'aria-label': ariaLabel, }: AppSidebarProps): import("react/jsx-runtime").JSX.Element;

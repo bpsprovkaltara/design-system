@@ -5,12 +5,7 @@ import { Menu } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { SkipLink } from '@/components/ui/skip-link'
-import {
-  Sheet,
-  SheetContent,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import {
   AppSidebar,
   type AppSidebarNavGroup,
@@ -30,7 +25,10 @@ export interface AppShellProps {
   onNavigate?: (item: AppSidebarNavItem) => void
   renderLink?: AppSidebarProps['renderLink']
   logo?: React.ReactNode
+  collapsedLogo?: React.ReactNode
   sidebarFooter?: React.ReactNode
+  mobileSidebarFooter?: React.ReactNode
+  desktopBreakpoint?: 'md' | 'lg'
   /** Desktop topbar leading slot (e.g. breadcrumbs). */
   topbarStart?: React.ReactNode
   /** Topbar trailing slot (actions / user / notifications). */
@@ -54,7 +52,10 @@ export function AppShell({
   onNavigate,
   renderLink,
   logo,
+  collapsedLogo,
   sidebarFooter,
+  mobileSidebarFooter,
+  desktopBreakpoint = 'lg',
   topbarStart,
   topbarEnd,
   appTitle,
@@ -85,18 +86,23 @@ export function AppShell({
     onNavigate: handleNavigate,
     renderLink,
     logo,
+    collapsedLogo,
     footer: sidebarFooter,
   }
+
+  const desktopVisibleClass = desktopBreakpoint === 'md' ? 'md:block' : 'lg:block'
+  const mobileVisibleClass = desktopBreakpoint === 'md' ? 'md:hidden' : 'lg:hidden'
+  const mobileFooter = mobileSidebarFooter === undefined ? sidebarFooter : mobileSidebarFooter
 
   return (
     <div
       data-slot="app-shell"
-      className={cn('flex h-screen overflow-hidden bg-background text-foreground', className)}
+      className={cn('flex h-screen h-dvh overflow-hidden bg-background text-foreground', className)}
     >
       <SkipLink href="#main-content" />
 
       {/* Desktop sidebar */}
-      <div className="hidden h-full lg:block">
+      <div className={cn('hidden h-full', desktopVisibleClass)}>
         <AppSidebar {...sidebarProps} />
       </div>
 
@@ -105,7 +111,7 @@ export function AppShell({
           <>
             {/* Mobile chrome */}
             <AppTopbar
-              className="lg:hidden"
+              className={mobileVisibleClass}
               appTitle={appTitle}
               start={
                 <>
@@ -121,12 +127,18 @@ export function AppShell({
                         <Menu className="h-5 w-5" />
                       </Button>
                     </SheetTrigger>
-                    <SheetContent side="left" showCloseButton={false} className="w-[280px] border-0 p-0">
+                    <SheetContent
+                      side="left"
+                      showCloseButton={false}
+                      className="w-[280px] border-0 p-0"
+                    >
                       <SheetTitle className="sr-only">Navigasi</SheetTitle>
                       <AppSidebar
                         {...sidebarProps}
                         collapsed={false}
                         onCollapsedChange={undefined}
+                        collapsedLogo={undefined}
+                        footer={mobileFooter}
                         className="h-full w-full border-0"
                       />
                     </SheetContent>
@@ -138,10 +150,16 @@ export function AppShell({
             />
 
             {/* Desktop topbar */}
-            <AppTopbar className="hidden lg:flex" start={topbarStart} end={topbarEnd} />
+            <AppTopbar
+              className={cn('hidden', desktopBreakpoint === 'md' ? 'md:flex' : 'lg:flex')}
+              start={topbarStart}
+              end={topbarEnd}
+            />
           </>
         ) : (
-          <div className="flex h-14 items-center border-b border-border px-4 lg:hidden">
+          <div
+            className={cn('flex h-14 items-center border-b border-border px-4', mobileVisibleClass)}
+          >
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
                 <Button type="button" variant="ghost" size="icon" aria-label="Buka menu">
@@ -154,6 +172,8 @@ export function AppShell({
                   {...sidebarProps}
                   collapsed={false}
                   onCollapsedChange={undefined}
+                  collapsedLogo={undefined}
+                  footer={mobileFooter}
                   className="h-full w-full border-0"
                 />
               </SheetContent>

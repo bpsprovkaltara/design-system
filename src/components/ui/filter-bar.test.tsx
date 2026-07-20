@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { FilterBar } from './filter-bar'
+import { DocumentFilterBar, FilterBar } from './filter-bar'
 
 describe('FilterBar', () => {
   const value = { keyword: '', status: 'all', unitKerja: 'all' }
@@ -68,5 +68,48 @@ describe('FilterBar', () => {
     expect(screen.getByLabelText('Cari')).toBeInTheDocument()
     await user.type(screen.getByLabelText('Cari'), 'a')
     expect(onChange).toHaveBeenCalledWith('a')
+  })
+
+  it('submits on Enter without reloading', async () => {
+    const user = userEvent.setup()
+    const onSubmit = vi.fn()
+    render(
+      <FilterBar
+        filters={[
+          {
+            type: 'search',
+            id: 'enter-q',
+            label: 'Cari Enter',
+            value: '',
+            onChange: () => undefined,
+          },
+        ]}
+        onSubmit={onSubmit}
+        onReset={() => undefined}
+      />
+    )
+    await user.type(screen.getByLabelText('Cari Enter'), '{Enter}')
+    expect(onSubmit).toHaveBeenCalledOnce()
+    expect(screen.getByRole('button', { name: 'Reset filter' })).toHaveAttribute('type', 'button')
+  })
+
+  it('renders custom fields and the document preset', () => {
+    const { rerender } = render(
+      <FilterBar
+        filters={[
+          {
+            type: 'custom',
+            id: 'date',
+            label: 'Tanggal',
+            content: <input aria-label="Tanggal khusus" />,
+          },
+        ]}
+      />
+    )
+    expect(screen.getByLabelText('Tanggal khusus')).toBeInTheDocument()
+    rerender(
+      <DocumentFilterBar value={value} onChange={() => undefined} onReset={() => undefined} />
+    )
+    expect(screen.getByLabelText('Pencarian')).toBeInTheDocument()
   })
 })

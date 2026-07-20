@@ -1,4 +1,5 @@
-import { ButtonProps } from './button';
+import { VariantProps } from 'class-variance-authority';
+import { buttonVariants } from './button-variants';
 import * as React from 'react';
 declare function Pagination({ className, ...props }: React.ComponentProps<'nav'>): import("react/jsx-runtime").JSX.Element;
 declare function PaginationContent({ className, ...props }: React.ComponentProps<'ul'>): import("react/jsx-runtime").JSX.Element;
@@ -15,7 +16,7 @@ type PaginationLinkProps = {
      * aria-current, isActive) — cukup di-spread ke komponen Link milik konsumen.
      */
     renderLink?: (props: PaginationLinkRenderProps) => React.ReactNode;
-} & Pick<ButtonProps, 'size'> & React.ComponentProps<'a'>;
+} & Pick<VariantProps<typeof buttonVariants>, 'size'> & React.ComponentProps<'a'>;
 declare function PaginationLink({ className, isActive, size, renderLink, ...props }: PaginationLinkProps): import("react/jsx-runtime").JSX.Element;
 declare function PaginationPrevious({ className, ...props }: React.ComponentProps<typeof PaginationLink>): import("react/jsx-runtime").JSX.Element;
 declare function PaginationNext({ className, ...props }: React.ComponentProps<typeof PaginationLink>): import("react/jsx-runtime").JSX.Element;

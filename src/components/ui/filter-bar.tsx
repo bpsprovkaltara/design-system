@@ -57,6 +57,7 @@ export interface FilterBarProps {
   /** Free-form filter content (alternative to `filters`). */
   children?: React.ReactNode
   onReset?: () => void
+  onSubmit?: () => void
   resetLabel?: string
   className?: string
   /** Accessible name for the search landmark. */
@@ -157,6 +158,7 @@ export function FilterBar({
   filters,
   children,
   onReset,
+  onSubmit,
   resetLabel = 'Reset filter',
   className,
   'aria-label': ariaLabel = 'Filter data',
@@ -207,11 +209,15 @@ export function FilterBar({
   const resetHandler = onReset
 
   return (
-    <div
+    <form
       className={cn('rounded-lg border bg-card p-4', className)}
       role="search"
       aria-label={ariaLabel}
       data-slot="filter-bar"
+      onSubmit={(event) => {
+        event.preventDefault()
+        onSubmit?.()
+      }}
     >
       {resolvedFilters ? (
         <div className={cn('grid gap-4', columnClass[columns])}>
@@ -234,7 +240,7 @@ export function FilterBar({
           Sediakan `filters`, `children`, atau API legacy `value`/`onChange`.
         </p>
       ) : null}
-    </div>
+    </form>
   )
 }
 
