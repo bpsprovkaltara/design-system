@@ -36,6 +36,7 @@ export interface FilterBarProps {
     /** Free-form filter content (alternative to `filters`). */
     children?: React.ReactNode;
     onReset?: () => void;
+    onSubmit?: () => void;
     resetLabel?: string;
     className?: string;
     /** Accessible name for the search landmark. */
@@ -60,7 +61,7 @@ export interface FilterBarProps {
     /** @deprecated */
     unitKerjaLabel?: string;
 }
-export declare function FilterBar({ filters, children, onReset, resetLabel, className, 'aria-label': ariaLabel, columns, value, onChange, statusOptions, unitKerjaOptions, keywordPlaceholder, keywordLabel, statusLabel, unitKerjaLabel, }: FilterBarProps): import("react/jsx-runtime").JSX.Element;
+export declare function FilterBar({ filters, children, onReset, onSubmit, resetLabel, className, 'aria-label': ariaLabel, columns, value, onChange, statusOptions, unitKerjaOptions, keywordPlaceholder, keywordLabel, statusLabel, unitKerjaLabel, }: FilterBarProps): import("react/jsx-runtime").JSX.Element;
 /** Domain preset: keyword + status + unit kerja (BPS document workflow). */
 export interface DocumentFilterBarProps {
     value: FilterBarValue;

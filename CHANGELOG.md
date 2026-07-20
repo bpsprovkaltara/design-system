@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [4.5.1] - 2026-07-20
+
+### Added
+
+- **`AppShell` / `AppSidebar`**: breakpoint desktop `md`/`lg`, logo rail collapsed, dan footer mobile terpisah.
+- **`ConfirmDialog`**: konten error dan hasil konfirmasi boolean untuk mempertahankan dialog saat operasi gagal.
+- **`FilterBar`**: callback submit native untuk pencarian via Enter tanpa reload.
+- **`TablePagination`**: opsi `hideWhenSinglePage`.
+
+### Fixed
+
+- Custom `renderLink` sidebar kini tetap menjalankan `onNavigate` dan mencegah aktivasi item disabled.
+- Shell menggunakan dynamic viewport height dengan fallback aman.
+- `TablePagination` dapat dievaluasi dari React Server Components karena tidak lagi ditandai client-only.
+
 ## [4.5.0] - 2026-07-19
 
 ### Added

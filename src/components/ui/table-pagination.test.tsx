@@ -46,4 +46,11 @@ describe('TablePagination', () => {
     )
     expect(screen.getByTestId('page-2')).toHaveAttribute('href', '/data?page=2')
   })
+
+  it('can hide the complete footer for a single page', () => {
+    const { container } = render(
+      <TablePagination page={1} pageSize={10} total={5} hideWhenSinglePage />
+    )
+    expect(container).toBeEmptyDOMElement()
+  })
 })

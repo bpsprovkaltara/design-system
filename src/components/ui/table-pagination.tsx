@@ -1,5 +1,3 @@
-'use client'
-
 import * as React from 'react'
 import { cn } from '@/lib/utils'
 import {
@@ -23,6 +21,7 @@ export interface TablePaginationProps {
   hrefForPage?: (page: number) => string
   /** Render framework link kustom, diteruskan ke PaginationLink. */
   renderLink?: (props: PaginationLinkRenderProps) => React.ReactNode
+  hideWhenSinglePage?: boolean
   className?: string
 }
 
@@ -47,12 +46,15 @@ export function TablePagination({
   onPageChange,
   hrefForPage,
   renderLink,
+  hideWhenSinglePage = false,
   className,
 }: TablePaginationProps) {
   const totalPages = Math.max(1, Math.ceil(total / pageSize))
   const from = total === 0 ? 0 : (page - 1) * pageSize + 1
   const to = Math.min(page * pageSize, total)
   const pages = buildPageWindow(page, totalPages)
+
+  if (hideWhenSinglePage && totalPages <= 1) return null
 
   const linkProps = (target: number) => ({
     href: hrefForPage ? hrefForPage(target) : '#',

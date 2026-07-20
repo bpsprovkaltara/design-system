@@ -20,14 +20,15 @@ export interface ConfirmDialogProps {
     showReason?: boolean;
     busy?: boolean;
     busyLabel?: string;
-    onConfirm: (reason: string) => void | Promise<void>;
+    error?: React.ReactNode;
+    onConfirm: (reason: string) => boolean | void | Promise<boolean | void>;
     onCancel?: () => void;
 }
 /**
  * Flexible confirm dialog — controlled or trigger-based, optional reason, async-safe.
  * Prefer this over the legacy `ConfirmActionDialog` wrapper.
  */
-export declare function ConfirmDialog({ title, description, confirmLabel, cancelLabel, variant, open: openProp, onOpenChange, trigger, triggerLabel, reasonRequired, reasonLabel, reasonPlaceholder, showReason, busy, busyLabel, onConfirm, onCancel, }: ConfirmDialogProps): import("react/jsx-runtime").JSX.Element;
+export declare function ConfirmDialog({ title, description, confirmLabel, cancelLabel, variant, open: openProp, onOpenChange, trigger, triggerLabel, reasonRequired, reasonLabel, reasonPlaceholder, showReason, busy, busyLabel, error, onConfirm, onCancel, }: ConfirmDialogProps): import("react/jsx-runtime").JSX.Element;
 /** @deprecated Use `ConfirmDialog` with `triggerLabel` / `trigger`. */
 export interface ConfirmActionDialogProps {
     triggerLabel: string;

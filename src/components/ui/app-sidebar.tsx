@@ -36,6 +36,8 @@ export interface AppSidebarProps {
    */
   renderLink?: (item: AppSidebarNavItem, children: React.ReactNode) => React.ReactNode
   logo?: React.ReactNode
+  /** Compact brand mark rendered while the desktop rail is collapsed. */
+  collapsedLogo?: React.ReactNode
   footer?: React.ReactNode
   className?: string
   /** Accessible label for the aside landmark. */
@@ -96,6 +98,7 @@ export function AppSidebar({
   onNavigate,
   renderLink,
   logo,
+  collapsedLogo,
   footer,
   className,
   'aria-label': ariaLabel = 'Navigasi utama',
@@ -116,10 +119,13 @@ export function AppSidebar({
       <div
         className={cn(
           'flex flex-shrink-0 items-center border-b border-border/40',
-          collapsed ? 'justify-center px-2 py-3' : 'justify-between gap-2 px-4 py-3'
+          collapsed ? 'justify-center gap-1 px-2 py-3' : 'justify-between gap-2 px-4 py-3'
         )}
       >
         {!collapsed && logo ? <div className="min-w-0 flex-1">{logo}</div> : null}
+        {collapsed && collapsedLogo ? (
+          <div className="flex min-w-0 items-center justify-center">{collapsedLogo}</div>
+        ) : null}
         {onCollapsedChange ? (
           <Button
             type="button"
@@ -136,7 +142,7 @@ export function AppSidebar({
               <PanelLeftClose className="h-4 w-4" />
             )}
           </Button>
-        ) : logo && collapsed ? (
+        ) : logo && collapsed && !collapsedLogo ? (
           <div className="flex items-center justify-center">{logo}</div>
         ) : null}
       </div>
@@ -159,7 +165,7 @@ export function AppSidebar({
                   isActive
                     ? 'bg-sidebar-active text-sidebar-foreground'
                     : 'text-sidebar-foreground/80 hover:bg-sidebar-hover hover:text-sidebar-foreground',
-                  item.disabled && 'pointer-events-none opacity-50'
+                  item.disabled && 'opacity-50'
                 )
 
                 const content = (
@@ -169,7 +175,9 @@ export function AppSidebar({
                         {item.icon}
                       </span>
                     ) : null}
-                    {!collapsed ? <span className="min-w-0 flex-1 truncate text-left">{item.label}</span> : null}
+                    {!collapsed ? (
+                      <span className="min-w-0 flex-1 truncate text-left">{item.label}</span>
+                    ) : null}
                     {!collapsed && item.badge ? (
                       <span className="shrink-0">{item.badge}</span>
                     ) : null}
@@ -180,7 +188,19 @@ export function AppSidebar({
                 return (
                   <li key={item.id}>
                     {renderLink ? (
-                      <div className={itemClass} data-active={isActive || undefined}>
+                      <div
+                        className={itemClass}
+                        data-active={isActive || undefined}
+                        aria-disabled={item.disabled || undefined}
+                        onClickCapture={(event) => {
+                          if (item.disabled) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                            return
+                          }
+                          onNavigate?.(item)
+                        }}
+                      >
                         {renderLink(item, content)}
                       </div>
                     ) : (
