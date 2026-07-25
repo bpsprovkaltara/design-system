@@ -4,6 +4,57 @@
 
 Versi 4 memerlukan **React 19**, **Tailwind CSS 4**, dan disarankan **Node.js 20+**. Build toolchain konsumen mengikuti dokumentasi resmi Tailwind v4 (misalnya plugin `@tailwindcss/vite` untuk proyek Vite).
 
+## v4.6.0 — Chrome alignment & sidebar a11y
+
+Rilis ini mengubah tampilan shell secara visual. Tidak ada perubahan API pada `AppShell`, tapi ada dua hal yang perlu disadari konsumen.
+
+### 1. Tombol collapse pindah dari `AppSidebar` ke `AppShell`
+
+Tombol sekarang dirender sebagai lingkaran mengambang di tepi kanan rail, di luar `<aside>` supaya tidak terpotong oleh overflow sidebar.
+
+Pemakai `AppShell` **tidak perlu berbuat apa-apa** — `onCollapsedChange` tetap diteruskan seperti biasa.
+
+Pemakai `<AppSidebar>` langsung: prop `onCollapsedChange` masih diterima tapi kini diabaikan. Sediakan tombolnya sendiri dan arahkan `aria-controls` ke prop `id` yang baru:
+
+```tsx
+<div className="relative">
+  <AppSidebar id="rail" groups={groups} collapsed={collapsed} />
+  <button aria-controls="rail" aria-expanded={!collapsed} onClick={() => setCollapsed(!collapsed)}>
+    …
+  </button>
+</div>
+```
+
+### 2. Tinggi topbar 56px → 64px
+
+`AppTopbar` memakai `h-topbar` (token `--topbar-height`, default `4rem`). Header `AppSidebar` memakai tinggi yang sama, sehingga kedua garis bawahnya membentuk satu garis lurus.
+
+Ganti offset yang di-hardcode:
+
+```diff
+- <div className="top-14">
++ <div className="top-[var(--topbar-height)]">
+```
+
+Konsumen bisa menimpanya di `:root`:
+
+```css
+:root { --topbar-height: 3.5rem; }
+```
+
+### 3. Warna border sidebar
+
+Sidebar tidak lagi memakai `--border` (token light theme yang merender terang di atas permukaan navy). Token barunya `--sidebar-border`, default `var(--navy-800)`. Timpa di `:root` bila perlu.
+
+### 4. `renderLink` — jangan lagi menata sendiri
+
+`AppSidebar` kini menyalin styling item ke elemen yang dikembalikan `renderLink`, bukan ke `<div>` pembungkus. Kalau sebelumnya link Anda diberi kelas sendiri untuk mengakali hal ini, hapus — kelasnya akan digabungkan dan bisa saling menimpa.
+
+```tsx
+// Cukup begini:
+renderLink={(item, content) => <Link href={item.href ?? '#'}>{content}</Link>}
+```
+
 ## v4.5.0 — App shell & list-page foundations
 
 ### AppShell / AppSidebar / AppTopbar

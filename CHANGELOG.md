@@ -6,6 +6,39 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [4.6.0] - 2026-07-25
+
+Rilis perbaikan chrome aplikasi: menyelaraskan garis atas shell, memperbaiki a11y navigasi sidebar, dan menghapus duplikasi topbar.
+
+### Added
+
+- **Token `--topbar-height`** (`4rem`) + utilitas `h-topbar`. Satu sumber untuk tinggi topbar dan tinggi header sidebar.
+- **Token `--sidebar-border`** (+ `--color-sidebar-border`). Hairline khusus permukaan gelap; `--border` milik light theme dan merender sebagai outline terang di atas sidebar navy.
+- **`AppSidebar`**: prop `animate` (tahan transisi lebar sampai client mount) dan `id` (target `aria-controls` dari toggle eksternal).
+- **`AppSidebar`**: tooltip otomatis di sisi kanan untuk item saat rail collapsed.
+
+### Changed
+
+- **`AppTopbar`**: `h-14` → `h-topbar` (56px → 64px); gutter `px-4` → `px-4 sm:px-6 lg:px-8` agar sejajar dengan padding area konten.
+- **`AppSidebar`**: header memakai tinggi tetap `h-topbar` dan `border-b border-sidebar-border` — garisnya kini menyambung dengan garis topbar. Sebelumnya tingginya bergantung isi (≈60px) dengan warna border berbeda.
+- **`AppSidebar`**: `overflow-y-auto` pindah dari `<aside>` ke `<nav>`, sehingga logo dan footer tetap terpaku saat menu panjang.
+- **`AppSidebar`**: item aktif `bg-sidebar-active text-sidebar-foreground` (kontras ≈1.5:1, gagal WCAG AA) → alas `bg-white/10` + teks putih + rail aksen 3px di tepi kiri.
+- **`AppSidebar`**: ritme item `gap-2 px-2 py-2` → `gap-3 px-3 py-2.5`, slot ikon 16px → 18px, dan `focus-visible` ring eksplisit.
+- **`AppShell`**: hanya merender **satu** `AppTopbar` (sebelumnya satu per breakpoint). Slot `topbarStart`/`topbarEnd` tidak lagi terpasang dua kali — widget pengambil data di dalamnya berhenti melakukan request ganda.
+- **`AppShell`**: `h-screen h-dvh` → `h-dvh`.
+
+### Fixed
+
+- **`AppSidebar` + `renderLink`**: styling item kini di-`cloneElement` ke elemen link milik router, bukan ke `<div>` pembungkus. Target klik mencakup satu baris penuh, focus ring terlihat, dan `aria-current="page"` terpasang. Sebelumnya `<a>` di dalamnya polos sehingga fokus keyboard tidak terlihat sama sekali.
+- **`AppSidebar`**: `DefaultLink` meneruskan ref dan props, sehingga `TooltipTrigger asChild` benar-benar menempel pada anchor/button.
+- **`AppSidebar`**: `<ul>` menu direset eksplisit (`m-0 list-none p-0`). Pada konsumen yang tidak mereset padding UA, `padding-inline-start` warisannya menggencet item nav — di rail collapsed 64px item hanya selebar 23px dan ikon tidak terpusat.
+- **Cincin fokus di permukaan gelap**: `:focus-visible` global memakai `--ring` (token light theme) yang praktis tidak terlihat di atas sidebar. Ditambah aturan `[data-slot='app-sidebar'] :focus-visible` yang memakai `--sidebar-ring`. Utilitas `focus-visible:ring-*` tidak bisa dipakai untuk ini — utilitas hidup di dalam `@layer` dan kalah dari aturan unlayered.
+
+### Breaking
+
+- **`AppSidebar` tidak lagi merender tombol collapse.** Tombol pindah ke `AppShell`, dirender di samping rail sebagai lingkaran mengambang di tepi kanan sidebar. Prop `onCollapsedChange` pada `AppSidebar` masih diterima tapi diabaikan (deprecated) — teruskan ke `AppShell`. Konsumen yang memakai `<AppSidebar>` langsung dan mengandalkan tombol bawaannya harus menyediakan tombolnya sendiri.
+- **Tinggi topbar 56px → 64px.** Layout yang meng-hardcode offset 56px perlu memakai `h-topbar` / `var(--topbar-height)`.
+
 ## [4.5.1] - 2026-07-20
 
 ### Added

@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { Menu } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Menu } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { SkipLink } from '@/components/ui/skip-link'
@@ -13,6 +13,8 @@ import {
   type AppSidebarProps,
 } from '@/components/ui/app-sidebar'
 import { AppTopbar } from '@/components/ui/app-topbar'
+
+const SIDEBAR_ID = 'app-shell-sidebar'
 
 export interface AppShellProps {
   /** Sidebar nav groups (desktop rail + mobile sheet). */
@@ -39,7 +41,7 @@ export interface AppShellProps {
   children: React.ReactNode
   className?: string
   mainClassName?: string
-  /** Hide the sticky topbar (desktop + mobile chrome still keeps the menu trigger). */
+  /** Hide the topbar (mobile chrome still keeps the menu trigger). */
   hideTopbar?: boolean
 }
 
@@ -70,6 +72,12 @@ export function AppShell({
 
   const [mobileOpen, setMobileOpen] = React.useState(false)
 
+  // The collapsed state is restored on the client, so the first paint always shows
+  // the expanded rail. Withholding transitions until mount keeps that correction
+  // from animating as a 280→64px jump on every page load.
+  const [mounted, setMounted] = React.useState(false)
+  React.useEffect(() => setMounted(true), [])
+
   const handleNavigate = React.useCallback(
     (item: AppSidebarNavItem) => {
       setMobileOpen(false)
@@ -82,7 +90,6 @@ export function AppShell({
     groups,
     activeId,
     collapsed,
-    onCollapsedChange: setCollapsed,
     onNavigate: handleNavigate,
     renderLink,
     logo,
@@ -94,90 +101,81 @@ export function AppShell({
   const mobileVisibleClass = desktopBreakpoint === 'md' ? 'md:hidden' : 'lg:hidden'
   const mobileFooter = mobileSidebarFooter === undefined ? sidebarFooter : mobileSidebarFooter
 
+  const mobileNav = (
+    <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+      <SheetTrigger asChild>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          aria-label="Buka menu"
+          className={cn('h-9 w-9 shrink-0', mobileVisibleClass)}
+        >
+          <Menu className="h-5 w-5" />
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="left" showCloseButton={false} className="w-[280px] border-0 p-0">
+        <SheetTitle className="sr-only">Navigasi</SheetTitle>
+        <AppSidebar
+          {...sidebarProps}
+          collapsed={false}
+          collapsedLogo={undefined}
+          footer={mobileFooter}
+          className="h-full w-full border-0"
+        />
+      </SheetContent>
+    </Sheet>
+  )
+
   return (
     <div
       data-slot="app-shell"
-      className={cn('flex h-screen h-dvh overflow-hidden bg-background text-foreground', className)}
+      className={cn('flex h-dvh overflow-hidden bg-background text-foreground', className)}
     >
       <SkipLink href="#main-content" />
 
-      {/* Desktop sidebar */}
-      <div className={cn('hidden h-full', desktopVisibleClass)}>
-        <AppSidebar {...sidebarProps} />
+      {/* Desktop rail. `relative` anchors the toggle, which sits outside the
+          <aside> so the rail's own overflow clipping can't cut it off. */}
+      <div className={cn('relative hidden h-full', desktopVisibleClass)}>
+        <AppSidebar {...sidebarProps} id={SIDEBAR_ID} animate={mounted} />
+        <button
+          type="button"
+          onClick={() => setCollapsed(!collapsed)}
+          aria-label={collapsed ? 'Buka sidebar' : 'Tutup sidebar'}
+          aria-expanded={!collapsed}
+          aria-controls={SIDEBAR_ID}
+          className={cn(
+            'absolute -right-3 top-5 z-30 flex size-6 items-center justify-center rounded-full',
+            'bg-sidebar-active text-sidebar shadow-md ring-2 ring-background',
+            'hover:scale-110 active:scale-95',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-active focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+            mounted && 'transition-transform duration-200'
+          )}
+        >
+          {collapsed ? <ChevronRight className="size-3.5" /> : <ChevronLeft className="size-3.5" />}
+        </button>
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col">
         {!hideTopbar ? (
-          <>
-            {/* Mobile chrome */}
-            <AppTopbar
-              className={mobileVisibleClass}
-              appTitle={appTitle}
-              start={
-                <>
-                  <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-                    <SheetTrigger asChild>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        aria-label="Buka menu"
-                        className="h-9 w-9"
-                      >
-                        <Menu className="h-5 w-5" />
-                      </Button>
-                    </SheetTrigger>
-                    <SheetContent
-                      side="left"
-                      showCloseButton={false}
-                      className="w-[280px] border-0 p-0"
-                    >
-                      <SheetTitle className="sr-only">Navigasi</SheetTitle>
-                      <AppSidebar
-                        {...sidebarProps}
-                        collapsed={false}
-                        onCollapsedChange={undefined}
-                        collapsedLogo={undefined}
-                        footer={mobileFooter}
-                        className="h-full w-full border-0"
-                      />
-                    </SheetContent>
-                  </Sheet>
-                  {topbarStart}
-                </>
-              }
-              end={topbarEnd}
-            />
-
-            {/* Desktop topbar */}
-            <AppTopbar
-              className={cn('hidden', desktopBreakpoint === 'md' ? 'md:flex' : 'lg:flex')}
-              start={topbarStart}
-              end={topbarEnd}
-            />
-          </>
+          <AppTopbar
+            appTitle={appTitle}
+            start={
+              <>
+                {mobileNav}
+                {topbarStart}
+              </>
+            }
+            end={topbarEnd}
+          />
         ) : (
           <div
-            className={cn('flex h-14 items-center border-b border-border px-4', mobileVisibleClass)}
+            className={cn(
+              'flex h-topbar shrink-0 items-center border-b border-border px-4',
+              mobileVisibleClass
+            )}
           >
-            <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-              <SheetTrigger asChild>
-                <Button type="button" variant="ghost" size="icon" aria-label="Buka menu">
-                  <Menu className="h-5 w-5" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" showCloseButton={false} className="w-[280px] border-0 p-0">
-                <SheetTitle className="sr-only">Navigasi</SheetTitle>
-                <AppSidebar
-                  {...sidebarProps}
-                  collapsed={false}
-                  onCollapsedChange={undefined}
-                  collapsedLogo={undefined}
-                  footer={mobileFooter}
-                  className="h-full w-full border-0"
-                />
-              </SheetContent>
-            </Sheet>
+            {mobileNav}
             {appTitle ? (
               <p className="ml-2 truncate text-sm font-semibold text-foreground">{appTitle}</p>
             ) : null}
