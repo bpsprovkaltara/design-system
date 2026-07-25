@@ -100,6 +100,7 @@
   --color-sidebar-active: hsl(var(--sidebar-active));
   --color-sidebar-hover: hsl(var(--sidebar-hover));
   --color-sidebar-ring: hsl(var(--sidebar-ring));
+  --color-sidebar-border: hsl(var(--sidebar-border));
 
   /* Legacy status aliases */
   --color-success: hsl(var(--success));
@@ -381,6 +382,8 @@
 @utility w-sidebar-expanded { width: var(--sidebar-width-expanded); }
 @utility w-sidebar-collapsed { width: var(--sidebar-width-collapsed); }
 
+@utility h-topbar { height: var(--topbar-height); }
+
 @utility z-base { z-index: var(--z-base); }
 @utility z-raised { z-index: var(--z-raised); }
 @utility z-dropdown { z-index: var(--z-dropdown); }
@@ -577,6 +580,9 @@
   --sidebar-active:       196 100% 50%;
   --sidebar-hover:        var(--navy-800);
   --sidebar-ring:         var(--amber-500);
+  /* Hairline untuk permukaan gelap. --border milik light theme (warm terang)
+     dan merender sebagai outline putih di atas sidebar navy. */
+  --sidebar-border:       var(--navy-800);
 
   /* Status (legacy compat) */
   --success:    var(--feedback-success);
@@ -686,6 +692,7 @@
   --sidebar-active:      196 100% 55%;
   --sidebar-hover:       var(--navy-900);
   --sidebar-ring:        var(--amber-400);
+  --sidebar-border:      var(--navy-900);
 
   /* Status compat */
   --success:    var(--feedback-success);
@@ -913,9 +920,12 @@
   --z-modal:    400;
   --z-toast:    500;
 
-  /* === Sidebar Dimensions === */
+  /* === Shell Dimensions === */
   --sidebar-width-expanded:  17.5rem;   /* 280px */
   --sidebar-width-collapsed: 4rem;      /* 64px */
+  /* Satu sumber untuk tinggi topbar DAN header sidebar — keduanya harus
+     membentuk satu garis horizontal kontinu di bagian atas shell. */
+  --topbar-height:           4rem;      /* 64px */
 }
 
 /* ============================================================
@@ -1009,6 +1019,14 @@
   outline: 2px solid hsl(var(--ring));
   outline-offset: 2px;
   border-radius: var(--radius-sm);
+}
+
+/* Permukaan gelap butuh cincin fokusnya sendiri: --ring adalah token light
+   theme dan praktis tak terlihat di atas sidebar. Aturan ini unlayered dan
+   lebih spesifik, jadi menang atas :focus-visible di atas — utilitas
+   focus-visible:ring-* tidak bisa, karena utilitas hidup di dalam @layer. */
+[data-slot='app-sidebar'] :focus-visible {
+  outline-color: hsl(var(--sidebar-ring));
 }
 
 /* === Skeleton Animation === */

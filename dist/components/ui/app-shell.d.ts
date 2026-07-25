@@ -25,7 +25,7 @@ export interface AppShellProps {
     children: React.ReactNode;
     className?: string;
     mainClassName?: string;
-    /** Hide the sticky topbar (desktop + mobile chrome still keeps the menu trigger). */
+    /** Hide the topbar (mobile chrome still keeps the menu trigger). */
     hideTopbar?: boolean;
 }
 export declare function AppShell({ groups, activeId, collapsed: collapsedProp, defaultCollapsed, onCollapsedChange, onNavigate, renderLink, logo, collapsedLogo, sidebarFooter, mobileSidebarFooter, desktopBreakpoint, topbarStart, topbarEnd, appTitle, children, className, mainClassName, hideTopbar, }: AppShellProps): import("react/jsx-runtime").JSX.Element;

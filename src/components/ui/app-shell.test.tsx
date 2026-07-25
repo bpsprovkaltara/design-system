@@ -66,36 +66,52 @@ describe('AppSidebar', () => {
     expect(onNavigate).toHaveBeenCalledTimes(1)
   })
 
-  it('renders a dedicated collapsed logo beside the expand control', () => {
+  it('swaps in the compact brand mark when collapsed', () => {
     render(
       <AppSidebar
         groups={groups}
         collapsed
         logo={<span>Wide</span>}
         collapsedLogo={<span>Mark</span>}
-        onCollapsedChange={() => undefined}
       />
     )
     expect(screen.getByText('Mark')).toBeInTheDocument()
     expect(screen.queryByText('Wide')).not.toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Buka sidebar' })).toBeInTheDocument()
   })
 
-  it('toggles collapse and activates button items', async () => {
+  it('activates button items', async () => {
     const user = userEvent.setup()
-    const onCollapsedChange = vi.fn()
     const onNavigate = vi.fn()
     render(
       <AppSidebar
         groups={[{ items: [{ id: 'action', label: 'Action' }] }]}
-        onCollapsedChange={onCollapsedChange}
         onNavigate={onNavigate}
       />
     )
-    await user.click(screen.getByRole('button', { name: 'Tutup sidebar' }))
-    expect(onCollapsedChange).toHaveBeenCalledWith(true)
     await user.click(screen.getByRole('button', { name: 'Action' }))
     expect(onNavigate).toHaveBeenCalledWith(expect.objectContaining({ id: 'action' }))
+  })
+
+  it('styles the rendered link itself so the hit area covers the whole row', () => {
+    render(
+      <AppSidebar
+        groups={groups}
+        activeId="docs"
+        renderLink={(item, children) => <a href={item.href}>{children}</a>}
+      />
+    )
+    const link = screen.getByRole('link', { name: 'Dokumen' })
+    expect(link).toHaveAttribute('aria-current', 'page')
+    expect(link).toHaveAttribute('data-active', 'true')
+    expect(link.className).toContain('w-full')
+  })
+
+  it('labels collapsed rail items with a tooltip trigger', () => {
+    render(<AppSidebar groups={groups} collapsed />)
+    expect(screen.getByRole('link', { name: 'Dokumen' })).toHaveAttribute(
+      'data-slot',
+      'tooltip-trigger'
+    )
   })
 })
 
@@ -108,7 +124,26 @@ describe('AppShell', () => {
     )
     expect(screen.getByText('Konten utama')).toBeInTheDocument()
     expect(screen.getByRole('main')).toHaveAttribute('id', 'main-content')
-    expect(screen.getAllByText('End').length).toBeGreaterThan(0)
+    // One topbar, not one per breakpoint — a duplicated banner also duplicates
+    // every data-fetching widget dropped into `topbarEnd`.
+    expect(screen.getAllByText('End')).toHaveLength(1)
+    expect(screen.getAllByRole('banner')).toHaveLength(1)
+  })
+
+  it('points the collapse toggle at the sidebar it controls', async () => {
+    const user = userEvent.setup()
+    render(<AppShell groups={groups}>Content</AppShell>)
+    const toggle = screen.getByRole('button', { name: 'Tutup sidebar' })
+    expect(toggle).toHaveAttribute('aria-expanded', 'true')
+    expect(document.getElementById(toggle.getAttribute('aria-controls')!)).toHaveAttribute(
+      'data-slot',
+      'app-sidebar'
+    )
+    await user.click(toggle)
+    expect(screen.getByRole('button', { name: 'Buka sidebar' })).toHaveAttribute(
+      'aria-expanded',
+      'false'
+    )
   })
 
   it('supports md desktop chrome and a separate mobile footer', async () => {
