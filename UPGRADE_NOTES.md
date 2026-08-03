@@ -4,6 +4,59 @@
 
 Versi 4 memerlukan **React 19**, **Tailwind CSS 4**, dan disarankan **Node.js 20+**. Build toolchain konsumen mengikuti dokumentasi resmi Tailwind v4 (misalnya plugin `@tailwindcss/vite` untuk proyek Vite).
 
+## [Unreleased] — Command/CommandDialog: a11y, varian inline, props cmdk
+
+Perbaikan `Command` dan `CommandDialog`. **Tidak ada breaking change API**: semua props lama tetap diterima, tampilan `CommandDialog` yang ada tidak berubah, dan default `Command` tetap mempertahankan `h-full overflow-hidden`. Bagian berikut menjelaskan perbaikan dan opt-in baru.
+
+### 1. CommandDialog sekarang accessible (a11y, wajib tau)
+
+Sebelumnya `DialogHeader`/`DialogTitle`/`DialogDescription` dirender sebagai sibling `DialogContent`, sehingga Radix tidak menautkan `aria-labelledby` ke `[role=dialog]` dan dialog tidak punya accessible name. Header kini berada di dalam `DialogContent`. **Tidak ada tindakan konsumen**; verifikasi: dialog tidak lagi memunculkan warning dev Radix "DialogContent requires a DialogTitle".
+
+### 2. Varian `inline` untuk palette anchored di topbar
+
+`Command` kini menerima `variant?: "dialog" | "inline"` (default `"dialog"`, kompatibel mundur). Untuk memasang palette inline (input di topbar, panel saran `absolute` di bawah):
+
+```tsx
+import {
+  Command,
+  CommandInput,
+  CommandList,
+  CommandGroup,
+  CommandItem,
+  CommandEmpty,
+} from '@bpsprovkaltara/design-system'
+
+;<Command variant="inline" className="rounded-lg border bg-popover shadow-elevation-3">
+  <CommandInput wrapperClassName="border-b-0" placeholder="Cari..." />
+  <CommandList>
+    <CommandEmpty>Tidak ada hasil.</CommandEmpty>
+    <CommandGroup heading="Halaman">
+      <CommandItem>Dashboard</CommandItem>
+    </CommandGroup>
+  </CommandList>
+</Command>
+```
+
+### 3. `commandProps` untuk pencarian server-side / `shouldFilter={false}`
+
+`CommandDialog` kini meneruskan props cmdk ke instance `<Command>` internal via `commandProps`:
+
+```tsx
+<CommandDialog commandProps={{ shouldFilter: false }}>
+  {/* item ditampilkan apa adanya; cocok untuk hasil dari API */}
+</CommandDialog>
+```
+
+Tanpa ini, filter fuzzy klien cmdk membuang baris yang sebenarnya cocok (mis. server mencocokkan NIP/email, label yang tampil adalah nama).
+
+### 4. `CommandInput.wrapperClassName` + indikator fokus yang tidak terkunci
+
+Wrapper `CommandInput` (pemegang `border-b`, padding, ikon Search) kini bisa di-styling lewat `wrapperClassName`; `className` tetap ke `<input>`. Indikator fokus tidak lagi memakai `!important` dan inset shadow 2px; diganti ring konvensional pada wrapper. Konsumen yang mengandalkan selector arbitrer `[&_[data-slot=command-input-wrapper]]` dapat beralih ke `wrapperClassName`.
+
+### 5. Komponen baru: `Kbd`
+
+Badge tombol keyboard (`⌘K`, `↵`) tersedia lewat barrel root dan subpath `@bpsprovkaltara/design-system/components/ui/kbd`.
+
 ## v4.6.0 — Chrome alignment & sidebar a11y
 
 Rilis ini mengubah tampilan shell secara visual. Tidak ada perubahan API pada `AppShell`, tapi ada dua hal yang perlu disadari konsumen.
@@ -39,7 +92,9 @@ Ganti offset yang di-hardcode:
 Konsumen bisa menimpanya di `:root`:
 
 ```css
-:root { --topbar-height: 3.5rem; }
+:root {
+  --topbar-height: 3.5rem;
+}
 ```
 
 ### 3. Warna border sidebar
@@ -64,7 +119,7 @@ Layout aplikasi kini diekspor (bukan hanya showcase):
 ```tsx
 import { AppShell } from '@bpsprovkaltara/design-system'
 
-<AppShell
+;<AppShell
   groups={[{ title: 'Menu', items: [{ id: 'home', label: 'Beranda', href: '/' }] }]}
   activeId="home"
   logo={<span>BPS</span>}
@@ -253,11 +308,11 @@ Migrasi dari pola lama:
 
 ## Peer dependencies
 
-| Paket           | v3.x    | v4.0.0   |
-|----------------|---------|----------|
-| `react`        | ≥ 18    | **≥ 19** |
-| `react-dom`    | ≥ 18    | **≥ 19** |
-| `tailwindcss`  | ≥ 3.4   | **≥ 4**  |
+| Paket         | v3.x  | v4.0.0   |
+| ------------- | ----- | -------- |
+| `react`       | ≥ 18  | **≥ 19** |
+| `react-dom`   | ≥ 18  | **≥ 19** |
+| `tailwindcss` | ≥ 3.4 | **≥ 4**  |
 
 ## 1) Naikkan React dan TypeScript
 
@@ -297,8 +352,10 @@ import { Fraunces, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google'
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+/>
 ```
 
 ### Jalur CDN opt-in (`fonts.css`, 4.1.0+)
@@ -307,7 +364,7 @@ Bila ingin cepat tanpa setup, impor file font opsional (bukan default — tidak 
 `styles.css`):
 
 ```css
-@import "@bpsprovkaltara/design-system/fonts.css";
+@import '@bpsprovkaltara/design-system/fonts.css';
 ```
 
 Weight yang dibutuhkan: IBM Plex Sans `400/500/600/700`, IBM Plex Mono `400/500`,
@@ -320,9 +377,9 @@ Tailwind v4, mengimpornya akan menggandakan base/reset. Sejak **4.1.0** tersedia
 `tokens.css` (token + `@theme` + utilitas DS, **tanpa** preflight):
 
 ```css
-@import "tailwindcss";                                  /* preflight app Anda (satu kali) */
-@import "@bpsprovkaltara/design-system/tokens.css";     /* token + tema DS, tanpa preflight */
-@source "../node_modules/@bpsprovkaltara/design-system/dist";  /* generate kelas komponen DS */
+@import 'tailwindcss'; /* preflight app Anda (satu kali) */
+@import '@bpsprovkaltara/design-system/tokens.css'; /* token + tema DS, tanpa preflight */
+@source "../node_modules/@bpsprovkaltara/design-system/dist"; /* generate kelas komponen DS */
 ```
 
 `tokens.css` diproses oleh Tailwind milik Anda (mengandung directive `@theme`/`@utility`),
@@ -364,7 +421,7 @@ export default defineConfig({
 Entry CSS aplikasi (mis. `src/index.css`):
 
 ```css
-@import "tailwindcss";
+@import 'tailwindcss';
 ```
 
 Pastikan file CSS itu diimpor dari `main.tsx`. Ikuti [instalasi Tailwind v4 + Vite](https://tailwindcss.com/docs/installation/using-vite).
@@ -376,7 +433,7 @@ Agar kelas Tailwind di **kode Anda** ikut discan:
 - Tailwind v4: gunakan `@source` di CSS aplikasi, misalnya:
 
 ```css
-@import "tailwindcss";
+@import 'tailwindcss';
 @source "../src";
 @source "../node_modules/@bpsprovkaltara/design-system/dist";
 ```

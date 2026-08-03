@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- **`Kbd`**: badge tombol keyboard untuk hint (mis. `⌘K`, `↵`). Diakses lewat barrel root dan subpath `@bpsprovkaltara/design-system/components/ui/kbd`. `CommandShortcut` tetap berupa slot teks; `Kbd` adalah badge visual yang sebelumnya harus ditulis sendiri oleh konsumen.
+- **`Command`**: prop `variant?: "dialog" | "inline"` (default `"dialog"`). Varian `inline` melepas `h-full` dan `overflow-hidden` dari root sehingga palette bisa dipasang inline di topbar dengan panel saran `absolute` tanpa terpotong atau meregang setinggi induknya. Varian default kompatibel mundur.
+- **`CommandDialog`**: prop `commandProps?: React.ComponentProps<typeof Command>` yang meneruskan props cmdk (`shouldFilter`, `filter`, `value`, `onValueChange`, `loop`, `disablePointerSelection`) ke instance `<Command>` internal — diperlukan untuk pencarian asinkron/server-side.
+- **`CommandInput`**: prop `wrapperClassName` untuk styling wrapper (pemegang `border-b`, padding, ikon Search, indikator fokus). `className` tetap diterapkan ke `<input>` (kompatibel mundur).
+
+### Fixed
+
+- **`CommandDialog` (a11y, prioritas tinggi)**: `DialogHeader`/`DialogTitle`/`DialogDescription` kini dirender DI DALAM `DialogContent` sebagai anak pertama, bukan sebagai sibling. Sebelumnya Radix tidak menautkan `aria-labelledby`/`aria-describedby` ke `[role=dialog]` karena Title berada di luar Content yang memortal isinya, sehingga dialog tidak memiliki accessible name dan memunculkan warning dev "DialogContent requires a DialogTitle".
+- **`CommandInput`**: tinggi input (`h-10`) sebelumnya lebih tinggi dari wrapper (`h-9`). Input kini `h-full` mengikuti wrapper; tambalan `h-12` pada input di `CommandDialog` dihapus karena tidak lagi diperlukan (wrapper tetap dih-12 di varian dialog).
+- **`CommandInput`**: indikator fokus tidak lagi mengunci `outline` dengan `!important` dan tidak lagi memakai inset shadow 2px `--border-focus` (terbaca sebagai palang hitam di atas `bg-popover` terang). Penanda fokus dipindah ke ring konvensional pada wrapper via `has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring`, sehingga seluruh field menyala dan konsumen dapat mengganti gaya fokus tanpa `!important`.
+
+### Changed
+
+- **`Command`**: root kini netral terhadap tinggi secara default hanya untuk varian `inline`; varian `dialog` (default) mempertahankan `h-full overflow-hidden`. Tidak ada perubahan visual pada `CommandDialog` yang ada.
+
 ## [4.6.0] - 2026-07-25
 
 Rilis perbaikan chrome aplikasi: menyelaraskan garis atas shell, memperbaiki a11y navigasi sidebar, dan menghapus duplikasi topbar.

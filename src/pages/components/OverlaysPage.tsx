@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHeader'
 import { CodeBlock } from '@/components/showcase/CodeBlock'
 import { Button } from '@/components/ui/button'
@@ -31,12 +31,73 @@ import {
 } from '@/components/ui/dropdown-menu'
 import {
   Command,
+  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
+  CommandShortcut,
 } from '@/components/ui/command'
+import { Kbd } from '@/components/ui/kbd'
+
+function CommandPaletteDialogDemo() {
+  const [open, setOpen] = useState(false)
+  return (
+    <>
+      <Button variant="outline" onClick={() => setOpen(true)}>
+        Buka Palet
+        <Kbd className="ml-2">⌘K</Kbd>
+      </Button>
+      <CommandDialog open={open} onOpenChange={setOpen}>
+        <CommandInput placeholder="Cari menu atau aksi..." />
+        <CommandList>
+          <CommandEmpty>Tidak ditemukan.</CommandEmpty>
+          <CommandGroup heading="Halaman">
+            <CommandItem>
+              Dashboard
+              <CommandShortcut>↵</CommandShortcut>
+            </CommandItem>
+            <CommandItem>Daftar Pegawai</CommandItem>
+            <CommandItem>Pengaturan</CommandItem>
+          </CommandGroup>
+          <CommandGroup heading="Aksi">
+            <CommandItem>Tambah data baru</CommandItem>
+            <CommandItem>Ekspor laporan</CommandItem>
+          </CommandGroup>
+        </CommandList>
+      </CommandDialog>
+    </>
+  )
+}
+
+function InlineCommandDemo() {
+  return (
+    <div className="relative max-w-md">
+      <Command
+        variant="inline"
+        className="rounded-lg border border-border-default bg-popover shadow-elevation-3"
+      >
+        <CommandInput
+          wrapperClassName="border-b border-border-subtle"
+          placeholder="Cari menu atau aksi..."
+        />
+        <CommandList>
+          <CommandEmpty>Tidak ditemukan.</CommandEmpty>
+          <CommandGroup heading="Halaman">
+            <CommandItem>Dashboard</CommandItem>
+            <CommandItem>Daftar Pegawai</CommandItem>
+            <CommandItem>Pengaturan</CommandItem>
+          </CommandGroup>
+          <CommandGroup heading="Aksi">
+            <CommandItem>Tambah data baru</CommandItem>
+            <CommandItem>Ekspor laporan</CommandItem>
+          </CommandGroup>
+        </CommandList>
+      </Command>
+    </div>
+  )
+}
 
 export function OverlaysPage() {
   return (
@@ -193,33 +254,66 @@ export function OverlaysPage() {
 </DropdownMenu>`}</CodeBlock>
       </ShowcaseSection>
 
-      <ShowcaseSection title="Command Palette">
+      <ShowcaseSection title="Command Palette — varian Dialog">
         <div className="rounded-lg border bg-card p-8">
-          <Command className="rounded-lg border max-w-md">
-            <CommandInput placeholder="Cari menu atau aksi..." />
-            <CommandList>
-              <CommandEmpty>Tidak ditemukan.</CommandEmpty>
-              <CommandGroup heading="Halaman">
-                <CommandItem>Dashboard</CommandItem>
-                <CommandItem>Daftar Pegawai</CommandItem>
-                <CommandItem>Pengaturan</CommandItem>
-              </CommandGroup>
-              <CommandGroup heading="Aksi">
-                <CommandItem>Tambah data baru</CommandItem>
-                <CommandItem>Ekspor laporan</CommandItem>
-              </CommandGroup>
-            </CommandList>
-          </Command>
+          <CommandPaletteDialogDemo />
         </div>
-        <CodeBlock>{`<Command>
-  <CommandInput placeholder="Cari menu atau aksi..." />
+        <p className="text-sm text-muted-foreground">
+          <code>{'<CommandDialog>'}</code> merender <code>{'<DialogHeader>'}</code> di dalam{' '}
+          <code>{'<DialogContent>'}</code> agar Radix menautkan <code>aria-labelledby</code> ke{' '}
+          <code>{'<DialogTitle>'}</code>. Prop <code>commandProps</code> diteruskan ke cmdk root,
+          mis. untuk pencarian server-side (<code>shouldFilter={'{false}'}</code>).
+        </p>
+        <CodeBlock>{`<CommandDialog open={open} onOpenChange={setOpen}
+  commandProps={{ shouldFilter: false }}
+>
+  <CommandInput placeholder="Cari NIP atau nama..." />
   <CommandList>
-    <CommandEmpty>Tidak ditemukan.</CommandEmpty>
+    <CommandEmpty>Tidak ada hasil.</CommandEmpty>
+    <CommandGroup heading="Pegawai">
+      <CommandItem>
+        Budi Santoso
+        <CommandShortcut><Kbd>↵</Kbd></CommandShortcut>
+      </CommandItem>
+    </CommandGroup>
+  </CommandList>
+</CommandDialog>`}</CodeBlock>
+      </ShowcaseSection>
+
+      <ShowcaseSection title="Command Palette — varian Inline (anchored)">
+        <div className="rounded-lg border bg-card p-8">
+          <InlineCommandDemo />
+        </div>
+        <p className="text-sm text-muted-foreground">
+          <code>{'<Command variant="inline">'}</code> melepas <code>h-full</code> dan{' '}
+          <code>overflow-hidden</code> dari root, sehingga palette bisa dipasang inline di topbar
+          dengan panel saran <code>absolute</code> di bawah input tanpa terpotong atau meregang
+          setinggi induknya.
+        </p>
+        <CodeBlock>{`<Command variant="inline" className="rounded-lg border shadow-elevation-3">
+  <CommandInput
+    wrapperClassName="border-b-0"
+    placeholder="Cari..."
+  />
+  <CommandList>
+    <CommandEmpty>Tidak ada hasil.</CommandEmpty>
     <CommandGroup heading="Halaman">
       <CommandItem>Dashboard</CommandItem>
     </CommandGroup>
   </CommandList>
 </Command>`}</CodeBlock>
+      </ShowcaseSection>
+
+      <ShowcaseSection title="Kbd (badge tombol keyboard)">
+        <div className="rounded-lg border bg-card p-8 flex flex-wrap items-center gap-3">
+          <Kbd>⌘K</Kbd>
+          <Kbd>⏎</Kbd>
+          <Kbd>↑</Kbd>
+          <Kbd>↓</Kbd>
+          <Kbd>Esc</Kbd>
+        </div>
+        <CodeBlock>{`<Kbd>⌘K</Kbd>
+<Kbd>⏎</Kbd>`}</CodeBlock>
       </ShowcaseSection>
     </div>
   )

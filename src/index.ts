@@ -59,6 +59,7 @@ export {
   CommandShortcut,
   CommandSeparator,
 } from '@/components/ui/command'
+export { Kbd } from '@/components/ui/kbd'
 export {
   Dialog,
   DialogPortal,

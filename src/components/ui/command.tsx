@@ -13,12 +13,32 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
-function Command({ className, ...props }: React.ComponentProps<typeof CommandPrimitive>) {
+type CommandProps = React.ComponentProps<typeof CommandPrimitive>
+
+/**
+ * Root cmdk wrapper.
+ *
+ * `variant="dialog"` (default) mengisi penuh kontainer induk (`h-full
+ * overflow-hidden`) — kompatibel mundur dengan pemakaian di dalam Dialog.
+ *
+ * `variant="inline"` melepas kedua kelas itu supaya root bisa dipakai untuk
+ * palette inline/anchored (input di topbar + panel saran absolute) tanpa
+ * meregang setinggi induk atau memotong panel yang overflow.
+ */
+function Command({
+  className,
+  variant = 'dialog',
+  ...props
+}: CommandProps & {
+  variant?: 'dialog' | 'inline'
+}) {
   return (
     <CommandPrimitive
       data-slot="command"
+      data-variant={variant}
       className={cn(
-        'flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground',
+        'flex w-full flex-col rounded-md bg-popover text-popover-foreground',
+        variant === 'dialog' && 'h-full overflow-hidden',
         className
       )}
       {...props}
@@ -26,30 +46,59 @@ function Command({ className, ...props }: React.ComponentProps<typeof CommandPri
   )
 }
 
+/**
+ * Varian dialog dari Command Palette.
+ *
+ * Perbaikan a11y: `DialogHeader` (berisi `DialogTitle` + `DialogDescription`)
+ * dirender DI DALAM `DialogContent` agar Radix menautkan `aria-labelledby`/
+ * `aria-describedby` ke elemen `[role=dialog]`. Versi lama menaruhnya sebagai
+ * sibling Content sehingga dialog tidak punya accessible name.
+ *
+ * `commandProps` diteruskan ke instance `<Command>` internal sehingga props
+ * cmdk seperti `shouldFilter`, `filter`, `value`, `onValueChange`, `loop`, dan
+ * `disablePointerSelection` bisa disetel — diperlukan untuk pencarian
+ * asinkron/server-side.
+ */
 function CommandDialog({
   title = 'Command Palette',
   description = 'Cari perintah untuk dijalankan...',
   children,
   className,
+  commandProps,
   showCloseButton = true,
   ...props
 }: React.ComponentProps<typeof Dialog> & {
   title?: string
   description?: string
   className?: string
+  commandProps?: CommandProps
   showCloseButton?: boolean
 }) {
+  const { className: commandClassName, ...restCommandProps } = commandProps ?? {}
+
   return (
     <Dialog {...props}>
-      <DialogHeader className="sr-only">
-        <DialogTitle>{title}</DialogTitle>
-        <DialogDescription>{description}</DialogDescription>
-      </DialogHeader>
       <DialogContent
         className={cn('overflow-hidden p-0', className)}
         showCloseButton={showCloseButton}
       >
-        <Command className="**:data-[slot=command-input-wrapper]:h-12 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-content-tertiary [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
+        <DialogHeader className="sr-only">
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
+        </DialogHeader>
+        <Command
+          className={cn(
+            // Wrapper input dinaikkan ke h-12 (48px) untuk varian dialog;
+            // input sendiri kini h-full jadi tidak perlu override tinggi input.
+            '**:data-[slot=command-input-wrapper]:h-12',
+            '[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-content-tertiary',
+            '[&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0',
+            '[&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5',
+            '[&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5',
+            commandClassName
+          )}
+          {...restCommandProps}
+        >
           {children}
         </Command>
       </DialogContent>
@@ -59,20 +108,36 @@ function CommandDialog({
 
 function CommandInput({
   className,
+  wrapperClassName,
   ...props
-}: React.ComponentProps<typeof CommandPrimitive.Input>) {
+}: React.ComponentProps<typeof CommandPrimitive.Input> & {
+  /**
+   * Kelas untuk wrapper (pemegang border-b, padding, ikon Search, dan
+   * indikator fokus). `className` tetap diterapkan ke `<input>` itu sendiri
+   * agar kompatibel mundur.
+   */
+  wrapperClassName?: string
+}) {
   return (
     <div
       data-slot="command-input-wrapper"
-      className="flex h-9 items-center gap-2 border-b border-border-subtle px-3"
+      className={cn(
+        'flex h-9 items-center gap-2 border-b border-border-subtle px-3',
+        // Indikator fokus dipindah ke wrapper: ring konvensional pada seluruh
+        // field, bukan inset shadow 2px di dalam input yang terbaca sebagai
+        // palang hitam. Tanpa !important, konsumen bisa mengganti gaya fokus.
+        'has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring has-[:focus-visible]:ring-offset-0',
+        wrapperClassName
+      )}
     >
       <Search className="size-4 shrink-0 opacity-50" />
       <CommandPrimitive.Input
         data-slot="command-input"
         className={cn(
-          'flex h-10 w-full rounded-md bg-transparent py-3 text-body-sm',
-          '!outline-none focus:!outline-none focus:ring-0 focus-visible:!outline-none focus-visible:ring-0',
-          'focus-visible:shadow-[inset_0_-2px_0_0_hsl(var(--border-focus))]',
+          // Tinggi input mengikuti wrapper (h-full) → konsisten dengan h-9.
+          'flex h-full w-full bg-transparent text-body-sm',
+          // outline dimatikan tanpa !important; penanda fokus ada di wrapper.
+          'outline-none focus-visible:outline-none',
           'placeholder:text-content-tertiary',
           'disabled:cursor-not-allowed disabled:opacity-50',
           className
