@@ -80,27 +80,26 @@ export function DataDisplayPage() {
             title="Laporan Disetujui"
             value="312"
             helper="89% dari target"
+            accent="success"
             icon={<FileBarChart className="h-4 w-4" />}
           />
           <KpiCard
             title="Dataset"
             value="48"
             helper="6 terbarui hari ini"
+            accent="info"
             icon={<Database className="h-4 w-4" />}
           />
           <KpiCard
             title="Kepatuhan SOP"
             value="96%"
             helper="Periode triwulan I"
+            accent="warning"
             icon={<ShieldCheck className="h-4 w-4" />}
           />
         </div>
-        <CodeBlock>{`<KpiCard
-  title="Pegawai Aktif"
-  value="1.284"
-  helper="+12 dari bulan lalu"
-  icon={<Users className="h-4 w-4" />}
-/>`}</CodeBlock>
+        <CodeBlock>{`<KpiCard title="Pegawai Aktif" value="1.284" icon={<Users />} />
+<KpiCard title="Laporan" value="312" accent="success" icon={<FileBarChart />} />`}</CodeBlock>
       </ShowcaseSection>
 
       <ShowcaseSection title="Progress">

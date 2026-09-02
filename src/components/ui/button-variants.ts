@@ -32,6 +32,8 @@ export const buttonVariants = cva(
           'bg-success text-success-foreground shadow-elevation-1 hover:bg-success/90 hover:shadow-elevation-2 hover:-translate-y-px active:translate-y-0',
         'danger-outline':
           'border border-feedback-danger text-feedback-danger bg-transparent hover:bg-feedback-danger-bg',
+        /** Chip navigasi: tint brand + ring lembut (untuk FilterChips / entry modul). */
+        nav: 'bg-brand-primary/10 text-brand-primary ring-1 ring-brand-primary/15 hover:bg-brand-primary/15',
       },
       size: {
         xs: 'h-6 px-2 text-[11px] gap-1 [&_svg]:size-3',

@@ -35,6 +35,7 @@ import { DisclosurePage } from '@/pages/components/DisclosurePage'
 import { DataDisplayPage } from '@/pages/components/DataDisplayPage'
 import { NavigationPage } from '@/pages/components/NavigationPage'
 import { EmptyStatePage } from '@/pages/components/EmptyStatePage'
+import { PatternsPage } from '@/pages/components/PatternsPage'
 
 function App() {
   return (
@@ -74,6 +75,7 @@ function App() {
             <Route path="data-display" element={<DataDisplayPage />} />
             <Route path="navigation" element={<NavigationPage />} />
             <Route path="empty-state" element={<EmptyStatePage />} />
+            <Route path="patterns" element={<PatternsPage />} />
           </Route>
 
           {/* Prototypes */}

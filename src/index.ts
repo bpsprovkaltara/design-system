@@ -257,7 +257,7 @@ export type {
 export { FormSection } from '@/components/ui/form-section'
 export type { FormSectionProps } from '@/components/ui/form-section'
 export { KpiCard } from '@/components/ui/kpi-card'
-export type { KpiCardProps } from '@/components/ui/kpi-card'
+export type { KpiCardProps, KpiAccent } from '@/components/ui/kpi-card'
 export { PageHeader } from '@/components/ui/page-header'
 export type { PageHeaderProps } from '@/components/ui/page-header'
 export { PerformanceCard } from '@/components/ui/performance-card'
@@ -292,6 +292,17 @@ export type { StepperProps, Step, StepStatus } from '@/components/ui/stepper'
 /* === Patterns === */
 export { EmptyState } from '@/components/patterns/empty-state'
 export type { EmptyStateProps } from '@/components/patterns/empty-state'
+export { SectionCard } from '@/components/patterns/section-card'
+export type { SectionCardProps } from '@/components/patterns/section-card'
+export { DataTableCard } from '@/components/patterns/data-table-card'
+export type {
+  DataTableCardProps,
+  DataTableCardSummaryItem,
+} from '@/components/patterns/data-table-card'
+export { FilterChips } from '@/components/patterns/filter-chips'
+export type { FilterChipsProps, FilterChipItem } from '@/components/patterns/filter-chips'
+export { PageSkeleton } from '@/components/patterns/page-skeleton'
+export type { PageSkeletonProps, PageSkeletonVariant } from '@/components/patterns/page-skeleton'
 
 /* === Hooks === */
 export { useToast } from '@/hooks/use-toast'

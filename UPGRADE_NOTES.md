@@ -102,7 +102,31 @@ import { SelectInput, DateInput, CheckboxInput } from '@bpsprovkaltara/design-sy
 
 Bisa dipakai dengan `register('field')` karena ref mengarah ke elemen native. Konsumen yang punya adapter lokal (mis. Menara `inputs.tsx`) dapat migrasi bertahap.
 
-### 9. Combobox: tinggi search + escape hatch styling
+### 9. Patterns Wave 2 (`SectionCard`, `DataTableCard`, `FilterChips`, `PageSkeleton`, `KpiCard.accent`, `nav`)
+
+Additive. Impor dari barrel atau subpath `patterns/*` / `components/ui/*`.
+
+```tsx
+import {
+  SectionCard,
+  DataTableCard,
+  FilterChips,
+  PageSkeleton,
+  KpiCard,
+  LinkButton,
+} from '@bpsprovkaltara/design-system'
+
+<SectionCard title="…" icon={…} action={…} headerExtra={…}>…</SectionCard>
+<DataTableCard summary={[{ label: 'Total', value: '12' }]} footer={…}>…</DataTableCard>
+<FilterChips label="Status" items={[{ href: '/a', label: 'A', active: true }]} />
+<PageSkeleton variant="table" />
+<KpiCard title="…" value="…" accent="success" icon={…} />
+<LinkButton variant="nav" size="sm" href="/modul">Modul</LinkButton>
+```
+
+`KpiCard` tanpa `accent` tetap memakai `border-l-4 border-l-primary`.
+
+### 10. Combobox: tinggi search + escape hatch styling
 
 `Combobox` tidak lagi memaksa `h-11` pada `CommandInput`. Default sudah selaras wrapper `h-9` dan fokus ring standar. Jika konsumen Menara (atau aplikasi lain) sudah mem-patch dengan selector arbitrer / `focus-visible:shadow-none` / override tinggi, patch itu biasanya bisa dihapus.
 

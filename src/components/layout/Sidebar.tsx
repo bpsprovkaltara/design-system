@@ -36,6 +36,7 @@ import {
   Inbox,
   PanelLeftClose,
   PanelLeftOpen,
+  Boxes,
 } from 'lucide-react'
 
 const navGroups = [
@@ -78,6 +79,7 @@ const navGroups = [
       { id: '/components/data-display', label: 'Data Display', icon: BarChart3 },
       { id: '/components/navigation', label: 'Navigation', icon: Compass },
       { id: '/components/empty-state', label: 'Empty State', icon: Inbox },
+      { id: '/components/patterns', label: 'Patterns', icon: Boxes },
     ],
   },
   {

@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- **`SectionCard`**, **`DataTableCard`**, **`FilterChips`**, **`PageSkeleton`**: pola tingkat tinggi di `components/patterns` (header kartu fleksibel, kartu tabel + ringkasan/footer, chip filter tautan, skeleton halaman `table`/`cards`/`detail`).
+- **`buttonVariants` / `LinkButton`**: variant `nav` (tint brand + ring) untuk chip navigasi.
+- **`KpiCard`**: prop opsional `accent?: "brand" | "accent" | "success" | "info" | "warning"` — bar atas + chip ikon. Tanpa `accent`, border-kiri primary tetap default.
 - **`Card`**: prop `variant?: "default" | "surface"`. Varian `surface` = `rounded-2xl border-border-subtle shadow-elevation-1` (skin kartu standar konsumen). Default tidak berubah. Tipe `CardProps` dan helper `cardVariants` diekspor.
 - **`FilterBar`**: prop `variant?: "default" | "surface"` dengan skin yang sama agar filter bisa selaras kartu tanpa className manual.
 - **`Stepper`**: prop opsional `onStepClick?: (index) => void` dan `stepErrors?: boolean[]`. Langkah selesai/aktif menjadi tombol jika `onStepClick` diberikan; `stepErrors` menampilkan status error (ikon peringatan).
