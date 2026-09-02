@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [4.7.0] - 2026-09-03
+
+Rilis minor dari audit konsumen Menara: adapter form native/RHF, skin kartu `surface`, pola SectionCard/DataTableCard/FilterChips/PageSkeleton, perbaikan Combobox/Command, serta BadgeTooltip dan RowDetailLink. Library motion JS **tidak** diadopsi (ADR 0002); standar motion tetap token CSS.
+
 ### Added
 
 - **`BadgeTooltip`**: wrapper Tooltip untuk badge/ikon (`content` kosong → passthrough children).

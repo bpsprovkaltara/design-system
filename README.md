@@ -1,4 +1,4 @@
-![versi](https://img.shields.io/badge/versi-4.6.0-blue) ![lisensi](https://img.shields.io/badge/lisensi-UNLICENSED-lightgrey) ![node](https://img.shields.io/badge/node-%3E%3D20-green)
+![versi](https://img.shields.io/badge/versi-4.7.0-blue) ![lisensi](https://img.shields.io/badge/lisensi-UNLICENSED-lightgrey) ![node](https://img.shields.io/badge/node-%3E%3D20-green)
 
 # BPS Kaltara Design System
 

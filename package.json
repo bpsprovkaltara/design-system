@@ -1,6 +1,6 @@
 {
   "name": "@bpsprovkaltara/design-system",
-  "version": "4.6.0",
+  "version": "4.7.0",
   "description": "BPS Provinsi Kalimantan Utara — internal design system (React + Tailwind + shadcn/ui).",
   "license": "UNLICENSED",
   "type": "module",
