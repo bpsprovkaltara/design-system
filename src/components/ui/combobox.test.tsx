@@ -86,15 +86,11 @@ describe('Combobox', () => {
     render(<Combobox options={options} commandClassName="data-testid-command-extra" />)
     await userEvent.click(screen.getByRole('combobox'))
     // PopoverContent di-portal ke document.body
-    expect(document.querySelector('[data-slot="command"]')).toHaveClass(
-      'data-testid-command-extra'
-    )
+    expect(document.querySelector('[data-slot="command"]')).toHaveClass('data-testid-command-extra')
   })
 
   it('applies inputWrapperClassName to the CommandInput wrapper', async () => {
-    render(
-      <Combobox options={options} inputWrapperClassName="data-testid-wrapper-extra" />
-    )
+    render(<Combobox options={options} inputWrapperClassName="data-testid-wrapper-extra" />)
     await userEvent.click(screen.getByRole('combobox'))
     expect(document.querySelector('[data-slot="command-input-wrapper"]')).toHaveClass(
       'data-testid-wrapper-extra'

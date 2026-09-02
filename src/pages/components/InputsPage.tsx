@@ -44,9 +44,8 @@ export function InputsPage() {
               searchPlaceholder="Cari wilayah..."
             />
             <p className="text-xs text-muted-foreground mt-1">
-              Gunakan untuk list yang panjang dengan kemampuan pencarian. Tinggi
-              kolom cari mengikuti kontrol form lain (`h-9`); fokus memakai ring
-              standar, bukan garis inset.
+              Gunakan untuk list yang panjang dengan kemampuan pencarian. Tinggi kolom cari
+              mengikuti kontrol form lain (`h-9`); fokus memakai ring standar, bukan garis inset.
             </p>
           </div>
           <div className="space-y-2.5">
@@ -145,13 +144,7 @@ export function InputsPage() {
             toYear={2026}
             label="Tahun publikasi"
           />
-          <NumberField
-            label="PDRB"
-            value={pdrb}
-            onChange={setPdrb}
-            unit="Miliar"
-            placeholder="0"
-          />
+          <NumberField label="PDRB" value={pdrb} onChange={setPdrb} unit="Miliar" placeholder="0" />
         </div>
         <CodeBlock>{`<YearSelect value={year} onChange={setYear} fromYear={2018} toYear={2026} />
 <NumberField label="PDRB" value={pdrb} onChange={setPdrb} unit="Miliar" />`}</CodeBlock>
