@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - **`Card`**: prop `variant?: "default" | "surface"`. Varian `surface` = `rounded-2xl border-border-subtle shadow-elevation-1` (skin kartu standar konsumen). Default tidak berubah. Tipe `CardProps` dan helper `cardVariants` diekspor.
 - **`FilterBar`**: prop `variant?: "default" | "surface"` dengan skin yang sama agar filter bisa selaras kartu tanpa className manual.
+- **`Stepper`**: prop opsional `onStepClick?: (index) => void` dan `stepErrors?: boolean[]`. Langkah selesai/aktif menjadi tombol jika `onStepClick` diberikan; `stepErrors` menampilkan status error (ikon peringatan).
 - **`Kbd`**: badge tombol keyboard untuk hint (mis. `⌘K`, `↵`). Diakses lewat barrel root dan subpath `@bpsprovkaltara/design-system/components/ui/kbd`. `CommandShortcut` tetap berupa slot teks; `Kbd` adalah badge visual yang sebelumnya harus ditulis sendiri oleh konsumen.
 - **`Command`**: prop `variant?: "dialog" | "inline"` (default `"dialog"`). Varian `inline` melepas `h-full` dan `overflow-hidden` dari root sehingga palette bisa dipasang inline di topbar dengan panel saran `absolute` tanpa terpotong atau meregang setinggi induknya. Varian default kompatibel mundur.
 - **`CommandDialog`**: prop `commandProps?: React.ComponentProps<typeof Command>` yang meneruskan props cmdk (`shouldFilter`, `filter`, `value`, `onValueChange`, `loop`, `disablePointerSelection`) ke instance `<Command>` internal — diperlukan untuk pencarian asinkron/server-side.

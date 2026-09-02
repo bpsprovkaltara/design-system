@@ -1,5 +1,6 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { Stepper } from './stepper'
 
 const steps = [
@@ -49,5 +50,27 @@ describe('Stepper', () => {
   it('renders an optional step description', () => {
     render(<Stepper steps={steps} current={1} />)
     expect(screen.getByText('Pengisian awal')).toBeInTheDocument()
+  })
+
+  it('calls onStepClick for completed and current steps only', async () => {
+    const onStepClick = vi.fn()
+    render(<Stepper steps={steps} current={1} onStepClick={onStepClick} />)
+    await userEvent.click(screen.getByRole('button', { name: /Draft/i }))
+    expect(onStepClick).toHaveBeenCalledWith(0)
+    await userEvent.click(screen.getByRole('button', { name: /Verifikasi/i }))
+    expect(onStepClick).toHaveBeenCalledWith(1)
+    expect(screen.queryByRole('button', { name: /Revisi/i })).not.toBeInTheDocument()
+  })
+
+  it('does not render clickable buttons when onStepClick is omitted', () => {
+    render(<Stepper steps={steps} current={1} />)
+    expect(screen.queryAllByRole('button')).toHaveLength(0)
+  })
+
+  it('renders error status from stepErrors on the current step', () => {
+    render(<Stepper steps={steps} current={1} stepErrors={[false, true, false, false]} />)
+    // Tanpa stepErrors, current=1 menampilkan "02". Dengan error, angka hilang.
+    expect(screen.queryByText('02')).not.toBeInTheDocument()
+    expect(screen.getByText('03')).toBeInTheDocument()
   })
 })

@@ -21,6 +21,7 @@ import {
 } from '@/components/ui/form'
 
 export function FormWorkflowPage() {
+  const [stepIndex, setStepIndex] = useState(1)
   const [formState, setFormState] = useState({
     judul: '',
     nomor: '',
@@ -59,7 +60,9 @@ export function FormWorkflowPage() {
       <ShowcaseSection title="Stepper — Indikator Alur Dokumen">
         <div className="rounded-lg border bg-card p-8 space-y-8">
           <div className="space-y-3">
-            <div className="text-sm text-muted-foreground">Langkah aktif: 2 (Verifikasi)</div>
+            <div className="text-sm text-muted-foreground">
+              Interaktif — klik langkah selesai/aktif (indeks {stepIndex + 1})
+            </div>
             <Stepper
               steps={[
                 { label: 'Draft', description: 'Pengisian awal' },
@@ -67,7 +70,9 @@ export function FormWorkflowPage() {
                 { label: 'Revisi', description: 'Perbaikan' },
                 { label: 'Disetujui', description: 'Final' },
               ]}
-              current={1}
+              current={stepIndex}
+              onStepClick={setStepIndex}
+              stepErrors={stepIndex >= 1 ? [false, true, false, false] : undefined}
             />
           </div>
           <div className="space-y-3">
@@ -85,16 +90,13 @@ export function FormWorkflowPage() {
           </div>
         </div>
         <CodeBlock>{`<Stepper
-  steps={[
-    { label: 'Draft', description: 'Pengisian awal' },
-    { label: 'Verifikasi', description: 'Tinjauan data' },
-    { label: 'Revisi' },
-    { label: 'Disetujui' },
-  ]}
-  current={1}
+  steps={steps}
+  current={stepIndex}
+  onStepClick={setStepIndex}
+  stepErrors={[false, true, false, false]}
 />
 
-// Dengan status eksplisit per langkah
+// Display-only tetap didukung
 <Stepper
   steps={steps}
   current={2}

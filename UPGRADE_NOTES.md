@@ -68,7 +68,22 @@ Untuk menghilangkan reskin berulang `rounded-2xl border-border-subtle shadow-ele
 
 Default visual tidak berubah. Konsumen yang sudah menulis className yang sama dapat menggantinya dengan `variant="surface"`.
 
-### 7. Combobox: tinggi search + escape hatch styling
+### 7. Stepper interaktif (`onStepClick`, `stepErrors`)
+
+Additive, non-breaking. Tanpa props baru, Stepper tetap display-only.
+
+```tsx
+<Stepper
+  steps={steps}
+  current={current}
+  onStepClick={(index) => setCurrent(index)}
+  stepErrors={errorsByStep}
+/>
+```
+
+Hanya langkah dengan `index <= current` yang bisa diklik. `stepErrors[i] === true` menampilkan status error (ikon peringatan).
+
+### 8. Combobox: tinggi search + escape hatch styling
 
 `Combobox` tidak lagi memaksa `h-11` pada `CommandInput`. Default sudah selaras wrapper `h-9` dan fokus ring standar. Jika konsumen Menara (atau aplikasi lain) sudah mem-patch dengan selector arbitrer / `focus-visible:shadow-none` / override tinggi, patch itu biasanya bisa dihapus.
 
