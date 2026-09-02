@@ -68,4 +68,36 @@ describe('Combobox', () => {
     render(<Combobox options={options} disabled />)
     expect(screen.getByRole('combobox')).toBeDisabled()
   })
+
+  it('does not force h-11 on the search input (aligns with h-9 wrapper)', async () => {
+    render(<Combobox options={options} />)
+    await userEvent.click(screen.getByRole('combobox'))
+    const input = screen.getByPlaceholderText('Cari...')
+    expect(input.className.split(/\s+/)).not.toContain('h-11')
+  })
+
+  it('applies inputClassName to the search input', async () => {
+    render(<Combobox options={options} inputClassName="data-testid-input-extra" />)
+    await userEvent.click(screen.getByRole('combobox'))
+    expect(screen.getByPlaceholderText('Cari...')).toHaveClass('data-testid-input-extra')
+  })
+
+  it('applies commandClassName to the Command root', async () => {
+    render(<Combobox options={options} commandClassName="data-testid-command-extra" />)
+    await userEvent.click(screen.getByRole('combobox'))
+    // PopoverContent di-portal ke document.body
+    expect(document.querySelector('[data-slot="command"]')).toHaveClass(
+      'data-testid-command-extra'
+    )
+  })
+
+  it('applies inputWrapperClassName to the CommandInput wrapper', async () => {
+    render(
+      <Combobox options={options} inputWrapperClassName="data-testid-wrapper-extra" />
+    )
+    await userEvent.click(screen.getByRole('combobox'))
+    expect(document.querySelector('[data-slot="command-input-wrapper"]')).toHaveClass(
+      'data-testid-wrapper-extra'
+    )
+  })
 })

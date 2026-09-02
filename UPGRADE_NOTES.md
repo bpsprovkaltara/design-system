@@ -57,6 +57,23 @@ Wrapper `CommandInput` (pemegang `border-b`, padding, ikon Search) kini bisa di-
 
 Badge tombol keyboard (`⌘K`, `↵`) tersedia lewat barrel root dan subpath `@bpsprovkaltara/design-system/components/ui/kbd`.
 
+### 6. Combobox: tinggi search + escape hatch styling
+
+`Combobox` tidak lagi memaksa `h-11` pada `CommandInput`. Default sudah selaras wrapper `h-9` dan fokus ring standar. Jika konsumen Menara (atau aplikasi lain) sudah mem-patch dengan selector arbitrer / `focus-visible:shadow-none` / override tinggi, patch itu biasanya bisa dihapus.
+
+Prop baru (opsional, non-breaking):
+
+```tsx
+<Combobox
+  options={options}
+  inputClassName="…"
+  inputWrapperClassName="border-b-0"
+  commandClassName="…"
+/>
+```
+
+`className` tetap hanya mengenai tombol trigger.
+
 ## v4.6.0 — Chrome alignment & sidebar a11y
 
 Rilis ini mengubah tampilan shell secara visual. Tidak ada perubahan API pada `AppShell`, tapi ada dua hal yang perlu disadari konsumen.

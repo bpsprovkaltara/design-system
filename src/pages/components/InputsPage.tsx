@@ -44,7 +44,9 @@ export function InputsPage() {
               searchPlaceholder="Cari wilayah..."
             />
             <p className="text-xs text-muted-foreground mt-1">
-              Gunakan untuk list yang panjang dengan kemampuan pencarian.
+              Gunakan untuk list yang panjang dengan kemampuan pencarian. Tinggi
+              kolom cari mengikuti kontrol form lain (`h-9`); fokus memakai ring
+              standar, bukan garis inset.
             </p>
           </div>
           <div className="space-y-2.5">
@@ -56,7 +58,11 @@ export function InputsPage() {
           </div>
         </div>
         <CodeBlock>
-          {`<Combobox options={[{value: "tarakan", label: "Kota Tarakan"}]} />
+          {`<Combobox
+  options={[{ value: "tarakan", label: "Kota Tarakan" }]}
+  searchPlaceholder="Cari wilayah..."
+  inputWrapperClassName="border-b-0" // opsional
+/>
 <DatePicker onChange={(date) => console.log(date)} />`}
         </CodeBlock>
       </ShowcaseSection>

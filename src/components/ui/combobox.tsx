@@ -27,7 +27,14 @@ export interface ComboboxProps {
   placeholder?: string
   searchPlaceholder?: string
   emptyText?: string
+  /** Kelas untuk tombol trigger. */
   className?: string
+  /** Kelas untuk root `Command` di dalam popover. */
+  commandClassName?: string
+  /** Kelas untuk `<input>` pencarian (`CommandInput`). */
+  inputClassName?: string
+  /** Kelas untuk wrapper `CommandInput` (border-b, padding, fokus). */
+  inputWrapperClassName?: string
   disabled?: boolean
 }
 
@@ -39,6 +46,9 @@ export function Combobox({
   searchPlaceholder = 'Cari...',
   emptyText = 'Tidak ditemukan.',
   className,
+  commandClassName,
+  inputClassName,
+  inputWrapperClassName,
   disabled = false,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false)
@@ -70,8 +80,12 @@ export function Combobox({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 border-border shadow-lg animate-in fade-in zoom-in-95 duration-200">
-        <Command className="bg-background">
-          <CommandInput placeholder={searchPlaceholder} className="h-11" />
+        <Command className={cn('bg-background', commandClassName)}>
+          <CommandInput
+            placeholder={searchPlaceholder}
+            className={inputClassName}
+            wrapperClassName={inputWrapperClassName}
+          />
           <CommandList className="max-h-[300px]">
             <CommandEmpty className="py-6 text-center text-sm text-muted-foreground italic">
               {emptyText}

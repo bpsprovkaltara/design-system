@@ -9,7 +9,14 @@ export interface ComboboxProps {
     placeholder?: string;
     searchPlaceholder?: string;
     emptyText?: string;
+    /** Kelas untuk tombol trigger. */
     className?: string;
+    /** Kelas untuk root `Command` di dalam popover. */
+    commandClassName?: string;
+    /** Kelas untuk `<input>` pencarian (`CommandInput`). */
+    inputClassName?: string;
+    /** Kelas untuk wrapper `CommandInput` (border-b, padding, fokus). */
+    inputWrapperClassName?: string;
     disabled?: boolean;
 }
-export declare function Combobox({ options, value, onChange, placeholder, searchPlaceholder, emptyText, className, disabled, }: ComboboxProps): import("react/jsx-runtime").JSX.Element;
+export declare function Combobox({ options, value, onChange, placeholder, searchPlaceholder, emptyText, className, commandClassName, inputClassName, inputWrapperClassName, disabled, }: ComboboxProps): import("react/jsx-runtime").JSX.Element;

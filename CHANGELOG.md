@@ -18,10 +18,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **`CommandDialog` (a11y, prioritas tinggi)**: `DialogHeader`/`DialogTitle`/`DialogDescription` kini dirender DI DALAM `DialogContent` sebagai anak pertama, bukan sebagai sibling. Sebelumnya Radix tidak menautkan `aria-labelledby`/`aria-describedby` ke `[role=dialog]` karena Title berada di luar Content yang memortal isinya, sehingga dialog tidak memiliki accessible name dan memunculkan warning dev "DialogContent requires a DialogTitle".
 - **`CommandInput`**: tinggi input (`h-10`) sebelumnya lebih tinggi dari wrapper (`h-9`). Input kini `h-full` mengikuti wrapper; tambalan `h-12` pada input di `CommandDialog` dihapus karena tidak lagi diperlukan (wrapper tetap dih-12 di varian dialog).
 - **`CommandInput`**: indikator fokus tidak lagi mengunci `outline` dengan `!important` dan tidak lagi memakai inset shadow 2px `--border-focus` (terbaca sebagai palang hitam di atas `bg-popover` terang). Penanda fokus dipindah ke ring konvensional pada wrapper via `has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring`, sehingga seluruh field menyala dan konsumen dapat mengganti gaya fokus tanpa `!important`.
+- **`Combobox`**: baris pencarian tidak lagi memaksa `CommandInput` dengan `h-11` di dalam wrapper `h-9` (clipping + tepi keras). Tinggi input mengikuti wrapper; fokus memakai ring wrapper dari `CommandInput` (bukan inset shadow navy).
 
 ### Changed
 
 - **`Command`**: root kini netral terhadap tinggi secara default hanya untuk varian `inline`; varian `dialog` (default) mempertahankan `h-full overflow-hidden`. Tidak ada perubahan visual pada `CommandDialog` yang ada.
+- **`Combobox`**: mengekspor prop opsional `commandClassName`, `inputClassName`, dan `inputWrapperClassName` agar konsumen dapat men-styling panel pencarian tanpa merakit `Command` sendiri. `className` tetap hanya untuk tombol trigger.
 
 ## [4.6.0] - 2026-07-25
 
