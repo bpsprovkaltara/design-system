@@ -60,6 +60,11 @@ export interface FilterBarProps {
   onSubmit?: () => void
   resetLabel?: string
   className?: string
+  /**
+   * Skin visual. `surface` = `rounded-2xl border-border-subtle shadow-elevation-1`
+   * (selaras `Card variant="surface"`). Default mempertahankan tampilan lama.
+   */
+  variant?: 'default' | 'surface'
   /** Accessible name for the search landmark. */
   'aria-label'?: string
   columns?: 2 | 3 | 4
@@ -161,6 +166,7 @@ export function FilterBar({
   onSubmit,
   resetLabel = 'Reset filter',
   className,
+  variant = 'default',
   'aria-label': ariaLabel = 'Filter data',
   columns = 3,
   value,
@@ -210,10 +216,17 @@ export function FilterBar({
 
   return (
     <form
-      className={cn('rounded-lg border bg-card p-4', className)}
+      className={cn(
+        'border bg-card p-4',
+        variant === 'surface'
+          ? 'rounded-2xl border-border-subtle shadow-elevation-1'
+          : 'rounded-lg border-border-default',
+        className
+      )}
       role="search"
       aria-label={ariaLabel}
       data-slot="filter-bar"
+      data-variant={variant}
       onSubmit={(event) => {
         event.preventDefault()
         onSubmit?.()

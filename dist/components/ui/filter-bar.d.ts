@@ -39,6 +39,11 @@ export interface FilterBarProps {
     onSubmit?: () => void;
     resetLabel?: string;
     className?: string;
+    /**
+     * Skin visual. `surface` = `rounded-2xl border-border-subtle shadow-elevation-1`
+     * (selaras `Card variant="surface"`). Default mempertahankan tampilan lama.
+     */
+    variant?: 'default' | 'surface';
     /** Accessible name for the search landmark. */
     'aria-label'?: string;
     columns?: 2 | 3 | 4;
@@ -61,7 +66,7 @@ export interface FilterBarProps {
     /** @deprecated */
     unitKerjaLabel?: string;
 }
-export declare function FilterBar({ filters, children, onReset, onSubmit, resetLabel, className, 'aria-label': ariaLabel, columns, value, onChange, statusOptions, unitKerjaOptions, keywordPlaceholder, keywordLabel, statusLabel, unitKerjaLabel, }: FilterBarProps): import("react/jsx-runtime").JSX.Element;
+export declare function FilterBar({ filters, children, onReset, onSubmit, resetLabel, className, variant, 'aria-label': ariaLabel, columns, value, onChange, statusOptions, unitKerjaOptions, keywordPlaceholder, keywordLabel, statusLabel, unitKerjaLabel, }: FilterBarProps): import("react/jsx-runtime").JSX.Element;
 /** Domain preset: keyword + status + unit kerja (BPS document workflow). */
 export interface DocumentFilterBarProps {
     value: FilterBarValue;

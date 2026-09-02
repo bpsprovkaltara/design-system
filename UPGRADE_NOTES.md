@@ -57,7 +57,18 @@ Wrapper `CommandInput` (pemegang `border-b`, padding, ikon Search) kini bisa di-
 
 Badge tombol keyboard (`⌘K`, `↵`) tersedia lewat barrel root dan subpath `@bpsprovkaltara/design-system/components/ui/kbd`.
 
-### 6. Combobox: tinggi search + escape hatch styling
+### 6. Card / FilterBar: skin `surface` (opt-in)
+
+Untuk menghilangkan reskin berulang `rounded-2xl border-border-subtle shadow-elevation-1`:
+
+```tsx
+<Card variant="surface">…</Card>
+<FilterBar variant="surface" filters={…} />
+```
+
+Default visual tidak berubah. Konsumen yang sudah menulis className yang sama dapat menggantinya dengan `variant="surface"`.
+
+### 7. Combobox: tinggi search + escape hatch styling
 
 `Combobox` tidak lagi memaksa `h-11` pada `CommandInput`. Default sudah selaras wrapper `h-9` dan fokus ring standar. Jika konsumen Menara (atau aplikasi lain) sudah mem-patch dengan selector arbitrer / `focus-visible:shadow-none` / override tinggi, patch itu biasanya bisa dihapus.
 

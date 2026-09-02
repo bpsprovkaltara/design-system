@@ -112,4 +112,18 @@ describe('FilterBar', () => {
     )
     expect(screen.getByLabelText('Pencarian')).toBeInTheDocument()
   })
+
+  it('applies surface skin when variant="surface"', () => {
+    const { container } = render(
+      <FilterBar
+        variant="surface"
+        filters={[{ type: 'search', id: 'q', label: 'Cari', value: '', onChange: () => undefined }]}
+      />
+    )
+    const el = container.querySelector('[data-slot="filter-bar"]')
+    expect(el).toHaveClass('rounded-2xl')
+    expect(el).toHaveClass('border-border-subtle')
+    expect(el).toHaveClass('shadow-elevation-1')
+    expect(el).toHaveAttribute('data-variant', 'surface')
+  })
 })

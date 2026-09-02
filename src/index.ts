@@ -46,7 +46,9 @@ export {
   CardTitle,
   CardDescription,
   CardContent,
+  cardVariants,
 } from '@/components/ui/card'
+export type { CardProps } from '@/components/ui/card'
 export { Checkbox } from '@/components/ui/checkbox'
 export {
   Command,

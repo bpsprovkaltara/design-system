@@ -12,6 +12,43 @@ export function CardsPage() {
         description="Wadah modular untuk menampilkan sekumpulan data terkait."
       />
 
+      <ShowcaseSection title="Surface skin">
+        <div className="grid md:grid-cols-2 gap-6 mb-6">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+                Default
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                `rounded-xl` · `border-border-default` · `shadow-sm`
+              </p>
+            </CardContent>
+          </Card>
+          <Card variant="surface">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+                Surface
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                `rounded-2xl` · `border-border-subtle` · `shadow-elevation-1`
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+        <CodeBlock>
+          {`<Card variant="surface">
+  <CardHeader>
+    <CardTitle>Judul bagian</CardTitle>
+  </CardHeader>
+  <CardContent>…</CardContent>
+</Card>`}
+        </CodeBlock>
+      </ShowcaseSection>
+
       <ShowcaseSection title="BPS Stat Card">
         <div className="grid md:grid-cols-2 gap-6 mb-6">
           <Card>
