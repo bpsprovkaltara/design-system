@@ -15,6 +15,9 @@ import { DatePicker } from '@/components/ui/date-picker'
 import { DateRangePicker } from '@/components/ui/date-range-picker'
 import { YearSelect } from '@/components/ui/year-select'
 import { NumberField } from '@/components/ui/number-field'
+import { SelectInput } from '@/components/ui/select-input'
+import { DateInput } from '@/components/ui/date-input'
+import { CheckboxInput } from '@/components/ui/checkbox-input'
 
 export function InputsPage() {
   const regions = [
@@ -33,6 +36,40 @@ export function InputsPage() {
         title="Form Inputs & Filters"
         description="Komponen input teks, dropdown, pencarian, dan pemilih tanggal tingkat lanjut."
       />
+
+      <ShowcaseSection title="Adapter native / react-hook-form">
+        <div className="grid md:grid-cols-3 gap-6 border rounded-lg p-8 bg-card mb-6">
+          <div className="space-y-2.5">
+            <label className="label" htmlFor="demo-wilayah">
+              Wilayah (SelectInput)
+            </label>
+            <SelectInput id="demo-wilayah" name="wilayah" defaultValue="tarakan">
+              <option value="tarakan">Kota Tarakan</option>
+              <option value="nunukan">Kab. Nunukan</option>
+              <option value="bulungan">Kab. Bulungan</option>
+            </SelectInput>
+          </div>
+          <div className="space-y-2.5">
+            <label className="label">Tanggal (DateInput)</label>
+            <DateInput name="tanggal" defaultValue="2024-08-17" />
+          </div>
+          <div className="space-y-2.5">
+            <label className="label">Persetujuan</label>
+            <CheckboxInput name="setuju" label="Saya menyetujui ketentuan" defaultChecked />
+          </div>
+        </div>
+        <p className="text-xs text-muted-foreground mb-4">
+          Ketiga komponen merender elemen native tersembunyi sehingga cocok untuk{' '}
+          <code>register()</code> dan POST form tanpa JavaScript.
+        </p>
+        <CodeBlock>
+          {`<SelectInput name="wilayah" defaultValue="tarakan">
+  <option value="tarakan">Kota Tarakan</option>
+</SelectInput>
+<DateInput name="tanggal" defaultValue="2024-08-17" />
+<CheckboxInput name="setuju" label="Saya menyetujui ketentuan" />`}
+        </CodeBlock>
+      </ShowcaseSection>
 
       <ShowcaseSection title="Advanced Filters (Phase 6)">
         <div className="grid md:grid-cols-2 gap-6 border rounded-lg p-8 bg-card mb-6">

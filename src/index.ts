@@ -50,6 +50,8 @@ export {
 } from '@/components/ui/card'
 export type { CardProps } from '@/components/ui/card'
 export { Checkbox } from '@/components/ui/checkbox'
+export { CheckboxInput } from '@/components/ui/checkbox-input'
+export type { CheckboxInputProps } from '@/components/ui/checkbox-input'
 export {
   Command,
   CommandDialog,
@@ -240,6 +242,8 @@ export type {
 } from '@/components/ui/data-table'
 export { DatePicker } from '@/components/ui/date-picker'
 export type { DatePickerProps } from '@/components/ui/date-picker'
+export { DateInput } from '@/components/ui/date-input'
+export { SelectInput } from '@/components/ui/select-input'
 export { DateRangePicker } from '@/components/ui/date-range-picker'
 export type { DateRangePickerProps } from '@/components/ui/date-range-picker'
 export { FilterBar, DocumentFilterBar } from '@/components/ui/filter-bar'

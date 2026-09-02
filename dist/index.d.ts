@@ -13,6 +13,8 @@ export { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrev
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent, cardVariants, } from './components/ui/card';
 export type { CardProps } from './components/ui/card';
 export { Checkbox } from './components/ui/checkbox';
+export { CheckboxInput } from './components/ui/checkbox-input';
+export type { CheckboxInputProps } from './components/ui/checkbox-input';
 export { Command, CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem, CommandShortcut, CommandSeparator, } from './components/ui/command';
 export { Kbd } from './components/ui/kbd';
 export { Dialog, DialogPortal, DialogOverlay, DialogTrigger, DialogClose, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription, } from './components/ui/dialog';
@@ -71,6 +73,8 @@ export { DataTable } from './components/ui/data-table';
 export type { DataTableProps, DataTableColumn, DataTablePagination, } from './components/ui/data-table';
 export { DatePicker } from './components/ui/date-picker';
 export type { DatePickerProps } from './components/ui/date-picker';
+export { DateInput } from './components/ui/date-input';
+export { SelectInput } from './components/ui/select-input';
 export { DateRangePicker } from './components/ui/date-range-picker';
 export type { DateRangePickerProps } from './components/ui/date-range-picker';
 export { FilterBar, DocumentFilterBar } from './components/ui/filter-bar';
