@@ -43,8 +43,7 @@ function getSelectOptions(children: ReactNode): SelectOption[] {
       disabled?: boolean
       children?: ReactNode
     }
-    const fallbackValue =
-      typeof props.children === 'string' ? props.children : String(index)
+    const fallbackValue = typeof props.children === 'string' ? props.children : String(index)
     const rawValue = props.value ?? fallbackValue
     const value = Array.isArray(rawValue) ? rawValue.join(',') : String(rawValue)
 
@@ -70,26 +69,14 @@ function toStringValue(value: SelectHTMLAttributes<HTMLSelectElement>['value']):
  */
 export const SelectInput = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement>>(
   function SelectInput(
-    {
-      className,
-      children,
-      value,
-      defaultValue,
-      disabled,
-      id,
-      name,
-      onBlur,
-      onChange,
-      ...props
-    },
+    { className, children, value, defaultValue, disabled, id, name, onBlur, onChange, ...props },
     ref
   ) {
     const emptyValue = `${useId()}-empty`
     const hiddenRef = useRef<HTMLSelectElement | null>(null)
     const options = useMemo(() => getSelectOptions(children), [children])
     const firstValue = options[0]?.value ?? ''
-    const defaultSelectValue =
-      defaultValue !== undefined ? toStringValue(defaultValue) : firstValue
+    const defaultSelectValue = defaultValue !== undefined ? toStringValue(defaultValue) : firstValue
     const isControlled = value !== undefined
     const [internalValue, setInternalValue] = useState(defaultSelectValue)
     const selectedValue = isControlled ? toStringValue(value) : internalValue

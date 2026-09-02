@@ -6,9 +6,7 @@ import { CheckboxInput } from './checkbox-input'
 
 describe('CheckboxInput', () => {
   it('renders a visually hidden native checkbox for form POST / register()', () => {
-    const { container } = render(
-      <CheckboxInput name="setuju" defaultChecked />
-    )
+    const { container } = render(<CheckboxInput name="setuju" defaultChecked />)
     const native = container.querySelector('input[name="setuju"]') as HTMLInputElement
     expect(native).toBeTruthy()
     expect(native.type).toBe('checkbox')

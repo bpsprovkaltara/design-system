@@ -6,9 +6,7 @@ import { DateInput } from './date-input'
 
 describe('DateInput', () => {
   it('renders a hidden native input with yyyy-MM-dd value', () => {
-    const { container } = render(
-      <DateInput name="tanggal" defaultValue="2024-08-17" />
-    )
+    const { container } = render(<DateInput name="tanggal" defaultValue="2024-08-17" />)
     const native = container.querySelector('input[name="tanggal"]') as HTMLInputElement
     expect(native).toBeTruthy()
     expect(native.type).toBe('hidden')
