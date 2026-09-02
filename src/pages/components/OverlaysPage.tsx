@@ -21,6 +21,8 @@ import {
 } from '@/components/ui/sheet'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { BadgeTooltip } from '@/components/ui/badge-tooltip'
+import { Badge } from '@/components/ui/badge'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -223,6 +225,20 @@ export function OverlaysPage() {
     <TooltipContent><p>Aksi cepat: Ctrl + K</p></TooltipContent>
   </Tooltip>
 </TooltipProvider>`}</CodeBlock>
+      </ShowcaseSection>
+
+      <ShowcaseSection title="BadgeTooltip">
+        <div className="flex flex-wrap gap-3 rounded-lg border bg-card p-8">
+          <BadgeTooltip content="Menunggu verifikasi atasan">
+            <Badge variant="secondary">Pending</Badge>
+          </BadgeTooltip>
+          <BadgeTooltip content="Sudah disetujui dan terkunci">
+            <Badge>Disetujui</Badge>
+          </BadgeTooltip>
+        </div>
+        <CodeBlock>{`<BadgeTooltip content="Menunggu verifikasi atasan">
+  <Badge variant="secondary">Pending</Badge>
+</BadgeTooltip>`}</CodeBlock>
       </ShowcaseSection>
 
       <ShowcaseSection title="Dropdown Menu">

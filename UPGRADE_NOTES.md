@@ -25,7 +25,6 @@ import {
   CommandItem,
   CommandEmpty,
 } from '@bpsprovkaltara/design-system'
-
 ;<Command variant="inline" className="rounded-lg border bg-popover shadow-elevation-3">
   <CommandInput wrapperClassName="border-b-0" placeholder="Cari..." />
   <CommandList>
@@ -126,7 +125,24 @@ import {
 
 `KpiCard` tanpa `accent` tetap memakai `border-l-4 border-l-primary`.
 
-### 10. Combobox: tinggi search + escape hatch styling
+### 10. BadgeTooltip, RowDetailLink, dan keputusan motion (#22)
+
+```tsx
+<BadgeTooltip content="Menunggu verifikasi">
+  <Badge>Pending</Badge>
+</BadgeTooltip>
+
+<RowDetailLink href="/pegawai/1" label="Detail pegawai Andi Pratama" />
+
+// Next.js / React Router
+<RowDetailLink label="Detail pegawai Andi Pratama" asChild>
+  <Link href="/pegawai/1" />
+</RowDetailLink>
+```
+
+**Motion JS:** DS **tidak** mengadopsi library `motion`. Standar tetap token CSS (`--motion-duration-*`, `--motion-ease-*`). Lihat `docs/decisions/0002-no-motion-js-dependency.md`.
+
+### 11. Combobox: tinggi search + escape hatch styling
 
 `Combobox` tidak lagi memaksa `h-11` pada `CommandInput`. Default sudah selaras wrapper `h-9` dan fokus ring standar. Jika konsumen Menara (atau aplikasi lain) sudah mem-patch dengan selector arbitrer / `focus-visible:shadow-none` / override tinggi, patch itu biasanya bisa dihapus.
 
@@ -204,7 +220,6 @@ Layout aplikasi kini diekspor (bukan hanya showcase):
 
 ```tsx
 import { AppShell } from '@bpsprovkaltara/design-system'
-
 ;<AppShell
   groups={[{ title: 'Menu', items: [{ id: 'home', label: 'Beranda', href: '/' }] }]}
   activeId="home"

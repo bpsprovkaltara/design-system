@@ -3,7 +3,6 @@ import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHea
 import { CodeBlock } from '@/components/showcase/CodeBlock'
 import { DataTable } from '@/components/ui/data-table'
 import { StatusBadge } from '@/components/ui/status-badge'
-import { Button } from '@/components/ui/button'
 import { TableEmpty } from '@/components/ui/table-empty'
 import { TablePagination } from '@/components/ui/table-pagination'
 import {
@@ -15,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { RowDetailLink } from '@/components/ui/row-detail-link'
 
 export function TablePage() {
   const [page, setPage] = React.useState(1)
@@ -59,29 +59,19 @@ export function TablePage() {
             columns={columns}
             getRowKey={(row) => row.id}
             pageSize={10}
-            renderRowActions={() => (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-primary hover:text-primary/80 font-bold h-7 px-2"
-              >
-                Edit
-              </Button>
+            renderRowActions={(row) => (
+              <RowDetailLink href={`#/wilayah/${row.id}`} label={`Detail wilayah ${row.name}`} />
             )}
           />
         </div>
         <CodeBlock>{`<DataTable
   data={rows}
-  columns={[
-    { key: 'name', label: 'Kabupaten/Kota', sortable: true },
-    { key: 'pdrb', label: 'PDRB', sortable: true },
-  ]}
-  pageSize={10}
-  getRowKey={(row) => row.id}
+  columns={…}
   renderRowActions={(row) => (
-    <Button variant="ghost" size="sm" onClick={() => edit(row)}>
-      Edit
-    </Button>
+    <RowDetailLink
+      href={\`/wilayah/\${row.id}\`}
+      label={\`Detail wilayah \${row.name}\`}
+    />
   )}
 />`}</CodeBlock>
       </ShowcaseSection>

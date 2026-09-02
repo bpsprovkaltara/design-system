@@ -3,6 +3,10 @@ export { Accordion, AccordionItem, AccordionTrigger, AccordionContent, } from '.
 export { Alert, AlertTitle, AlertDescription } from './components/ui/alert';
 export { Avatar, AvatarImage, AvatarFallback, AvatarGroup } from './components/ui/avatar';
 export { Badge } from './components/ui/badge';
+export { BadgeTooltip } from './components/ui/badge-tooltip';
+export type { BadgeTooltipProps } from './components/ui/badge-tooltip';
+export { RowDetailLink } from './components/ui/row-detail-link';
+export type { RowDetailLinkProps } from './components/ui/row-detail-link';
 export { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator, BreadcrumbEllipsis, } from './components/ui/breadcrumb';
 export { Button, buttonVariants } from './components/ui/button';
 export type { ButtonProps } from './components/ui/button';

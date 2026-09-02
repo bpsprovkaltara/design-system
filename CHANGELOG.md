@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- **`BadgeTooltip`**: wrapper Tooltip untuk badge/ikon (`content` kosong → passthrough children).
+- **`RowDetailLink`**: afordansi kolom aksi lihat detail (ikon Eye + `aria-label` wajib). Mendukung `href` atau `asChild` untuk Link kerangka.
 - **`SectionCard`**, **`DataTableCard`**, **`FilterChips`**, **`PageSkeleton`**: pola tingkat tinggi di `components/patterns` (header kartu fleksibel, kartu tabel + ringkasan/footer, chip filter tautan, skeleton halaman `table`/`cards`/`detail`).
 - **`buttonVariants` / `LinkButton`**: variant `nav` (tint brand + ring) untuk chip navigasi.
 - **`KpiCard`**: prop opsional `accent?: "brand" | "accent" | "success" | "info" | "warning"` — bar atas + chip ikon. Tanpa `accent`, border-kiri primary tetap default.
