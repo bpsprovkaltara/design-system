@@ -1,0 +1,2 @@
+import{cn as e}from"../../lib/utils.js";import"react";import{jsx as t}from"react/jsx-runtime";function n({className:n,...r}){return t(`kbd`,{"data-slot":`kbd`,className:e(`inline-flex h-5 select-none items-center justify-center gap-0.5 rounded border border-border-default bg-surface-raised px-1.5 font-mono text-caption font-medium text-content-secondary`,n),...r})}export{n as Kbd};
+//# sourceMappingURL=kbd.js.map

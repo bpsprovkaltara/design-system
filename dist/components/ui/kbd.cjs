@@ -1,0 +1,2 @@
+const e=require(`../../_virtual/_rolldown/runtime.cjs`),t=require(`../../lib/utils.cjs`);let n=require(`react`);n=e.__toESM(n,1);let r=require(`react/jsx-runtime`);function i({className:e,...n}){return(0,r.jsx)(`kbd`,{"data-slot":`kbd`,className:t.cn(`inline-flex h-5 select-none items-center justify-center gap-0.5 rounded border border-border-default bg-surface-raised px-1.5 font-mono text-caption font-medium text-content-secondary`,e),...n})}exports.Kbd=i;
+//# sourceMappingURL=kbd.cjs.map

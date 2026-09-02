@@ -13,6 +13,7 @@ export { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrev
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent, } from './components/ui/card';
 export { Checkbox } from './components/ui/checkbox';
 export { Command, CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem, CommandShortcut, CommandSeparator, } from './components/ui/command';
+export { Kbd } from './components/ui/kbd';
 export { Dialog, DialogPortal, DialogOverlay, DialogTrigger, DialogClose, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription, } from './components/ui/dialog';
 export { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuCheckboxItem, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuGroup, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuRadioGroup, } from './components/ui/dropdown-menu';
 export { Drawer, DrawerPortal, DrawerOverlay, DrawerTrigger, DrawerClose, DrawerContent, DrawerHeader, DrawerFooter, DrawerTitle, DrawerDescription, } from './components/ui/drawer';
