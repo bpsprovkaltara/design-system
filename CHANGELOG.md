@@ -6,6 +6,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [4.8.0] - 2026-09-05
+
+Rilis minor dari audit lintas konsumen Suaraku + Menara: overlay form, tab berbasis rute, dan kulit chrome (notifikasi, pencarian topbar, akun sidebar) tanpa motion JS.
+
+### Added
+
+- **`FormDialog`**: dialog terpusat untuk formulir create/edit — `title`/`description`, `trigger` atau controlled `open`/`onOpenChange`, `children` sebagai node atau render-prop `(close) => …`. Tanpa library motion.
+- **`FormSheet`**: sheet sisi (default kanan) untuk formulir panjang — layout header/body/footer, slot `footer` opsional dengan render-prop `close` yang sama. Menggantikan boilerplate Sheet yang diulang di konsumen (Menara `FormDrawer`, Suaraku `Drawer`).
+- **`SectionTabs`** (+ helper murni **`resolveActiveTab`**): sub-nav sibling route berbasis tautan (bukan Radix Tabs). Visual selaras `TabsList`/`TabsTrigger`. Konsumen mengoper `pathname` (mis. dari `usePathname`) dan opsional `renderLink` untuk Link kerangka. Aturan aktif: prefix terpanjang; `matchPrefixes` untuk rute di luar nest `href`.
+- **`NotificationPopover`**: kulit lonceng notifikasi (badge unread, header, mark-all, loading/empty/list slots) di atas `Popover` — tanpa fetch.
+- **`CommandSearch`**: pola pencarian topbar (`Command` inline + panel absolute + pintasan ⌘K/Ctrl+K). Hasil tetap diisi app lewat `CommandGroup`/`CommandItem`.
+- **`SidebarAccount`**: chrome footer akun di sidebar (expanded/collapsed, slot `leading`/`actions`) — tanpa auth.
+- **`usePersistedCollapsed`**: hook kecil untuk state collapse sidebar + `localStorage`.
+
+### Docs
+
+- Catatan migrasi konsumen: pola yang sudah ada sejak 4.6/4.7 (`AppShell` toggle, `SectionCard`, `DataTableCard`, `FilterChips`, `PageSkeleton`, `BadgeTooltip`, `RowDetailLink`, `KpiCard.accent`) vs apa yang tetap lokal di aplikasi. Lihat `UPGRADE_NOTES.md` dan `docs/consumer-chrome.md`.
+
+### Fixed
+
+- **`tsconfig`**: hapus `baseUrl` yang dihapus di TypeScript 6 (`TS5102`) agar `pnpm typecheck` dan CI rilis lulus.
+
 ## [4.7.0] - 2026-09-03
 
 Rilis minor dari audit konsumen Menara: adapter form native/RHF, skin kartu `surface`, pola SectionCard/DataTableCard/FilterChips/PageSkeleton, perbaikan Combobox/Command, serta BadgeTooltip dan RowDetailLink. Library motion JS **tidak** diadopsi (ADR 0002); standar motion tetap token CSS.
@@ -313,7 +335,9 @@ maupun bundler ESM browser** — segera upgrade ke 4.0.1.
 
 Version 2.x is no longer maintained. No migration guide is available. Upgrade directly to 4.0.0 (lihat `UPGRADE_NOTES.md` jika dari v3).
 
-[Unreleased]: https://github.com/bpsprovkaltara/design-system/compare/v4.4.0...HEAD
+[Unreleased]: https://github.com/bpsprovkaltara/design-system/compare/v4.8.0...HEAD
+[4.8.0]: https://github.com/bpsprovkaltara/design-system/compare/v4.7.0...v4.8.0
+[4.7.0]: https://github.com/bpsprovkaltara/design-system/compare/v4.6.0...v4.7.0
 [4.4.0]: https://github.com/bpsprovkaltara/design-system/compare/v4.3.0...v4.4.0
 [4.3.0]: https://github.com/bpsprovkaltara/design-system/compare/v4.2.0...v4.3.0
 [4.2.0]: https://github.com/bpsprovkaltara/design-system/compare/v4.1.0...v4.2.0

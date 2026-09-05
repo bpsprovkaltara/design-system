@@ -4,6 +4,117 @@
 
 Versi 4 memerlukan **React 19**, **Tailwind CSS 4**, dan disarankan **Node.js 20+**. Build toolchain konsumen mengikuti dokumentasi resmi Tailwind v4 (misalnya plugin `@tailwindcss/vite` untuk proyek Vite).
 
+## [Unreleased] — Form overlays / SectionTabs / chrome slots + peta chrome konsumen
+
+### NotificationPopover, CommandSearch, SidebarAccount, usePersistedCollapsed (additive)
+
+Kulit chrome lintas app — **tanpa** fetch, NextAuth, atau motion.
+
+```tsx
+import {
+  NotificationPopover,
+  CommandSearch,
+  CommandGroup,
+  CommandItem,
+  SidebarAccount,
+  usePersistedCollapsed,
+} from '@bpsprovkaltara/design-system'
+
+const [collapsed, setCollapsed] = usePersistedCollapsed('app.sidebarCollapsed')
+
+<NotificationPopover unreadCount={n} onMarkAllRead={markAll}>
+  <ul>{/* item dari API app */}</ul>
+</NotificationPopover>
+
+<CommandSearch value={q} onValueChange={setQ} placeholder="Cari…">
+  <CommandGroup heading="Halaman">
+    <CommandItem value="home" onSelect={() => go('/')} >
+      Beranda
+    </CommandItem>
+  </CommandGroup>
+</CommandSearch>
+
+<AppShell collapsed={collapsed} onCollapsedChange={setCollapsed} sidebarFooter={
+  <SidebarAccount
+    name={user.name}
+    roleLabel={user.role}
+    initials={user.initials}
+    collapsed={collapsed}
+    actions={<LogoutButton />}
+  />
+} />
+```
+
+Suaraku dapat mengganti CSS `t-notif-*` / `t-tsearch-*` secara bertahap; Menara dapat mengganti `NotificationBell` UI shell dan menyalin pola `GlobalSearch` ke `CommandSearch`.
+
+### SectionTabs (additive)
+
+Sub-nav sibling route. Bukan pengganti `Tabs` Radix (state dalam satu halaman) — ini navigasi rute sungguhan.
+
+```tsx
+import { SectionTabs } from '@bpsprovkaltara/design-system'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+
+const pathname = usePathname()
+
+<SectionTabs
+  label="Navigasi modul"
+  pathname={pathname}
+  tabs={[
+    { href: '/pegawai', label: 'Daftar' },
+    { href: '/pegawai/status-data', label: 'Status data' },
+    {
+      href: '/pegawai/peta',
+      label: 'Peta jabatan',
+      matchPrefixes: ['/pegawai/formasi'],
+    },
+  ]}
+  renderLink={(tab, children) => <Link href={tab.href}>{children}</Link>}
+/>
+```
+
+Helper `resolveActiveTab(pathname, tabs)` diekspor untuk kasus yang hanya butuh id aktif tanpa merender. Fork lokal Menara `section-tabs.tsx` dapat diganti setelah upgrade.
+
+### FormDialog dan FormSheet (additive)
+
+Komposit tipis di atas `Dialog` / `Sheet` untuk formulir create/edit. Menggantikan boilerplate yang diulang di konsumen (mis. Menara `FormDialog`/`FormDrawer`, Suaraku `Modal`/`Drawer`) **tanpa** library motion.
+
+```tsx
+import { FormDialog, FormSheet, Button } from '@bpsprovkaltara/design-system'
+
+<FormDialog
+  title="Tambah pengguna"
+  description="Lengkapi data akun baru."
+  trigger={<Button>Buka</Button>}
+>
+  {(close) => (
+    <>
+      {/* field */}
+      <Button type="button" onClick={close}>
+        Simpan
+      </Button>
+    </>
+  )}
+</FormDialog>
+
+<FormSheet
+  title="Edit pegawai"
+  trigger={<Button>Buka</Button>}
+  footer={(close) => (
+    <Button type="button" onClick={close}>
+      Simpan
+    </Button>
+  )}
+>
+  {/* field panjang */}
+</FormSheet>
+```
+
+Controlled: oper `open` + `onOpenChange`. Primitif `Dialog` / `Sheet` tetap tersedia untuk kasus non-form.
+
+Peta lengkap “sudah di DS vs tetap di app” (termasuk `AppShell` toggle sejak 4.6 dan pola 4.7): lihat [`docs/consumer-chrome.md`](./docs/consumer-chrome.md).
+
 ## [Unreleased] — Command/CommandDialog: a11y, varian inline, props cmdk
 
 Perbaikan `Command` dan `CommandDialog`. **Tidak ada breaking change API**: semua props lama tetap diterima, tampilan `CommandDialog` yang ada tidak berubah, dan default `Command` tetap mempertahankan `h-full overflow-hidden`. Bagian berikut menjelaskan perbaikan dan opt-in baru.

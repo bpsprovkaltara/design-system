@@ -1,0 +1,2 @@
+"use client";const e=require(`../_virtual/_rolldown/runtime.cjs`);let t=require(`react`);t=e.__toESM(t,1);function n(e,n=!1){let[r,i]=t.useState(n);return t.useEffect(()=>{t.startTransition(()=>{i(localStorage.getItem(e)===`true`)})},[e]),[r,t.useCallback(t=>{i(t),localStorage.setItem(e,String(t))},[e])]}exports.usePersistedCollapsed=n;
+//# sourceMappingURL=use-persisted-collapsed.cjs.map

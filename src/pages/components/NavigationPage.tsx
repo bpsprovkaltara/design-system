@@ -21,15 +21,56 @@ import {
 } from '@/components/ui/pagination'
 import { PageHeader } from '@/components/ui/page-header'
 import { Button } from '@/components/ui/button'
+import { SectionTabs } from '@/components/patterns/section-tabs'
 import { Plus } from 'lucide-react'
+
+const SECTION_TAB_DEMO = [
+  { href: '/pegawai', label: 'Daftar' },
+  { href: '/pegawai/status-data', label: 'Status data' },
+  {
+    href: '/pegawai/peta',
+    label: 'Peta jabatan',
+    matchPrefixes: ['/pegawai/formasi'],
+  },
+]
 
 export function NavigationPage() {
   return (
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <SectionHeader
         title="Navigation"
-        description="Komponen orientasi pengguna dalam aplikasi: breadcrumb, pagination, dan page header."
+        description="Komponen orientasi pengguna dalam aplikasi: breadcrumb, pagination, page header, dan tab berbasis rute."
       />
+
+      <ShowcaseSection title="SectionTabs">
+        <div className="rounded-lg border bg-card p-8 space-y-4">
+          <p className="text-sm text-content-secondary">
+            Pathname contoh: <code className="text-xs">/pegawai/status-data</code> — tab
+            terpanjang yang cocok yang aktif.
+          </p>
+          <SectionTabs
+            label="Navigasi kepegawaian"
+            pathname="/pegawai/status-data"
+            tabs={SECTION_TAB_DEMO}
+          />
+        </div>
+        <CodeBlock>{`import { SectionTabs } from '@bpsprovkaltara/design-system'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+
+const pathname = usePathname()
+
+<SectionTabs
+  label="Navigasi kepegawaian"
+  pathname={pathname}
+  tabs={[
+    { href: '/pegawai', label: 'Daftar' },
+    { href: '/pegawai/status-data', label: 'Status data' },
+    { href: '/pegawai/peta', label: 'Peta jabatan', matchPrefixes: ['/pegawai/formasi'] },
+  ]}
+  renderLink={(tab, children) => <Link href={tab.href}>{children}</Link>}
+/>`}</CodeBlock>
+      </ShowcaseSection>
 
       <ShowcaseSection title="Breadcrumb">
         <div className="rounded-lg border bg-card p-8 space-y-4">

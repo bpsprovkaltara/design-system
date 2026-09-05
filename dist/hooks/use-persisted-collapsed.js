@@ -1,0 +1,2 @@
+"use client";import*as e from"react";function t(t,n=!1){let[r,i]=e.useState(n);return e.useEffect(()=>{e.startTransition(()=>{i(localStorage.getItem(t)===`true`)})},[t]),[r,e.useCallback(e=>{i(e),localStorage.setItem(t,String(e))},[t])]}export{t as usePersistedCollapsed};
+//# sourceMappingURL=use-persisted-collapsed.js.map

@@ -234,6 +234,16 @@ export type {
   ConfirmActionDialogProps,
   ConfirmDialogProps,
 } from '@/components/ui/confirm-action-dialog'
+export { FormDialog } from '@/components/ui/form-dialog'
+export type { FormDialogProps } from '@/components/ui/form-dialog'
+export { FormSheet } from '@/components/ui/form-sheet'
+export type { FormSheetProps } from '@/components/ui/form-sheet'
+export { NotificationPopover } from '@/components/ui/notification-popover'
+export type { NotificationPopoverProps } from '@/components/ui/notification-popover'
+export { CommandSearch } from '@/components/ui/command-search'
+export type { CommandSearchProps } from '@/components/ui/command-search'
+export { SidebarAccount } from '@/components/ui/sidebar-account'
+export type { SidebarAccountProps } from '@/components/ui/sidebar-account'
 export { BulkActionBar } from '@/components/ui/bulk-action-bar'
 export type { BulkActionBarProps, BulkAction } from '@/components/ui/bulk-action-bar'
 export { DataStatePanel } from '@/components/ui/data-state-panel'
@@ -305,8 +315,11 @@ export type {
 } from '@/components/patterns/data-table-card'
 export { FilterChips } from '@/components/patterns/filter-chips'
 export type { FilterChipsProps, FilterChipItem } from '@/components/patterns/filter-chips'
+export { SectionTabs, resolveActiveTab } from '@/components/patterns/section-tabs'
+export type { SectionTabsProps, SectionTab } from '@/components/patterns/section-tabs'
 export { PageSkeleton } from '@/components/patterns/page-skeleton'
 export type { PageSkeletonProps, PageSkeletonVariant } from '@/components/patterns/page-skeleton'
 
 /* === Hooks === */
 export { useToast } from '@/hooks/use-toast'
+export { usePersistedCollapsed } from '@/hooks/use-persisted-collapsed'

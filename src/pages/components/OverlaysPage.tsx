@@ -42,6 +42,10 @@ import {
   CommandShortcut,
 } from '@/components/ui/command'
 import { Kbd } from '@/components/ui/kbd'
+import { FormDialog } from '@/components/ui/form-dialog'
+import { FormSheet } from '@/components/ui/form-sheet'
+import { NotificationPopover } from '@/components/ui/notification-popover'
+import { CommandSearch } from '@/components/ui/command-search'
 
 function CommandPaletteDialogDemo() {
   const [open, setOpen] = useState(false)
@@ -101,6 +105,27 @@ function InlineCommandDemo() {
   )
 }
 
+function CommandSearchDemo() {
+  const [query, setQuery] = useState('')
+  const show = query.trim().length > 0
+  return (
+    <div className="max-w-sm space-y-2">
+      <p className="text-xs text-content-tertiary">
+        Pintasan <Kbd>⌘K</Kbd> memfokuskan input. Panel muncul setelah mengetik.
+      </p>
+      <CommandSearch value={query} onValueChange={setQuery} placeholder="Cari halaman…">
+        {show ? (
+          <CommandGroup heading="Halaman">
+            <CommandItem value="dashboard">Dashboard</CommandItem>
+            <CommandItem value="pegawai">Daftar Pegawai</CommandItem>
+            <CommandItem value="pengaturan">Pengaturan</CommandItem>
+          </CommandGroup>
+        ) : null}
+      </CommandSearch>
+    </div>
+  )
+}
+
 export function OverlaysPage() {
   return (
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -108,6 +133,45 @@ export function OverlaysPage() {
         title="Overlays"
         description="Komponen yang muncul di atas konten utama: dialog, sheet, popover, tooltip, menu, dan command palette."
       />
+
+      <ShowcaseSection title="FormDialog">
+        <div className="rounded-lg border bg-card p-8">
+          <FormDialog
+            title="Tambah pengguna"
+            description="Lengkapi data akun baru."
+            trigger={<Button>Buka FormDialog</Button>}
+          >
+            {(close) => (
+              <div className="space-y-3">
+                <p className="text-sm text-content-secondary">
+                  Slot body untuk field formulir. Panggil <code>close()</code> setelah
+                  submit berhasil.
+                </p>
+                <div className="flex justify-end gap-2">
+                  <Button type="button" variant="outline" onClick={close}>
+                    Batal
+                  </Button>
+                  <Button type="button" onClick={close}>
+                    Simpan
+                  </Button>
+                </div>
+              </div>
+            )}
+          </FormDialog>
+        </div>
+        <CodeBlock>{`<FormDialog
+  title="Tambah pengguna"
+  description="Lengkapi data akun baru."
+  trigger={<Button>Buka</Button>}
+>
+  {(close) => (
+    <>
+      {/* field formulir */}
+      <Button type="button" onClick={close}>Simpan</Button>
+    </>
+  )}
+</FormDialog>`}</CodeBlock>
+      </ShowcaseSection>
 
       <ShowcaseSection title="Dialog">
         <div className="rounded-lg border bg-card p-8">
@@ -144,6 +208,38 @@ export function OverlaysPage() {
     </DialogFooter>
   </DialogContent>
 </Dialog>`}</CodeBlock>
+      </ShowcaseSection>
+
+      <ShowcaseSection title="FormSheet">
+        <div className="rounded-lg border bg-card p-8">
+          <FormSheet
+            title="Edit pegawai"
+            description="Perbarui data kepegawaian."
+            trigger={<Button variant="outline">Buka FormSheet</Button>}
+            footer={(close) => (
+              <>
+                <Button type="button" variant="outline" onClick={close}>
+                  Batal
+                </Button>
+                <Button type="button" onClick={close}>
+                  Simpan
+                </Button>
+              </>
+            )}
+          >
+            <p className="text-sm text-content-secondary">
+              Body scroll untuk formulir panjang. Daftar di belakang tetap terlihat.
+            </p>
+          </FormSheet>
+        </div>
+        <CodeBlock>{`<FormSheet
+  title="Edit pegawai"
+  description="Perbarui data kepegawaian."
+  trigger={<Button>Buka</Button>}
+  footer={(close) => <Button onClick={close}>Simpan</Button>}
+>
+  {/* field formulir */}
+</FormSheet>`}</CodeBlock>
       </ShowcaseSection>
 
       <ShowcaseSection title="Sheet (Side Panel)">
@@ -202,6 +298,25 @@ export function OverlaysPage() {
   </PopoverTrigger>
   <PopoverContent>...</PopoverContent>
 </Popover>`}</CodeBlock>
+      </ShowcaseSection>
+
+      <ShowcaseSection title="NotificationPopover">
+        <div className="rounded-lg border bg-card p-8 flex justify-end">
+          <NotificationPopover
+            unreadCount={3}
+            onMarkAllRead={() => undefined}
+            empty={<p className="px-4 py-8 text-center text-sm">Belum ada notifikasi</p>}
+          >
+            <ul className="divide-y divide-border">
+              <li className="px-4 py-3 text-sm">Tiket baru menunggu penugasan</li>
+              <li className="px-4 py-3 text-sm">Komentar forum memerlukan tanggapan</li>
+              <li className="px-4 py-3 text-sm">Sinkronisasi Menara selesai</li>
+            </ul>
+          </NotificationPopover>
+        </div>
+        <CodeBlock>{`<NotificationPopover unreadCount={3} onMarkAllRead={markAll}>
+  <ul>{/* item dari fetch app */}</ul>
+</NotificationPopover>`}</CodeBlock>
       </ShowcaseSection>
 
       <ShowcaseSection title="Tooltip">
@@ -318,6 +433,17 @@ export function OverlaysPage() {
     </CommandGroup>
   </CommandList>
 </Command>`}</CodeBlock>
+      </ShowcaseSection>
+
+      <ShowcaseSection title="CommandSearch (pola topbar)">
+        <div className="rounded-lg border bg-card p-8">
+          <CommandSearchDemo />
+        </div>
+        <CodeBlock>{`<CommandSearch value={q} onValueChange={setQ} placeholder="Cari…">
+  <CommandGroup heading="Halaman">
+    <CommandItem value="dashboard">Dashboard</CommandItem>
+  </CommandGroup>
+</CommandSearch>`}</CodeBlock>
       </ShowcaseSection>
 
       <ShowcaseSection title="Kbd (badge tombol keyboard)">

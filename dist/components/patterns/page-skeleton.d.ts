@@ -10,4 +10,4 @@ export interface PageSkeletonProps {
 /**
  * Pola skeleton halaman lengkap di atas primitif `Skeleton`.
  */
-export declare function PageSkeleton({ variant, rows, cols, className, }: PageSkeletonProps): import("react/jsx-runtime").JSX.Element;
+export declare function PageSkeleton({ variant, rows, cols, className }: PageSkeletonProps): import("react/jsx-runtime").JSX.Element;

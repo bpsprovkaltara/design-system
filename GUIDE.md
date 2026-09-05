@@ -4,6 +4,13 @@
 
 > Panduan lengkap cara menerapkan BPS Kaltara Design System ke aplikasi baru maupun existing.
 
+**Chrome aplikasi (AppShell, pola kartu/tabel, overlay form):** lihat
+[`docs/consumer-chrome.md`](./docs/consumer-chrome.md) — peta singkat apa yang
+sudah diekspor paket (`AppShell` sudah termasuk toggle sidebar sejak 4.6,
+`SectionCard`/`FormDialog`/`FormSheet`, dll.) versus apa yang wajar tetap di
+repo konsumen (auth footer, fetch notifikasi/search, domain hero). Untuk
+perubahan antarversi, utamakan `UPGRADE_NOTES.md` dan `CHANGELOG.md`.
+
 ---
 
 ## Daftar Isi

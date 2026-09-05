@@ -1,5 +1,5 @@
 import React from 'react'
-import { Users } from 'lucide-react'
+import { LogOut, Users } from 'lucide-react'
 import { SectionHeader, ShowcaseSection } from '@/components/showcase/SectionHeader'
 import { CodeBlock } from '@/components/showcase/CodeBlock'
 import { Button } from '@/components/ui/button'
@@ -7,14 +7,59 @@ import { SectionCard } from '@/components/patterns/section-card'
 import { DataTableCard } from '@/components/patterns/data-table-card'
 import { FilterChips } from '@/components/patterns/filter-chips'
 import { PageSkeleton } from '@/components/patterns/page-skeleton'
+import { SidebarAccount } from '@/components/ui/sidebar-account'
 
 export function PatternsPage() {
   return (
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <SectionHeader
         title="Patterns"
-        description="Pola tingkat tinggi di atas primitif Card, Button, dan Skeleton."
+        description="Pola tingkat tinggi di atas primitif Card, Button, Skeleton, dan chrome akun sidebar."
       />
+
+      <ShowcaseSection title="SidebarAccount">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="rounded-lg bg-sidebar p-4 text-sidebar-foreground">
+            <SidebarAccount
+              name="Ahmad Fauzi"
+              roleLabel="Admin"
+              initials="AF"
+              actions={
+                <button
+                  type="button"
+                  aria-label="Keluar"
+                  className="flex size-8 items-center justify-center rounded-lg text-sidebar-muted hover:bg-white/10 hover:text-white"
+                >
+                  <LogOut className="size-4" aria-hidden="true" />
+                </button>
+              }
+            />
+          </div>
+          <div className="flex justify-center rounded-lg bg-sidebar p-4 text-sidebar-foreground">
+            <SidebarAccount
+              name="Ahmad Fauzi"
+              roleLabel="Admin"
+              initials="AF"
+              collapsed
+              collapsedActions={
+                <button
+                  type="button"
+                  aria-label="Keluar"
+                  className="flex size-8 items-center justify-center rounded-lg text-sidebar-muted hover:bg-white/10 hover:text-white"
+                >
+                  <LogOut className="size-4" aria-hidden="true" />
+                </button>
+              }
+            />
+          </div>
+        </div>
+        <CodeBlock>{`<SidebarAccount
+  name="Ahmad Fauzi"
+  roleLabel="Admin"
+  initials="AF"
+  actions={<button type="submit" aria-label="Keluar">…</button>}
+/>`}</CodeBlock>
+      </ShowcaseSection>
 
       <ShowcaseSection title="SectionCard">
         <SectionCard

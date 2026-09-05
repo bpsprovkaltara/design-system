@@ -14,4 +14,4 @@ export interface FilterChipsProps {
  * Deret chip filter berbasis tautan (`LinkButton` variant `nav`).
  * Untuk filter route-level sederhana.
  */
-export declare function FilterChips({ label, items, showLabel, className, }: FilterChipsProps): import("react/jsx-runtime").JSX.Element;
+export declare function FilterChips({ label, items, showLabel, className }: FilterChipsProps): import("react/jsx-runtime").JSX.Element;
