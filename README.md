@@ -1,4 +1,4 @@
-![versi](https://img.shields.io/badge/versi-4.7.0-blue) ![lisensi](https://img.shields.io/badge/lisensi-UNLICENSED-lightgrey) ![node](https://img.shields.io/badge/node-%3E%3D20-green)
+![versi](https://img.shields.io/badge/versi-4.8.1-blue) ![lisensi](https://img.shields.io/badge/lisensi-UNLICENSED-lightgrey) ![node](https://img.shields.io/badge/node-%3E%3D20-green)
 
 # BPS Kaltara Design System
 
@@ -60,6 +60,10 @@ Tambahkan `.npmrc` di aplikasi konsumen:
 pnpm add @bpsprovkaltara/design-system@latest   # v4
 # atau: pnpm add @bpsprovkaltara/design-system@legacy   # v3
 ```
+
+Konsumen Next.js **wajib** mengisi `asChild` / `renderLink` pada komponen
+navigasi (`RowDetailLink`, `LinkButton`, `FilterChips`, `SectionTabs`,
+`TablePagination`, `AppShell`) — lihat [docs/consumer-chrome.md](./docs/consumer-chrome.md).
 
 Peer dependency — pasang di aplikasi konsumen bila belum ada:
 

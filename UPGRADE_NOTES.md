@@ -4,6 +4,25 @@
 
 Versi 4 memerlukan **React 19**, **Tailwind CSS 4**, dan disarankan **Node.js 20+**. Build toolchain konsumen mengikuti dokumentasi resmi Tailwind v4 (misalnya plugin `@tailwindcss/vite` untuk proyek Vite).
 
+## [Unreleased] — 4.8.1 FilterChips.renderLink + kontrak tautan
+
+### FilterChips.renderLink (additive)
+
+Konsumen Next/TanStack mengoper `renderLink` supaya chip tidak menjadi `<a>` mentah
+(reload penuh). Tanpa prop ini, perilaku 4.8.0 tidak berubah.
+
+```tsx
+<FilterChips
+  label="Status"
+  items={items}
+  renderLink={(item, children) => <Link href={item.href}>{children}</Link>}
+/>
+```
+
+Tabel lubang tautan lengkap: [`docs/consumer-chrome.md`](./docs/consumer-chrome.md)
+(bagian “Kontrak tautan kerangka”). Lebar `FormSheet` cukup ditimpa lewat
+`className` (`sm:max-w-[480px]`); jangan menyuntik CSS ke `html`.
+
 ## [Unreleased] — Form overlays / SectionTabs / chrome slots + peta chrome konsumen
 
 ### NotificationPopover, CommandSearch, SidebarAccount, usePersistedCollapsed (additive)

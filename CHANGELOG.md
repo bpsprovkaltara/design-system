@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [4.8.1] - 2026-09-05
+
+Patch adopsi konsumen: lubang `renderLink` pada `FilterChips` dan kontrak tautan kerangka (Next.js `asChild` / `renderLink`) supaya daftar, chip, dan pagination tidak reload penuh.
+
+### Added
+
+- **`FilterChips.renderLink`**: renderer tautan kerangka (selaras `SectionTabs`). Default tetap `LinkButton` + `href`.
+
+### Docs
+
+- Kontrak tautan kerangka + checklist aplikasi baru di `docs/consumer-chrome.md`. Lebar `FormSheet` didokumentasikan lewat `className`, bukan prop `width`.
+
 ## [4.8.0] - 2026-09-05
 
 Rilis minor dari audit lintas konsumen Suaraku + Menara: overlay form, tab berbasis rute, dan kulit chrome (notifikasi, pencarian topbar, akun sidebar) tanpa motion JS.
@@ -335,7 +347,8 @@ maupun bundler ESM browser** — segera upgrade ke 4.0.1.
 
 Version 2.x is no longer maintained. No migration guide is available. Upgrade directly to 4.0.0 (lihat `UPGRADE_NOTES.md` jika dari v3).
 
-[Unreleased]: https://github.com/bpsprovkaltara/design-system/compare/v4.8.0...HEAD
+[Unreleased]: https://github.com/bpsprovkaltara/design-system/compare/v4.8.1...HEAD
+[4.8.1]: https://github.com/bpsprovkaltara/design-system/compare/v4.8.0...v4.8.1
 [4.8.0]: https://github.com/bpsprovkaltara/design-system/compare/v4.7.0...v4.8.0
 [4.7.0]: https://github.com/bpsprovkaltara/design-system/compare/v4.6.0...v4.7.0
 [4.4.0]: https://github.com/bpsprovkaltara/design-system/compare/v4.3.0...v4.4.0

@@ -8,7 +8,9 @@
 [`docs/consumer-chrome.md`](./docs/consumer-chrome.md) — peta singkat apa yang
 sudah diekspor paket (`AppShell` sudah termasuk toggle sidebar sejak 4.6,
 `SectionCard`/`FormDialog`/`FormSheet`, dll.) versus apa yang wajar tetap di
-repo konsumen (auth footer, fetch notifikasi/search, domain hero). Untuk
+repo konsumen (auth footer, fetch notifikasi/search, domain hero). Konsumen
+Next.js **wajib** mengisi `asChild` / `renderLink` (lihat tabel kontrak tautan
+di dokumen itu) supaya navigasi tidak menjadi reload dokumen. Untuk
 perubahan antarversi, utamakan `UPGRADE_NOTES.md` dan `CHANGELOG.md`.
 
 ---

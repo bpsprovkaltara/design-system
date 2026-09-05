@@ -26,4 +26,17 @@ describe('FilterChips', () => {
     expect(screen.getByRole('link', { name: 'Semua' })).toHaveAttribute('data-variant', 'nav')
     expect(screen.getByRole('link', { name: 'Aktif' })).toHaveAttribute('data-variant', 'outline')
   })
+
+  it('uses renderLink for framework routers and keeps aria-current', () => {
+    render(
+      <FilterChips
+        label="Filter"
+        items={items}
+        renderLink={(item, children) => <a href={`/app${item.href}`}>{children}</a>}
+      />
+    )
+    expect(screen.getByRole('link', { name: 'Semua' })).toHaveAttribute('href', '/app/semua')
+    expect(screen.getByRole('link', { name: 'Semua' })).toHaveAttribute('aria-current', 'page')
+    expect(screen.getByRole('link', { name: 'Aktif' })).toHaveAttribute('href', '/app/aktif')
+  })
 })

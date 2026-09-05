@@ -150,6 +150,7 @@ export function PatternsPage() {
     { href: "/semua", label: "Semua", active: true },
     { href: "/aktif", label: "Aktif", active: false },
   ]}
+  renderLink={(item, children) => <Link href={item.href}>{children}</Link>}
 />`}</CodeBlock>
       </ShowcaseSection>
 

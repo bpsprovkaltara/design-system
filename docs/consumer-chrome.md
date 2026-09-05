@@ -56,6 +56,53 @@ Jika app masih mengimpor salinan lokal yang namanya sama dengan pola DS:
 | `…/form-dialog` / `form-drawer` | `FormDialog` / `FormSheet` |
 | `…/section-tabs` | `SectionTabs` (+ `pathname` + `renderLink`) |
 
-Upgrade dependensi ke `^4.7.0` (atau versi yang memuat `FormDialog`/`FormSheet`)
+Upgrade dependensi ke `^4.8.1` (atau versi yang memuat `FilterChips.renderLink`)
 dulu; baru ganti impor. Wrapper app di atas `AppShell` (logo + footer + search)
 tetap sah — itu komposisi, bukan duplikasi chrome.
+
+## Kontrak tautan kerangka (Next.js / TanStack Router)
+
+DS **tidak** bergantung pada Next.js. Default tautan adalah `<a href>`. Konsumen
+router wajib mengisi lubang berikut supaya navigasi in-app tidak reload penuh:
+
+| Komponen | Lubang |
+|---|---|
+| `AppShell` / `AppSidebar` | `renderLink` |
+| `SectionTabs` | `pathname` + `renderLink` |
+| `FilterChips` | `renderLink` |
+| `RowDetailLink` | `asChild` + elemen `Link` kerangka |
+| `LinkButton` | `asChild` + elemen `Link` kerangka |
+| `TablePagination` | `hrefForPage` **dan** `renderLink` |
+
+Satu modul adapter per app (jangan mengulang di tiap halaman):
+
+```tsx
+// presentation/lib/ds-link.tsx — milik aplikasi
+import Link from 'next/link'
+import type { PaginationLinkRenderProps } from '@bpsprovkaltara/design-system'
+
+export function renderNavLink(
+  item: { href: string },
+  children: React.ReactNode
+) {
+  return <Link href={item.href}>{children}</Link>
+}
+
+export function renderPaginationLink(props: PaginationLinkRenderProps) {
+  return <Link {...props} />
+}
+```
+
+Lebar `FormSheet` diatur lewat `className` (`sm:max-w-[480px]`), bukan `style`
+pada `html` atau prop `width`.
+
+## Checklist aplikasi baru
+
+- [ ] `tokens.css` + `@source` ke `dist`, **bukan** `styles.css` (hindari double-preflight)
+- [ ] Font produksi self-hosted; `fonts.css` CDN hanya opt-in
+- [ ] `AppShell` + `usePersistedCollapsed`; jangan merakit toggle sidebar sendiri
+- [ ] File adapter tautan ada sebelum halaman daftar pertama
+- [ ] Tidak fork `SectionCard` / overlay / pagination / chip filter
+- [ ] Tidak menimpa `--navy-*` / `--amber-*` tanpa keputusan tertulis
+- [ ] Tidak menambah CSS overlay paralel (`t-modal`, `t-drawer`, `t-notif`)
+- [ ] Konfirmasi destruktif memakai `ConfirmDialog`, bukan dialog + warna inline
