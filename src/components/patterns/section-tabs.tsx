@@ -32,10 +32,7 @@ export interface SectionTabsProps {
  * `/pegawai` dan `/pegawai/status-data` — tanpa aturan terpanjang, dua tab
  * bisa aktif bersamaan.
  */
-export function resolveActiveTab(
-  pathname: string,
-  tabs: SectionTab[]
-): string | undefined {
+export function resolveActiveTab(pathname: string, tabs: SectionTab[]): string | undefined {
   return tabs
     .flatMap((tab) =>
       [tab.href, ...(tab.matchPrefixes ?? [])].map((prefix) => ({
@@ -43,9 +40,7 @@ export function resolveActiveTab(
         prefix,
       }))
     )
-    .filter(
-      ({ prefix }) => pathname === prefix || pathname.startsWith(`${prefix}/`)
-    )
+    .filter(({ prefix }) => pathname === prefix || pathname.startsWith(`${prefix}/`))
     .sort((left, right) => right.prefix.length - left.prefix.length)[0]?.href
 }
 
@@ -54,22 +49,14 @@ const tabClassName = (active: boolean) =>
     'inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium leading-none',
     'ring-offset-background transition-all outline-none',
     'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-    active
-      ? 'bg-background text-content-primary shadow-sm'
-      : 'hover:text-content-primary'
+    active ? 'bg-background text-content-primary shadow-sm' : 'hover:text-content-primary'
   )
 
 /**
  * Sub-nav sibling route (bukan Radix Tabs) — tiap klik adalah navigasi rute.
  * Visual selaras `TabsList` / `TabsTrigger` (kotak di atas `bg-muted`).
  */
-export function SectionTabs({
-  tabs,
-  label,
-  pathname,
-  renderLink,
-  className,
-}: SectionTabsProps) {
+export function SectionTabs({ tabs, label, pathname, renderLink, className }: SectionTabsProps) {
   const activeHref = resolveActiveTab(pathname, tabs)
 
   return (
@@ -112,12 +99,7 @@ export function SectionTabs({
         }
 
         return (
-          <a
-            key={tab.href}
-            href={tab.href}
-            aria-current={ariaCurrent}
-            className={classNameForTab}
-          >
+          <a key={tab.href} href={tab.href} aria-current={ariaCurrent} className={classNameForTab}>
             {tab.label}
           </a>
         )

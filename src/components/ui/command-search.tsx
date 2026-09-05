@@ -3,12 +3,7 @@
 import * as React from 'react'
 
 import { cn } from '@/lib/utils'
-import {
-  Command,
-  CommandEmpty,
-  CommandInput,
-  CommandList,
-} from '@/components/ui/command'
+import { Command, CommandEmpty, CommandInput, CommandList } from '@/components/ui/command'
 
 export interface CommandSearchProps {
   value?: string

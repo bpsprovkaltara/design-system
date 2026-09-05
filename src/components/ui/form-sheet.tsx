@@ -62,10 +62,7 @@ export function FormSheet({
       {trigger ? <SheetTrigger asChild>{trigger}</SheetTrigger> : null}
       <SheetContent
         side={side}
-        className={cn(
-          'flex w-full flex-col gap-0 p-0 sm:max-w-xl lg:max-w-2xl',
-          className
-        )}
+        className={cn('flex w-full flex-col gap-0 p-0 sm:max-w-xl lg:max-w-2xl', className)}
       >
         <SheetHeader className="shrink-0 space-y-1 border-b border-border px-6 py-4 text-left">
           <SheetTitle>{title}</SheetTitle>

@@ -37,9 +37,7 @@ describe('SidebarAccount', () => {
   })
 
   it('renders leading slot content such as a role switcher', () => {
-    render(
-      <SidebarAccount name="Ahmad" initials="A" leading={<div>Pilih peran</div>} />
-    )
+    render(<SidebarAccount name="Ahmad" initials="A" leading={<div>Pilih peran</div>} />)
 
     expect(screen.getByText('Pilih peran')).toBeInTheDocument()
   })

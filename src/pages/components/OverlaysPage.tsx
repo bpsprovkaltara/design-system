@@ -144,8 +144,8 @@ export function OverlaysPage() {
             {(close) => (
               <div className="space-y-3">
                 <p className="text-sm text-content-secondary">
-                  Slot body untuk field formulir. Panggil <code>close()</code> setelah
-                  submit berhasil.
+                  Slot body untuk field formulir. Panggil <code>close()</code> setelah submit
+                  berhasil.
                 </p>
                 <div className="flex justify-end gap-2">
                   <Button type="button" variant="outline" onClick={close}>

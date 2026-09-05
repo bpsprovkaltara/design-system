@@ -45,8 +45,8 @@ export function NavigationPage() {
       <ShowcaseSection title="SectionTabs">
         <div className="rounded-lg border bg-card p-8 space-y-4">
           <p className="text-sm text-content-secondary">
-            Pathname contoh: <code className="text-xs">/pegawai/status-data</code> — tab
-            terpanjang yang cocok yang aktif.
+            Pathname contoh: <code className="text-xs">/pegawai/status-data</code> — tab terpanjang
+            yang cocok yang aktif.
           </p>
           <SectionTabs
             label="Navigasi kepegawaian"
