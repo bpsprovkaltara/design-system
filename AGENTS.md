@@ -1,257 +1,212 @@
-# AGENTS.md
+# Panduan Agent — bpskaltara-design-system
 
-Panduan ini berlaku untuk seluruh repo `bpskaltara-design-system`. Gunakan panduan ini untuk memahami sumber kebenaran, menjaga kontrak paket, dan memverifikasi perubahan tanpa menganggap repo ini sebagai aplikasi framework lain.
+Berlaku untuk seluruh repositori, agent mana pun. Perubahan sekecil mungkin,
+jaga perilaku yang tidak diminta, buktikan dengan pemeriksaan yang benar-benar
+dijalankan.
 
-## Ringkasan proyek
+## Arsitektur
 
-Repo ini memuat sistem desain internal BPS Provinsi Kalimantan Utara versi paket `4.6.0`. Satu source tree beroperasi dalam dua mode:
+Sistem desain internal BPS Provinsi Kalimantan Utara. Satu source tree, dua mode:
 
-- **Library**: paket privat `@bpsprovkaltara/design-system` untuk aplikasi internal BPS
-- **Showcase**: single-page application React berbasis Vite untuk dokumentasi interaktif
+- **Library** — paket privat `@bpsprovkaltara/design-system` (versi `4.8.1`)
+  untuk aplikasi internal BPS.
+- **Showcase** — SPA React + Vite untuk dokumentasi interaktif.
 
-Repo ini **bukan aplikasi Next.js**. Directive `'use client'` pada modul tertentu dipertahankan sebagai kompatibilitas bagi konsumen React Server Components, termasuk konsumen Next.js. Directive itu bukan penanda arsitektur repo. `vite.lib.config.ts` memakai `preserveModules` agar directive tersebut tetap ada pada output subpath.
+Repo ini **bukan aplikasi Next.js**. Directive `'use client'` pada modul
+tertentu ada demi kompatibilitas konsumen React Server Components (termasuk
+Next.js), bukan penanda arsitektur repo. `vite.lib.config.ts` memakai
+`preserveModules` supaya directive itu tetap ada pada output subpath. Jangan
+menambahkan API Next.js ke showcase Vite, dan jangan mengubah showcase jadi
+framework lain ketika diminta memperbaiki kompatibilitas konsumen.
 
-Stack utama yang terverifikasi dari `package.json`:
+Stack: React 19, TypeScript 6, Vite 8, Tailwind CSS 4 (CSS-first), React Router 7,
+shadcn/ui gaya `new-york` + Radix UI, Vitest 4 + Testing Library + `jsdom`,
+pnpm 10.30.0, Node `>=20`.
 
-| Area | Versi atau teknologi |
-|---|---|
-| Paket | `@bpsprovkaltara/design-system@4.6.0` |
-| Runtime UI | React 19 |
-| Bahasa | TypeScript 6 |
-| Build | Vite 8 |
-| Styling | Tailwind CSS 4, CSS-first |
-| Routing showcase | React Router 7 |
-| Komponen dasar | shadcn/ui gaya `new-york` dan Radix UI |
-| Pengujian | Vitest 4, Testing Library, `jsdom` |
-| Package manager | `pnpm@10.30.0` |
-| Node.js | `>=20` |
+Pembagian `src/`: `components/ui` primitif dan komposit BPS · `components/patterns`
+pola tingkat tinggi · `components/showcase` helper dokumentasi · `components/layout`
+navigasi showcase · `hooks` hook publik · `pages` halaman showcase ·
+`index.ts` API publik · `main.tsx` entry showcase.
 
 ## Sumber kebenaran
 
-Jika dokumen dan implementasi berbeda, gunakan urutan berikut:
+Saat dokumen dan implementasi berbeda: (1) `package.json` + `pnpm-lock.yaml`
+untuk versi, dependency, script, entry, `exports`; (2) `vite.config.ts`,
+`vite.lib.config.ts`, `vitest.config.ts`, `tsconfig*.json`, `eslint.config.js`
+untuk perilaku tool; (3) `src/index.ts`, `src/utils.ts`, `src/components/**`,
+`src/hooks/**`, `src/App.tsx`, `src/components/layout/Sidebar.tsx` untuk API dan
+alur aktif; (4) `tokens.css`, `colors_and_type.css`, `fonts.css`,
+`scripts/copy-css-assets.mjs` untuk kontrak CSS; (5) test yang berdampingan
+dengan source; (6) `DESIGN.md`, `GUIDE.md`, `README.md`, `docs/README.md`.
 
-1. `package.json` dan `pnpm-lock.yaml` untuk versi, dependency, script, entry, dan `exports`
-2. `vite.config.ts`, `vite.lib.config.ts`, `vitest.config.ts`, `tsconfig*.json`, dan `eslint.config.js` untuk perilaku tool
-3. `src/index.ts`, `src/utils.ts`, `src/components/**`, `src/hooks/**`, `src/App.tsx`, dan `src/components/layout/Sidebar.tsx` untuk API dan alur aktif
-4. `tokens.css`, `colors_and_type.css`, `fonts.css`, dan `scripts/copy-css-assets.mjs` untuk kontrak CSS
-5. Test yang berdampingan dengan source untuk perilaku yang telah dikunci
-6. `DESIGN.md`, `GUIDE.md`, `README.md`, `CONTRIBUTING.md`, `UPGRADE_NOTES.md`, dan `docs/**` untuk konteks
+`design/DESIGN.md` adalah referensi historis Kinara, bukan panduan aktif BPS
+Kaltara — pakai `DESIGN.md` root. `dist/` adalah output build, bukan tempat
+mengedit source. Jangan mengarang script, path, export, atau token.
 
-`design/DESIGN.md` adalah referensi historis Kinara, bukan panduan aktif BPS Kaltara. `dist/` adalah output terbangun, bukan tempat mengedit source. Dokumen dapat tertinggal dari source; verifikasi identifier dan versi sebelum mengulang klaimnya.
+## Perintah
 
-## Perintah yang tersedia
-
-Jalankan dari root repo:
+Dari root repo. Semua terverifikasi ada di `package.json`.
 
 ```bash
 pnpm install
-pnpm dev
-pnpm build
-pnpm build:lib
+pnpm dev            # showcase
+pnpm build          # tsc && vite build (showcase)
+pnpm build:lib      # build library + salin tokens.css & fonts.css ke dist/
 pnpm preview
 pnpm typecheck
-pnpm lint
-pnpm lint:fix
-pnpm format
-pnpm format:check
-pnpm test
-pnpm test:watch
-pnpm test:ui
-pnpm test:coverage
+pnpm lint           # eslint; lint:fix, format, format:check tersedia
+pnpm test           # test:watch, test:ui, test:coverage tersedia
 ```
 
-`pnpm build` membangun showcase melalui `tsc && vite build`. `pnpm build:lib` menjalankan konfigurasi library lalu menyalin `tokens.css` dan `fonts.css` ke `dist/`. Pilih pemeriksaan sesuai matriks pengujian; jangan menjalankan perintah berat yang tidak relevan.
+Pilih pemeriksaan sesuai matriks di bawah; jangan menjalankan perintah berat
+yang tidak relevan dengan perubahan.
 
-## Arsitektur dan alur
+## Kontrak ekspor
 
-Alur showcase:
-
-1. `src/main.tsx` memuat `colors_and_type.css`
-2. `src/App.tsx` memasang `BrowserRouter` dan route
-3. `src/layouts/ShowcaseLayout.tsx` membungkus halaman
-4. `src/pages/**` merender foundations, katalog komponen, dan prototipe
-5. `src/components/layout/Sidebar.tsx` menyediakan navigasi yang harus selaras dengan route
-
-Alur library:
-
-1. `src/index.ts` adalah barrel API publik dan memuat `colors_and_type.css` sebagai side effect
-2. `src/utils.ts` adalah entry `cn` tanpa `'use client'`
-3. `vite.lib.config.ts` membangun ESM, CommonJS, deklarasi tipe, dan modul subpath
-4. Runtime dependency dan peer dependency tetap eksternal
-5. `scripts/copy-css-assets.mjs` menyalin CSS sumber yang memang diekspor terpisah
-6. `package.json#exports` menentukan satu-satunya kontrak subpath yang didukung
-
-Folder utama:
-
-```text
-src/components/ui/       Primitif dan komposit BPS
-src/components/patterns/ Pola tingkat tinggi
-src/components/showcase/ Helper dokumentasi interaktif
-src/components/layout/   Navigasi showcase
-src/hooks/               Hook publik
-src/pages/               Halaman showcase
-src/index.ts             API publik
-src/main.tsx             Entry showcase
-```
-
-## Kontrak ekspor dan CSS konsumen
-
-Jaga ekspor ini tetap sinkron dengan `package.json`, `src/index.ts`, dan hasil library build:
+Jaga tetap sinkron antara `package.json#exports`, `src/index.ts`, dan hasil
+`build:lib`. `exports` adalah satu-satunya kontrak subpath yang didukung.
 
 | Import konsumen | Kontrak |
 |---|---|
-| `@bpsprovkaltara/design-system` | API barrel dan side effect CSS all-in-one |
-| `@bpsprovkaltara/design-system/components/ui/*` | Modul UI terarah; CSS tidak dijamin masuk melalui subpath |
-| `@bpsprovkaltara/design-system/patterns/*` | Pattern terarah |
-| `@bpsprovkaltara/design-system/hooks/*` | Hook terarah |
-| `@bpsprovkaltara/design-system/utils` | `cn`, tanpa kebutuhan client component |
-| `@bpsprovkaltara/design-system/styles.css` | CSS all-in-one terkompilasi, termasuk preflight |
-| `@bpsprovkaltara/design-system/tokens.css` | CSS sumber Tailwind 4, token dan utilitas tanpa preflight |
-| `@bpsprovkaltara/design-system/fonts.css` | Google Fonts CDN opsional, tidak dimuat default |
-| `@bpsprovkaltara/design-system/tailwind-preset` | Shim kosong yang deprecated; jangan pakai untuk integrasi baru |
+| `@bpsprovkaltara/design-system` | barrel API + side effect CSS all-in-one |
+| `.../components/ui/*` · `.../patterns/*` · `.../hooks/*` | modul terarah; **CSS tidak dijamin ikut** lewat subpath |
+| `.../utils` | `cn`, tanpa kebutuhan client component |
+| `.../styles.css` | CSS terkompilasi, termasuk preflight |
+| `.../tokens.css` | CSS sumber Tailwind 4, token + utilitas, tanpa preflight |
+| `.../fonts.css` | Google Fonts CDN opsional, tidak dimuat default |
+| `.../tailwind-preset` | shim kosong, deprecated — jangan pakai untuk integrasi baru |
 
-Integrasi `Form` membutuhkan peer opsional `react-hook-form`, `zod`, dan `@hookform/resolvers`. Jangan memaksa konsumen yang tidak memakai form untuk memasangnya.
+Aturan konsumsi CSS: impor tepat sekali di root aplikasi konsumen · konsumen
+non-Tailwind pakai `styles.css` · konsumen Tailwind 4 yang sudah punya preflight
+pakai `tokens.css` setelah `@import "tailwindcss"` plus `@source` ke `dist`
+paket · konsumen yang memakai subpath komponen **wajib** mengimpor `tokens.css`
+· jangan mengimpor `styles.css` dan `tokens.css` sekaligus · font produksi
+disediakan sendiri, `fonts.css` hanya jalur CDN opt-in.
 
-Aturan konsumsi CSS:
-
-- Impor CSS tepat sekali pada root aplikasi konsumen
-- Konsumen non-Tailwind dapat memakai `styles.css`
-- Konsumen Tailwind 4 yang sudah memiliki preflight memakai `tokens.css` setelah `@import "tailwindcss"` dan menambahkan `@source` menuju `dist` paket
-- Konsumen Tailwind 4 yang memilih subpath komponen harus mengimpor `tokens.css`; jangan memakai root barrel bila ingin menghindari side effect `styles.css`
-- Jangan mengimpor `styles.css` dan `tokens.css` sekaligus
-- Sediakan font sendiri untuk produksi; `fonts.css` hanya jalur CDN opt-in
+Integrasi `Form` butuh peer opsional `react-hook-form`, `zod`,
+`@hookform/resolvers`. Jangan memaksa konsumen non-form memasangnya.
 
 ## Sistem token tiga lapis
 
-Gunakan alur konseptual berikut:
+**Layer A primitive** `--navy-*`, `--amber-*`, `--emerald-*`, `--crimson-*`,
+`--slate-*`, `--warm-*` → **Layer B semantic** `--surface-*`, `--content-*`,
+`--border-*`, `--brand-*`, `--feedback-*`, `--data-*`, `--chart-*`,
+`--map-tier-*` → **Layer C kompatibilitas** alias shadcn (`--background`,
+`--primary`, `--card`, `--input`) dan pemetaan `@theme` ke utility Tailwind.
 
-1. **Layer A, primitive**: `--navy-*`, `--amber-*`, `--emerald-*`, `--crimson-*`, `--slate-*`, dan `--warm-*`
-2. **Layer B, semantic**: `--surface-*`, `--content-*`, `--border-*`, `--brand-*`, `--feedback-*`, `--data-*`, `--chart-*`, dan `--map-tier-*`
-3. **Layer C, compatibility/consumption**: alias shadcn seperti `--background`, `--primary`, `--card`, `--input`, dan pemetaan `@theme` ke utility Tailwind
+Secara fisik `tokens.css` menaruh alias shadcn di blok Layer B, dan token khusus
+komponen lama sudah dihapus. Jangan menghidupkan kembali `--button-*`,
+`--input-*`, atau token per-komponen tanpa kebutuhan nyata dan wiring lengkap.
 
-Secara fisik, `tokens.css` menempatkan alias shadcn pada blok Layer B dan menyatakan token khusus komponen lama sudah dihapus. Jangan menambahkan `--button-*`, `--input-*`, atau token komponen baru tanpa kebutuhan nyata dan wiring lengkap. Komponen memakai token semantik atau alias kompatibilitas.
-
-Nilai warna umumnya berbentuk bare HSL dan dipakai sebagai `hsl(var(--token))`. `--warm-50`, `--warm-100`, dan `--warm-200` sudah dibungkus `hsl()`; gunakan `var(--warm-*)` atau varian `--warm-*-hsl` saat membutuhkan komponen HSL mentah.
+Nilai warna umumnya bare HSL, dipakai sebagai `hsl(var(--token))`. Pengecualian:
+`--warm-50`, `--warm-100`, `--warm-200` sudah terbungkus `hsl()` — pakai
+`var(--warm-*)` langsung, atau varian `--warm-*-hsl` bila butuh komponen mentah.
 
 ## Invariant implementasi
 
-- Simbol React memakai PascalCase; nama file komponen memakai kebab-case sesuai source saat ini
-- Pakai named export dan ekspor tipe props yang menjadi bagian API publik
-- Pakai `@/` untuk source internal; alias tersebut mengarah ke `src/`
-- Gunakan `cn()` untuk penggabungan class yang kondisional
-- Buat object atau array baru; jangan mutasi input props atau state
-- Pakai token semantik atau utility Tailwind; jangan hardcode warna di komponen
-- Pertahankan dukungan light dan `.dark`
-- Pakai Bahasa Indonesia formal untuk copy UI dan hindari emoji
-- Format angka lokal dengan `Intl.NumberFormat('id-ID')`
-- Jaga keyboard navigation, focus state, label, semantic HTML, dan atribut ARIA
-- Tambahkan `'use client'` hanya pada modul yang membutuhkan boundary client atau harus kompatibel dengan consumer client component
-- Jangan menambahkan API Next.js ke showcase Vite
+- Simbol React PascalCase; nama file komponen kebab-case.
+- Named export, dan ekspor tipe props yang jadi bagian API publik.
+- `@/` untuk source internal (mengarah ke `src/`). `cn()` untuk class kondisional.
+- Buat object/array baru; jangan mutasi props atau state.
+- Pakai token semantik atau utility Tailwind; jangan hardcode warna di komponen.
+- Pertahankan dukungan light dan `.dark`.
+- Copy UI Bahasa Indonesia formal, tanpa emoji. Angka lewat `Intl.NumberFormat('id-ID')`.
+- Jaga keyboard navigation, focus state, label, semantic HTML, atribut ARIA.
+- `'use client'` hanya pada modul yang butuh boundary client atau harus kompatibel dengan consumer client component.
+- Komponen yang menavigasi **wajib** punya `asChild` atau `renderLink`. Jangan
+  mengimpor Next.js ke paket. Kontrak konsumen: `docs/consumer-chrome.md`.
 
-## Checklist komponen
-
-Komponen baru atau perubahan komponen belum selesai sampai enam bagian ini terpenuhi:
-
-1. **Implementation**: buat atau ubah source di `src/components/ui/` atau `src/components/patterns/`
-2. **Export**: perbarui `src/index.ts` dan pastikan subpath cocok dengan `package.json#exports`
-3. **Test**: tambah atau perbarui `.test.tsx` berdampingan dengan source
-4. **Showcase**: tambah atau perbarui halaman di `src/pages/components/`
-5. **Route**: sinkronkan route di `src/App.tsx`
-6. **Navigation**: sinkronkan item di `src/components/layout/Sidebar.tsx`
-
-Untuk perubahan kecil pada komponen yang sudah berada pada halaman gabungan, perbarui demo, route, dan navigasi yang relevan. Jangan membuat route duplikat hanya untuk memenuhi checklist secara mekanis.
+**Checklist komponen** — komponen baru/berubah belum selesai sampai enam
+bagian ini beres: implementasi di `src/components/{ui,patterns}/` → ekspor di
+`src/index.ts` selaras `package.json#exports` → test `.test.tsx` berdampingan →
+halaman di `src/pages/components/` → route di `src/App.tsx` → item navigasi di
+`src/components/layout/Sidebar.tsx`. Untuk perubahan kecil pada komponen yang
+sudah ada di halaman gabungan, perbarui yang relevan saja — jangan membuat route
+duplikat demi memenuhi checklist secara mekanis.
 
 ## Keamanan dan privasi
 
-- Validasi data eksternal pada boundary komponen, terutama URL, file, nilai form, dan data tabel
-- Jangan merender HTML mentah; bila kebutuhan terverifikasi memakai `dangerouslySetInnerHTML`, sanitasi lebih dahulu
-- Jangan hardcode token, credential, URL privat, atau data pribadi
-- Jangan mencatat payload yang dapat memuat data pribadi BPS
-- Pertahankan dependency runtime sebagai dependency atau peer yang eksplisit; jangan membundel salinan React
-- Tinjau dependency baru dan jalankan `pnpm audit` sebelum commit atau rilis yang mengubah dependency
-- Jangan menjadikan font CDN sebagai default karena implikasi privasi dan availability
-- Jangan menurunkan aksesibilitas ketika mengganti primitive Radix dengan markup kustom
+Validasi data eksternal di boundary komponen (URL, file, nilai form, data
+tabel). Jangan merender HTML mentah; bila `dangerouslySetInnerHTML` memang
+terbukti perlu, sanitasi lebih dulu. Jangan hardcode token, credential, URL
+privat, atau data pribadi, dan jangan mencatat payload yang bisa memuat data
+pribadi BPS. Dependency runtime tetap sebagai dependency/peer eksplisit —
+jangan membundel salinan React. Jalankan `pnpm audit` sebelum rilis yang
+mengubah dependency. Font CDN jangan dijadikan default (privasi + availability).
+Jangan menurunkan aksesibilitas saat mengganti primitive Radix dengan markup
+kustom.
 
-## Matriks pengujian
+## Cara kerja
+
+- Cari sempit dulu; jangan membaca file besar utuh kalau pencarian sudah cukup.
+- Untuk tugas kompleks, nyatakan rencana dan kriteria verifikasi sebelum menulis kode.
+- Edit terarah, pertahankan perubahan orang lain, jangan refactor di luar permintaan.
+- **Jangan mengandalkan ingatan model untuk API framework.** Cocokkan ke
+  `package.json`/lockfile, lalu rujuk dokumentasi resmi versi aktif untuk React,
+  TypeScript, Vite, Tailwind, Vitest, dan Radix UI.
+- Contoh Next.js/Laravel/framework lain adalah panduan konsumen, bukan arsitektur repo.
+- Jangan mengedit `node_modules/`, `dist/`, atau artifact generated sebagai source.
+- Temuan di luar scope dilaporkan sebagai catatan, bukan diperbaiki diam-diam.
+- Tinjau diff sebelum menyatakan selesai.
+
+## Verifikasi
 
 | Jenis perubahan | Pemeriksaan minimum |
 |---|---|
-| Dokumentasi saja | Cek path/identifier, tinjau diff, `git diff --check` |
+| Dokumentasi saja | cek path/identifier, tinjau diff, `git diff --check` |
 | Type atau utilitas murni | `pnpm typecheck`, `pnpm lint`, test terkait |
-| Komponen atau hook | `pnpm typecheck`, `pnpm lint`, `pnpm test`, cek interaksi dan aksesibilitas |
-| Token atau CSS | `pnpm build:lib`, pemeriksaan light/dark dan konsumen Tailwind/non-Tailwind |
+| Komponen atau hook | `pnpm typecheck`, `pnpm lint`, `pnpm test`, cek interaksi + aksesibilitas |
+| Token atau CSS | `pnpm build:lib`, cek light/dark dan konsumen Tailwind/non-Tailwind |
 | Public export atau build config | `pnpm build:lib`, cek ESM/CJS/type/subpath dan CSS output |
-| Route atau showcase | `pnpm build`, cek route langsung, navigasi, dan tampilan responsif |
-| Dependency atau rilis | Pemeriksaan di atas yang relevan dan `pnpm audit` |
+| Route atau showcase | `pnpm build`, cek route langsung, navigasi, tampilan responsif |
+| Dependency atau rilis | pemeriksaan relevan di atas + `pnpm audit` |
 
-`vitest.config.ts` mempunyai threshold repo saat ini sebesar 34% statements, 42% branches, 26% functions, dan 34% lines. Itu bukan gate 80% repo-wide. Targetkan cakupan **minimal 80% untuk kode baru atau berubah**, termasuk jalur error dan interaksi penting, tanpa mengklaim repo sudah memiliki gate global 80%.
+CI (`.github/workflows/ci.yml`) menjalankan `pnpm install --frozen-lockfile`
+lalu `typecheck` → `lint` → `test` → `build:lib` → `build`.
+
+Threshold coverage di `vitest.config.ts` saat ini **34% statements, 42%
+branches, 26% functions, 34% lines** — itu bukan gate 80% repo-wide. Target
+>=80% berlaku untuk kode baru/berubah termasuk jalur error; jangan mengklaim
+repo punya gate global 80%, dan jangan menyatakan test/coverage/lint/build/audit
+lulus tanpa benar-benar menjalankannya.
 
 ## Definition of Done
 
-Perubahan dianggap selesai jika:
+Permintaan terpenuhi tanpa perubahan di luar scope · kontrak API/tipe/CSS tetap
+kompatibel atau breaking change didokumentasikan · checklist enam bagian
+dipenuhi sesuai relevansi · pemeriksaan pada matriks lulus dan dilaporkan apa
+adanya · coverage kode baru/berubah >=80% · aksesibilitas, dark mode, Bahasa
+Indonesia, keamanan, dan privasi ditinjau · dokumen publik dan `CHANGELOG.md`
+diperbarui bila perilaku konsumen berubah · diff bebas secret, debug code,
+output build, dan perubahan tidak terkait.
 
-- Permintaan pengguna terpenuhi tanpa perubahan di luar scope
-- Kontrak API, tipe, dan CSS tetap kompatibel atau breaking change didokumentasikan
-- Checklist enam bagian komponen dipenuhi sesuai relevansi
-- Pemeriksaan pada matriks lulus dan hasilnya dilaporkan apa adanya
-- Cakupan kode baru atau berubah mencapai minimal 80%
-- Aksesibilitas, dark mode, Bahasa Indonesia, keamanan, dan privasi ditinjau
-- Dokumen publik dan `CHANGELOG.md` diperbarui bila perilaku konsumen berubah
-- Diff bebas secret, debug code, output build, dan perubahan tidak terkait
+## Workflow lintas-agent
 
-## Aturan kerja Codex
+- Baca `../../WORKFLOW.md` sebelum memulai perubahan.
+- Untuk detail mode/scope dan quality gate, buka `../../PLAYBOOKS.md` bila relevan.
+- Berlaku sama di Claude Code dan OpenCode — keduanya membaca file ini dan
+  skill di `.claude/skills/`. Jangan menganggap capability tool tersedia tanpa
+  memeriksa runtime aktif.
+- OpenCode tidak memuat `../../WORKFLOW.md` otomatis; baca sendiri saat memulai.
 
-- Awali pencarian dengan `rtk rg` atau `rtk rg --files`; gunakan `rtk` untuk semua perintah shell
-- Gunakan `apply_patch` untuk edit manual dan hindari script ad hoc untuk menulis file
-- Baca status dan diff sebelum serta sesudah perubahan; pertahankan edit pengguna lain
-- Jangan mengedit `node_modules/`, `dist/`, atau artifact generated sebagai source
-- Jangan menjalankan perintah destruktif, menghapus file, atau memulihkan working tree tanpa permintaan eksplisit
-- Jangan commit, push, membuat tag/rilis, atau mengubah resource eksternal tanpa permintaan eksplisit
-- Jangan memperbaiki temuan di luar scope; laporkan sebagai catatan
+## Rujukan
 
-## Graphify
-
-Repo memiliki knowledge graph di `graphify-out/`. Sebelum menjawab pertanyaan arsitektur, baca `graphify-out/GRAPH_REPORT.md` untuk god nodes dan struktur komunitas. Jika `graphify-out/wiki/index.md` tersedia, gunakan wiki untuk navigasi lalu verifikasi klaim pada source. Setelah mengubah file kode, jalankan `rtk python3 -c "from graphify.watch import _rebuild_code; from pathlib import Path; _rebuild_code(Path('.'))"`. Perubahan dokumentasi saja tidak memerlukan rebuild graph. Jangan menganggap graph sebagai sumber kebenaran bila berbeda dari working copy.
+`docs/README.md` adalah indeks seluruh dokumentasi mendalam. Bahasa visual dan
+aturan brand di `DESIGN.md`; panduan pemakaian untuk project konsumen di
+`GUIDE.md`; catatan upgrade antarversi di `UPGRADE_NOTES.md`.
 
 <!-- SKILL-ROUTING:START -->
-## Skill Routing
+## Skills
 
-Katalog lengkap ada di level user dan tidak dipangkas. Blok ini cuma menunjuk
-yang relevan untuk repo ini. Regenerasi: `/skill-routing`.
-Terakhir diperbarui: 2026-07-28
+Skill khusus repo ini ada di `.claude/skills/` dan otomatis terbaca Claude Code
+maupun OpenCode saat sesi dibuka dari root repo ini. Skill metodologi (Superpowers,
+`documentation-lookup`, dll.) global — tidak diulang di sini.
 
-### NOW
-| Skill | Untuk apa di repo ini | Frasa pemicu |
-|---|---|---|
-| `impeccable` | audit visual + UX komponen sebelum bump versi paket | "polish komponen", "audit UI showcase", "spacing label kurang rapi" |
-| `ui-ux-pro-max` | rujukan palet, font pairing, dan state interaksi untuk token tiga lapis | "cari padanan warna", "atur tipografi", "state hover/disabled" |
-| `shadcn` | repo punya `components.json` + Radix; cari/patch primitive upstream | "tambah komponen shadcn", "cek registry", "contoh Radix" |
-| `dataviz` | DS sudah punya primitive Sparkline/BarChart SVG | "tambah chart", "warna seri grafik", "bikin sparkline" |
-| `everything-claude-code:accessibility` | `eslint-plugin-jsx-a11y` aktif, DS dipakai 4 aplikasi konsumen | "cek aksesibilitas", "kontras warna", "aria label" |
-| agent `everything-claude-code:a11y-architect` | audit WCAG saat menambah komponen interaktif baru | "audit a11y komponen", "keyboard navigation" |
-| `everything-claude-code:design-system` | audit konsistensi token pada PR yang menyentuh styling | "konsistensi token", "review PR styling" |
-| `vercel-composition-patterns` | desain API komponen: compound pattern, hindari ledakan boolean prop | "API komponen ini gimana", "prop-nya kebanyakan", "bikin compound component" |
-| agent `everything-claude-code:typescript-reviewer` | kontrak ekspor `.d.ts` lewat `vite-plugin-dts` gampang bocor | "review tipe", "ekspor type salah" |
-| `everything-claude-code:test-coverage` | coverage gate vitest sudah aktif di repo | "cek coverage", "test kurang" |
-| `everything-claude-code:build-fix` | dua target build (lib `preserveModules` + showcase) sering pecah tipe | "build gagal", "typecheck merah" |
-| `graphify` | `graphify-out/` sudah ada, jaga peta ekspor tetap segar | "rebuild graph", "peta kode" |
-| `superpowers:verification-before-completion` | Definition of Done panjang di `CLAUDE.md` | "sudah selesai?", "cek DoD" |
-| `commit-commands:commit` | riwayat commit Conventional Commits konsisten | "commit", "buat commit" |
-
-### LATER
-- `everything-claude-code:e2e-testing` — aktifkan kalau `@playwright/test` masuk `devDependencies` untuk menguji showcase.
-- `vercel-react-best-practices` — aktifkan kalau repo menambah target Next.js/RSC nyata, bukan sekadar directive kompatibilitas konsumen.
-- `mattpocock-skills:codebase-design` — aktifkan kalau ada file di `src/` melewati ~400 baris atau barrel export jadi ambigu.
-- `everything-claude-code:opensource-pipeline` — aktifkan kalau paket privat `@bpsprovkaltara/design-system` mau dibuka publik.
-- `everything-claude-code:seo` — aktifkan kalau showcase dipublikasikan ke domain publik.
-- `everything-claude-code:documentation-lookup` — aktifkan kalau butuh dokumen Radix/Tailwind 4 yang tidak ada di `node_modules`.
-- `everything-claude-code:gan-design` — alternatif loop desain berskor; kalah dari `impeccable` karena butuh app hidup, showcase belum punya harness evaluator.
-
-### NEVER
-Bahasa lain (Go, Rust, Java/Spring, Kotlin/Android, C++, C#, Python, Perl, Dart/Flutter, Swift), backend/database (Prisma, PostgreSQL, Docker, queue — repo ini tanpa server dan tanpa DB), domain bisnis (healthcare, logistik, finance, energy, customs, investor/market research, web3/DeFi) — tetap terpasang untuk proyek lain.
-
-### BROKEN
-- `everything-claude-code:docs-lookup` (agent) — frontmatter `tools:` menyebut `mcp__context7__*`, nama nyata di harness `mcp__plugin_everything-claude-code_context7__*`; agent tidak bisa memanggil MCP-nya.
-- `~/.claude/skills/learned/` — direktori kosong tanpa `SKILL.md`, tidak pernah termuat.
-- Sebagian besar command `everything-claude-code:*` (mis. `jira`, `instinct-*`, `pm2`) tidak punya `description`, jadi tidak pernah tersaring otomatis — panggil eksplisit atau abaikan.
+| Skill | Kondisi Pemicu (Trigger) |
+|---|---|
+| `impeccable` | Buka sebelum merancang, mengubah, atau mereview hierarki visual komponen UI, state kosong, dan aksesibilitas showcase |
+| `release-tag` | Buka saat menyiapkan annotated git tag rilis versi library dari `package.json` + `CHANGELOG.md` |
+| `shadcn` | Buka sebelum menambah atau memodifikasi komponen primitif dari registry shadcn (`components.json`) |
+| `vercel-composition-patterns` | Buka sebelum mendesain API komponen tingkat tinggi yang reusable (compound components, render props, context) |
+| `vercel-react-best-practices` | Buka saat mengoptimalkan performa modul React/Vite, tree-shaking, dan bundle size library |
 <!-- SKILL-ROUTING:END -->

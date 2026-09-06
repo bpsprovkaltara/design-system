@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Docs
+
+- Checklist aplikasi baru dilengkapi (CommandSearch, Tabs vs SectionTabs, pagar lint konsumen). Lihat `docs/consumer-chrome.md`.
+
 ## [4.8.1] - 2026-09-05
 
 Patch adopsi konsumen: lubang `renderLink` pada `FilterChips` dan kontrak tautan kerangka (Next.js `asChild` / `renderLink`) supaya daftar, chip, dan pagination tidak reload penuh.

@@ -101,8 +101,11 @@ pada `html` atau prop `width`.
 - [ ] `tokens.css` + `@source` ke `dist`, **bukan** `styles.css` (hindari double-preflight)
 - [ ] Font produksi self-hosted; `fonts.css` CDN hanya opt-in
 - [ ] `AppShell` + `usePersistedCollapsed`; jangan merakit toggle sidebar sendiri
-- [ ] File adapter tautan ada sebelum halaman daftar pertama
+- [ ] File adapter tautan (`presentation/lib/ds-link.tsx` atau setara) ada sebelum halaman daftar pertama
 - [ ] Tidak fork `SectionCard` / overlay / pagination / chip filter
 - [ ] Tidak menimpa `--navy-*` / `--amber-*` tanpa keputusan tertulis
-- [ ] Tidak menambah CSS overlay paralel (`t-modal`, `t-drawer`, `t-notif`)
+- [ ] Tidak menambah CSS overlay paralel (`t-modal`, `t-drawer`, `t-notif`, `t-tabs`)
 - [ ] Konfirmasi destruktif memakai `ConfirmDialog`, bukan dialog + warna inline
+- [ ] Pencarian topbar memakai `CommandSearch` (fetch tetap di app)
+- [ ] Tab **dalam** halaman memakai `Tabs`; tab **sibling route** memakai `SectionTabs`
+- [ ] Pagar lint lokal: larang `RowDetailLink`/`LinkButton`/`TablePagination` mentah (lihat Menara) dan class chrome overlay legacy (lihat Suaraku)
