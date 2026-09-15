@@ -3,4 +3,4 @@ node_modules
 .playwright-mcp/
 tw4-*.png
 coverage
-graphify-out/cache/
+graphify-out/

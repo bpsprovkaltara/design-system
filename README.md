@@ -19,7 +19,7 @@ Repo ini **bukan aplikasi Next.js**. Directive `'use client'` pada modul tertent
 hanya menjaga kompatibilitas konsumen React Server Components; `vite.lib.config.ts`
 memakai `preserveModules` agar directive itu tetap ada pada output subpath.
 
-Migrasi dari v3: lihat [UPGRADE_NOTES.md](./UPGRADE_NOTES.md).
+Migrasi dari v3: lihat [docs/upgrading.md](./docs/upgrading.md).
 
 ---
 
@@ -39,7 +39,7 @@ Migrasi dari v3: lihat [UPGRADE_NOTES.md](./UPGRADE_NOTES.md).
 
 ### Pilih versi
 
-Dua jalur rilis dipelihara paralel (detail di [DESIGN.md](./DESIGN.md)):
+Dua jalur rilis dipelihara paralel (detail di [docs/design.md](./docs/design.md)):
 
 | Versi | dist-tag | Untuk aplikasi | Branch |
 |---|---|---|---|
@@ -242,7 +242,6 @@ src/
 colors_and_type.css      # Token + directive CSS-first Tailwind 4
 tokens.css, fonts.css    # Kontrak CSS konsumen
 design/
-├── DESIGN.md            # Referensi historis Kinara — bukan panduan aktif
 └── design-tokens.json   # Ekspor token
 ```
 
@@ -327,24 +326,23 @@ publish. Bump versi dilakukan manual sebelum membuat tag.
 - Jangan menurunkan aksesibilitas saat mengganti primitive Radix dengan markup
   kustom.
 
-Pelaporan kerentanan: [SECURITY.md](./SECURITY.md).
+Pelaporan kerentanan: laporan ke maintainer langsung (kontak internal diisi
+operator) — jangan dibuka sebagai GitHub issue publik.
 
 ## Dokumentasi
 
 | Berkas | Isi |
 |---|---|
-| [DESIGN.md](./DESIGN.md) | Aturan desain aktif dan panduan agen konsumen |
-| [GUIDE.md](./GUIDE.md) | Panduan penggunaan |
+| [docs/design.md](./docs/design.md) | Aturan desain aktif dan panduan agen konsumen |
+| [docs/guide.md](./docs/guide.md) | Panduan penggunaan |
 | [CLAUDE.md](./CLAUDE.md) / [AGENTS.md](./AGENTS.md) | Invariant, matriks pengujian, Definition of Done |
-| [UPGRADE_NOTES.md](./UPGRADE_NOTES.md) | Migrasi v3 → v4 |
-| [CONTRIBUTING.md](./CONTRIBUTING.md) | Proses kontribusi |
+| [docs/upgrading.md](./docs/upgrading.md) | Migrasi v3 → v4 |
 | [CHANGELOG.md](./CHANGELOG.md) | Riwayat perubahan |
 | [docs/architecture.md](./docs/architecture.md) | Arsitektur |
 | [docs/development.md](./docs/development.md) | Panduan pengembangan dan daftar route showcase |
 | [docs/api.md](./docs/api.md) | Kontrak API |
-| [docs/deployment.md](./docs/deployment.md), [docs/runbook.md](./docs/runbook.md) | Deployment dan operasional |
+| [docs/operations.md](./docs/operations.md) | Deployment dan operasional |
 | [docs/decisions/](./docs/decisions/) | ADR |
-| [docs/releases/](./docs/releases/) | Catatan rilis siap salin |
 
 Knowledge graph kode ada di `graphify-out/GRAPH_REPORT.md`.
 
@@ -356,7 +354,8 @@ Knowledge graph kode ada di `graphify-out/GRAPH_REPORT.md`.
 
 ## Kontribusi
 
-Baca [CONTRIBUTING.md](./CONTRIBUTING.md). Ringkasnya:
+Ringkasnya (rincian: [docs/development.md](./docs/development.md), bagian
+Kontribusi):
 
 - Simbol React memakai PascalCase; nama berkas komponen memakai kebab-case.
 - Gunakan named export dan ekspor tipe props yang menjadi bagian API publik.

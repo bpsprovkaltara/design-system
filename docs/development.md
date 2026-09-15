@@ -70,6 +70,13 @@ The showcase app starts at http://localhost:5173. Hot reload is enabled for all 
 | `/components/data-management` | `DataManagementPage` |
 | `/components/feedback-status` | `FeedbackStatusPage` |
 | `/components/performance-card` | `PerformanceCardPage` |
+| `/components/form-controls` | `FormControlsPage` |
+| `/components/overlays` | `OverlaysPage` |
+| `/components/disclosure` | `DisclosurePage` |
+| `/components/data-display` | `DataDisplayPage` |
+| `/components/navigation` | `NavigationPage` |
+| `/components/empty-state` | `EmptyStatePage` |
+| `/components/patterns` | `PatternsPage` |
 | `/prototypes/dashboard` | `DashboardPage` |
 | `/prototypes/auth` | `AuthPage` |
 | `/prototypes/list` | `ListPage` |
@@ -196,10 +203,33 @@ import '@bpsprovkaltara/design-system/styles.css'
 
 ### Fonts not loading
 
-Google Fonts are loaded via CDN in `colors_and_type.css`:
+Sejak v4.0.1 CSS paket sengaja **tidak memuat font** — showcase memuatnya lewat
+`<link>` Google Fonts di `index.html`; aplikasi konsumen menyediakan font
+sendiri (self-host, atau `fonts.css` CDN opt-in).
 
-```css
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:...')
-```
+Bila `fonts.googleapis.com` diblokir jaringan, font jatuh ke system stack di
+`colors_and_type.css` — aplikasi tetap terbaca. Solusi permanen (self-host
+WOFF2) belum diimplementasi; langkah mitigasi produksi di
+[operations.md](./operations.md).
 
-In environments where Google Fonts CDN is blocked (e.g. internal networks with restricted outbound traffic), the fonts fall back to the system stack defined in `colors_and_type.css`. A self-hosted font setup is not yet configured. See `docs/runbook.md` for the mitigation steps.
+## Kontribusi
+
+Repo internal BPS Provinsi Kalimantan Utara — kontribusi eksternal tidak
+diterima.
+
+**Branch:** dari `main`; `feat/`, `fix/`, `chore/`, `docs/`; PR ke `main`,
+tidak pernah commit langsung ke `main`.
+
+**Commit:** Conventional Commits — `feat|fix|chore|docs|refactor|test(style,perf)`
+dengan scope opsional; subject lowercase imperatif maks 72 karakter.
+
+**PR checklist:**
+
+- [ ] `pnpm typecheck` (zero error), `pnpm lint`, `pnpm test`
+- [ ] Komponen baru/berubah punya test di `src/test/`
+- [ ] Perubahan token/preset: `dist/` ikut di-build ulang, changelog diubah
+- [ ] Tanpa secret/`.env` ter-stage
+
+**Review:** minimal 1 approval — peninjau mengecek kepatuhan kontrak API
+komponen (`docs/architecture.md`), kebenaran token, dan aksesibilitas.
+Author yang merge dan menghapus branch.

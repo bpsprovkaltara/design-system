@@ -37,10 +37,10 @@ untuk perilaku tool; (3) `src/index.ts`, `src/utils.ts`, `src/components/**`,
 `src/hooks/**`, `src/App.tsx`, `src/components/layout/Sidebar.tsx` untuk API dan
 alur aktif; (4) `tokens.css`, `colors_and_type.css`, `fonts.css`,
 `scripts/copy-css-assets.mjs` untuk kontrak CSS; (5) test yang berdampingan
-dengan source; (6) `DESIGN.md`, `GUIDE.md`, `README.md`, `docs/README.md`.
+dengan source; (6) `docs/design.md`, `docs/guide.md`, `README.md`.
 
-`design/DESIGN.md` adalah referensi historis Kinara, bukan panduan aktif BPS
-Kaltara — pakai `DESIGN.md` root. `dist/` adalah output build, bukan tempat
+`docs/design.md` memuat juga referensi historis Kinara (bagian terpisah);
+bagian aktifnya untuk BPS Kaltara. `dist/` adalah output build, bukan tempat
 mengedit source. Jangan mengarang script, path, export, atau token.
 
 ## Perintah
@@ -191,9 +191,10 @@ output build, dan perubahan tidak terkait.
 
 ## Rujukan
 
-`docs/README.md` adalah indeks seluruh dokumentasi mendalam. Bahasa visual dan
-aturan brand di `DESIGN.md`; panduan pemakaian untuk project konsumen di
-`GUIDE.md`; catatan upgrade antarversi di `UPGRADE_NOTES.md`.
+Peta dokumentasi mendalam ada di `README.md` (bagian Dokumentasi). Bahasa
+visual dan aturan brand di `docs/design.md`; panduan pemakaian untuk project
+konsumen di `docs/guide.md`; catatan upgrade antarversi di
+`docs/upgrading.md`.
 
 <!-- SKILL-ROUTING:START -->
 ## Skills
