@@ -1,0 +1,892 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-26",
+  "title": "Design System: BPS Kaltara",
+  "extensions": {
+    "colorMeta": {
+      "surface-canvas": {
+        "role": "neutral",
+        "displayName": "Kanvas",
+        "canonical": "hsl(33 20% 97%)",
+        "tonalRamp": [
+          "hsl(36 30% 89%)",
+          "hsl(34 29% 94%)",
+          "hsl(33 20% 97%)"
+        ]
+      },
+      "surface-raised": {
+        "role": "neutral",
+        "displayName": "Permukaan naik",
+        "canonical": "hsl(0 0% 100%)",
+        "tonalRamp": [
+          "hsl(0 0% 100%)"
+        ]
+      },
+      "surface-sunken": {
+        "role": "neutral",
+        "displayName": "Permukaan sunken",
+        "canonical": "hsl(34 29% 94%)",
+        "tonalRamp": [
+          "hsl(36 30% 89%)",
+          "hsl(34 29% 94%)",
+          "hsl(33 20% 97%)"
+        ]
+      },
+      "surface-inverse": {
+        "role": "neutral",
+        "displayName": "Permukaan invers",
+        "canonical": "hsl(215 60% 13%)",
+        "tonalRamp": [
+          "hsl(218 70% 8%)",
+          "hsl(215 60% 13%)",
+          "hsl(214 52% 20%)",
+          "hsl(215 40% 28%)",
+          "hsl(215 32% 38%)",
+          "hsl(214 25% 50%)",
+          "hsl(213 27% 64%)",
+          "hsl(210 30% 76%)",
+          "hsl(210 35% 88%)",
+          "hsl(210 40% 96%)",
+          "hsl(210 40% 98%)"
+        ]
+      },
+      "surface-overlay": {
+        "role": "neutral",
+        "displayName": "Lapisan gelap",
+        "canonical": "hsl(218 70% 8%)",
+        "tonalRamp": [
+          "hsl(218 70% 8%)",
+          "hsl(215 60% 13%)",
+          "hsl(214 52% 20%)",
+          "hsl(215 40% 28%)",
+          "hsl(215 32% 38%)",
+          "hsl(214 25% 50%)",
+          "hsl(213 27% 64%)",
+          "hsl(210 30% 76%)",
+          "hsl(210 35% 88%)",
+          "hsl(210 40% 96%)",
+          "hsl(210 40% 98%)"
+        ]
+      },
+      "content-primary": {
+        "role": "neutral",
+        "displayName": "Teks utama",
+        "canonical": "hsl(215 60% 13%)",
+        "tonalRamp": [
+          "hsl(218 70% 8%)",
+          "hsl(215 60% 13%)",
+          "hsl(214 52% 20%)",
+          "hsl(215 40% 28%)",
+          "hsl(215 32% 38%)",
+          "hsl(214 25% 50%)",
+          "hsl(213 27% 64%)",
+          "hsl(210 30% 76%)",
+          "hsl(210 35% 88%)",
+          "hsl(210 40% 96%)",
+          "hsl(210 40% 98%)"
+        ]
+      },
+      "content-secondary": {
+        "role": "neutral",
+        "displayName": "Teks sekunder",
+        "canonical": "hsl(215 19% 35%)",
+        "tonalRamp": [
+          "hsl(229 84% 5%)",
+          "hsl(222 47% 11%)",
+          "hsl(217 33% 17%)",
+          "hsl(215 25% 27%)",
+          "hsl(215 19% 35%)",
+          "hsl(215 16% 47%)",
+          "hsl(215 20% 65%)",
+          "hsl(213 27% 84%)",
+          "hsl(214 32% 91%)",
+          "hsl(210 40% 96%)",
+          "hsl(210 40% 98%)"
+        ]
+      },
+      "content-tertiary": {
+        "role": "neutral",
+        "displayName": "Teks tersier",
+        "canonical": "hsl(215 20% 65%)",
+        "tonalRamp": [
+          "hsl(229 84% 5%)",
+          "hsl(222 47% 11%)",
+          "hsl(217 33% 17%)",
+          "hsl(215 25% 27%)",
+          "hsl(215 19% 35%)",
+          "hsl(215 16% 47%)",
+          "hsl(215 20% 65%)",
+          "hsl(213 27% 84%)",
+          "hsl(214 32% 91%)",
+          "hsl(210 40% 96%)",
+          "hsl(210 40% 98%)"
+        ]
+      },
+      "content-disabled": {
+        "role": "neutral",
+        "displayName": "Teks nonaktif",
+        "canonical": "hsl(213 27% 84%)",
+        "tonalRamp": [
+          "hsl(229 84% 5%)",
+          "hsl(222 47% 11%)",
+          "hsl(217 33% 17%)",
+          "hsl(215 25% 27%)",
+          "hsl(215 19% 35%)",
+          "hsl(215 16% 47%)",
+          "hsl(215 20% 65%)",
+          "hsl(213 27% 84%)",
+          "hsl(214 32% 91%)",
+          "hsl(210 40% 96%)",
+          "hsl(210 40% 98%)"
+        ]
+      },
+      "content-inverse": {
+        "role": "neutral",
+        "displayName": "Teks invers",
+        "canonical": "hsl(0 0% 100%)",
+        "tonalRamp": [
+          "hsl(0 0% 100%)"
+        ]
+      },
+      "content-brand": {
+        "role": "primary",
+        "displayName": "Teks merek",
+        "canonical": "hsl(214 52% 20%)",
+        "tonalRamp": [
+          "hsl(218 70% 8%)",
+          "hsl(215 60% 13%)",
+          "hsl(214 52% 20%)",
+          "hsl(215 40% 28%)",
+          "hsl(215 32% 38%)",
+          "hsl(214 25% 50%)",
+          "hsl(213 27% 64%)",
+          "hsl(210 30% 76%)",
+          "hsl(210 35% 88%)",
+          "hsl(210 40% 96%)",
+          "hsl(210 40% 98%)"
+        ]
+      },
+      "content-accent": {
+        "role": "secondary",
+        "displayName": "Teks amber",
+        "canonical": "hsl(28 87% 37%)",
+        "tonalRamp": [
+          "hsl(20 90% 14%)",
+          "hsl(22 78% 25%)",
+          "hsl(25 80% 30%)",
+          "hsl(28 87% 37%)",
+          "hsl(32 95% 44%)",
+          "hsl(35 93% 54%)",
+          "hsl(36 96% 62%)",
+          "hsl(38 96% 73%)",
+          "hsl(40 97% 84%)",
+          "hsl(40 96% 93%)",
+          "hsl(40 100% 97%)"
+        ]
+      },
+      "border-subtle": {
+        "role": "neutral",
+        "displayName": "Garis halus",
+        "canonical": "hsl(36 30% 89%)",
+        "tonalRamp": [
+          "hsl(36 30% 89%)",
+          "hsl(34 29% 94%)",
+          "hsl(33 20% 97%)"
+        ]
+      },
+      "border-default": {
+        "role": "neutral",
+        "displayName": "Garis default",
+        "canonical": "hsl(214 32% 91%)",
+        "tonalRamp": [
+          "hsl(229 84% 5%)",
+          "hsl(222 47% 11%)",
+          "hsl(217 33% 17%)",
+          "hsl(215 25% 27%)",
+          "hsl(215 19% 35%)",
+          "hsl(215 16% 47%)",
+          "hsl(215 20% 65%)",
+          "hsl(213 27% 84%)",
+          "hsl(214 32% 91%)",
+          "hsl(210 40% 96%)",
+          "hsl(210 40% 98%)"
+        ]
+      },
+      "border-strong": {
+        "role": "neutral",
+        "displayName": "Garis kuat",
+        "canonical": "hsl(213 27% 84%)",
+        "tonalRamp": [
+          "hsl(229 84% 5%)",
+          "hsl(222 47% 11%)",
+          "hsl(217 33% 17%)",
+          "hsl(215 25% 27%)",
+          "hsl(215 19% 35%)",
+          "hsl(215 16% 47%)",
+          "hsl(215 20% 65%)",
+          "hsl(213 27% 84%)",
+          "hsl(214 32% 91%)",
+          "hsl(210 40% 96%)",
+          "hsl(210 40% 98%)"
+        ]
+      },
+      "border-brand": {
+        "role": "primary",
+        "displayName": "Garis merek",
+        "canonical": "hsl(214 52% 20%)",
+        "tonalRamp": [
+          "hsl(218 70% 8%)",
+          "hsl(215 60% 13%)",
+          "hsl(214 52% 20%)",
+          "hsl(215 40% 28%)",
+          "hsl(215 32% 38%)",
+          "hsl(214 25% 50%)",
+          "hsl(213 27% 64%)",
+          "hsl(210 30% 76%)",
+          "hsl(210 35% 88%)",
+          "hsl(210 40% 96%)",
+          "hsl(210 40% 98%)"
+        ]
+      },
+      "border-focus": {
+        "role": "primary",
+        "displayName": "Garis fokus",
+        "canonical": "hsl(214 52% 20%)",
+        "tonalRamp": [
+          "hsl(218 70% 8%)",
+          "hsl(215 60% 13%)",
+          "hsl(214 52% 20%)",
+          "hsl(215 40% 28%)",
+          "hsl(215 32% 38%)",
+          "hsl(214 25% 50%)",
+          "hsl(213 27% 64%)",
+          "hsl(210 30% 76%)",
+          "hsl(210 35% 88%)",
+          "hsl(210 40% 96%)",
+          "hsl(210 40% 98%)"
+        ]
+      },
+      "brand-primary": {
+        "role": "primary",
+        "displayName": "Navy merek",
+        "canonical": "hsl(214 52% 20%)",
+        "tonalRamp": [
+          "hsl(218 70% 8%)",
+          "hsl(215 60% 13%)",
+          "hsl(214 52% 20%)",
+          "hsl(215 40% 28%)",
+          "hsl(215 32% 38%)",
+          "hsl(214 25% 50%)",
+          "hsl(213 27% 64%)",
+          "hsl(210 30% 76%)",
+          "hsl(210 35% 88%)",
+          "hsl(210 40% 96%)",
+          "hsl(210 40% 98%)"
+        ]
+      },
+      "brand-primary-fg": {
+        "role": "primary",
+        "displayName": "Putih aksen merek",
+        "canonical": "hsl(0 0% 100%)",
+        "tonalRamp": [
+          "hsl(0 0% 100%)"
+        ]
+      },
+      "brand-accent": {
+        "role": "secondary",
+        "displayName": "Amber aksen",
+        "canonical": "hsl(35 93% 54%)",
+        "tonalRamp": [
+          "hsl(20 90% 14%)",
+          "hsl(22 78% 25%)",
+          "hsl(25 80% 30%)",
+          "hsl(28 87% 37%)",
+          "hsl(32 95% 44%)",
+          "hsl(35 93% 54%)",
+          "hsl(36 96% 62%)",
+          "hsl(38 96% 73%)",
+          "hsl(40 97% 84%)",
+          "hsl(40 96% 93%)",
+          "hsl(40 100% 97%)"
+        ]
+      },
+      "brand-accent-fg": {
+        "role": "secondary",
+        "displayName": "Teks pada amber",
+        "canonical": "hsl(218 70% 8%)",
+        "tonalRamp": [
+          "hsl(218 70% 8%)",
+          "hsl(215 60% 13%)",
+          "hsl(214 52% 20%)",
+          "hsl(215 40% 28%)",
+          "hsl(215 32% 38%)",
+          "hsl(214 25% 50%)",
+          "hsl(213 27% 64%)",
+          "hsl(210 30% 76%)",
+          "hsl(210 35% 88%)",
+          "hsl(210 40% 96%)",
+          "hsl(210 40% 98%)"
+        ]
+      },
+      "primary-foreground": {
+        "role": "primary",
+        "displayName": "Teks pada primer",
+        "canonical": "hsl(210 40% 98%)",
+        "tonalRamp": [
+          "hsl(218 70% 8%)",
+          "hsl(215 60% 13%)",
+          "hsl(214 52% 20%)",
+          "hsl(215 40% 28%)",
+          "hsl(215 32% 38%)",
+          "hsl(214 25% 50%)",
+          "hsl(213 27% 64%)",
+          "hsl(210 30% 76%)",
+          "hsl(210 35% 88%)",
+          "hsl(210 40% 96%)",
+          "hsl(210 40% 98%)"
+        ]
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "Permukaan kartu",
+        "canonical": "hsl(34 29% 94%)",
+        "tonalRamp": [
+          "hsl(36 30% 89%)",
+          "hsl(34 29% 94%)",
+          "hsl(33 20% 97%)"
+        ]
+      },
+      "feedback-success": {
+        "role": "feedback",
+        "displayName": "Berhasil",
+        "canonical": "hsl(161 94% 30%)",
+        "tonalRamp": [
+          "hsl(166 91% 9%)",
+          "hsl(164 86% 16%)",
+          "hsl(163 88% 20%)",
+          "hsl(163 94% 24%)",
+          "hsl(161 94% 30%)",
+          "hsl(160 84% 39%)",
+          "hsl(158 64% 52%)",
+          "hsl(156 72% 67%)",
+          "hsl(152 76% 80%)",
+          "hsl(150 80% 90%)",
+          "hsl(152 81% 96%)"
+        ]
+      },
+      "feedback-success-bg": {
+        "role": "feedback",
+        "displayName": "Latar berhasil",
+        "canonical": "hsl(152 81% 96%)",
+        "tonalRamp": [
+          "hsl(166 91% 9%)",
+          "hsl(164 86% 16%)",
+          "hsl(163 88% 20%)",
+          "hsl(163 94% 24%)",
+          "hsl(161 94% 30%)",
+          "hsl(160 84% 39%)",
+          "hsl(158 64% 52%)",
+          "hsl(156 72% 67%)",
+          "hsl(152 76% 80%)",
+          "hsl(150 80% 90%)",
+          "hsl(152 81% 96%)"
+        ]
+      },
+      "feedback-warning": {
+        "role": "feedback",
+        "displayName": "Peringatan",
+        "canonical": "hsl(32 95% 44%)",
+        "tonalRamp": [
+          "hsl(20 90% 14%)",
+          "hsl(22 78% 25%)",
+          "hsl(25 80% 30%)",
+          "hsl(28 87% 37%)",
+          "hsl(32 95% 44%)",
+          "hsl(35 93% 54%)",
+          "hsl(36 96% 62%)",
+          "hsl(38 96% 73%)",
+          "hsl(40 97% 84%)",
+          "hsl(40 96% 93%)",
+          "hsl(40 100% 97%)"
+        ]
+      },
+      "feedback-warning-bg": {
+        "role": "feedback",
+        "displayName": "Latar peringatan",
+        "canonical": "hsl(40 100% 97%)",
+        "tonalRamp": [
+          "hsl(20 90% 14%)",
+          "hsl(22 78% 25%)",
+          "hsl(25 80% 30%)",
+          "hsl(28 87% 37%)",
+          "hsl(32 95% 44%)",
+          "hsl(35 93% 54%)",
+          "hsl(36 96% 62%)",
+          "hsl(38 96% 73%)",
+          "hsl(40 97% 84%)",
+          "hsl(40 96% 93%)",
+          "hsl(40 100% 97%)"
+        ]
+      },
+      "feedback-danger": {
+        "role": "feedback",
+        "displayName": "Bahaya",
+        "canonical": "hsl(0 72% 51%)",
+        "tonalRamp": [
+          "hsl(0 75% 15%)",
+          "hsl(0 63% 31%)",
+          "hsl(0 70% 35%)",
+          "hsl(0 74% 42%)",
+          "hsl(0 72% 51%)",
+          "hsl(0 84% 60%)",
+          "hsl(0 91% 71%)",
+          "hsl(0 94% 82%)",
+          "hsl(0 96% 89%)",
+          "hsl(0 93% 94%)",
+          "hsl(0 86% 97%)"
+        ]
+      },
+      "feedback-danger-bg": {
+        "role": "feedback",
+        "displayName": "Latar bahaya",
+        "canonical": "hsl(0 86% 97%)",
+        "tonalRamp": [
+          "hsl(0 75% 15%)",
+          "hsl(0 63% 31%)",
+          "hsl(0 70% 35%)",
+          "hsl(0 74% 42%)",
+          "hsl(0 72% 51%)",
+          "hsl(0 84% 60%)",
+          "hsl(0 91% 71%)",
+          "hsl(0 94% 82%)",
+          "hsl(0 96% 89%)",
+          "hsl(0 93% 94%)",
+          "hsl(0 86% 97%)"
+        ]
+      },
+      "feedback-info": {
+        "role": "feedback",
+        "displayName": "Informasi",
+        "canonical": "hsl(214 89% 40%)",
+        "tonalRamp": [
+          "hsl(214 70% 10%)",
+          "hsl(214 89% 40%)",
+          "hsl(214 89% 60%)",
+          "hsl(214 100% 96%)"
+        ]
+      },
+      "feedback-info-bg": {
+        "role": "feedback",
+        "displayName": "Latar informasi",
+        "canonical": "hsl(214 100% 96%)",
+        "tonalRamp": [
+          "hsl(214 70% 10%)",
+          "hsl(214 89% 40%)",
+          "hsl(214 89% 60%)",
+          "hsl(214 100% 96%)"
+        ]
+      },
+      "data-positive": {
+        "role": "feedback",
+        "displayName": "Data positif",
+        "canonical": "hsl(160 84% 39%)",
+        "tonalRamp": [
+          "hsl(166 91% 9%)",
+          "hsl(164 86% 16%)",
+          "hsl(163 88% 20%)",
+          "hsl(163 94% 24%)",
+          "hsl(161 94% 30%)",
+          "hsl(160 84% 39%)",
+          "hsl(158 64% 52%)",
+          "hsl(156 72% 67%)",
+          "hsl(152 76% 80%)",
+          "hsl(150 80% 90%)",
+          "hsl(152 81% 96%)"
+        ]
+      },
+      "data-negative": {
+        "role": "feedback",
+        "displayName": "Data negatif",
+        "canonical": "hsl(0 72% 51%)",
+        "tonalRamp": [
+          "hsl(0 75% 15%)",
+          "hsl(0 63% 31%)",
+          "hsl(0 70% 35%)",
+          "hsl(0 74% 42%)",
+          "hsl(0 72% 51%)",
+          "hsl(0 84% 60%)",
+          "hsl(0 91% 71%)",
+          "hsl(0 94% 82%)",
+          "hsl(0 96% 89%)",
+          "hsl(0 93% 94%)",
+          "hsl(0 86% 97%)"
+        ]
+      },
+      "data-neutral": {
+        "role": "neutral",
+        "displayName": "Data netral",
+        "canonical": "hsl(215 20% 65%)",
+        "tonalRamp": [
+          "hsl(229 84% 5%)",
+          "hsl(222 47% 11%)",
+          "hsl(217 33% 17%)",
+          "hsl(215 25% 27%)",
+          "hsl(215 19% 35%)",
+          "hsl(215 16% 47%)",
+          "hsl(215 20% 65%)",
+          "hsl(213 27% 84%)",
+          "hsl(214 32% 91%)",
+          "hsl(210 40% 96%)",
+          "hsl(210 40% 98%)"
+        ]
+      },
+      "data-warning": {
+        "role": "secondary",
+        "displayName": "Data peringatan",
+        "canonical": "hsl(35 93% 54%)",
+        "tonalRamp": [
+          "hsl(20 90% 14%)",
+          "hsl(22 78% 25%)",
+          "hsl(25 80% 30%)",
+          "hsl(28 87% 37%)",
+          "hsl(32 95% 44%)",
+          "hsl(35 93% 54%)",
+          "hsl(36 96% 62%)",
+          "hsl(38 96% 73%)",
+          "hsl(40 97% 84%)",
+          "hsl(40 96% 93%)",
+          "hsl(40 100% 97%)"
+        ]
+      },
+      "data-highlight": {
+        "role": "secondary",
+        "displayName": "Data sorot",
+        "canonical": "hsl(38 96% 73%)",
+        "tonalRamp": [
+          "hsl(20 90% 14%)",
+          "hsl(22 78% 25%)",
+          "hsl(25 80% 30%)",
+          "hsl(28 87% 37%)",
+          "hsl(32 95% 44%)",
+          "hsl(35 93% 54%)",
+          "hsl(36 96% 62%)",
+          "hsl(38 96% 73%)",
+          "hsl(40 97% 84%)",
+          "hsl(40 96% 93%)",
+          "hsl(40 100% 97%)"
+        ]
+      },
+      "chart-1": {
+        "role": "tertiary",
+        "displayName": "Biru grafik",
+        "canonical": "hsl(196 100% 40%)",
+        "tonalRamp": [
+          "hsl(196 100% 40%)",
+          "hsl(196 100% 55%)"
+        ]
+      },
+      "chart-2": {
+        "role": "secondary",
+        "displayName": "Amber grafik",
+        "canonical": "hsl(35 93% 54%)",
+        "tonalRamp": [
+          "hsl(20 90% 14%)",
+          "hsl(22 78% 25%)",
+          "hsl(25 80% 30%)",
+          "hsl(28 87% 37%)",
+          "hsl(32 95% 44%)",
+          "hsl(35 93% 54%)",
+          "hsl(36 96% 62%)",
+          "hsl(38 96% 73%)",
+          "hsl(40 97% 84%)",
+          "hsl(40 96% 93%)",
+          "hsl(40 100% 97%)"
+        ]
+      },
+      "chart-3": {
+        "role": "tertiary",
+        "displayName": "Hijau data",
+        "canonical": "hsl(160 84% 39%)",
+        "tonalRamp": [
+          "hsl(166 91% 9%)",
+          "hsl(164 86% 16%)",
+          "hsl(163 88% 20%)",
+          "hsl(163 94% 24%)",
+          "hsl(161 94% 30%)",
+          "hsl(160 84% 39%)",
+          "hsl(158 64% 52%)",
+          "hsl(156 72% 67%)",
+          "hsl(152 76% 80%)",
+          "hsl(150 80% 90%)",
+          "hsl(152 81% 96%)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display-2xl": {
+        "displayName": "Display 2xl",
+        "purpose": "Puncak skala display Fraunces."
+      },
+      "display-xl": {
+        "displayName": "Display xl",
+        "purpose": "Display besar Fraunces."
+      },
+      "display": {
+        "displayName": "Display",
+        "purpose": "Display aplikasi, 2.5rem."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Heading 1, IBM Plex Sans."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Heading 2. Judul PageHeader memakai ukuran ini."
+      },
+      "title-sm": {
+        "displayName": "Title sm",
+        "purpose": "Heading 3."
+      },
+      "body-lg": {
+        "displayName": "Body lg",
+        "purpose": "Teks berjalan besar."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Teks berjalan 16px."
+      },
+      "body-sm": {
+        "displayName": "Body sm",
+        "purpose": "Teks kontrol dan deskripsi."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Label tombol: body sm, berat 500."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Label formulir."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Badge dan keterangan kecil."
+      },
+      "micro": {
+        "displayName": "Micro",
+        "purpose": "Header tabel, huruf kapital."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Angka tabular dan kode."
+      }
+    },
+    "shadows": [
+      {
+        "name": "elevation-0",
+        "value": "none",
+        "purpose": "Permukaan diam, tanpa bayangan."
+      },
+      {
+        "name": "elevation-1",
+        "value": "0 1px 2px 0 rgba(8, 28, 52, 0.06)",
+        "purpose": "Angkat paling kecil. Kartu varian surface."
+      },
+      {
+        "name": "elevation-2",
+        "value": "0 2px 4px 0 rgba(8, 28, 52, 0.06), 0 1px 2px 0 rgba(8, 28, 52, 0.04)",
+        "purpose": "Tombol primer saat diam."
+      },
+      {
+        "name": "elevation-3",
+        "value": "0 8px 16px -2px rgba(8, 28, 52, 0.08), 0 2px 4px 0 rgba(8, 28, 52, 0.04)",
+        "purpose": "Tombol primer saat hover."
+      },
+      {
+        "name": "elevation-4",
+        "value": "0 16px 32px -4px rgba(8, 28, 52, 0.12), 0 4px 8px -2px rgba(8, 28, 52, 0.06)",
+        "purpose": "Overlay yang lebih tinggi."
+      },
+      {
+        "name": "elevation-5",
+        "value": "0 24px 48px -6px rgba(8, 28, 52, 0.16), 0 8px 16px -4px rgba(8, 28, 52, 0.08)",
+        "purpose": "Lapisan paling atas."
+      },
+      {
+        "name": "shadow-sm",
+        "value": "0 1px 3px 0 rgba(8, 28, 52, 0.06), 0 1px 2px -1px rgba(8, 28, 52, 0.04)",
+        "purpose": "Kartu default. Bukan alias elevation-1."
+      }
+    ],
+    "motion": [
+      {
+        "name": "duration-instant",
+        "value": "50ms",
+        "purpose": "Perubahan yang hampir seketika."
+      },
+      {
+        "name": "duration-fast",
+        "value": "120ms",
+        "purpose": "Hover tombol dan kontrol."
+      },
+      {
+        "name": "duration-base",
+        "value": "200ms",
+        "purpose": "Transisi standar."
+      },
+      {
+        "name": "duration-slow",
+        "value": "320ms",
+        "purpose": "Panel dan sidebar."
+      },
+      {
+        "name": "duration-slower",
+        "value": "480ms",
+        "purpose": "Gerakan yang lebih panjang."
+      },
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Easing keluar bawaan."
+      },
+      {
+        "name": "ease-in-out",
+        "value": "cubic-bezier(0.65, 0, 0.35, 1)",
+        "purpose": "Easing dua arah."
+      },
+      {
+        "name": "ease-spring",
+        "value": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "purpose": "Easing dengan sedikit lambung."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      },
+      {
+        "name": "2xl",
+        "value": "1536px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Tombol aksi utama. Latar navy merek, teks primary-foreground.",
+      "html": "<button class=\"ds-btn-primary\" type=\"button\">Simpan</button>",
+      "css": ".ds-btn-primary {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  gap: 8px;\n  height: 36px;\n  padding: 0 16px;\n  border: 0;\n  border-radius: var(--radius-md);\n  background: hsl(var(--primary));\n  color: hsl(var(--primary-foreground));\n  font-family: var(--font-sans);\n  font-size: var(--text-body-sm-size);\n  font-weight: 500;\n  line-height: var(--text-body-sm-lh);\n  box-shadow: var(--elevation-2);\n  cursor: pointer;\n  transition: background-color 120ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 120ms cubic-bezier(0.16, 1, 0.3, 1), transform 120ms cubic-bezier(0.16, 1, 0.3, 1);\n}\n.ds-btn-primary:hover {\n  background: hsl(var(--primary) / 0.9);\n  box-shadow: var(--elevation-3);\n  transform: translateY(-1px);\n}\n.ds-btn-primary:focus-visible {\n  outline: 2px solid hsl(var(--ring));\n  outline-offset: 2px;\n}\n.ds-btn-primary:active {\n  transform: translateY(0);\n  box-shadow: var(--elevation-1);\n}\n.ds-btn-primary:disabled {\n  opacity: 0.5;\n  pointer-events: none;\n}"
+    },
+    {
+      "name": "Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Kolom teks. Batas halus, latar transparan, tinggi 36px.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Cari data\" />",
+      "css": ".ds-input {\n  display: block;\n  width: 100%;\n  height: 36px;\n  min-width: 0;\n  padding: 4px 12px;\n  border: 1px solid hsl(var(--input));\n  border-radius: var(--radius-md);\n  background: transparent;\n  color: hsl(var(--content-primary));\n  font-family: var(--font-sans);\n  font-size: var(--text-body-sm-size);\n  font-weight: 400;\n  line-height: var(--text-body-sm-lh);\n  box-shadow: var(--elevation-1);\n}\n.ds-input::placeholder { color: hsl(var(--content-tertiary)); }\n.ds-input:hover { border-color: hsl(var(--input)); }\n.ds-input:focus-visible {\n  outline: 2px solid hsl(var(--ring));\n  outline-offset: 2px;\n}\n.ds-input:disabled { opacity: 0.5; cursor: not-allowed; }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Kartu default. Latar warm-100, sudut 10px, bayangan shadow-sm.",
+      "html": "<article class=\"ds-card\"><h3 class=\"ds-card-title\">Ringkasan</h3><p class=\"ds-card-copy\">Data periode berjalan.</p></article>",
+      "css": ".ds-card {\n  border: 1px solid hsl(var(--border-default));\n  border-radius: var(--radius-xl);\n  background: hsl(var(--card));\n  color: hsl(var(--card-foreground));\n  padding: 24px;\n  box-shadow: var(--shadow-sm);\n  font-family: var(--font-sans);\n}\n.ds-card-title {\n  margin: 0 0 6px;\n  font-size: 1rem;\n  font-weight: 600;\n  line-height: 1;\n  letter-spacing: -0.025em;\n  color: hsl(var(--content-primary));\n}\n.ds-card-copy {\n  margin: 0;\n  font-size: var(--text-body-sm-size);\n  line-height: var(--text-body-sm-lh);\n  color: hsl(var(--content-secondary));\n}\n.ds-card:hover { border-color: hsl(var(--border-default)); }\n.ds-card:focus-visible {\n  outline: 2px solid hsl(var(--ring));\n  outline-offset: 2px;\n}"
+    },
+    {
+      "name": "Badge",
+      "kind": "chip",
+      "refersTo": "badge",
+      "description": "Badge pill primer. Hover hanya saat menjadi tautan.",
+      "html": "<a class=\"ds-badge\" href=\"#disetujui\">Disetujui</a>",
+      "css": ".ds-badge {\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: fit-content;\n  padding: 2px 8px;\n  border: 1px solid transparent;\n  border-radius: var(--radius-full);\n  background: hsl(var(--primary));\n  color: hsl(var(--primary-foreground));\n  font-family: var(--font-sans);\n  font-size: var(--text-caption-size);\n  font-weight: 500;\n  line-height: var(--text-caption-lh);\n  text-decoration: none;\n  white-space: nowrap;\n}\n.ds-badge:hover { background: hsl(var(--primary) / 0.9); }\n.ds-badge:focus-visible {\n  outline: 2px solid hsl(var(--ring));\n  outline-offset: 2px;\n}"
+    },
+    {
+      "name": "Page Header",
+      "kind": "custom",
+      "description": "Judul halaman. Elemen h1 bertipografi heading 2, plus deskripsi dan slot aksi.",
+      "html": "<header class=\"ds-page-header\"><div><h1 class=\"ds-page-title\">Ringkasan</h1><p class=\"ds-page-desc\">Data periode berjalan.</p></div><div class=\"ds-page-action\">Aksi</div></header>",
+      "css": ".ds-page-header {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n  padding-bottom: 16px;\n  border-bottom: 1px solid hsl(var(--border));\n  font-family: var(--font-sans);\n}\n.ds-page-title {\n  margin: 0;\n  font-size: var(--text-h2-size);\n  font-weight: var(--text-h2-weight);\n  line-height: var(--text-h2-lh);\n  letter-spacing: var(--text-h2-ls);\n  color: hsl(var(--foreground));\n}\n.ds-page-desc {\n  margin: 4px 0 0;\n  font-size: 0.875rem;\n  line-height: calc(1.25 / 0.875);\n  color: hsl(var(--muted-foreground));\n}\n.ds-page-action { flex-shrink: 0; color: hsl(var(--content-secondary)); font-size: var(--text-body-sm-size); }\n.ds-page-header:hover { border-bottom-color: hsl(var(--border)); }\n.ds-page-header:focus-visible {\n  outline: 2px solid hsl(var(--ring));\n  outline-offset: 2px;\n}\n@media (min-width: 768px) {\n  .ds-page-header { flex-direction: row; align-items: flex-end; justify-content: space-between; }\n}"
+    },
+    {
+      "name": "KPI Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Kartu indikator. Tepi kiri navy, nilai mono tabular.",
+      "html": "<article class=\"ds-kpi\"><p class=\"ds-kpi-title\">Responden</p><p class=\"ds-kpi-value\">1.240</p><p class=\"ds-kpi-helper\">+8% bulan ini</p></article>",
+      "css": ".ds-kpi {\n  position: relative;\n  overflow: hidden;\n  border: 1px solid hsl(var(--border-default));\n  border-left: 4px solid hsl(var(--primary));\n  border-radius: var(--radius-xl);\n  background: hsl(var(--card));\n  color: hsl(var(--card-foreground));\n  padding: 24px;\n  box-shadow: var(--shadow-sm);\n  font-family: var(--font-sans);\n}\n.ds-kpi-title {\n  margin: 0 0 8px;\n  font-size: 0.75rem;\n  font-weight: 600;\n  line-height: calc(1 / 0.75);\n  letter-spacing: 0.05em;\n  text-transform: uppercase;\n  color: hsl(var(--muted-foreground));\n}\n.ds-kpi-value {\n  margin: 0;\n  font-family: var(--font-mono);\n  font-size: 1.5rem;\n  font-weight: 700;\n  line-height: calc(2 / 1.5);\n  font-variant-numeric: tabular-nums;\n  font-feature-settings: \"tnum\" 1;\n  letter-spacing: 0;\n  text-align: right;\n  color: hsl(var(--content-primary));\n}\n.ds-kpi-helper {\n  margin: 4px 0 0;\n  font-size: 0.75rem;\n  line-height: calc(1 / 0.75);\n  color: hsl(var(--muted-foreground));\n}\n.ds-kpi:hover { border-color: hsl(var(--border-default)); border-left-color: hsl(var(--primary)); }\n.ds-kpi:focus-visible {\n  outline: 2px solid hsl(var(--ring));\n  outline-offset: 2px;\n}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Berkas ini mencatat token visual @bpsprovkaltara/design-system supaya aplikasi konsumen tetap pada sistem.",
+    "overview": "Berkas ini mencatat token visual `@bpsprovkaltara/design-system` supaya aplikasi konsumen tetap pada sistem. Nilai di frontmatter adalah mode terang (`:root`) setelah alias semantik di-resolve ke kanal HSL. Sumber kanal itu `tokens.css`. Skala primitif hanya dipakai untuk mendefinisikan token semantik, bukan untuk diwarnai langsung di komponen.\n\nPaket ini CSS-first (Tailwind 4). Konsumen memakai token semantik `surface`, `content`, `border`, `brand`, dan `feedback`. Mode `.dark` menimpa token semantik yang sama; skala primitif tidak berubah. Salinan antarmuka Bahasa Indonesia formal, tanpa emoji.",
+    "keyCharacteristics": [
+      "Token semantik untuk komponen; primitif hanya bahan definisi.",
+      "Warna disimpan sebagai kanal HSL mentah, dipakai lewat `hsl(var(--token))`.",
+      "Fraunces untuk display, IBM Plex Sans untuk UI, IBM Plex Mono untuk angka.",
+      "Radius tertahan dan enam tingkat elevasi bernuansa navy.",
+      "Lapisan permukaan (kanvas, sunken, raised) lebih dulu daripada bayangan."
+    ],
+    "rules": [
+      {
+        "name": "The Semantic Token Rule",
+        "body": "Komponen konsumen memakai `surface-*`, `content-*`, `border-*`, `brand-*`, `feedback-*`, dan `data-*`. Skala primitif `navy`, `amber`, `emerald`, `crimson`, `slate`, dan `warm` hanya mendefinisikan token itu.",
+        "section": "colors"
+      },
+      {
+        "name": "The Bare Channel Rule",
+        "body": "Jangan menulis hex di komponen. Kanal disimpan mentah; pemakaiannya `hsl(var(--token))` atau utilitas Tailwind, termasuk opasitas `hsl(var(--token) / 0.9)`.",
+        "section": "colors"
+      },
+      {
+        "name": "The Type Role Rule",
+        "body": "Fraunces tidak dipakai untuk tombol, input, atau tabel. IBM Plex Mono tidak dipakai untuk paragraf. Heading aplikasi tetap IBM Plex Sans.",
+        "section": "typography"
+      },
+      {
+        "name": "The Four Point Rule",
+        "body": "Jangan mengarang jarak di luar skala `--space-*`. Padding komponen yang sudah ada (tombol 16px horizontal, kartu 24px) mengikuti langkah itu.",
+        "section": "layout"
+      },
+      {
+        "name": "The Surface Layer Rule",
+        "body": "Jangan menambah bayangan baru untuk membedakan kartu dari halaman. Gunakan `surface-canvas`, `surface-sunken`, dan `surface-raised` lebih dulu. Bayangan yang dipakai komponen adalah elevation 0–5 dan `shadow-sm` di atas.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Restrained Radius Rule",
+        "body": "Tombol dan input tetap 6px. Jangan menukar kartu default ke pill atau ke sudut nol.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do pakai token semantik di komponen konsumen: `surface`, `content`, `border`, `brand`, `feedback`, dan `data`.",
+      "Do simpan warna sebagai kanal HSL mentah dan pakai `hsl(var(--token))` atau utilitas Tailwind.",
+      "Do impor CSS paket tepat sekali di root. Tailwind 4 memakai `tokens.css` sesudah `@import \"tailwindcss\"`. Non-Tailwind memakai `styles.css`.",
+      "Do tulis salinan UI dalam Bahasa Indonesia formal, tanpa emoji, dan format angka dengan `Intl.NumberFormat('id-ID')`.",
+      "Do andalkan token semantik yang sama untuk mode terang dan `.dark`."
+    ],
+    "donts": [
+      "Don't hardcode hex di komponen konsumen.",
+      "Don't pakai skala primitif (`navy`, `amber`, `emerald`, `crimson`, `slate`, `warm`) langsung di komponen.",
+      "Don't mengimpor `styles.css` dan `tokens.css` sekaligus, dan jangan memakai `tailwind-preset` untuk integrasi baru.",
+      "Don't menganggap latar kartu putih. Token `card` adalah warm-100; yang putih adalah `surface-raised`.",
+      "Don't menganggap teks tombol primer `brand-primary-fg`. Varian default memakai `primary-foreground`.",
+      "Don't memuat `fonts.css` sebagai default. Berkas itu CDN opsional."
+    ]
+  }
+}
