@@ -4,7 +4,7 @@
 
 Versi 4 memerlukan **React 19**, **Tailwind CSS 4**, dan disarankan **Node.js 20+**. Build toolchain konsumen mengikuti dokumentasi resmi Tailwind v4 (misalnya plugin `@tailwindcss/vite` untuk proyek Vite).
 
-## [Unreleased] — 4.8.1 FilterChips.renderLink + kontrak tautan
+## v4.8.1 — FilterChips.renderLink + kontrak tautan
 
 ### FilterChips.renderLink (additive)
 
@@ -23,7 +23,7 @@ Tabel lubang tautan lengkap: [`consumer-chrome.md`](./consumer-chrome.md)
 (bagian “Kontrak tautan kerangka”). Lebar `FormSheet` cukup ditimpa lewat
 `className` (`sm:max-w-[480px]`); jangan menyuntik CSS ke `html`.
 
-## [Unreleased] — Form overlays / SectionTabs / chrome slots + peta chrome konsumen
+## v4.8.0 — Form overlays / SectionTabs / chrome slots + peta chrome konsumen
 
 ### NotificationPopover, CommandSearch, SidebarAccount, usePersistedCollapsed (additive)
 
@@ -134,7 +134,7 @@ Controlled: oper `open` + `onOpenChange`. Primitif `Dialog` / `Sheet` tetap ters
 
 Peta lengkap “sudah di DS vs tetap di app” (termasuk `AppShell` toggle sejak 4.6 dan pola 4.7): lihat [`consumer-chrome.md`](./consumer-chrome.md).
 
-## [Unreleased] — Command/CommandDialog: a11y, varian inline, props cmdk
+## v4.7.0 — Command/CommandDialog: a11y, varian inline, props cmdk
 
 Perbaikan `Command` dan `CommandDialog`. **Tidak ada breaking change API**: semua props lama tetap diterima, tampilan `CommandDialog` yang ada tidak berubah, dan default `Command` tetap mempertahankan `h-full overflow-hidden`. Bagian berikut menjelaskan perbaikan dan opt-in baru.
 
@@ -556,13 +556,15 @@ Sesuaikan `tsconfig` konsumen bila compiler mengeluh (target/lib modern, JSX `re
 
 ## 2) Stylesheet design system (wajib)
 
-Di entry aplikasi (mis. `main.tsx`):
+Untuk aplikasi non-Tailwind, di entry aplikasi (mis. `main.tsx`):
 
 ```ts
 import '@bpsprovkaltara/design-system/styles.css'
 ```
 
-Ini memuat token + utilitas yang dipakai komponen library. Di v4, token Tailwind paket ini dikonfigurasi langsung di CSS (`@theme`, `@utility`, `@source`, `@plugin`), bukan melalui `tailwind.config.ts`.
+Ini memuat token + utilitas dan preflight. Aplikasi Tailwind4 yang sudah memiliki
+preflight memakai tokens.css dan @source dist, seperti bagian 2bb di bawah;
+jangan mengimpor kedua entry CSS. Token dikonfigurasi di CSS, bukan preset.
 
 ## 2b) Font (wajib mulai 4.0.1)
 
@@ -653,6 +655,7 @@ Entry CSS aplikasi (mis. `src/index.css`):
 
 ```css
 @import 'tailwindcss';
+@import '@bpsprovkaltara/design-system/tokens.css';
 ```
 
 Pastikan file CSS itu diimpor dari `main.tsx`. Ikuti [instalasi Tailwind v4 + Vite](https://tailwindcss.com/docs/installation/using-vite).
@@ -681,7 +684,7 @@ import preset from '@bpsprovkaltara/design-system/tailwind-preset'
 export default { presets: [preset], content: [...] }
 ```
 
-**Sesudah (v4):** tidak perlu `presets` dari paket ini; konfigurasi Tailwind mengikuti dokumentasi v4 + impor `styles.css` di atas.
+**Sesudah (v4):** tidak perlu `presets` dari paket ini; konfigurasi Tailwind mengikuti dokumentasi v4 + `tokens.css` sesudah `@import 'tailwindcss'` (lihat contoh di atas). `styles.css` hanya untuk konsumen non-Tailwind — jangan diimpor bersama `tokens.css`.
 
 ## 4) Utility Tailwind yang berubah
 
@@ -703,7 +706,7 @@ Repositori design system memakai TypeScript 6.x; konsumen disarankan memakai Typ
 
 1. Naikkan `react` dan `react-dom` ke 19 (+ tipe dev bila perlu).
 2. Naikkan `tailwindcss` ke 4; pasang tooling resmi (`@tailwindcss/vite` atau PostCSS sesuai stack).
-3. Impor `@bpsprovkaltara/design-system/styles.css` sekali di root aplikasi.
+3. Impor stylesheet paket sekali di root: `@bpsprovkaltara/design-system/tokens.css` sesudah `@import 'tailwindcss'` untuk aplikasi Tailwind 4; `styles.css` hanya bila aplikasi tidak memakai Tailwind.
 4. Hapus impor `tailwind-preset` dari paket ini; atur `@source` / `content` agar mencakup `src` dan `node_modules/.../design-system/dist` bila perlu.
 5. Jalankan test, lint, dan tinjau UI (terutama dialog, sheet, form, tabel).
 

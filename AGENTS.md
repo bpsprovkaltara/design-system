@@ -4,44 +4,13 @@ Berlaku untuk seluruh repositori, agent mana pun. Perubahan sekecil mungkin,
 jaga perilaku yang tidak diminta, buktikan dengan pemeriksaan yang benar-benar
 dijalankan.
 
-## Arsitektur
+## Identitas proyek
 
-Sistem desain internal BPS Provinsi Kalimantan Utara. Satu source tree, dua mode:
+Library privat `@bpsprovkaltara/design-system` versi 4.8.1 dan SPA showcase Vite dari source tree yang sama.
 
-- **Library** — paket privat `@bpsprovkaltara/design-system` (versi `4.8.1`)
-  untuk aplikasi internal BPS.
-- **Showcase** — SPA React + Vite untuk dokumentasi interaktif.
+## Stack
 
-Repo ini **bukan aplikasi Next.js**. Directive `'use client'` pada modul
-tertentu ada demi kompatibilitas konsumen React Server Components (termasuk
-Next.js), bukan penanda arsitektur repo. `vite.lib.config.ts` memakai
-`preserveModules` supaya directive itu tetap ada pada output subpath. Jangan
-menambahkan API Next.js ke showcase Vite, dan jangan mengubah showcase jadi
-framework lain ketika diminta memperbaiki kompatibilitas konsumen.
-
-Stack: React 19, TypeScript 6, Vite 8, Tailwind CSS 4 (CSS-first), React Router 7,
-shadcn/ui gaya `new-york` + Radix UI, Vitest 4 + Testing Library + `jsdom`,
-pnpm 10.30.0, Node `>=20`.
-
-Pembagian `src/`: `components/ui` primitif dan komposit BPS · `components/patterns`
-pola tingkat tinggi · `components/showcase` helper dokumentasi · `components/layout`
-navigasi showcase · `hooks` hook publik · `pages` halaman showcase ·
-`index.ts` API publik · `main.tsx` entry showcase.
-
-## Sumber kebenaran
-
-Saat dokumen dan implementasi berbeda: (1) `package.json` + `pnpm-lock.yaml`
-untuk versi, dependency, script, entry, `exports`; (2) `vite.config.ts`,
-`vite.lib.config.ts`, `vitest.config.ts`, `tsconfig*.json`, `eslint.config.js`
-untuk perilaku tool; (3) `src/index.ts`, `src/utils.ts`, `src/components/**`,
-`src/hooks/**`, `src/App.tsx`, `src/components/layout/Sidebar.tsx` untuk API dan
-alur aktif; (4) `tokens.css`, `colors_and_type.css`, `fonts.css`,
-`scripts/copy-css-assets.mjs` untuk kontrak CSS; (5) test yang berdampingan
-dengan source; (6) `docs/design.md`, `docs/guide.md`, `README.md`.
-
-`docs/design.md` memuat juga referensi historis Kinara (bagian terpisah);
-bagian aktifnya untuk BPS Kaltara. `dist/` adalah output build, bukan tempat
-mengedit source. Jangan mengarang script, path, export, atau token.
+Versi resolved dari `pnpm-lock.yaml` (dokumen runtime kedua): React 19.2.6, Vite 8.0.11, TypeScript 6.0.3, Vitest 4.1.5. Package manager: pnpm 12.6.0; Node >=20. Tailwind CSS 4, React Router 7, shadcn/ui dan Radix UI.
 
 ## Perintah
 
@@ -61,7 +30,46 @@ pnpm test           # test:watch, test:ui, test:coverage tersedia
 Pilih pemeriksaan sesuai matriks di bawah; jangan menjalankan perintah berat
 yang tidak relevan dengan perubahan.
 
-## Kontrak ekspor
+## Sumber kebenaran
+
+Saat dokumen dan implementasi berbeda: (1) `package.json` + `pnpm-lock.yaml`
+untuk versi, dependency, script, entry, `exports`; (2) `vite.config.ts`,
+`vite.lib.config.ts`, `vitest.config.ts`, `tsconfig*.json`, `eslint.config.js`
+untuk perilaku tool; (3) `src/index.ts`, `src/utils.ts`, `src/components/**`,
+`src/hooks/**`, `src/App.tsx`, `src/components/layout/Sidebar.tsx` untuk API dan
+alur aktif; (4) `tokens.css`, `colors_and_type.css`, `fonts.css`,
+`scripts/copy-css-assets.mjs` untuk kontrak CSS; (5) test yang berdampingan
+dengan source; (6) `DESIGN.md`, `docs/guide.md`, `README.md`.
+
+`DESIGN.md` memuat token normatif plus panduan konsumsi paket untuk AI
+agent. `dist/` adalah output build, bukan tempat
+mengedit source. Jangan mengarang script, path, export, atau token.
+
+## Struktur / Lapisan
+
+Sistem desain internal BPS Provinsi Kalimantan Utara. Satu source tree, dua mode:
+
+- **Library** — paket privat `@bpsprovkaltara/design-system` (versi `4.8.1`)
+  untuk aplikasi internal BPS.
+- **Showcase** — SPA React + Vite untuk dokumentasi interaktif.
+
+Repo ini **bukan aplikasi Next.js**. Directive `'use client'` pada modul
+tertentu ada demi kompatibilitas konsumen React Server Components (termasuk
+Next.js), bukan penanda arsitektur repo. `vite.lib.config.ts` memakai
+`preserveModules` supaya directive itu tetap ada pada output subpath. Jangan
+menambahkan API Next.js ke showcase Vite, dan jangan mengubah showcase jadi
+framework lain ketika diminta memperbaiki kompatibilitas konsumen.
+
+Stack: React 19, TypeScript 6, Vite 8, Tailwind CSS 4 (CSS-first), React Router 7,
+shadcn/ui gaya `new-york` + Radix UI, Vitest 4 + Testing Library + `jsdom`,
+pnpm 12.6.0, Node `>=20`.
+
+Pembagian `src/`: `components/ui` primitif dan komposit BPS · `components/patterns`
+pola tingkat tinggi · `components/showcase` helper dokumentasi · `components/layout`
+navigasi showcase · `hooks` hook publik · `pages` halaman showcase ·
+`index.ts` API publik · `main.tsx` entry showcase.
+
+### Kontrak ekspor
 
 Jaga tetap sinkron antara `package.json#exports`, `src/index.ts`, dan hasil
 `build:lib`. `exports` adalah satu-satunya kontrak subpath yang didukung.
@@ -79,14 +87,14 @@ Jaga tetap sinkron antara `package.json#exports`, `src/index.ts`, dan hasil
 Aturan konsumsi CSS: impor tepat sekali di root aplikasi konsumen · konsumen
 non-Tailwind pakai `styles.css` · konsumen Tailwind 4 yang sudah punya preflight
 pakai `tokens.css` setelah `@import "tailwindcss"` plus `@source` ke `dist`
-paket · konsumen yang memakai subpath komponen **wajib** mengimpor `tokens.css`
-· jangan mengimpor `styles.css` dan `tokens.css` sekaligus · font produksi
+paket · konsumen subpath komponen **wajib** mengimpor entry CSS sesuai mode
+di atas · jangan mengimpor `styles.css` dan `tokens.css` sekaligus · font produksi
 disediakan sendiri, `fonts.css` hanya jalur CDN opt-in.
 
 Integrasi `Form` butuh peer opsional `react-hook-form`, `zod`,
 `@hookform/resolvers`. Jangan memaksa konsumen non-form memasangnya.
 
-## Sistem token tiga lapis
+### Sistem token tiga lapis
 
 **Layer A primitive** `--navy-*`, `--amber-*`, `--emerald-*`, `--crimson-*`,
 `--slate-*`, `--warm-*` → **Layer B semantic** `--surface-*`, `--content-*`,
@@ -102,7 +110,7 @@ Nilai warna umumnya bare HSL, dipakai sebagai `hsl(var(--token))`. Pengecualian:
 `--warm-50`, `--warm-100`, `--warm-200` sudah terbungkus `hsl()` — pakai
 `var(--warm-*)` langsung, atau varian `--warm-*-hsl` bila butuh komponen mentah.
 
-## Invariant implementasi
+## Invariant dan alur
 
 - Simbol React PascalCase; nama file komponen kebab-case.
 - Named export, dan ekspor tipe props yang jadi bagian API publik.
@@ -124,7 +132,7 @@ halaman di `src/pages/components/` → route di `src/App.tsx` → item navigasi 
 sudah ada di halaman gabungan, perbarui yang relevan saja — jangan membuat route
 duplikat demi memenuhi checklist secara mekanis.
 
-## Keamanan dan privasi
+## Keamanan
 
 Validasi data eksternal di boundary komponen (URL, file, nilai form, data
 tabel). Jangan merender HTML mentah; bila `dangerouslySetInnerHTML` memang
@@ -149,6 +157,15 @@ kustom.
 - Temuan di luar scope dilaporkan sebagai catatan, bukan diperbaiki diam-diam.
 - Tinjau diff sebelum menyatakan selesai.
 
+### Workflow lintas-agent
+
+- Baca `../../WORKFLOW.md` sebelum memulai perubahan.
+- Untuk detail mode/scope dan quality gate, buka `../../PLAYBOOKS.md` bila relevan.
+- Berlaku sama di Claude Code dan OpenCode — keduanya membaca file ini dan
+  skill di `.claude/skills/`. Jangan menganggap capability tool tersedia tanpa
+  memeriksa runtime aktif.
+- OpenCode tidak memuat `../../WORKFLOW.md` otomatis; baca sendiri saat memulai.
+
 ## Verifikasi
 
 | Jenis perubahan | Pemeriksaan minimum |
@@ -161,7 +178,7 @@ kustom.
 | Route atau showcase | `pnpm build`, cek route langsung, navigasi, tampilan responsif |
 | Dependency atau rilis | pemeriksaan relevan di atas + `pnpm audit` |
 
-CI (`.github/workflows/ci.yml`) menjalankan `pnpm install --frozen-lockfile`
+CI (`.github/workflows/ci.yml`) pada `main`/`v3` juga memeriksa directive client; menjalankan `pnpm install --frozen-lockfile`
 lalu `typecheck` → `lint` → `test` → `build:lib` → `build`.
 
 Threshold coverage di `vitest.config.ts` saat ini **34% statements, 42%
@@ -180,32 +197,21 @@ Indonesia, keamanan, dan privasi ditinjau · dokumen publik dan `CHANGELOG.md`
 diperbarui bila perilaku konsumen berubah · diff bebas secret, debug code,
 output build, dan perubahan tidak terkait.
 
-## Workflow lintas-agent
-
-- Baca `../../WORKFLOW.md` sebelum memulai perubahan.
-- Untuk detail mode/scope dan quality gate, buka `../../PLAYBOOKS.md` bila relevan.
-- Berlaku sama di Claude Code dan OpenCode — keduanya membaca file ini dan
-  skill di `.claude/skills/`. Jangan menganggap capability tool tersedia tanpa
-  memeriksa runtime aktif.
-- OpenCode tidak memuat `../../WORKFLOW.md` otomatis; baca sendiri saat memulai.
-
 ## Rujukan
 
 Peta dokumentasi mendalam ada di `README.md` (bagian Dokumentasi). Bahasa
-visual dan aturan brand di `docs/design.md`; panduan pemakaian untuk project
+visual, token, dan aturan brand di `DESIGN.md`; panduan pemakaian untuk project
 konsumen di `docs/guide.md`; catatan upgrade antarversi di
 `docs/upgrading.md`.
+
 
 <!-- SKILL-ROUTING:START -->
 ## Skills
 
-Skill khusus repo ini ada di `.claude/skills/` dan otomatis terbaca Claude Code
-maupun OpenCode saat sesi dibuka dari root repo ini. Skill metodologi (Superpowers,
-`documentation-lookup`, dll.) global — tidak diulang di sini.
+Routing ini dirawat **manual** mengikuti `.claude/skills/` aktual. Superpowers adalah workflow utama global; capability skill berbeda per harness. Impeccable tersedia global, bukan skill lokal repo.
 
 | Skill | Kondisi Pemicu (Trigger) |
 |---|---|
-| `impeccable` | Buka sebelum merancang, mengubah, atau mereview hierarki visual komponen UI, state kosong, dan aksesibilitas showcase |
 | `release-tag` | Buka saat menyiapkan annotated git tag rilis versi library dari `package.json` + `CHANGELOG.md` |
 | `shadcn` | Buka sebelum menambah atau memodifikasi komponen primitif dari registry shadcn (`components.json`) |
 | `vercel-composition-patterns` | Buka sebelum mendesain API komponen tingkat tinggi yang reusable (compound components, render props, context) |

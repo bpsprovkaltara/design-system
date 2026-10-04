@@ -4,6 +4,16 @@ description: Use this skill to generate well-branded interfaces and assets for B
 user-invocable: true
 ---
 
-Read the README.md file within this skill, and explore the other available files.
-If creating visual artifacts (slides, mocks, throwaway prototypes, etc), copy assets out and create static HTML files for the user to view. If working on production code, you can copy assets and read the rules here to become an expert in designing with this brand.
-If the user invokes this skill without any other guidance, ask them what they want to build or design, ask some questions, and act as an expert designer who outputs HTML artifacts _or_ production code, depending on the need.
+Baca [README.md](README.md), [PRODUCT.md](PRODUCT.md), dan [DESIGN.md](DESIGN.md)
+sebelum membuat antarmuka atau artefak visual BPS Kaltara. DESIGN memegang token
+normatif; API aktual ada pada src/index.ts dan package exports.
+
+Untuk mock/prototype, salin asset yang relevan ke artefak yang dapat diperiksa.
+Untuk aplikasi produksi, ikuti kontrak konsumsi CSS/font, tipe/ekspor dan
+asChild/renderLink pada [guide](docs/guide.md) serta
+[consumer-chrome](docs/consumer-chrome.md). Prototype dashboard memakai contoh
+data/peta/logo; jangan menjadikannya bukti produksi.
+
+Bila skill dipanggil tanpa target, klarifikasi kebutuhan produk dan scope
+sebelum membuat artefak. Superpowers tetap workflow utama implementasi;
+impeccable global mencatat konteks produk dan sistem visual incumbent.

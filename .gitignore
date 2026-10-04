@@ -4,3 +4,9 @@ node_modules
 tw4-*.png
 coverage
 graphify-out/
+
+# Artefak sesi agent; catatan durabel ada di dokumen root/docs.
+.impeccable/
+docs/superpowers/
+plans/
+audits/
