@@ -208,7 +208,7 @@ konsumen di `docs/guide.md`; catatan upgrade antarversi di
 <!-- SKILL-ROUTING:START -->
 ## Skills
 
-Routing ini dirawat **manual** mengikuti `.claude/skills/` aktual. Superpowers adalah workflow utama global; capability skill berbeda per harness. Impeccable tersedia global, bukan skill lokal repo.
+Routing ini dirawat **manual**; semua skill di tabel ada di `.claude/skills/` (tidak ikut clone). Impeccable tersedia global, bukan skill lokal repo.
 
 | Skill | Kondisi Pemicu (Trigger) |
 |---|---|
