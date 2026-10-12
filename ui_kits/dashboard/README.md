@@ -1,34 +1,33 @@
 # BPS Kaltara Dashboard UI Kit
 
-Interactive prototype of the BPS Kaltara statistics dashboard.
+Prototype interaktif dashboard statistik, terpisah dari library React19. index.html memuat React/ReactDOM18.3.1 dan Babel CDN serta component JSX lokal; data, logo dan peta bersifat contoh.
 
-## Screens Covered
+## Fitur
 
-1. **Beranda** — Stat cards (4 KPIs), monthly PDRB bar chart, choropleth map placeholder, full data table
-2. **Kependudukan** — Population KPIs, per-kabupaten bar chart, data table
-3. **Publikasi** — Publications list with download actions
-4. **All other pages** — Placeholder state (in development)
+Beranda memuat empat KPI, bar chart PDRB bulanan, SVG peta contoh dan tabel. Kependudukan memuat KPI/bar chart/tabel kabupaten; Publikasi memuat daftar dengan aksi unduh. Halaman lain menampilkan state pengembangan.
 
-## Components
+## Mulai cepat
 
-| File | Description |
+Sajikan folder ini melalui server HTTP statis pilihan pengembang lalu buka index.html. JSX Babel eksternal membutuhkan HTTP dan akses CDN; membuka file langsung dapat memicu batas akses browser. Tidak ada script/package manifest tersendiri atau dependency install di folder ini.
+
+## Perintah
+
+Server prototype: diisi operator — belum ditetapkan. Build/typecheck/test library dijalankan dari root mengikuti [pengembangan](../../docs/development.md); hasilnya bukan test otomatis prototype ini.
+
+## Komponen
+
+| File | Isi |
 |---|---|
-| `Sidebar.jsx` | Collapsible sidebar with grouped nav, active state, localStorage persistence |
-| `Topbar.jsx` | Breadcrumb + search + notifications + user avatar |
-| `StatCard.jsx` | Metric card with trend icon, provisional warning, period label |
-| `DataTable.jsx` | Sortable, paginated data table with Indonesian locale number formatting |
-| `index.html` | Full interactive app — click through pages via sidebar |
+| [components/Sidebar.jsx](components/Sidebar.jsx) | Sidebar collapse, kelompok nav dan persistence |
+| [components/Topbar.jsx](components/Topbar.jsx) | Breadcrumb, pencarian, notifikasi dan avatar |
+| [components/StatCard.jsx](components/StatCard.jsx) | Metrik, tren, provisional dan periode |
+| [components/DataTable.jsx](components/DataTable.jsx) | Sort dan pagination, angka id-ID |
+| [index.html](index.html) | App interaktif dan data contoh |
 
-## Notes
+State lokal memakai bps-sidebar-collapsed dan bps-active-page di localStorage. Toast pada aksi navigasi; chart sederhana CSS tanpa library chart eksternal.
 
-- Sidebar collapse state persists via `localStorage('bps-sidebar-collapsed')`
-- Active page persists via `localStorage('bps-active-page')`
-- Number formatting uses `Intl.NumberFormat('id-ID')` throughout
-- Toast notifications fire on navigation actions
-- No external chart library — simple CSS bar charts used as placeholder
+## Batas dan rujukan
 
-## ⚠️ Caveats
+SVG choropleth disederhanakan; logo teks BPS dan chart merupakan contoh yang perlu data/asset resmi untuk produksi. Integrasi peta/chart produksi belum ditetapkan; jangan menyatakan prototype ini implementasi resmi.
 
-- **Map**: Choropleth is a simplified SVG placeholder. Real implementation should use Leaflet/MapLibre with GeoJSON for Kaltara districts.
-- **Logo**: Text placeholder `BPS` used — replace with official vector logo when available.
-- **Charts**: Placeholder bar charts — wire up Recharts or Chart.js for production.
+[README root](../../README.md) memetakan [produk](../../PRODUCT.md), [desain](../../DESIGN.md), [API](../../docs/api.md) dan [guide](../../docs/guide.md).
