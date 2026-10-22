@@ -7,9 +7,9 @@
 | Tool | Version | Install |
 |---|---|---|
 | Node.js | >= 20 | https://nodejs.org or `nvm install 20` |
-| pnpm | 10.30.0 | `npm install -g pnpm@10.30.0` |
+| Bun | 1.3.14 | https://bun.sh |
 
-The project declares `"packageManager": "pnpm@10.30.0"` in `package.json`. Using a different package manager may produce an incorrect lockfile.
+The project declares `"packageManager": "bun@1.3.14"` in `package.json`; a `preinstall` guard rejects pnpm and npm. Vitest and `tsc` still run on Node.
 
 ---
 
@@ -18,8 +18,8 @@ The project declares `"packageManager": "pnpm@10.30.0"` in `package.json`. Using
 ```bash
 git clone https://github.com/bpsprovkaltara/design-system.git
 cd design-system
-pnpm install
-pnpm dev
+bun install
+bun run dev
 ```
 
 The showcase app starts at http://localhost:5173. Hot reload is enabled for all source files.

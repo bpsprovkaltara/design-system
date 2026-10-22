@@ -1,30 +1,27 @@
-# Showcase app — Node 20 + pnpm (selaras package.json / engines)
-FROM node:20-bookworm-slim AS builder
+# Showcase app — Bun 1.3.14 (selaras packageManager di package.json)
+FROM oven/bun:1.3.14-slim AS builder
 
 WORKDIR /app
 
-ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
-RUN corepack enable
-
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile --ignore-scripts
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile --ignore-scripts
 
 COPY . .
 
-RUN pnpm run build
+RUN bun run build
 
-FROM node:20-bookworm-slim
+FROM oven/bun:1.3.14-slim
 
 WORKDIR /app
 
 ENV NODE_ENV=production
 
-RUN npm install -g serve@^14.2.4
+RUN bun add serve@14.2.4
 
 COPY --from=builder /app/dist ./dist
 
 EXPOSE 8081
 
-USER node
+USER bun
 
-CMD ["serve", "dist", "-l", "8081", "-s", "-n"]
+CMD ["bun", "run", "--bun", "serve", "dist", "-l", "8081", "-s", "-n"]

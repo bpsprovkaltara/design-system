@@ -50,17 +50,17 @@ Operational procedures for diagnosing and resolving common issues with the BPS K
 
 ## Build failure
 
-**Symptom:** `pnpm build:lib` or `pnpm build` exits with an error.
+**Symptom:** `bun run build:lib` or `bun run build` exits with an error.
 
 **Common causes and fixes:**
 
 | Cause | Fix |
 |---|---|
 | Wrong Node version | Run `node -v` — must be >= 20. Use `nvm use 20` or install from https://nodejs.org |
-| Missing or incompatible lockfile | Run `pnpm install` to regenerate. If `package-lock.json` was accidentally committed, delete it — the project uses `pnpm-lock.yaml` |
-| TypeScript error | Run `pnpm typecheck` to identify the specific error before building |
+| Missing or incompatible lockfile | Run `bun install` to regenerate. If `package-lock.json` was accidentally committed, delete it — the project uses `bun.lock` |
+| TypeScript error | Run `bun run typecheck` to identify the specific error before building |
 | Vite config error | Check `vite.lib.config.ts` for syntax errors |
-| Missing peer dependency | Run `pnpm install` and check `peerDependencies` in `package.json` |
+| Missing peer dependency | Run `bun install` and check `peerDependencies` in `package.json` |
 
 ---
 
@@ -72,12 +72,12 @@ Operational procedures for diagnosing and resolving common issues with the BPS K
 
 1. In the design system repo, rebuild the library:
    ```bash
-   pnpm build:lib
+   bun run build:lib
    ```
 
 2. In the consumer app, update the installed version:
    ```bash
-   pnpm update @bpsprovkaltara/design-system
+   bun update @bpsprovkaltara/design-system
    ```
 
 3. Verify the consumer app imports `styles.css`:
@@ -97,7 +97,7 @@ Operational procedures for diagnosing and resolving common issues with the BPS K
 5. If styles are still stale after the above steps, clear the consumer's Tailwind cache:
    ```bash
    rm -rf node_modules/.cache
-   pnpm build
+   bun run build
    ```
 
 ---

@@ -23,14 +23,14 @@ Stack utama yang terverifikasi dari `package.json`:
 | Routing showcase | React Router 7 |
 | Komponen dasar | shadcn/ui gaya `new-york` dan Radix UI |
 | Pengujian | Vitest 4, Testing Library, `jsdom` |
-| Package manager | `pnpm@10.30.0` |
+| Package manager | `bun@1.3.14` (pnpm/npm ditolak preinstall) |
 | Node.js | `>=20` |
 
 ## Sumber kebenaran
 
 Jika dokumen dan implementasi berbeda, gunakan urutan berikut:
 
-1. `package.json` dan `pnpm-lock.yaml` untuk versi, dependency, script, entry, dan `exports`
+1. `package.json` dan `bun.lock` untuk versi, dependency, script, entry, dan `exports`
 2. `vite.config.ts`, `vite.lib.config.ts`, `vitest.config.ts`, `tsconfig*.json`, dan `eslint.config.js` untuk perilaku tool
 3. `src/index.ts`, `src/utils.ts`, `src/components/**`, `src/hooks/**`, `src/App.tsx`, dan `src/components/layout/Sidebar.tsx` untuk API dan alur aktif
 4. `tokens.css`, `colors_and_type.css`, `fonts.css`, dan `scripts/copy-css-assets.mjs` untuk kontrak CSS
@@ -44,23 +44,23 @@ Jika dokumen dan implementasi berbeda, gunakan urutan berikut:
 Jalankan dari root repo:
 
 ```bash
-pnpm install
-pnpm dev
-pnpm build
-pnpm build:lib
-pnpm preview
-pnpm typecheck
-pnpm lint
-pnpm lint:fix
-pnpm format
-pnpm format:check
-pnpm test
-pnpm test:watch
-pnpm test:ui
-pnpm test:coverage
+bun install
+bun run dev
+bun run build
+bun run build:lib
+bun run preview
+bun run typecheck
+bun run lint
+bun run lint:fix
+bun run format
+bun run format:check
+bun run test
+bun run test:watch
+bun run test:ui
+bun run test:coverage
 ```
 
-`pnpm build` membangun showcase melalui `tsc && vite build`. `pnpm build:lib` menjalankan konfigurasi library lalu menyalin `tokens.css` dan `fonts.css` ke `dist/`. Pilih pemeriksaan sesuai matriks pengujian; jangan menjalankan seluruh suite bila perubahan dan risikonya tidak memerlukan itu.
+`bun run build` membangun showcase melalui `tsc && vite build`. `bun run build:lib` menjalankan konfigurasi library lalu menyalin `tokens.css` dan `fonts.css` ke `dist/`. Pilih pemeriksaan sesuai matriks pengujian; jangan menjalankan seluruh suite bila perubahan dan risikonya tidak memerlukan itu.
 
 ## Arsitektur dan alur
 
@@ -168,7 +168,7 @@ Untuk perubahan kecil pada komponen yang sudah berada pada halaman gabungan, per
 - Jangan hardcode token, credential, URL privat, atau data pribadi
 - Jangan mencatat payload yang dapat memuat data pribadi BPS
 - Pertahankan dependency runtime sebagai dependency atau peer yang eksplisit; jangan membundel salinan React
-- Tinjau dependency baru dan jalankan `pnpm audit` sebelum commit atau rilis yang mengubah dependency
+- Tinjau dependency baru dan jalankan `bun audit` sebelum commit atau rilis yang mengubah dependency
 - Jangan menjadikan font CDN sebagai default karena implikasi privasi dan availability
 - Jangan menurunkan aksesibilitas ketika mengganti primitive Radix dengan markup kustom
 
@@ -177,12 +177,12 @@ Untuk perubahan kecil pada komponen yang sudah berada pada halaman gabungan, per
 | Jenis perubahan | Pemeriksaan minimum |
 |---|---|
 | Dokumentasi saja | Cek path/identifier, tinjau diff, `git diff --check` |
-| Type atau utilitas murni | `pnpm typecheck`, `pnpm lint`, test terkait |
-| Komponen atau hook | `pnpm typecheck`, `pnpm lint`, `pnpm test`, cek interaksi dan aksesibilitas |
-| Token atau CSS | `pnpm build:lib`, pemeriksaan light/dark dan konsumen Tailwind/non-Tailwind |
-| Public export atau build config | `pnpm build:lib`, cek ESM/CJS/type/subpath dan CSS output |
-| Route atau showcase | `pnpm build`, cek route langsung, navigasi, dan tampilan responsif |
-| Dependency atau rilis | Pemeriksaan di atas yang relevan dan `pnpm audit` |
+| Type atau utilitas murni | `bun run typecheck`, `bun run lint`, test terkait |
+| Komponen atau hook | `bun run typecheck`, `bun run lint`, `bun run test`, cek interaksi dan aksesibilitas |
+| Token atau CSS | `bun run build:lib`, pemeriksaan light/dark dan konsumen Tailwind/non-Tailwind |
+| Public export atau build config | `bun run build:lib`, cek ESM/CJS/type/subpath dan CSS output |
+| Route atau showcase | `bun run build`, cek route langsung, navigasi, dan tampilan responsif |
+| Dependency atau rilis | Pemeriksaan di atas yang relevan dan `bun audit` |
 
 `vitest.config.ts` mempunyai threshold repo saat ini sebesar 34% statements, 42% branches, 26% functions, dan 34% lines. Itu bukan gate 80% repo-wide. Targetkan cakupan **minimal 80% untuk kode baru atau berubah**, termasuk jalur error dan interaksi penting, tanpa mengklaim repo sudah memiliki gate global 80%.
 

@@ -176,7 +176,7 @@ export function Example() {
 | Tanggal | react-day-picker + date-fns |
 | Ikon | lucide-react |
 | Uji | Vitest 4 + Testing Library + jsdom |
-| Paket | pnpm 10.30 |
+| Paket | Bun 1.3.14 |
 | Node.js | ≥20 |
 
 ## Sistem token
@@ -202,21 +202,21 @@ memakai token semantik atau alias kompatibilitas.
 ## Pengembangan
 
 ```bash
-pnpm install
-pnpm dev        # showcase di http://localhost:5173
+bun install
+bun run dev        # showcase di http://localhost:5173
 ```
 
 | Perintah | Kegunaan |
 |---|---|
-| `pnpm dev` | Dev server showcase |
-| `pnpm build` | Build showcase (`tsc && vite build`) |
-| `pnpm build:lib` | Build library + salin aset CSS |
-| `pnpm preview` | Pratinjau hasil build showcase |
-| `pnpm typecheck` | `tsc --noEmit` |
-| `pnpm lint` / `pnpm lint:fix` | ESLint |
-| `pnpm format` / `pnpm format:check` | Prettier |
-| `pnpm test` / `pnpm test:watch` / `pnpm test:ui` | Vitest |
-| `pnpm test:coverage` | Laporan coverage (v8, lcov + teks) |
+| `bun run dev` | Dev server showcase |
+| `bun run build` | Build showcase (`tsc && vite build`) |
+| `bun run build:lib` | Build library + salin aset CSS |
+| `bun run preview` | Pratinjau hasil build showcase |
+| `bun run typecheck` | `tsc --noEmit` |
+| `bun run lint` / `bun run lint:fix` | ESLint |
+| `bun run format` / `bun run format:check` | Prettier |
+| `bun run test` / `bun run test:watch` / `bun run test:ui` | Vitest |
+| `bun run test:coverage` | Laporan coverage (v8, lcov + teks) |
 
 ## Struktur direktori
 
@@ -265,8 +265,8 @@ demi memenuhi checklist secara mekanis.
 ## Pengujian
 
 ```bash
-pnpm test
-pnpm test:coverage
+bun run test
+bun run test:coverage
 ```
 
 Berkas uji berdampingan dengan komponen, berakhiran `.test.tsx`. Coverage
@@ -275,12 +275,12 @@ menyasar `src/components/**`.
 | Jenis perubahan | Pemeriksaan minimum |
 |---|---|
 | Dokumentasi saja | Cek path dan identifier, tinjau diff, `git diff --check` |
-| Tipe atau utilitas murni | `pnpm typecheck`, `pnpm lint`, uji terkait |
-| Komponen atau hook | `pnpm typecheck`, `pnpm lint`, `pnpm test`, cek interaksi dan aksesibilitas |
-| Token atau CSS | `pnpm build:lib`, cek terang/gelap dan konsumen Tailwind/non-Tailwind |
-| Ekspor publik atau konfigurasi build | `pnpm build:lib`, cek ESM/CJS/tipe/subpath dan output CSS |
-| Route atau showcase | `pnpm build`, cek route langsung, navigasi, tampilan responsif |
-| Dependency atau rilis | Pemeriksaan relevan di atas + `pnpm audit` |
+| Tipe atau utilitas murni | `bun run typecheck`, `bun run lint`, uji terkait |
+| Komponen atau hook | `bun run typecheck`, `bun run lint`, `bun run test`, cek interaksi dan aksesibilitas |
+| Token atau CSS | `bun run build:lib`, cek terang/gelap dan konsumen Tailwind/non-Tailwind |
+| Ekspor publik atau konfigurasi build | `bun run build:lib`, cek ESM/CJS/tipe/subpath dan output CSS |
+| Route atau showcase | `bun run build`, cek route langsung, navigasi, tampilan responsif |
+| Dependency atau rilis | Pemeriksaan relevan di atas + `bun audit` |
 
 `vitest.config.ts` saat ini menetapkan threshold 34% statements, 42% branches,
 26% functions, dan 34% lines. Itu **bukan** gate 80% repo-wide. Target ≥80%
@@ -289,7 +289,7 @@ berlaku untuk kode baru atau berubah, termasuk jalur error dan interaksi penting
 ## Build dan rilis
 
 ```bash
-pnpm build:lib
+bun run build:lib
 ```
 
 Keluaran di `dist/`:
