@@ -55,9 +55,9 @@ docs: add deployment runbook
 
 Before marking a PR ready for review:
 
-- [ ] `pnpm typecheck` passes with no errors
-- [ ] `pnpm lint` passes with no errors
-- [ ] `pnpm test` passes
+- [ ] `bun run typecheck` passes with no errors
+- [ ] `bun run lint` passes with no errors
+- [ ] `bun run test` passes
 - [ ] New component follows the five-step checklist below
 - [ ] No hardcoded hex colors — all colors use `hsl(var(--token))` or Tailwind classes
 - [ ] UI copy is in Bahasa Indonesia

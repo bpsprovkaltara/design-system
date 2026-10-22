@@ -49,4 +49,4 @@ Bikin annotated tag `vX.Y.Z` buat commit HEAD saat ini di proyek BPS Kaltara Des
 ## Catatan
 
 - Tidak membuat GitHub Release (cuma git tag). Kalau user minta release notes di GitHub juga, pakai `gh release create vX.Y.Z --notes-from-tag` setelah tag ke-push.
-- Tidak menjalankan `pnpm run build:lib`/publish — itu di luar scope skill ini.
+- Tidak menjalankan `bun run build:lib`/publish — itu di luar scope skill ini.

@@ -29,8 +29,8 @@ This is an internal BPS Provinsi Kalimantan Utara tool. It is not published to a
 
 The design system is a frontend UI library. It has no backend, no database, and no authentication logic of its own. Security considerations are limited to:
 
-- Dependency vulnerabilities (check with `pnpm audit`)
+- Dependency vulnerabilities (check with `bun audit`)
 - XSS risks from any component that renders unsanitized user-provided HTML (none currently do this)
 - Supply chain risks from transitive dependencies
 
-Run `pnpm audit` regularly and upgrade flagged dependencies via a `chore:` PR.
+Run `bun audit` regularly and upgrade flagged dependencies via a `chore:` PR.

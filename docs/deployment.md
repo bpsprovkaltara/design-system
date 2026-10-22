@@ -17,21 +17,21 @@ The design system showcase app is deployed as a Docker container behind a Traefi
 
 ## Docker build
 
-The `Dockerfile` memakai **multi-stage build Node.js 20** + **pnpm** (selaras `engines` dan `packageManager` di `package.json`).
+The `Dockerfile` memakai **multi-stage build Bun 1.3.14** (selaras `packageManager` di `package.json`).
 
 **Stage 1 — builder**
 
-1. Base image: `node:20-bookworm-slim`
-2. `corepack enable` lalu `COPY package.json pnpm-lock.yaml` dan `pnpm install --frozen-lockfile --ignore-scripts` (melewati `prepare` / `build:lib` sampai source lengkap tersalin)
+1. Base image: `oven/bun:1.3.14-slim`
+2. `COPY package.json bun.lock` lalu `bun install --frozen-lockfile --ignore-scripts` (melewati `prepare` / `build:lib` sampai source lengkap tersalin)
 3. Menyalin seluruh source
-4. Menjalankan `pnpm run build` (showcase: `tsc && vite build` → `dist/`)
+4. Menjalankan `bun run build` (showcase: `tsc && vite build` → `dist/`)
 
 **Stage 2 — runtime**
 
-1. Base image: `node:20-bookworm-slim`
-2. Menginstal `serve` secara global (`npm install -g serve`)
+1. Base image: `oven/bun:1.3.14-slim`
+2. Menginstal `serve@14.2.4` (`bun add serve@14.2.4`)
 3. Menyalin hanya `dist/` dari builder
-4. Port **8081**, user non-root `node`, perintah: `serve dist -l 8081 -s -n`
+4. Port **8081**, user non-root `bun`, perintah: `bun run --bun serve dist -l 8081 -s -n` (serve berjalan di runtime Bun)
    - `-l 8081`: listen pada 8081
    - `-s`: fallback SPA (`index.html`)
    - `-n`: tanpa clipboard (cocok untuk container)
@@ -120,11 +120,11 @@ docker compose up -d
 
 Workflow `.github/workflows/ci.yml` berjalan pada **push** dan **pull request** ke `main`:
 
-1. `pnpm install --frozen-lockfile`
-2. `pnpm run typecheck`
-3. `pnpm run lint`
-4. `pnpm run test`
-5. `pnpm run build:lib`
-6. `pnpm run build`
+1. `bun install --frozen-lockfile`
+2. `bun run typecheck`
+3. `bun run lint`
+4. `bun run test`
+5. `bun run build:lib`
+6. `bun run build`
 
 Build dan deploy Docker ke server produksi tetap dapat dilakukan manual (`docker compose up -d --build`) atau diotomatisasi terpisah (mis. workflow kedua yang push image ke registry).

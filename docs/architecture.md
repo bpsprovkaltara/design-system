@@ -99,7 +99,7 @@ The library exposes Tailwind 4 tokens and utilities from `colors_and_type.css` u
 
 | Mode | Command | Entry | Output |
 |---|---|---|---|
-| Showcase app | `pnpm dev` / `pnpm build` | `src/main.tsx` | `dist/` (SPA) |
-| Library | `pnpm build:lib` | `src/index.ts` + `src/tailwind-preset.ts` | `dist/index.js`, `dist/index.cjs`, `dist/styles.css`, etc. |
+| Showcase app | `bun run dev` / `bun run build` | `src/main.tsx` | `dist/` (SPA) |
+| Library | `bun run build:lib` | `src/index.ts` + `src/tailwind-preset.ts` | `dist/index.js`, `dist/index.cjs`, `dist/styles.css`, etc. |
 
 Both modes use the same source. The library build excludes React from the bundle (external peer dependency). The showcase build bundles everything.
