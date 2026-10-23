@@ -394,7 +394,7 @@ Aplikasi yang tidak memakai Form tidak perlu menginstal ketiganya.
 
 ### `prepare` tidak lagi membangun library
 
-`pnpm install` pada paket/repo ini tidak menjalankan `build:lib`. Build tetap di `prepublishOnly` dan CI. Pastikan `dist/` ada saat consume dari git/path, atau install dari registry yang sudah di-publish.
+`bun install` pada repo ini tidak menjalankan `build:lib`. Build tetap di `prepublishOnly` dan CI. Pastikan `dist/` ada saat consume dari git/path, atau install dari registry yang sudah di-publish.
 
 ### DataTable — row actions
 

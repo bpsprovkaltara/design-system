@@ -10,21 +10,21 @@ Library privat `@bpsprovkaltara/design-system` versi 4.8.1 dan SPA showcase Vite
 
 ## Stack
 
-Versi resolved dari `pnpm-lock.yaml` (dokumen runtime kedua): React 19.2.6, Vite 8.0.11, TypeScript 6.0.3, Vitest 4.1.5. Package manager: pnpm 12.6.0; Node >=20. Tailwind CSS 4, React Router 7, shadcn/ui dan Radix UI.
+Versi resolved dari `bun.lock` (dokumen runtime kedua): React 19.2.6, Vite 8.0.11, TypeScript 6.0.3, Vitest 4.1.5. Package manager: Bun 1.3.14 (`packageManager`; pnpm/npm ditolak `preinstall`); Node >=20 untuk vitest dan tsc. Tailwind CSS 4, React Router 7, shadcn/ui dan Radix UI.
 
 ## Perintah
 
 Dari root repo. Semua terverifikasi ada di `package.json`.
 
 ```bash
-pnpm install
-pnpm dev            # showcase
-pnpm build          # tsc && vite build (showcase)
-pnpm build:lib      # build library + salin tokens.css & fonts.css ke dist/
-pnpm preview
-pnpm typecheck
-pnpm lint           # eslint; lint:fix, format, format:check tersedia
-pnpm test           # test:watch, test:ui, test:coverage tersedia
+bun install
+bun run dev            # showcase
+bun run build          # tsc && vite build (showcase)
+bun run build:lib      # build library + salin tokens.css & fonts.css ke dist/
+bun run preview
+bun run typecheck
+bun run lint           # eslint; lint:fix, format, format:check tersedia
+bun run test           # test:watch, test:ui, test:coverage tersedia
 ```
 
 Pilih pemeriksaan sesuai matriks di bawah; jangan menjalankan perintah berat
@@ -32,7 +32,7 @@ yang tidak relevan dengan perubahan.
 
 ## Sumber kebenaran
 
-Saat dokumen dan implementasi berbeda: (1) `package.json` + `pnpm-lock.yaml`
+Saat dokumen dan implementasi berbeda: (1) `package.json` + `bun.lock`
 untuk versi, dependency, script, entry, `exports`; (2) `vite.config.ts`,
 `vite.lib.config.ts`, `vitest.config.ts`, `tsconfig*.json`, `eslint.config.js`
 untuk perilaku tool; (3) `src/index.ts`, `src/utils.ts`, `src/components/**`,
@@ -62,7 +62,7 @@ framework lain ketika diminta memperbaiki kompatibilitas konsumen.
 
 Stack: React 19, TypeScript 6, Vite 8, Tailwind CSS 4 (CSS-first), React Router 7,
 shadcn/ui gaya `new-york` + Radix UI, Vitest 4 + Testing Library + `jsdom`,
-pnpm 12.6.0, Node `>=20`.
+Bun 1.3.14, Node `>=20` untuk vitest dan tsc.
 
 Pembagian `src/`: `components/ui` primitif dan komposit BPS · `components/patterns`
 pola tingkat tinggi · `components/showcase` helper dokumentasi · `components/layout`
@@ -139,7 +139,7 @@ tabel). Jangan merender HTML mentah; bila `dangerouslySetInnerHTML` memang
 terbukti perlu, sanitasi lebih dulu. Jangan hardcode token, credential, URL
 privat, atau data pribadi, dan jangan mencatat payload yang bisa memuat data
 pribadi BPS. Dependency runtime tetap sebagai dependency/peer eksplisit —
-jangan membundel salinan React. Jalankan `pnpm audit` sebelum rilis yang
+jangan membundel salinan React. Jalankan `bun audit` sebelum rilis yang
 mengubah dependency. Font CDN jangan dijadikan default (privasi + availability).
 Jangan menurunkan aksesibilitas saat mengganti primitive Radix dengan markup
 kustom.
@@ -171,14 +171,14 @@ kustom.
 | Jenis perubahan | Pemeriksaan minimum |
 |---|---|
 | Dokumentasi saja | cek path/identifier, tinjau diff, `git diff --check` |
-| Type atau utilitas murni | `pnpm typecheck`, `pnpm lint`, test terkait |
-| Komponen atau hook | `pnpm typecheck`, `pnpm lint`, `pnpm test`, cek interaksi + aksesibilitas |
-| Token atau CSS | `pnpm build:lib`, cek light/dark dan konsumen Tailwind/non-Tailwind |
-| Public export atau build config | `pnpm build:lib`, cek ESM/CJS/type/subpath dan CSS output |
-| Route atau showcase | `pnpm build`, cek route langsung, navigasi, tampilan responsif |
-| Dependency atau rilis | pemeriksaan relevan di atas + `pnpm audit` |
+| Type atau utilitas murni | `bun run typecheck`, `bun run lint`, test terkait |
+| Komponen atau hook | `bun run typecheck`, `bun run lint`, `bun run test`, cek interaksi + aksesibilitas |
+| Token atau CSS | `bun run build:lib`, cek light/dark dan konsumen Tailwind/non-Tailwind |
+| Public export atau build config | `bun run build:lib`, cek ESM/CJS/type/subpath dan CSS output |
+| Route atau showcase | `bun run build`, cek route langsung, navigasi, tampilan responsif |
+| Dependency atau rilis | pemeriksaan relevan di atas + `bun audit` |
 
-CI (`.github/workflows/ci.yml`) pada `main`/`v3` juga memeriksa directive client; menjalankan `pnpm install --frozen-lockfile`
+CI (`.github/workflows/ci.yml`) pada `main`/`v3` juga memeriksa directive client; menjalankan `bun install --frozen-lockfile`
 lalu `typecheck` → `lint` → `test` → `build:lib` → `build`.
 
 Threshold coverage di `vitest.config.ts` saat ini **34% statements, 42%

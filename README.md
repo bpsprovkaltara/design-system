@@ -37,7 +37,7 @@ Migrasi dari v3: lihat [docs/upgrading.md](./docs/upgrading.md).
 
 ## Teknologi
 
-Versi resolved dari dokumen runtime kedua `pnpm-lock.yaml`; manifest menentukan API, scripts, dan package manager.
+Versi resolved dari dokumen runtime kedua `bun.lock`; manifest menentukan API, scripts, dan package manager.
 
 | Area | Pilihan |
 |---|---|
@@ -52,16 +52,16 @@ Versi resolved dari dokumen runtime kedua `pnpm-lock.yaml`; manifest menentukan 
 | Tanggal | react-day-picker + date-fns |
 | Ikon | lucide-react |
 | Uji | Vitest 4.1.5 + Testing Library + jsdom |
-| Paket | pnpm 12.6.0 |
+| Paket | Bun 1.3.14 |
 | Node.js | ≥20 |
 
 ## Mulai cepat
 
-Prasyarat pengembangan showcase: Node >=20, pnpm 12.6.0, akses dependency registry bila diperlukan.
+Prasyarat pengembangan showcase: Node >=20, Bun 1.3.14, akses dependency registry bila diperlukan.
 
 ```bash
-pnpm install
-pnpm dev
+bun install
+bun run dev
 ```
 
 Showcase Vite tersedia di http://localhost:5173. Setup lengkap dan semua scripts: [pengembangan](docs/development.md).
@@ -242,7 +242,7 @@ design/
 ## Deployment
 
 ```bash
-pnpm build:lib
+bun run build:lib
 ```
 
 Keluaran di `dist/`:
@@ -302,8 +302,8 @@ demi memenuhi checklist secara mekanis.
 ### Pengujian
 
 ```bash
-pnpm test
-pnpm test:coverage
+bun run test
+bun run test:coverage
 ```
 
 Berkas uji berdampingan dengan komponen, berakhiran `.test.tsx`. Coverage
@@ -312,12 +312,12 @@ menyasar `src/components/**`.
 | Jenis perubahan | Pemeriksaan minimum |
 |---|---|
 | Dokumentasi saja | Cek path dan identifier, tinjau diff, `git diff --check` |
-| Tipe atau utilitas murni | `pnpm typecheck`, `pnpm lint`, uji terkait |
-| Komponen atau hook | `pnpm typecheck`, `pnpm lint`, `pnpm test`, cek interaksi dan aksesibilitas |
-| Token atau CSS | `pnpm build:lib`, cek terang/gelap dan konsumen Tailwind/non-Tailwind |
-| Ekspor publik atau konfigurasi build | `pnpm build:lib`, cek ESM/CJS/tipe/subpath dan output CSS |
-| Route atau showcase | `pnpm build`, cek route langsung, navigasi, tampilan responsif |
-| Dependency atau rilis | Pemeriksaan relevan di atas + `pnpm audit` |
+| Tipe atau utilitas murni | `bun run typecheck`, `bun run lint`, uji terkait |
+| Komponen atau hook | `bun run typecheck`, `bun run lint`, `bun run test`, cek interaksi dan aksesibilitas |
+| Token atau CSS | `bun run build:lib`, cek terang/gelap dan konsumen Tailwind/non-Tailwind |
+| Ekspor publik atau konfigurasi build | `bun run build:lib`, cek ESM/CJS/tipe/subpath dan output CSS |
+| Route atau showcase | `bun run build`, cek route langsung, navigasi, tampilan responsif |
+| Dependency atau rilis | Pemeriksaan relevan di atas + `bun audit` |
 
 `vitest.config.ts` saat ini menetapkan threshold 34% statements, 42% branches,
 26% functions, dan 34% lines. Itu **bukan** gate 80% repo-wide. Target ≥80%

@@ -17,7 +17,7 @@ Showcase tidak mendeklarasikan credential runtime; Docker memakai NODE_ENV=produ
 
 ## Build dan image
 
-Dockerfile dua stage node:20-bookworm-slim, corepack enable, install frozen-lockfile --ignore-scripts sebelum source lengkap, lalu pnpm run build showcase. Runtime memasang serve@^14.2.4, menyalin dist, user non-root node, port 8081 dan serve dist -l 8081 -s -n (SPA fallback tanpa clipboard).
+Dockerfile dua stage oven/bun:1.3.14-slim, install `bun install --frozen-lockfile --ignore-scripts` sebelum source lengkap, lalu `bun run build` showcase. Runtime memasang serve@14.2.4, menyalin dist, user non-root bun, port 8081 dan `bun run --bun serve dist -l 8081 -s -n` (SPA fallback tanpa clipboard).
 
 Library build menghasilkan ESM/CJS/types, compiled styles.css, raw tokens.css dan fonts.css. Output dist dipakai bersama build showcase; artefak library dan Docker showcase harus dibangun sesuai target, bukan mengasumsikan satu dist memenuhi keduanya.
 
@@ -66,7 +66,7 @@ Compose saat ini build dari source, tanpa image registry tag; jangan memakai doc
 | Gejala | Pemeriksaan/tindakan |
 |---|---|
 | 502/503/timeout | compose ps/logs, restart service web, jaringan proxy_network dan label host/port/entrypoint; cek Traefik |
-| Build gagal | Node/pnpm, lockfile multis, typecheck, config dan peer dependencies; jangan meregenerasi lock tanpa alasan |
+| Build gagal | Bun/Node, `bun.lock`, typecheck, config dan peer dependencies; jangan meregenerasi lock tanpa alasan |
 | Styling lama/hilang | Versi paket dan exports; non-Tailwind styles.css, Tailwind4 tokens.css + @source dist; import tepat sekali |
 | Font fallback | index.html, network/CSP Google Fonts; konsumen menyediakan font/self-host; fonts.css hanya opt-in |
 | Publish gagal | Kecocokan tag/manifest, permissions packages:write dan registry; jangan cetak token |

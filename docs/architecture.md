@@ -6,7 +6,7 @@ Satu source tree untuk library privat dan showcase SPA. Primitive dimiliki repo 
 
 ## Tech stack
 
-Resolved lockfile (dokumen runtime kedua): React 19.2.6, TypeScript 6.0.3, Vite 8.0.11, Vitest 4.1.5. pnpm 12.6.0 dari manifest; Node >=20. Tailwind 4 CSS-first, React Router 7, shadcn/ui new-york, Radix UI, Testing Library/jsdom.
+Resolved lockfile (dokumen runtime kedua): React 19.2.6, TypeScript 6.0.3, Vite 8.0.11, Vitest 4.1.5. Bun 1.3.14 dari manifest; Node >=20 untuk vitest dan tsc. Tailwind 4 CSS-first, React Router 7, shadcn/ui new-york, Radix UI, Testing Library/jsdom.
 
 ## System context
 

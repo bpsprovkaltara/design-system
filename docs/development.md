@@ -2,15 +2,15 @@
 
 ## Prasyarat
 
-Node >=20 (CI/Docker memakai Node 20) dan pnpm 12.6.0 sesuai manifest. Cek node --version dan pnpm --version. Lockfile runtime dokumen kedua: React 19.2.6, Vite 8.0.11, TS 6.0.3, Vitest 4.1.5.
+Node >=20 (CI menjalankan vitest dan tsc di Node 20) dan Bun 1.3.14 sesuai manifest; `preinstall` menolak pnpm/npm. Cek node --version dan bun --version. Lockfile `bun.lock` (dokumen runtime kedua): React 19.2.6, Vite 8.0.11, TS 6.0.3, Vitest 4.1.5.
 
 ## Setup lokal
 
 ```bash
 git clone https://github.com/bpsprovkaltara/design-system.git
 cd design-system
-pnpm install
-pnpm dev
+bun install
+bun run dev
 ```
 
 Showcase berjalan di http://localhost:5173. Jangan memakai package manager lain atau mengedit output dist/node_modules.
@@ -19,11 +19,11 @@ Showcase berjalan di http://localhost:5173. Jangan memakai package manager lain 
 
 | Script | Implementasi manifest |
 |---|---|
-| dev | vite |
-| build | tsc && vite build |
-| build:lib | vite build --config vite.lib.config.ts && node scripts/copy-css-assets.mjs |
-| preview | vite preview |
-| prepublishOnly | pnpm run build:lib |
+| dev | bun --bun vite |
+| build | tsc && bun --bun vite build |
+| build:lib | bun --bun vite build --config vite.lib.config.ts && bun scripts/copy-css-assets.mjs |
+| preview | bun --bun vite preview |
+| prepublishOnly | bun run build:lib |
 | test | vitest run |
 | test:watch | vitest |
 | test:ui | vitest --ui |
@@ -33,7 +33,7 @@ Showcase berjalan di http://localhost:5173. Jangan memakai package manager lain 
 | format | prettier --write "src/**/*.{ts,tsx,css}" |
 | format:check | prettier --check "src/**/*.{ts,tsx,css}" |
 | typecheck | tsc --noEmit |
-| prepare | pnpm run prepare:hooks |
+| prepare | bun run prepare:hooks |
 | prepare:hooks | husky |
 
 Build showcase/library berbagi dist; build terakhir menentukan isi folder. prepare memasang hook saja, tidak build library. Rilis memicu prepublishOnly.
@@ -60,9 +60,9 @@ Simbol PascalCase, file komponen kebab-case; @/ untuk source internal; cn untuk 
 ## Testing
 
 ```bash
-pnpm typecheck
-pnpm lint
-pnpm test
+bun run typecheck
+bun run lint
+bun run test
 ```
 
 Vitest/Testing Library/jsdom; test source berdampingan. Threshold global saat ini 34% statements, 42% branches, 26% functions, 34% lines; target kode baru/berubah >=80% tanpa mengecualikan file secara palsu. CI main/v3 memeriksa client directives, test, build:lib dan build showcase. Perubahan CSS/API/build perlu build:lib dan integrasi Tailwind/non-Tailwind/RSC; route/showcase perlu build dan navigasi/responsif. Dependency/rilis juga audit. Dokumentasi saja memakai cek path/link/versi dan git diff --check, tanpa build.
