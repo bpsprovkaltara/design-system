@@ -14,15 +14,26 @@ export function usePersistedCollapsed(
   const [collapsed, setCollapsed] = React.useState(defaultCollapsed)
 
   React.useEffect(() => {
+    let stored: string | null = null
+    try {
+      stored = localStorage.getItem(storageKey)
+    } catch {
+      return
+    }
+    if (stored !== 'true' && stored !== 'false') return
     React.startTransition(() => {
-      setCollapsed(localStorage.getItem(storageKey) === 'true')
+      setCollapsed(stored === 'true')
     })
   }, [storageKey])
 
   const updateCollapsed = React.useCallback(
     (next: boolean) => {
       setCollapsed(next)
-      localStorage.setItem(storageKey, String(next))
+      try {
+        localStorage.setItem(storageKey, String(next))
+      } catch {
+        // storage diblokir: state tetap berlaku di memori
+      }
     },
     [storageKey]
   )
