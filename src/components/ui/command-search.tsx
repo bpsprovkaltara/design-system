@@ -55,13 +55,15 @@ export function CommandSearch({
   const trimmed = value.trim()
   const autoOpen = trimmed.length > 0
   const isOpenControlled = openProp !== undefined
-  const open = isOpenControlled ? openProp : autoOpen
+  const [dismissed, setDismissed] = React.useState(false)
+  const open = isOpenControlled ? openProp : autoOpen && !dismissed
 
   const setValue = React.useCallback(
     (next: string) => {
       if (!isValueControlled) setUncontrolledValue(next)
       onValueChange?.(next)
       if (!isOpenControlled) {
+        setDismissed(false)
         onOpenChange?.(next.trim().length > 0)
       }
     },
@@ -70,9 +72,10 @@ export function CommandSearch({
 
   const setOpen = React.useCallback(
     (next: boolean) => {
+      if (!isOpenControlled) setDismissed(!next)
       onOpenChange?.(next)
     },
-    [onOpenChange]
+    [isOpenControlled, onOpenChange]
   )
 
   React.useEffect(() => {

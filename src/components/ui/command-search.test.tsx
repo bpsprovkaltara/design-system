@@ -58,4 +58,53 @@ describe('CommandSearch', () => {
     await user.keyboard('{Meta>}k{/Meta}')
     expect(input).toHaveFocus()
   })
+
+  function renderUncontrolled(onOpenChange?: (open: boolean) => void) {
+    return render(
+      <CommandSearch defaultValue="" placeholder="Cari…" onOpenChange={onOpenChange}>
+        <CommandGroup heading="Halaman">
+          <CommandItem value="dashboard">Dashboard</CommandItem>
+        </CommandGroup>
+      </CommandSearch>
+    )
+  }
+
+  it('closes the uncontrolled panel on Escape', async () => {
+    const user = userEvent.setup()
+    renderUncontrolled()
+    await user.type(screen.getByPlaceholderText('Cari…'), 'das')
+    expect(screen.getByText('Dashboard')).toBeInTheDocument()
+    await user.keyboard('{Escape}')
+    expect(screen.queryByText('Dashboard')).not.toBeInTheDocument()
+  })
+
+  it('closes the uncontrolled panel on blur', async () => {
+    const user = userEvent.setup()
+    renderUncontrolled()
+    await user.type(screen.getByPlaceholderText('Cari…'), 'das')
+    expect(screen.getByText('Dashboard')).toBeInTheDocument()
+    await user.click(document.body)
+    expect(screen.queryByText('Dashboard')).not.toBeInTheDocument()
+  })
+
+  it('reopens after typing again', async () => {
+    const user = userEvent.setup()
+    renderUncontrolled()
+    const input = screen.getByPlaceholderText('Cari…')
+    await user.type(input, 'das')
+    await user.keyboard('{Escape}')
+    expect(screen.queryByText('Dashboard')).not.toBeInTheDocument()
+    await user.click(input)
+    await user.type(input, 'h')
+    expect(screen.getByText('Dashboard')).toBeInTheDocument()
+  })
+
+  it('calls onOpenChange(false) on Escape', async () => {
+    const user = userEvent.setup()
+    const onOpenChange = vi.fn()
+    renderUncontrolled(onOpenChange)
+    await user.type(screen.getByPlaceholderText('Cari…'), 'das')
+    await user.keyboard('{Escape}')
+    expect(onOpenChange).toHaveBeenLastCalledWith(false)
+  })
 })
