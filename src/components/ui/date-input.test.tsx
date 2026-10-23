@@ -39,4 +39,23 @@ describe('DateInput', () => {
     expect(native.value).toMatch(/^\d{4}-\d{2}-\d{2}$/)
     expect(onChange).toHaveBeenCalled()
   })
+
+  it('shows placeholder after controlled value changes to empty string', () => {
+    const { rerender } = render(<DateInput value="2026-01-15" onChange={vi.fn()} />)
+    expect(screen.getByText('15 Januari 2026')).toBeInTheDocument()
+    rerender(<DateInput value="" onChange={vi.fn()} />)
+    expect(screen.getByText('Pilih tanggal')).toBeInTheDocument()
+    expect(screen.queryByText('15 Januari 2026')).not.toBeInTheDocument()
+  })
+
+  it('clearing calls onChange with empty string', async () => {
+    let cleared: string | undefined
+    const onChange = vi.fn((e: React.ChangeEvent<HTMLInputElement>) => {
+      cleared = e.target.value
+    })
+    render(<DateInput name="tanggal" defaultValue="2026-01-15" onChange={onChange} />)
+    await userEvent.click(screen.getByRole('button', { name: 'Hapus tanggal' }))
+    expect(onChange).toHaveBeenCalled()
+    expect(cleared).toBe('')
+  })
 })

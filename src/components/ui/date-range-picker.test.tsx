@@ -41,9 +41,16 @@ describe('DateRangePicker', () => {
     const onChange = vi.fn()
     const range = { from: new Date(2026, 0, 1), to: new Date(2026, 2, 31) }
     render(<DateRangePicker range={range} onChange={onChange} clearable />)
-    const clearIcon = document.querySelector('svg.lucide-x')
-    expect(clearIcon).toBeInTheDocument()
-    await userEvent.click(clearIcon as HTMLElement)
+    await userEvent.click(screen.getByRole('button', { name: 'Hapus rentang tanggal' }))
     expect(onChange).toHaveBeenCalledWith(undefined)
+  })
+
+  it('shows placeholder after controlled range changes to null', () => {
+    const range = { from: new Date(2026, 0, 1), to: new Date(2026, 2, 31) }
+    const { rerender } = render(<DateRangePicker range={range} onChange={vi.fn()} />)
+    expect(screen.getByText(/01 Jan.*31 Mar 2026/)).toBeInTheDocument()
+    rerender(<DateRangePicker range={null} onChange={vi.fn()} />)
+    expect(screen.getByText('Pilih rentang tanggal')).toBeInTheDocument()
+    expect(screen.queryByText(/01 Jan.*31 Mar 2026/)).not.toBeInTheDocument()
   })
 })

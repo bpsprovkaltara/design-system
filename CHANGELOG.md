@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- **`DatePicker` / `DateRangePicker`**: `date={null}` / `range={null}` kini mengosongkan nilai secara terkontrol (sebelumnya kembali ke tanggal lama). `undefined` tetap berarti uncontrolled. Tombol hapus kini `<button>` terpisah yang bisa dijangkau keyboard (`aria-label` "Hapus tanggal" / "Hapus rentang tanggal").
+- **`DateInput`**: tampilan ikut kosong setelah nilai dihapus atau form di-`reset` ke string kosong.
+
 ### Docs
 
 - Checklist aplikasi baru dilengkapi (CommandSearch, Tabs vs SectionTabs, pagar lint konsumen). Lihat `docs/consumer-chrome.md`.

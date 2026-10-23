@@ -46,23 +46,45 @@ describe('DatePicker', () => {
 
   it('does not open when disabled', async () => {
     render(<DatePicker disabled />)
-    expect(screen.getByRole('button')).toBeDisabled()
+    const trigger = screen.getByRole('button')
+    expect(trigger).toBeDisabled()
+    await userEvent.click(trigger)
+    expect(screen.queryByRole('grid')).not.toBeInTheDocument()
   })
 
   it('shows clear button when clearable and date is set', () => {
     const date = new Date(2026, 0, 15)
     render(<DatePicker date={date} onChange={vi.fn()} clearable />)
-    const clearIcon = document.querySelector('svg.lucide-x')
-    expect(clearIcon).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Hapus tanggal' })).toBeInTheDocument()
   })
 
   it('calls onChange with undefined when clear button is clicked', async () => {
     const onChange = vi.fn()
-    const date = new Date(2026, 5, 1)
-    render(<DatePicker date={date} onChange={onChange} clearable />)
-    const clearButton = document.querySelector('svg.lucide-x')
-    expect(clearButton).toBeInTheDocument()
-    await userEvent.click(clearButton as Element)
+    render(<DatePicker date={new Date(2026, 5, 1)} onChange={onChange} clearable />)
+    await userEvent.click(screen.getByRole('button', { name: 'Hapus tanggal' }))
     expect(onChange).toHaveBeenCalledWith(undefined)
+  })
+
+  it('shows placeholder after controlled date changes from a Date to null', () => {
+    const { rerender } = render(<DatePicker date={new Date(2026, 0, 15)} onChange={vi.fn()} />)
+    expect(screen.getByText('15 Januari 2026')).toBeInTheDocument()
+    rerender(<DatePicker date={null} onChange={vi.fn()} />)
+    expect(screen.getByText('Pilih tanggal')).toBeInTheDocument()
+    expect(screen.queryByText('15 Januari 2026')).not.toBeInTheDocument()
+  })
+
+  it('clear button is reachable by keyboard', async () => {
+    const onChange = vi.fn()
+    render(<DatePicker date={new Date(2026, 0, 15)} onChange={onChange} clearable />)
+    await userEvent.tab()
+    await userEvent.tab()
+    expect(screen.getByRole('button', { name: 'Hapus tanggal' })).toHaveFocus()
+    await userEvent.keyboard('{Enter}')
+    expect(onChange).toHaveBeenCalledWith(undefined)
+  })
+
+  it('does not render clear button when disabled', () => {
+    render(<DatePicker date={new Date(2026, 0, 15)} onChange={vi.fn()} clearable disabled />)
+    expect(screen.queryByRole('button', { name: 'Hapus tanggal' })).not.toBeInTheDocument()
   })
 })
