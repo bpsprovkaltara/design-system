@@ -1,7 +1,8 @@
 # Chrome aplikasi konsumen — apa yang DS sediakan vs apa yang lokal
 
-Ringkasan dari audit Suaraku & Menara (2026-09-05). Tujuan: memakai design
-system secara maksimal tanpa memaksa domain aplikasi masuk ke paket.
+Kontrak library untuk aplikasi konsumen; riwayat pengenalannya tercatat di
+CHANGELOG dan tag rilis. Tujuan: memakai design system secara maksimal tanpa
+memaksa domain aplikasi masuk ke paket.
 
 ## Sudah disediakan design system
 
@@ -17,12 +18,12 @@ system secara maksimal tanpa memaksa domain aplikasi masuk ke paket.
 | Aksi "lihat detail" di baris tabel | `RowDetailLink` | 4.7.0 |
 | Skin kartu lembut | `Card variant="surface"` | 4.7.0 |
 | Overlay konfirmasi | `ConfirmDialog` | 4.5+ |
-| Overlay formulir (dialog / sheet) | `FormDialog`, `FormSheet` | Unreleased (pasca-4.7) |
-| Tab sibling route (bukan Radix Tabs) | `SectionTabs`, `resolveActiveTab` | Unreleased (pasca-4.7) |
-| Lonceng notifikasi (UI only) | `NotificationPopover` | Unreleased (pasca-4.7) |
-| Pencarian topbar (panel + ⌘K) | `CommandSearch` (+ `CommandGroup`/`CommandItem`) | Unreleased (pasca-4.7) |
-| Footer akun sidebar | `SidebarAccount` | Unreleased (pasca-4.7) |
-| Persist collapse sidebar | `usePersistedCollapsed` | Unreleased (pasca-4.7) |
+| Overlay formulir (dialog / sheet) | `FormDialog`, `FormSheet` | 4.8.0 |
+| Tab sibling route (bukan Radix Tabs) | `SectionTabs`, `resolveActiveTab` | 4.8.0 |
+| Lonceng notifikasi (UI only) | `NotificationPopover` | 4.8.0 |
+| Pencarian topbar (panel + ⌘K) | `CommandSearch` (+ `CommandGroup`/`CommandItem`) | 4.8.0 |
+| Footer akun sidebar | `SidebarAccount` | 4.8.0 |
+| Persist collapse sidebar | `usePersistedCollapsed` | 4.8.0 |
 | Palette perintah / search building blocks | `Command` (`inline` \| `dialog`), `CommandDialog`, `Kbd` | 4.7.0 |
 
 **Penting:** tombol collapse sidebar **tidak** ada di `AppSidebar` lagi (breaking
@@ -34,7 +35,7 @@ kecuali Anda merakit rail sendiri tanpa `AppShell`.
 - Logo, `nav` groups, RBAC, `renderLink` ke router kerangka (Next.js `Link`).
 - Persistensi `collapsed` di `localStorage` (pola sederhana; boleh disalin).
 - Footer akun / ganti peran / keluar — data auth dan aksi milik app.
-- Loncing notifikasi & pencarian global — **fetch, DTO, otorisasi** milik app;
+- Lonceng notifikasi & pencarian global — **fetch, DTO, otorisasi** milik app;
   DS menyediakan kulit (`NotificationPopover`, `CommandSearch`) + primitif
   (`CommandGroup`, `Badge`, …).
 - Hero domain (`DetailHero` bertema jabatan), insight modul dengan count-up,
@@ -98,7 +99,7 @@ pada `html` atau prop `width`.
 
 ## Checklist aplikasi baru
 
-- [ ] `tokens.css` + `@source` ke `dist`, **bukan** `styles.css` (hindari double-preflight)
+- [ ] Tailwind4: `tokens.css` + `@source` ke `dist`; non-Tailwind: `styles.css` sekali
 - [ ] Font produksi self-hosted; `fonts.css` CDN hanya opt-in
 - [ ] `AppShell` + `usePersistedCollapsed`; jangan merakit toggle sidebar sendiri
 - [ ] File adapter tautan (`presentation/lib/ds-link.tsx` atau setara) ada sebelum halaman daftar pertama

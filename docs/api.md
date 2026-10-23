@@ -1,304 +1,97 @@
-# Library API
+# API Library BPS Kaltara
 
-`@bpsprovkaltara/design-system` is a React component library, not a REST API service. This document covers the component and hook API exposed from `src/index.ts`.
+## Kontrak paket
 
----
+Library React privat, versi manifest 4.8.1. API publik ditentukan `src/index.ts` dan `package.json#exports`; props aktual berasal dari declarations/source pada versi yang dipasang. Dokumen ini memakai struktur API library; autentikasi HTTP/health endpoint tidak menjadi kontrak paket.
 
-## Installation and import
+| Entry/subpath | Isi |
+|---|---|
+| root | `dist/index.js` ESM, `index.cjs` CJS, `index.d.ts` types; barrel memuat CSS all-in-one |
+| `components/ui/*` | Module UI ESM/CJS/types |
+| `patterns/*` | Module patterns ESM/CJS/types |
+| `hooks/*` | Hooks ESM/CJS/types |
+| `utils` | cn dan utility murni RSC-safe |
+| `styles.css` | CSS compiled dengan preflight |
+| `tokens.css` | CSS source tokens/utilities tanpa preflight |
+| `fonts.css` | Google Fonts CDN opt-in |
+| `tailwind-preset` | Shim kosong deprecated |
+| `package.json` | Metadata paket |
 
-```bash
-pnpm add @bpsprovkaltara/design-system
-```
+Subpath tidak menjamin CSS ikut. Impor CSS sekali; non-Tailwind pilih styles.css; Tailwind 4 pilih tokens.css sesudah @import tailwindcss dan @source dist paket. Jangan memasang kedua entry CSS sekaligus. Font produksi disediakan konsumen.
 
-```ts
-// Styles — import once at app root
-import '@bpsprovkaltara/design-system/styles.css'
+Peer wajib: React/ReactDOM >=19 dan Tailwind >=4. Form memakai optional peers react-hook-form ^7, zod ^4 dan @hookform/resolvers ^5; konsumen yang tidak memakai Form tidak wajib memasangnya. Setup registry di [README](../README.md#mulai-cepat).
 
-// Components and hooks
-import { Button, DataTable, useToast } from '@bpsprovkaltara/design-system'
-```
+## Primitive dan ekspor
 
----
+Primitive beserta subkomponen tersedia melalui barrel: Accordion, Alert, Avatar/AvatarGroup, Badge/BadgeTooltip, Breadcrumb, Button/buttonVariants/LinkButton, Calendar, Carousel, Card/cardVariants, Checkbox/CheckboxInput, Command/CommandDialog/Kbd, Dialog, DropdownMenu, Drawer, DescriptionList, FileUpload, Form/useFormField, Input, Label, NavigationMenu, Pagination, Popover, Progress, RadioGroup, ScrollArea, Select/SelectInput, Separator, Sheet, Skeleton, Slider, Spinner, StatusBadge, Switch, Table, Tabs, Textarea, Toggle/ToggleGroup, Toast/Toaster, Tooltip.
 
-## Primitive components (shadcn/ui based)
+Source dimiliki repo; ada extension lokal sehingga jangan menganggap API sama persis dokumentasi upstream shadcn. Props/types yang diekspor eksplisit tercatat pada `src/index.ts`; declarations diproduksi build:lib.
 
-These are standard shadcn/ui components (new-york style) with BPS token theming applied. Their APIs follow the shadcn/ui documentation exactly.
+## Komponen dan props utama
 
-`Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent`
-`Alert`, `AlertTitle`, `AlertDescription`
-`Avatar`, `AvatarImage`, `AvatarFallback`, `AvatarGroup`
-`Badge`
-`Breadcrumb`, `BreadcrumbList`, `BreadcrumbItem`, `BreadcrumbLink`, `BreadcrumbPage`, `BreadcrumbSeparator`, `BreadcrumbEllipsis`
-`Button`, `buttonVariants` — type: `ButtonProps`
-`Calendar`
-`Card`, `CardHeader`, `CardFooter`, `CardTitle`, `CardDescription`, `CardContent`
-`Checkbox`
-`Command`, `CommandDialog`, `CommandInput`, `CommandList`, `CommandEmpty`, `CommandGroup`, `CommandItem`, `CommandShortcut`, `CommandSeparator`
-`Dialog`, `DialogPortal`, `DialogOverlay`, `DialogTrigger`, `DialogClose`, `DialogContent`, `DialogHeader`, `DialogFooter`, `DialogTitle`, `DialogDescription`
-`DropdownMenu`, `DropdownMenuTrigger`, `DropdownMenuContent`, `DropdownMenuItem`, `DropdownMenuCheckboxItem`, `DropdownMenuRadioItem`, `DropdownMenuLabel`, `DropdownMenuSeparator`, `DropdownMenuShortcut`, `DropdownMenuGroup`, `DropdownMenuPortal`, `DropdownMenuSub`, `DropdownMenuSubContent`, `DropdownMenuSubTrigger`, `DropdownMenuRadioGroup`
-`Form`, `FormField`, `FormItem`, `FormLabel`, `FormControl`, `FormDescription`, `FormMessage`, `useFormField`
-`Input`
-`Label`
-`Pagination`, `PaginationContent`, `PaginationEllipsis`, `PaginationItem`, `PaginationLink`, `PaginationNext`, `PaginationPrevious`
-`Popover`, `PopoverTrigger`, `PopoverContent`
-`Progress`
-`RadioGroup`, `RadioGroupItem`
-`ScrollArea`, `ScrollBar`
-`Select`, `SelectGroup`, `SelectValue`, `SelectTrigger`, `SelectContent`, `SelectLabel`, `SelectItem`, `SelectSeparator`, `SelectScrollUpButton`, `SelectScrollDownButton`
-`Separator`
-`Sheet`, `SheetPortal`, `SheetOverlay`, `SheetTrigger`, `SheetClose`, `SheetContent`, `SheetHeader`, `SheetFooter`, `SheetTitle`, `SheetDescription`
-`Skeleton`
-`Slider`
-`Spinner`
-`Switch`
-`Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableHead`, `TableRow`, `TableCell`, `TableCaption`
-`Tabs`, `TabsList`, `TabsTrigger`, `TabsContent`
-`Textarea`
-`Toast`, `ToastAction`, `ToastClose`, `ToastDescription`, `ToastProvider`, `ToastTitle`, `ToastViewport`
-`Toaster`
-`Tooltip`, `TooltipContent`, `TooltipProvider`, `TooltipTrigger`
+| Komponen | Kontrak utama |
+|---|---|
+| AppShell | groups wajib dan children; activeId; collapsed/defaultCollapsed/onCollapsedChange; onNavigate/renderLink; logo/collapsedLogo; sidebarFooter/mobileSidebarFooter; desktopBreakpoint md/lg; topbarStart/topbarEnd/appTitle; className/mainClassName |
+| AppSidebar/AppTopbar | Primitive chrome untuk komposisi shell; consumer adapter mengendalikan route |
+| FormSheet | title dan children wajib; description, trigger, open/onOpenChange, footer, className, side right/left (default right). children/footer boleh fungsi yang menerima close; lebar via className, tidak ada prop style khusus |
+| FormDialog | Overlay form berbasis dialog; lihat FormDialogProps. Controlled/uncontrolled; children boleh fungsi yang menerima `close()`; tanpa slot footer — footer hanya di FormSheet |
+| CommandSearch | value/defaultValue/onValueChange; open/onOpenChange; placeholder/label; loading/loadingLabel/emptyLabel; enableShortcut default true (Ctrl/⌘K); children hasil pencarian; className/panelClassName/inputClassName |
+| DataStatePanel | state loading/error/empty/ready; title/description/onRetry/children. ready merender children; fetching tetap di app |
+| FilterBar | filters: FilterField[] atau children; onReset/onSubmit/resetLabel, columns 2/3/4, aria-label, variant default/surface. FilterField search/select/custom; API keyword/status/unitKerja lama deprecated |
+| DocumentFilterBar | Preset domain kompatibilitas: value/onChange/onReset dan opsi status/unit |
+| SectionTabs | tabs, label, pathname wajib; renderLink/className. SectionTab href/label/matchPrefixes; resolveActiveTab memilih prefix terpanjang. Ini navigasi sibling route; Tabs untuk panel dalam halaman |
+| NotificationPopover/SidebarAccount | Presentasi notifikasi/account dan slots; data, auth, unread persistence tetap di app |
+| ThemeToggle/useTheme | Preferensi tema konsumen; tipe ThemeMode/ThemeToggleProps |
+| ConfirmDialog/ConfirmActionDialog | Konfirmasi generik/kompatibilitas; lihat tipe masing-masing |
+| BulkActionBar | Selection dan actions generik dari BulkActionBarProps/BulkAction |
+| FormSection/ValidationSummary | Komposisi section/summary form |
+| PageHeader/KpiCard/PerformanceCard | Heading/metric; KpiAccent dan PerformanceCardProps tersedia |
+| ProgressAudit/ReviewTimeline | Presentasi audit/timeline dari input konsumen |
+| DatePicker/DateInput/DateRangePicker | Tanggal dan adapter input |
+| YearSelect/NumberField | Tahun descending dan angka format id-ID; NumberField dapat menampilkan unit |
+| MapLegend/SkipLink | Skala map-tier; skip link ke main-content default |
+| TableEmpty/TablePagination | State tabel dan kontrol pagination terpisah |
+| RowDetailLink | Tautan detail row; adapter asChild untuk link framework |
+| Sparkline/BarChart | Chart ringan dari data props, tipe item diekspor |
+| Stepper | Step/StepStatus, onStepClick dan stepErrors untuk workflow |
 
----
+`StatusBadge` menerima children sebagai teks dan variant default/secondary/destructive/outline/draft/pending/revised/approved; default bila tidak diisi. `Combobox` memakai options value/label, value/onChange, placeholder/searchPlaceholder/emptyText, className/disabled; menekan ulang opsi aktif dapat mengosongkan nilai.
 
-## StatusBadge
-
-Displays a workflow status as a styled badge.
-
-```tsx
-import { StatusBadge } from '@bpsprovkaltara/design-system'
-
-<StatusBadge variant="approved">Disetujui</StatusBadge>
-```
-
-| Prop | Type | Required | Description |
-|---|---|---|---|
-| `variant` | `'default' \| 'secondary' \| 'destructive' \| 'outline' \| 'draft' \| 'pending' \| 'revised' \| 'approved'` | No | Visual variant (`default` jika dihilangkan) |
-| `children` | `ReactNode` | Yes | Teks status yang ditampilkan |
-| `className` | `string` | No | Kelas tambahan |
----
-
-## PerformanceCard
-
-KPI performance card with optional sparkline trend, delta badge, and target percentage.
-
-```tsx
-import { PerformanceCard } from '@bpsprovkaltara/design-system'
-import { Users } from 'lucide-react'
-
-<PerformanceCard
-  title="Jumlah Penduduk"
-  value={694000}
-  unit="jiwa"
-  target={700000}
-  delta={{ value: 2.4, direction: 'up', period: 'vs tahun lalu' }}
-  trend={[640000, 655000, 670000, 682000, 694000]}
-  icon={Users}
-  variant="gradient"
-/>
-```
-
-### PerformanceCardProps
-
-| Prop | Type | Required | Default | Description |
-|---|---|---|---|---|
-| `title` | `string` | Yes | — | Card label, rendered as uppercase tracking-wider |
-| `value` | `string \| number` | Yes | — | Primary metric. Numbers formatted with `id-ID` locale |
-| `unit` | `string` | No | — | Unit label shown after the value (e.g. `"jiwa"`, `"%"`) |
-| `target` | `number` | No | — | Target value. When provided alongside a numeric `value`, renders a target percentage line |
-| `delta` | `{ value: number; direction: 'up' \| 'down'; period: string }` | No | — | Period-over-period change badge |
-| `trend` | `number[]` | No | — | Array of 2+ data points rendered as a sparkline SVG |
-| `icon` | `LucideIcon` | No | — | Lucide icon component rendered in the card header |
-| `variant` | `'default' \| 'glass' \| 'backdrop-blur' \| 'gradient'` | No | `'default'` | Visual style variant |
-| `loading` | `boolean` | No | `false` | Renders skeleton placeholders instead of content |
-| `className` | `string` | No | — | Additional Tailwind classes passed to the card root |
-
----
-
-## Combobox
-
-Searchable select built on Popover + Command (cmdk).
-
-```tsx
-import { Combobox } from '@bpsprovkaltara/design-system'
-
-<Combobox
-  options={[
-    { value: 'tarakan', label: 'Kota Tarakan' },
-    { value: 'nunukan', label: 'Kab. Nunukan' },
-  ]}
-  value={value}
-  onChange={setValue}
-  placeholder="Pilih wilayah..."
-  searchPlaceholder="Cari..."
-  emptyText="Tidak ditemukan."
-/>
-```
-
-### ComboboxProps
-
-| Prop | Type | Required | Default | Description |
-|---|---|---|---|---|
-| `options` | `{ value: string; label: string }[]` | Yes | — | Daftar opsi yang dapat dicari |
-| `value` | `string` | No | — | Nilai terkontrol |
-| `onChange` | `(value: string) => void` | No | — | Dipanggil saat opsi dipilih (klik ulang opsi yang sama mengosongkan) |
-| `placeholder` | `string` | No | `'Pilih item...'` | Teks trigger saat kosong |
-| `searchPlaceholder` | `string` | No | `'Cari...'` | Placeholder di `CommandInput` |
-| `emptyText` | `string` | No | `'Tidak ditemukan.'` | Teks saat hasil pencarian kosong |
-| `className` | `string` | No | — | Kelas tambahan pada trigger |
-| `disabled` | `boolean` | No | `false` | Nonaktifkan kontrol |
-
----
+`PerformanceCard`: title/value wajib; unit, target, delta (value/direction/period), trend, icon, variant default/glass/backdrop-blur/gradient, loading dan className. Angka numeric memakai id-ID. `FileUpload` membungkus input file native; validasi dan upload server tetap di aplikasi.
 
 ## DataTable
 
-Tabel data ringan (bukan `@tanstack/react-table`). Mendukung render sel kustom, aksi baris opsional, sorting kolom client-side, dan pagination client-side.
+`DataTable<T extends Record<string, unknown>>` menerima data dan columns wajib. Kolom: key/label/getValue/render/sortable. Row actions opsional melalui renderRowActions(row,index), actionsLabel; getRowKey menjaga key stabil. Sorting client-side menggunakan nilai kolom, locale Indonesia/numeric untuk teks.
+
+`pageSize` tanpa `pagination` mengaktifkan pagination client-side. `pagination: { page, pageSize, total, onPageChange }` mengendalikan/server pagination; page zero-based, fetch dan total berasal dari aplikasi. loading/loadingLabel; error/errorTitle/errorDescription/onRetry; emptyTitle/emptyDescription/emptyAction mengatur state. Tidak ada column visibility toggle; primitive Table memberi kontrol markup penuh.
 
 ```tsx
-import { DataTable, Button } from '@bpsprovkaltara/design-system'
+import { DataTable } from '@bpsprovkaltara/design-system'
 
 <DataTable
   data={rows}
-  columns={[
-    { key: 'nama', label: 'Nama', sortable: true },
-    { key: 'nilai', label: 'Nilai', sortable: true },
-  ]}
-  pageSize={10}
-  getRowKey={(row) => row.id}
-  renderRowActions={(row) => (
-    <Button size="sm" variant="ghost" onClick={() => edit(row)}>
-      Edit
-    </Button>
-  )}
+  columns={[{ key: 'nama', label: 'Nama', sortable: true }]}
+  getRowKey={(row) => String(row.id)}
+  pagination={{ page, pageSize: 20, total, onPageChange: setPage }}
+  loading={loading}
+  error={error}
+  onRetry={refetch}
 />
 ```
 
-### DataTableProps
+## Patterns dan hooks
 
-| Prop | Type | Required | Default | Description |
-|---|---|---|---|---|
-| `data` | `T[]` | Yes | — | Baris data (`T extends Record<string, unknown>`) |
-| `columns` | `DataTableColumn<T>[]` | Yes | — | Definisi kolom (`key`, `label`, `getValue?`, `render?`, `sortable?`) |
-| `renderRowActions` | `(row: T, index: number) => ReactNode` | No | — | Jika diisi, menampilkan kolom aksi |
-| `actionsLabel` | `string` | No | `'Aksi'` | Label header kolom aksi |
-| `getRowKey` | `(row: T, index: number) => string \| number` | No | index | Kunci React per baris |
-| `pageSize` | `number` | No | — | Jika diisi, mengaktifkan pagination client-side |
+Patterns: EmptyState, SectionCard, DataTableCard, FilterChips, SectionTabs/resolveActiveTab, PageSkeleton beserta props/types. EmptyState title wajib; illustration empty/search/error atau ReactNode, description, action/secondaryAction, compact, className. FilterChips dapat renderLink; aplikasi tetap menentukan href dan navigasi.
 
-Tidak ada column visibility toggle dan tidak ada server-side pagination bawaan. Untuk kontrol penuh, gunakan primitif `Table`.
+Hooks: useToast (pasang Toaster pada tree), usePersistedCollapsed; useTheme diekspor dari komponen theme-toggle. `cn` menggabungkan clsx dan tailwind-merge.
 
----
+## Boundary client dan navigasi
 
-## Essential UI
+Directive use client dipertahankan per modul melalui preserveModules. Hooks/interaksi memerlukan boundary client konsumen RSC; import utils/subpath murni sesuai kebutuhan. Jangan memperlakukan seluruh barrel sebagai bukti bahwa semua ekspor server-safe.
 
-Additional primitives for common application screens:
+Navigasi framework lewat asChild/renderLink (AppShell/AppSidebar, SectionTabs, FilterChips, TablePagination dan primitive terkait); tidak ada dependency Next.js dalam library. `CommandDialog` menyediakan title/description aksesibel dan commandProps (misalnya shouldFilter false untuk pencarian server). Fokus/label/semantic HTML harus dipertahankan.
 
-```tsx
-import {
-  DescriptionDetails,
-  DescriptionList,
-  DescriptionListItem,
-  DescriptionTerm,
-  FileUpload,
-  Toggle,
-  ToggleGroup,
-  ToggleGroupItem,
-} from '@bpsprovkaltara/design-system'
-```
+## Referensi
 
-- `Toggle` renders a controlled or uncontrolled pressed button.
-- `ToggleGroup` and `ToggleGroupItem` support single or multiple selection for compact toolbars.
-- `DescriptionList` renders key/value metadata in detail pages.
-- `FileUpload` wraps a native file input with drag-and-drop styling and selected-file preview.
-
----
-
-## EmptyState
-
-Pattern component for empty, no-results, and error states.
-
-```tsx
-import { EmptyState } from '@bpsprovkaltara/design-system'
-
-<EmptyState
-  illustration="search"
-  title="Tidak ada hasil"
-  description="Coba ubah kata kunci pencarian."
-  action={{ label: 'Reset filter', onClick: handleReset }}
-/>
-```
-
-### EmptyStateProps
-
-| Prop | Type | Required | Default | Description |
-|---|---|---|---|---|
-| `illustration` | `'empty' \| 'search' \| 'error' \| ReactNode` | No | `'empty'` | Built-in illustration key or a custom React node |
-| `title` | `string` | Yes | — | Main heading text |
-| `description` | `string` | No | — | Supporting description below the title |
-| `action` | `{ label: string; onClick: () => void; variant?: 'default' \| 'outline' \| 'ghost' }` | No | — | Primary action button |
-| `secondaryAction` | `{ label: string; onClick: () => void }` | No | — | Secondary ghost button |
-| `compact` | `boolean` | No | `false` | Reduces padding and illustration size for use inside panels |
-| `className` | `string` | No | — | Additional classes on the wrapper |
-
----
-
-## YearSelect / NumberField / MapLegend / SkipLink (4.4.0)
-
-```tsx
-import {
-  YearSelect,
-  NumberField,
-  MapLegend,
-  SkipLink,
-} from '@bpsprovkaltara/design-system'
-
-<YearSelect value={2025} onChange={setYear} fromYear={2018} toYear={2026} />
-<NumberField label="PDRB" value={pdrb} onChange={setPdrb} unit="Miliar" />
-<MapLegend />
-<SkipLink href="#main-content" />
-```
-
-- **`YearSelect`**: daftar tahun descending; props `fromYear` / `toYear` / `label`.
-- **`NumberField`**: format tampilan `id-ID`; parse titik ribuan saat blur; `unit` opsional.
-- **`MapLegend`**: legenda `map-tier-0`…`5` + `active`; `orientation` `vertical` | `horizontal`.
-- **`SkipLink`**: tautan fokus keyboard ke `#main-content` (default).
-
----
-
-## useToast
-
-Hook for triggering toast notifications. Requires `<Toaster />` in the component tree.
-
-```tsx
-import { useToast, Toaster } from '@bpsprovkaltara/design-system'
-
-// In app root:
-<Toaster />
-
-// In any component:
-const { toast } = useToast()
-
-toast({
-  title: 'Data berhasil disimpan',
-  description: 'Perubahan telah tersimpan.',
-})
-```
-
----
-
-## Stylesheet
-
-```ts
-import '@bpsprovkaltara/design-system/styles.css'
-```
-
-The stylesheet registers design token CSS variables, Tailwind 4 `@theme` values, custom utilities, `tailwindcss-animate`, and keyframes such as `animate-shimmer`. The `tailwind-preset` export is deprecated and only kept as a compatibility shim.
-
----
-
-## Utility
-
-```ts
-import { cn } from '@bpsprovkaltara/design-system'
-
-// Merges Tailwind classes with conflict resolution (tailwind-merge + clsx)
-cn('px-4 py-2', isActive && 'bg-primary text-primary-foreground')
-```
+- [Arsitektur](architecture.md), [DESIGN](../DESIGN.md), [consumer chrome](consumer-chrome.md), [guide](guide.md), [upgrading](upgrading.md).
+- [Public barrel](../src/index.ts), [manifest exports](../package.json), [library build](../vite.lib.config.ts).

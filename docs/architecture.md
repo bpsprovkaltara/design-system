@@ -1,105 +1,89 @@
-# Architecture
+# Arsitektur BPS Kaltara Design System
 
-The BPS Kaltara design system operates in two modes from a single codebase: as a **component library** consumed by BPS internal apps, and as a **showcase app** deployed to `design.kaltarastats.id` for browsing and referencing components.
+## Prinsip
 
----
+Satu source tree untuk library privat dan showcase SPA. Primitive dimiliki repo melalui shadcn/ui dan dibangun di atas Radix; komposit/patterns merangkai primitive, pages merangkai demo. Konsumen mengambil kontrak dari public exports, bukan folder internal sembarang.
+
+## Tech stack
+
+Resolved lockfile (dokumen runtime kedua): React 19.2.6, TypeScript 6.0.3, Vite 8.0.11, Vitest 4.1.5. Bun 1.3.14 dari manifest; Node >=20 untuk vitest dan tsc. Tailwind 4 CSS-first, React Router 7, shadcn/ui new-york, Radix UI, Testing Library/jsdom.
 
 ## System context
 
 ```mermaid
 C4Context
-  title BPS Kaltara design system — system context
-
-  Person(dev, "BPS Developer", "Builds internal BPS apps")
-  Person(designer, "BPS Designer", "Reviews tokens and components")
-
-  System(ds, "@bpsprovkaltara/design-system", "React component library + Tailwind 4 CSS-first tokens. Exports components, styles, and types.")
-  System(showcase, "Showcase app", "Deployed at design.kaltarastats.id. Interactive component reference.")
-  System_Ext(consumer, "BPS internal app", "Any internal BPS application that installs the library")
-
-  Rel(dev, showcase, "Browses components, copies code")
-  Rel(designer, showcase, "Reviews visual output")
-  Rel(dev, consumer, "Builds")
-  Rel(consumer, ds, "Imports components and styles")
-  Rel(showcase, ds, "Renders all components")
+  Person(dev, "Developer BPS", "Membangun aplikasi internal")
+  Person(designer, "Designer", "Meninjau komponen dan token")
+  System(showcase, "Showcase Vite", "Referensi interaktif")
+  System(ds, "Library desain", "React, CSS dan tipe")
+  System_Ext(app, "Aplikasi konsumen", "Memiliki data, auth dan routing")
+  Rel(dev, showcase, "Mempelajari contoh")
+  Rel(designer, showcase, "Meninjau")
+  Rel(app, ds, "Mengimpor")
+  Rel(showcase, ds, "Merender source bersama")
 ```
 
----
+## Struktur dan lapisan
 
-## Design token layer diagram
-
-Tokens flow from raw primitive values to semantic roles to component-specific overrides. Consumers should reference Layer B (semantic) tokens in their own code and never Layer A (primitive) directly.
-
-```mermaid
-flowchart TD
-    A["Layer A — Primitives\n--navy-50 … --navy-950\n--amber-50 … --amber-950\n--emerald-50 … --emerald-950\n--crimson-50 … --crimson-950\n--warm-50 / --warm-100 / --warm-200\n--slate-50 … --slate-950"]
-    B["Layer B — Semantic\n--surface-canvas / raised / sunken / inverse\n--content-primary / secondary / tertiary\n--brand-primary / accent\n--feedback-success / warning / danger / info\n--data-positive / negative / neutral\n--chart-1 … --chart-10\n--border-subtle / default / strong / brand"]
-    C["Layer C — Component (shadcn compat)\n--background / --foreground\n--primary / --primary-foreground\n--secondary / --muted / --accent\n--destructive / --border / --ring\n--card / --popover / --input"]
-
-    A -->|referenced by| B
-    B -->|referenced by| C
-    C -->|consumed by| D["Radix UI + shadcn/ui components\nBPS custom components\nConsumer app Tailwind classes"]
-```
-
-All token values are bare HSL components — no `hsl()` wrapper. Usage: `hsl(var(--token))`. Exception: `--warm-50`, `--warm-100`, `--warm-200` are pre-wrapped `hsl()` values and must be used as `var(--warm-*)` directly (see `docs/development.md` for details).
-
----
-
-## Component dependency diagram
+| Area | Isi |
+|---|---|
+| `src/components/ui/` | Primitive dan komposit BPS |
+| `src/components/patterns/` | Pola tingkat tinggi |
+| `src/hooks/` | Hooks publik |
+| `src/pages/` | Halaman showcase/prototype |
+| `src/components/layout/`, `showcase/` | Navigasi/helper showcase |
+| `src/index.ts`, `src/utils.ts` | Barrel dan utilitas entry |
+| `tokens.css` | Otoritas token dan @theme/utilitas |
+| `colors_and_type.css` | Entry all-in-one dengan preflight, mengimpor tokens |
+| `fonts.css` | CDN opsional |
+| `ui_kits/dashboard/` | Prototype terpisah |
 
 ```mermaid
 flowchart LR
-    radix["Radix UI primitives"]
-    shadcn["shadcn/ui components\n(owned source in src/components/ui/)"]
-    custom["BPS custom components\n(Combobox, DataTable, etc.)"]
-    patterns["Patterns\n(EmptyState)"]
-    pages["Showcase pages\n(src/pages/)"]
-    consumer["Consumer app"]
-
-    radix --> shadcn
-    shadcn --> custom
-    shadcn --> patterns
-    custom --> pages
-    patterns --> pages
-    shadcn --> consumer
-    custom --> consumer
-    patterns --> consumer
+  A[Primitive skala] --> B[Token semantik]
+  B --> C[Alias shadcn dan Tailwind]
+  C --> UI[Primitive dan komposit]
+  UI --> P[Patterns]
+  UI --> S[Showcase]
+  P --> S
+  UI --> App[Konsumen]
+  P --> App
 ```
 
-BPS custom components build on top of shadcn/ui primitives. They are not built on Radix UI directly. Patterns (`EmptyState`) use shadcn/ui `Button` and are self-contained.
+Tiga lapis konseptual A primitive → B semantic → C compatibility/@theme. Alias shadcn secara fisik berada dalam blok semantic. Jangan menghidupkan token per-komponen lama. Bare HSL memakai hsl(var(--token)); warm-50/100/200 sudah terbungkus hsl sehingga var langsung, atau versi -hsl mentah. Rincian normatif: [DESIGN](../DESIGN.md).
 
----
+## Aliran request
 
-## Key design decisions
+```mermaid
+sequenceDiagram
+  participant Developer
+  participant Showcase
+  participant Library
+  participant Konsumen
+  Developer->>Showcase: Buka route contoh
+  Showcase->>Library: Render komponen source
+  Konsumen->>Library: Import ESM/CJS, tipe dan CSS
+  Konsumen->>Konsumen: Kelola fetch, auth dan routing sendiri
+```
 
-### Why shadcn/ui (owned source)
+Library build memakai preserveModules dan preserveEntrySignatures strict, dua output ESM/CJS serta declarations. Semua runtime/peer dependency dieksternalkan agar tidak membundel React atau shim require bermasalah. CSS source tambahan disalin oleh scripts/copy-css-assets.mjs. Build showcase dan library sama-sama memakai dist; jangan menganggap output keduanya tersedia bersamaan setelah build terakhir.
 
-shadcn/ui components are copied into `src/components/ui/` at install time — they are not a runtime dependency. This means the team owns and can freely modify every component without forking a library or waiting for upstream changes. The trade-off is that upstream shadcn/ui improvements must be manually pulled in.
+## Model keamanan
 
-See `docs/decisions/0001-record-architecture-decisions.md` for how future decisions should be recorded.
+Data/URL/file/form eksternal tidak tepercaya. Sanitasi bila HTML mentah memang dibutuhkan, jangan mencatat PII atau credential. Font produksi di bawah kendali konsumen; CDN opt-in. Boundary RSC: modul dengan hooks/interaksi tetap client, utils terpisah murni; jangan menambahkan Next.js dependency ke showcase/library untuk menyelesaikan routing konsumen.
 
-### Why a three-layer token system
+## Integrasi eksternal
 
-Separating primitive scales (Layer A) from semantic roles (Layer B) from component aliases (Layer C) allows:
-- Theming: swap Layer B values for a different visual theme without touching components.
-- shadcn/ui compatibility: Layer C maps semantic tokens onto the `--primary`, `--background` names that shadcn components expect, so all components work without modification.
-- Consistency: developers reference semantic tokens (`--content-primary`) rather than raw palette values (`--navy-900`), making intent explicit.
+GitHub Packages restricted menyediakan paket. Showcase memuat font melalui link pada index.html; fallback tetap dapat dibaca bila CDN terhalang. Docker/Traefik dan release CI dijelaskan di [operasi](operations.md).
 
-### Why Vite lib build
+## Kontrak lint
 
-`vite.lib.config.ts` produces dual ESM (`dist/index.js`) and CJS (`dist/index.cjs`) outputs from a single build. `vite-plugin-dts` generates `dist/index.d.ts`. This covers both modern bundlers (ESM) and older toolchains (CJS require) without a separate Rollup configuration.
+ESLint di eslint.config.js untuk source; CI memeriksa directive use client pada komponen UI yang memakai hooks. Alias internal @/ ke src, named export dan props types publik; test berdampingan. Skema tokens dan API tetap perlu review karena lint bukan bukti integrasi konsumen.
 
-### Tailwind CSS-first styling pattern
+## Design decisions
 
-The library exposes Tailwind 4 tokens and utilities from `colors_and_type.css` using `@theme`, `@utility`, `@source`, `@plugin`, and `@custom-variant`. Consumer apps import `@bpsprovkaltara/design-system/styles.css`; the old `@bpsprovkaltara/design-system/tailwind-preset` export remains only as a deprecated shim until v5.
+Owned shadcn source memudahkan perubahan lokal tetapi pembaruan upstream perlu manual. Tiga lapis token memisahkan skala dari peran dan kompatibilitas. Vite menghasilkan ESM/CJS/types/subpath; Tailwind 4 CSS-first mengganti preset lama. Motion memakai CSS dan React yang sudah ada, sesuai [ADR 0002](adr/0002-no-motion-js-dependency.md); format ADR dijelaskan [ADR 0001](adr/0001-record-architecture-decisions.md).
 
----
+## Pengecualian
 
-## Build modes
-
-| Mode | Command | Entry | Output |
-|---|---|---|---|
-| Showcase app | `bun run dev` / `bun run build` | `src/main.tsx` | `dist/` (SPA) |
-| Library | `bun run build:lib` | `src/index.ts` + `src/tailwind-preset.ts` | `dist/index.js`, `dist/index.cjs`, `dist/styles.css`, etc. |
-
-Both modes use the same source. The library build excludes React from the bundle (external peer dependency). The showcase build bundles everything.
+Directive use client hanya untuk kompatibilitas konsumen RSC; repo bukan Next.js. Contoh Next.js/Laravel/HTML di [guide](guide.md) adalah integrasi konsumen. Shim tailwind-preset deprecated untuk kompatibilitas, bukan pola baru.

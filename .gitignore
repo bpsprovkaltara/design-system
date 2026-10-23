@@ -3,4 +3,13 @@ node_modules
 .playwright-mcp/
 tw4-*.png
 coverage
-graphify-out/cache/
+graphify-out/
+
+# Artefak sesi agent; catatan durabel ada di dokumen root/docs.
+.impeccable/
+docs/superpowers/
+plans/
+audits/
+
+# Indeks CodeGraph lokal
+.codegraph/
