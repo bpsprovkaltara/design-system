@@ -6,9 +6,15 @@ import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
 
 const numberFormatter = new Intl.NumberFormat('id-ID')
+const editFormatter = new Intl.NumberFormat('id-ID', {
+  useGrouping: false,
+  maximumFractionDigits: 20,
+})
 
-export interface NumberFieldProps
-  extends Omit<React.ComponentProps<'input'>, 'type' | 'value' | 'onChange' | 'defaultValue'> {
+export interface NumberFieldProps extends Omit<
+  React.ComponentProps<'input'>,
+  'type' | 'value' | 'onChange' | 'defaultValue'
+> {
   value?: number | null
   defaultValue?: number | null
   onChange?: (value: number | null) => void
@@ -17,22 +23,22 @@ export interface NumberFieldProps
   allowDecimal?: boolean
 }
 
-function parseIdNumber(raw: string, allowDecimal: boolean): number | null {
+const ID_NUMBER = /^(-)?(\d+|\d{1,3}(?:\.\d{3})+)(?:,(\d+))?$/
+
+/** `undefined` = tidak valid (jangan simpan); `null` = kosong. */
+function parseIdNumber(raw: string, allowDecimal: boolean): number | null | undefined {
   const trimmed = raw.trim()
   if (!trimmed) return null
-  const normalized = trimmed.replace(/\./g, '').replace(',', '.')
-  if (allowDecimal) {
-    if (!/^-?\d+(\.\d+)?$/.test(normalized)) return null
-  } else if (!/^-?\d+$/.test(normalized)) {
-    return null
-  }
-  const parsed = Number(normalized)
-  return Number.isFinite(parsed) ? parsed : null
+  const match = ID_NUMBER.exec(trimmed)
+  if (!match) return undefined
+  const [, sign = '', intPart, fraction] = match
+  if (fraction !== undefined && !allowDecimal) return undefined
+  const parsed = Number(`${sign}${intPart.replace(/\./g, '')}${fraction ? `.${fraction}` : ''}`)
+  return Number.isFinite(parsed) ? parsed : undefined
 }
 
-function formatDisplay(value: number | null | undefined, allowDecimal: boolean): string {
+function formatDisplay(value: number | null | undefined): string {
   if (value == null || Number.isNaN(value)) return ''
-  if (!allowDecimal) return numberFormatter.format(value)
   return numberFormatter.format(value)
 }
 
@@ -53,24 +59,26 @@ export function NumberField({
   const inputId = id ?? generatedId
   const isControlled = value !== undefined
   const [internalValue, setInternalValue] = React.useState<number | null>(defaultValue ?? null)
-  const [text, setText] = React.useState(() =>
-    formatDisplay(isControlled ? value : defaultValue, allowDecimal)
-  )
+  const [text, setText] = React.useState(() => formatDisplay(isControlled ? value : defaultValue))
   const [focused, setFocused] = React.useState(false)
 
   const actualValue = isControlled ? (value ?? null) : internalValue
 
   React.useEffect(() => {
     if (!focused) {
-      setText(formatDisplay(actualValue, allowDecimal))
+      setText(formatDisplay(actualValue))
     }
-  }, [actualValue, allowDecimal, focused])
+  }, [actualValue, focused])
 
   const commit = (raw: string) => {
     const parsed = parseIdNumber(raw, allowDecimal)
+    if (parsed === undefined) {
+      setText(formatDisplay(actualValue))
+      return
+    }
     if (!isControlled) setInternalValue(parsed)
     onChange?.(parsed)
-    setText(formatDisplay(parsed, allowDecimal))
+    setText(formatDisplay(parsed))
   }
 
   return (
@@ -83,22 +91,20 @@ export function NumberField({
           inputMode={allowDecimal ? 'decimal' : 'numeric'}
           disabled={disabled}
           placeholder={placeholder}
-          value={focused ? text : formatDisplay(actualValue, allowDecimal)}
+          value={focused ? text : formatDisplay(actualValue)}
           onFocus={(event) => {
             setFocused(true)
-            setText(
-              actualValue == null
-                ? ''
-                : allowDecimal
-                  ? String(actualValue).replace('.', ',')
-                  : String(actualValue)
-            )
+            setText(actualValue == null ? '' : editFormatter.format(actualValue))
             props.onFocus?.(event)
           }}
           onBlur={(event) => {
             setFocused(false)
             commit(text)
             props.onBlur?.(event)
+          }}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') commit(text)
+            props.onKeyDown?.(event)
           }}
           onChange={(event) => {
             setText(event.target.value)

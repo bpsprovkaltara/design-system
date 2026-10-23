@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **`DateInput`**: tampilan ikut kosong setelah nilai dihapus atau form di-`reset` ke string kosong.
 - **`CommandSearch`**: panel saran tanpa `open` terkontrol kini tertutup saat Escape atau blur, dan terbuka lagi saat user mengetik.
 - **`TablePagination`**: tombol Sebelumnya/Berikutnya yang nonaktif tidak lagi punya `href`/`onClick`, tidak bisa difokus, dan tidak diteruskan ke `renderLink`.
+- **`NumberField`**: input dengan titik yang bukan pemisah ribuan yang sah (mis. "1.5") kini ditolak dan nilai lama dipertahankan, bukan disimpan sebagai 15. Desimal memakai koma. Enter menyimpan nilai. Teks saat fokus memakai presisi penuh tanpa grouping.
 
 ### Docs
 
