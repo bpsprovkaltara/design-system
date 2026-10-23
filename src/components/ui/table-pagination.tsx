@@ -65,6 +65,10 @@ export function TablePagination({
         }
       : undefined,
   })
+  const prevDisabled = page <= 1
+  const nextDisabled = page >= totalPages
+  // <a> tanpa href tidak bisa difokus atau diaktifkan; renderLink tidak dipakai untuk kontrol mati.
+  const inertProps = { 'aria-disabled': true, tabIndex: -1 } as const
 
   return (
     <div className={cn('flex flex-wrap items-center justify-between gap-3 pt-3', className)}>
@@ -76,10 +80,8 @@ export function TablePagination({
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
-                {...linkProps(page - 1)}
-                renderLink={renderLink}
-                aria-disabled={page <= 1}
-                className={cn(page <= 1 && 'pointer-events-none opacity-50')}
+                {...(prevDisabled ? inertProps : { ...linkProps(page - 1), renderLink })}
+                className={cn(prevDisabled && 'pointer-events-none opacity-50')}
               />
             </PaginationItem>
             {pages.map((n) => (
@@ -91,10 +93,8 @@ export function TablePagination({
             ))}
             <PaginationItem>
               <PaginationNext
-                {...linkProps(page + 1)}
-                renderLink={renderLink}
-                aria-disabled={page >= totalPages}
-                className={cn(page >= totalPages && 'pointer-events-none opacity-50')}
+                {...(nextDisabled ? inertProps : { ...linkProps(page + 1), renderLink })}
+                className={cn(nextDisabled && 'pointer-events-none opacity-50')}
               />
             </PaginationItem>
           </PaginationContent>
