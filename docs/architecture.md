@@ -82,7 +82,7 @@ ESLint di eslint.config.js untuk source; CI memeriksa directive use client pada 
 
 ## Design decisions
 
-Owned shadcn source memudahkan perubahan lokal tetapi pembaruan upstream perlu manual. Tiga lapis token memisahkan skala dari peran dan kompatibilitas. Vite menghasilkan ESM/CJS/types/subpath; Tailwind 4 CSS-first mengganti preset lama. Motion memakai CSS dan React yang sudah ada, sesuai [ADR 0002](decisions/0002-no-motion-js-dependency.md); format ADR dijelaskan [ADR 0001](decisions/0001-record-architecture-decisions.md).
+Owned shadcn source memudahkan perubahan lokal tetapi pembaruan upstream perlu manual. Tiga lapis token memisahkan skala dari peran dan kompatibilitas. Vite menghasilkan ESM/CJS/types/subpath; Tailwind 4 CSS-first mengganti preset lama. Motion memakai CSS dan React yang sudah ada, sesuai [ADR 0002](adr/0002-no-motion-js-dependency.md); format ADR dijelaskan [ADR 0001](adr/0001-record-architecture-decisions.md).
 
 ## Pengecualian
 

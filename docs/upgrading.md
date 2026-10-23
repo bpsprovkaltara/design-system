@@ -270,7 +270,7 @@ import {
 </RowDetailLink>
 ```
 
-**Motion JS:** DS **tidak** mengadopsi library `motion`. Standar tetap token CSS (`--motion-duration-*`, `--motion-ease-*`). Lihat `docs/decisions/0002-no-motion-js-dependency.md`.
+**Motion JS:** DS **tidak** mengadopsi library `motion`. Standar tetap token CSS (`--motion-duration-*`, `--motion-ease-*`). Lihat `docs/adr/0002-no-motion-js-dependency.md`.
 
 ### 11. Combobox: tinggi search + escape hatch styling
 

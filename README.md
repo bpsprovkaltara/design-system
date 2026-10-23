@@ -357,8 +357,8 @@ Kontak pelaporan: diisi operator — belum ditetapkan.
 | [docs/api.md](./docs/api.md) | Kontrak API |
 | [docs/operations.md](./docs/operations.md) | Deployment dan operasional |
 | [docs/consumer-chrome.md](docs/consumer-chrome.md) | Batas shell, link router, dan fitur milik konsumen |
-| [ADR 0001](docs/decisions/0001-record-architecture-decisions.md) | Mencatat keputusan arsitektur |
-| [ADR 0002](docs/decisions/0002-no-motion-js-dependency.md) | Motion tanpa dependency JavaScript tambahan |
+| [ADR 0001](docs/adr/0001-record-architecture-decisions.md) | Mencatat keputusan arsitektur |
+| [ADR 0002](docs/adr/0002-no-motion-js-dependency.md) | Motion tanpa dependency JavaScript tambahan |
 | [PRODUCT.md](PRODUCT.md) | Fakta produk, pengguna, batas library/showcase |
 | [ui_kits/dashboard/README.md](ui_kits/dashboard/README.md) | Prototype dashboard dan batas data/visual |
 | [SKILL.md](SKILL.md) | Panduan skill paket untuk konsumen |

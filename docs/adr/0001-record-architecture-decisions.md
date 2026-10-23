@@ -15,7 +15,7 @@ Architecture Decision Records (ADRs) are short documents that capture a single s
 
 ## Decision
 
-We will use ADRs to document significant architecture, tooling, and design decisions for this project. ADR files are stored in `docs/decisions/` and numbered sequentially starting from `0001`.
+We will use ADRs to document significant architecture, tooling, and design decisions for this project. ADR files are stored in `docs/adr/` and numbered sequentially starting from `0001`.
 
 Each ADR follows the MADR (Markdown Architecture Decision Record) format:
 
@@ -54,7 +54,7 @@ An ADR is never deleted. If a decision is reversed, the original ADR is marked `
 
 ## Consequences
 
-- Positive: new contributors can read `docs/decisions/` to understand why the system is built the way it is without asking the original authors.
+- Positive: new contributors can read `docs/adr/` to understand why the system is built the way it is without asking the original authors.
 - Positive: decisions that were right at one point but should be revisited are clearly marked with their original rationale, making it easier to argue for change with full context.
 - Negative: small overhead per significant decision — writing a short ADR takes 15–30 minutes.
 - Neutral: ADRs do not replace discussion. They record the outcome of a discussion, not the discussion itself.

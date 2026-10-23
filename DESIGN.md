@@ -395,7 +395,7 @@ Kartu dengan nilai angka. Tanpa `accent`, tepi kiri 4px memakai `brand-primary`.
 
 ## Motion
 
-Token durasi source: instant 50ms, fast 120ms, base 200ms, slow 320ms, slower 480ms, dengan easing CSS source. prefers-reduced-motion di tokens.css menurunkan animation/transition; verifikasi implementasi interaktif tetap menghormati preferensi. Tidak menambah library motion JavaScript; [ADR 0002](docs/decisions/0002-no-motion-js-dependency.md) immutable.
+Token durasi source: instant 50ms, fast 120ms, base 200ms, slow 320ms, slower 480ms, dengan easing CSS source. prefers-reduced-motion di tokens.css menurunkan animation/transition; verifikasi implementasi interaktif tetap menghormati preferensi. Tidak menambah library motion JavaScript; [ADR 0002](docs/adr/0002-no-motion-js-dependency.md) immutable.
 
 ## Aksesibilitas
 
