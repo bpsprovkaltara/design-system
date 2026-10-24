@@ -72,13 +72,15 @@ export function NumberField({
 
   const commit = (raw: string) => {
     const parsed = parseIdNumber(raw, allowDecimal)
+    // Teks hanya tampil saat fokus (Enter); pakai format edit agar presisi tidak terpotong.
+    const toEditText = (v: number | null) => (v == null ? '' : editFormatter.format(v))
     if (parsed === undefined) {
-      setText(formatDisplay(actualValue))
+      setText(toEditText(actualValue))
       return
     }
     if (!isControlled) setInternalValue(parsed)
     onChange?.(parsed)
-    setText(formatDisplay(parsed))
+    setText(toEditText(parsed))
   }
 
   return (

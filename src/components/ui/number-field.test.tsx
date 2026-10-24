@@ -80,4 +80,14 @@ describe('NumberField', () => {
     await user.keyboard('{Enter}')
     expect(onChange).toHaveBeenCalledWith(42)
   })
+
+  it('keeps full precision when Enter is followed by blur', async () => {
+    const user = userEvent.setup()
+    const onChange = vi.fn()
+    render(<NumberField label="Nilai" value={null} onChange={onChange} allowDecimal />)
+    await user.type(screen.getByLabelText('Nilai'), '1234,5678')
+    await user.keyboard('{Enter}')
+    await user.tab()
+    expect(onChange).toHaveBeenLastCalledWith(1234.5678)
+  })
 })

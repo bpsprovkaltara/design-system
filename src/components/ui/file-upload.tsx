@@ -70,6 +70,18 @@ function FileUpload({
     setFiles(accepted)
     onFilesChange?.(accepted)
     if (rejected.length > 0) onReject?.(rejected)
+    return { accepted, rejected }
+  }
+
+  // Berkas yang ditolak tidak boleh ikut terkirim lewat submit form native.
+  function keepOnlyAccepted(input: HTMLInputElement, accepted: File[]) {
+    if (typeof DataTransfer === 'undefined') {
+      input.value = ''
+      return
+    }
+    const transfer = new DataTransfer()
+    accepted.forEach((file) => transfer.items.add(file))
+    input.files = transfer.files
   }
 
   function assignRef(node: HTMLInputElement | null) {
@@ -108,7 +120,10 @@ function FileUpload({
           multiple={multiple}
           disabled={disabled}
           className="sr-only"
-          onChange={(event) => updateFiles(event.target.files)}
+          onChange={(event) => {
+            const { accepted, rejected } = updateFiles(event.target.files)
+            if (rejected.length > 0) keepOnlyAccepted(event.target, accepted)
+          }}
           {...props}
         />
         <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">

@@ -142,4 +142,12 @@ describe('FileUpload', () => {
     drop([pdf('a.pdf'), pdf('b.pdf')])
     expect(onReject).not.toHaveBeenCalled()
   })
+
+  it('picker drops rejected files from the native input', async () => {
+    const big = new File(['12345678901'], 'besar.pdf', { type: 'application/pdf' })
+    const { container } = render(<FileUpload maxSize={10} />)
+    const input = container.querySelector('input[type=file]') as HTMLInputElement
+    await userEvent.upload(input, big)
+    expect(input.files).toHaveLength(0)
+  })
 })

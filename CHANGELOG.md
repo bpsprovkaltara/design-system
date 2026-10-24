@@ -19,7 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **`NumberField`**: input dengan titik yang bukan pemisah ribuan yang sah (mis. "1.5") kini ditolak dan nilai lama dipertahankan, bukan disimpan sebagai 15. Desimal memakai koma. Enter menyimpan nilai. Teks saat fokus memakai presisi penuh tanpa grouping.
 - **`usePersistedCollapsed`**: `defaultCollapsed` dipertahankan bila storage kosong atau berisi nilai tak dikenal; storage yang diblokir tidak lagi melempar error.
 - **`ThemeToggle` / `useTheme`**: mode controlled tidak lagi ditimpa tema internal saat mount; `onThemeChange` tanpa `theme` tetap mengganti tema; storage dan `matchMedia` dibaca setelah mount (tanpa hydration mismatch) dan aman bila storage diblokir.
-- **`FileUpload`**: `accept` dan `multiple` kini juga diterapkan pada drag-and-drop dan diperiksa ulang untuk pemilih berkas.
+- **`FileUpload`**: `accept` dan `multiple` kini juga diterapkan pada drag-and-drop dan diperiksa ulang untuk pemilih berkas; berkas yang ditolak juga dilepas dari input native agar tidak ikut terkirim lewat submit form.
 
 ### Docs
 
