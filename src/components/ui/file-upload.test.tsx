@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { FileUpload } from './file-upload'
 
@@ -67,5 +67,79 @@ describe('FileUpload', () => {
     render(<FileUpload disabled />)
     const input = document.querySelector('input[type="file"]') as HTMLInputElement
     expect(input).toBeDisabled()
+  })
+
+  const pdf = (name = 'a.pdf') => new File(['pdf'], name, { type: 'application/pdf' })
+  const png = (name = 'b.png') => new File(['png'], name, { type: 'image/png' })
+  const drop = (files: File[]) =>
+    fireEvent.drop(screen.getByText('Unggah berkas').closest('label')!, {
+      dataTransfer: { files },
+    })
+
+  it('drop ignores files outside accept', () => {
+    const onFilesChange = vi.fn()
+    const onReject = vi.fn()
+    const a = pdf()
+    const b = png()
+    render(<FileUpload accept=".pdf" multiple onFilesChange={onFilesChange} onReject={onReject} />)
+    drop([a, b])
+    expect(onFilesChange).toHaveBeenCalledWith([a])
+    expect(onReject).toHaveBeenCalledWith([{ file: b, reason: 'type' }])
+  })
+
+  it('drop keeps only one file when not multiple', () => {
+    const onFilesChange = vi.fn()
+    const onReject = vi.fn()
+    const a = pdf('a.pdf')
+    const b = pdf('b.pdf')
+    render(<FileUpload onFilesChange={onFilesChange} onReject={onReject} />)
+    drop([a, b])
+    expect(onFilesChange).toHaveBeenCalledWith([a])
+    expect(onReject).toHaveBeenCalledWith([{ file: b, reason: 'count' }])
+  })
+
+  it('drop rejects oversized files', () => {
+    const onFilesChange = vi.fn()
+    const onReject = vi.fn()
+    const big = new File(['12345678901'], 'besar.pdf', { type: 'application/pdf' })
+    render(<FileUpload maxSize={10} onFilesChange={onFilesChange} onReject={onReject} />)
+    drop([big])
+    expect(onFilesChange).toHaveBeenCalledWith([])
+    expect(onReject).toHaveBeenCalledWith([{ file: big, reason: 'size' }])
+  })
+
+  it('accept matches mime wildcard', () => {
+    const onFilesChange = vi.fn()
+    const x = png('x.png')
+    render(<FileUpload accept="image/*" onFilesChange={onFilesChange} />)
+    drop([x])
+    expect(onFilesChange).toHaveBeenCalledWith([x])
+  })
+
+  it('accept matches extension case-insensitively', () => {
+    const onFilesChange = vi.fn()
+    const a = pdf()
+    render(<FileUpload accept=".PDF" onFilesChange={onFilesChange} />)
+    drop([a])
+    expect(onFilesChange).toHaveBeenCalledWith([a])
+  })
+
+  it('picker also enforces maxSize', async () => {
+    const onFilesChange = vi.fn()
+    const onReject = vi.fn()
+    const big = new File(['12345678901'], 'besar.pdf', { type: 'application/pdf' })
+    const { container } = render(
+      <FileUpload maxSize={10} onFilesChange={onFilesChange} onReject={onReject} />
+    )
+    await userEvent.upload(container.querySelector('input[type=file]') as HTMLInputElement, big)
+    expect(onFilesChange).toHaveBeenCalledWith([])
+    expect(onReject).toHaveBeenCalledWith([{ file: big, reason: 'size' }])
+  })
+
+  it('does not call onReject when everything is valid', () => {
+    const onReject = vi.fn()
+    render(<FileUpload accept=".pdf" multiple onReject={onReject} />)
+    drop([pdf('a.pdf'), pdf('b.pdf')])
+    expect(onReject).not.toHaveBeenCalled()
   })
 })
