@@ -12,7 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 
-- **`DatePicker` / `DateRangePicker`**: `date={null}` / `range={null}` kini mengosongkan nilai secara terkontrol (sebelumnya kembali ke tanggal lama). `undefined` tetap berarti uncontrolled. Tombol hapus kini `<button>` terpisah yang bisa dijangkau keyboard (`aria-label` "Hapus tanggal" / "Hapus rentang tanggal").
+- **`DatePicker` / `DateRangePicker`**: `date={null}` / `range={null}` kini mengosongkan nilai secara terkontrol (sebelumnya kembali ke tanggal lama). `undefined` tetap berarti uncontrolled. Tombol hapus kini `<button>` terpisah yang bisa dijangkau keyboard (`aria-label` "Hapus tanggal" / "Hapus rentang tanggal"). Komponen kini dibungkus `<div class="relative">` selebar parent; atur lebar lewat elemen parent, bukan `className`, agar tombol hapus tetap di dalam trigger.
 - **`DateInput`**: tampilan ikut kosong setelah nilai dihapus atau form di-`reset` ke string kosong.
 - **`CommandSearch`**: panel saran tanpa `open` terkontrol kini tertutup saat Escape atau blur, dan terbuka lagi saat user mengetik.
 - **`TablePagination`**: tombol Sebelumnya/Berikutnya yang nonaktif tidak lagi punya `href`/`onClick`, tidak bisa difokus, dan tidak diteruskan ke `renderLink`.
