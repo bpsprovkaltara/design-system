@@ -202,7 +202,8 @@ output build, dan perubahan tidak terkait.
 Peta dokumentasi mendalam ada di `README.md` (bagian Dokumentasi). Fakta
 produk di `PRODUCT.md`; bahasa visual, token, dan aturan brand di `DESIGN.md`;
 struktur di `docs/architecture.md`; API komponen di `docs/api.md`; build dan
-deploy di `docs/operations.md`; setup lokal di `docs/development.md`; chrome
+deploy di `docs/operations.md`; setup lokal di `docs/development.md`;
+tangga verifikasi di `docs/testing.md`; chrome
 aplikasi konsumen di `docs/consumer-chrome.md`; panduan pemakaian untuk project
 konsumen di `docs/guide.md`; catatan upgrade antarversi di `docs/upgrading.md`;
 keputusan arsitektur di `docs/adr/`.

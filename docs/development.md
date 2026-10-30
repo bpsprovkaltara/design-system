@@ -65,7 +65,7 @@ bun run lint
 bun run test
 ```
 
-Vitest/Testing Library/jsdom; test source berdampingan. Threshold global saat ini 34% statements, 42% branches, 26% functions, 34% lines; target kode baru/berubah >=80% tanpa mengecualikan file secara palsu. CI main/v3 memeriksa client directives, test, build:lib dan build showcase. Perubahan CSS/API/build perlu build:lib dan integrasi Tailwind/non-Tailwind/RSC; route/showcase perlu build dan navigasi/responsif. Dependency/rilis juga audit. Dokumentasi saja memakai cek path/link/versi dan git diff --check, tanpa build.
+Tangga verifikasi ada di [testing](testing.md). Vitest/Testing Library/jsdom; test source berdampingan. Threshold global saat ini 34% statements, 42% branches, 26% functions, 34% lines; target kode baru/berubah >=80% tanpa mengecualikan file secara palsu. CI main/v3 memeriksa client directives, test, build:lib dan build showcase. Perubahan CSS/API/build perlu build:lib dan integrasi Tailwind/non-Tailwind/RSC; route/showcase perlu build dan navigasi/responsif. Dependency/rilis juga audit. Dokumentasi saja memakai cek path/link/versi dan git diff --check, tanpa build.
 
 ## Debugging
 
