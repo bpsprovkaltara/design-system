@@ -354,6 +354,7 @@ Kontak pelaporan: diisi operator — belum ditetapkan.
 | [CHANGELOG.md](./CHANGELOG.md) | Riwayat perubahan |
 | [docs/architecture.md](./docs/architecture.md) | Arsitektur |
 | [docs/development.md](./docs/development.md) | Panduan pengembangan, scripts, dan quality gate |
+| [docs/testing.md](./docs/testing.md) | Tangga verifikasi; tanpa DB dan login |
 | [docs/api.md](./docs/api.md) | Kontrak API |
 | [docs/operations.md](./docs/operations.md) | Deployment dan operasional |
 | [docs/consumer-chrome.md](docs/consumer-chrome.md) | Batas shell, link router, dan fitur milik konsumen |
