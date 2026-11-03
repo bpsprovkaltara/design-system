@@ -4,7 +4,7 @@ Standar workspace ada di `TESTING.md`. Dokumen ini mencatat penerapannya di desi
 
 ## Lane dan perintah
 
-Lane: browser, docker (`TESTING.md` §2a). Kode komponen berjalan di browser,
+Lane: browser, docker (`TESTING.md` §2a; lane docker = Dockerfile showcase, job image-nya di tiket CI/image terpisah). Kode komponen berjalan di browser,
 jadi Vitest berjalan di Node 24 (`.node-version`), bukan di Bun. Pin Node ini
 hanya untuk tooling repo; aplikasi konsumen paket atau registry tidak terikat
 padanya. Test masih memakai jsdom + Testing Library; migrasi ke Vitest Browser
@@ -50,7 +50,9 @@ dikirim ke konsumen: `src/components/ui`, `src/components/patterns`,
 `src/hooks`, `src/lib`, `src/index.ts`, `src/utils.ts`, `src/tailwind-preset.ts`.
 Showcase (`src/pages`, `src/layouts`, `src/components/{layout,showcase}`,
 `src/App.tsx`, `src/main.tsx`) tidak dikirim, jadi tidak dihitung; ia
-dibuktikan lewat `bun run build`. Exclude ada di `vitest.config.ts` dengan
+dibuktikan lewat `bun run build`. Akar ini diturunkan dari barrel
+`src/index.ts` dan `package.json#exports`, karena registry ADR 0003 belum
+ada di `main`; cek ulang daftarnya saat registry dibangun. Exclude ada di `vitest.config.ts` dengan
 alasan per baris.
 
 | Metrik | Baseline | Threshold | Diukur | Tindak lanjut |
@@ -60,8 +62,8 @@ alasan per baris.
 | branches | 74,56% | 74 | 2026-11-03 | menuju 80%, issue tindak lanjut coverage |
 | statements | 67,89% | 67 | 2026-11-03 | menuju 80%, issue tindak lanjut coverage |
 
-- Diukur tiga kali dengan `bun run test:coverage` (232 test hijau, Node 22
-  lokal); ketiga run identik. Threshold = floor baseline dan hanya boleh naik.
+- Diukur tiga kali di Node 22 dan tiga kali di Node 24 (pin `.node-version`)
+  dengan `test:coverage` (232 test hijau); keenam run identik. Threshold = floor baseline dan hanya boleh naik.
 - Threshold sebelumnya (34/42/26/34) hanya menghitung `src/components/**`
   termasuk showcase, dan CI tidak menjalankannya.
 
@@ -84,5 +86,5 @@ Tidak ada Playwright atau suite E2E browser. Pemeriksaan visual showcase (naviga
 
 ## Skill verifikasi
 
-`.claude/skills/verify-design-system/` dan peta fiturnya di `features/`
-dibuat di fachriizzudin/project-rules#85.
+Belum ada. `.claude/skills/verify-design-system/` beserta peta fitur
+`features/` dilacak di fachriizzudin/project-rules#85.
