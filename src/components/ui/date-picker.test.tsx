@@ -61,9 +61,8 @@ describe('DatePicker', () => {
     const date = new Date(2026, 5, 1)
     render(<DatePicker date={date} onChange={onChange} clearable />)
     const clearButton = document.querySelector('svg.lucide-x')
-    if (clearButton) {
-      await userEvent.click(clearButton as HTMLElement)
-      expect(onChange).toHaveBeenCalledWith(undefined)
-    }
+    expect(clearButton).toBeInTheDocument()
+    await userEvent.click(clearButton as Element)
+    expect(onChange).toHaveBeenCalledWith(undefined)
   })
 })

@@ -435,7 +435,7 @@ Ada dua jalur rilis paralel. **Tentukan versi sebelum menulis kode** — API-nya
 |---|---|---|
 | Tailwind CSS | 3.4 | 4 |
 | React | 18 | 19 |
-| Node | ≥18 | ≥20 (CI/Docker: Node 20) |
+| Node | ≥18 | ≥20 di aplikasi konsumen (tooling repo: Node 24, `.node-version`) |
 | Tema / styling | preset (`tailwind-preset`) | CSS-first (`import 'styles.css'`) |
 | Nama komponen custom | ber-prefix `BpsX` | tanpa prefix |
 | dist-tag | `legacy` | `latest` |

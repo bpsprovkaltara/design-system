@@ -2,7 +2,7 @@
 
 ## Prasyarat
 
-Node >=20 (CI menjalankan vitest dan tsc di Node 20) dan Bun 1.3.14 sesuai manifest; `preinstall` menolak pnpm/npm. Cek node --version dan bun --version. Lockfile `bun.lock` (dokumen runtime kedua): React 19.2.6, Vite 8.0.11, TS 6.0.3, Vitest 4.1.5.
+Node 24 dari `.node-version` (CI menjalankan vitest dan tsc di Node 24; hanya tooling, bukan syarat konsumen) dan Bun 1.3.14 sesuai manifest; `preinstall` menolak pnpm/npm. Cek node --version dan bun --version. Lockfile `bun.lock` (dokumen runtime kedua): React 19.2.6, Vite 8.0.11, TS 6.0.3, Vitest 4.1.5.
 
 ## Setup lokal
 
@@ -65,7 +65,7 @@ bun run lint
 bun run test
 ```
 
-Tangga verifikasi ada di [testing](testing.md). Vitest/Testing Library/jsdom; test source berdampingan. Threshold global saat ini 34% statements, 42% branches, 26% functions, 34% lines; target kode baru/berubah >=80% tanpa mengecualikan file secara palsu. CI main/v3 memeriksa client directives, test, build:lib dan build showcase. Perubahan CSS/API/build perlu build:lib dan integrasi Tailwind/non-Tailwind/RSC; route/showcase perlu build dan navigasi/responsif. Dependency/rilis juga audit. Dokumentasi saja memakai cek path/link/versi dan git diff --check, tanpa build.
+Tangga verifikasi ada di [testing](testing.md). Vitest/Testing Library/jsdom; test source berdampingan. Threshold global saat ini 67% statements, 74% branches, 62% functions, 68% lines (ratchet, baseline di testing.md); target kode baru/berubah >=80% tanpa mengecualikan file secara palsu. CI main/v3 memeriksa client directives, test:coverage, build:lib dan build showcase, plus job security (audit, gitleaks, zizmor). Perubahan CSS/API/build perlu build:lib dan integrasi Tailwind/non-Tailwind/RSC; route/showcase perlu build dan navigasi/responsif. Dependency/rilis juga audit. Dokumentasi saja memakai cek path/link/versi dan git diff --check, tanpa build.
 
 ## Debugging
 

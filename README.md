@@ -53,11 +53,11 @@ Versi resolved dari dokumen runtime kedua `bun.lock`; manifest menentukan API, s
 | Ikon | lucide-react |
 | Uji | Vitest 4.1.5 + Testing Library + jsdom |
 | Paket | Bun 1.3.14 |
-| Node.js | ≥20 |
+| Node.js | 24 untuk tooling repo (`.node-version`); konsumen paket/registry ≥20 |
 
 ## Mulai cepat
 
-Prasyarat pengembangan showcase: Node >=20, Bun 1.3.14, akses dependency registry bila diperlukan.
+Prasyarat pengembangan showcase: Node 24 (`.node-version`), Bun 1.3.14, akses dependency registry bila diperlukan.
 
 ```bash
 bun install
@@ -319,8 +319,8 @@ menyasar `src/components/**`.
 | Route atau showcase | `bun run build`, cek route langsung, navigasi, tampilan responsif |
 | Dependency atau rilis | Pemeriksaan relevan di atas + `bun audit` |
 
-`vitest.config.ts` saat ini menetapkan threshold 34% statements, 42% branches,
-26% functions, dan 34% lines. Itu **bukan** gate 80% repo-wide. Target ≥80%
+`vitest.config.ts` saat ini menetapkan threshold 67% statements, 74% branches,
+62% functions, dan 68% lines (ratchet; baseline di [testing](docs/testing.md)). Itu **bukan** gate 80% repo-wide. Target ≥80%
 berlaku untuk kode baru atau berubah, termasuk jalur error dan interaksi penting.
 
 ## Keamanan
