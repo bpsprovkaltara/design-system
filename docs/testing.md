@@ -38,8 +38,8 @@ Mode belum termasuk kontrak ini.
   PR, atau `HEAD` saat push), dan zizmor atas workflow.
 - Ambang audit `critical`. Per 2026-11-03 ada 37 temuan high; di cakupan
   produksi hanya peer `zod` (<4.6.6), sisanya dependency dev (vite,
-  react-router, undici, postcss, dan lainnya). Dilacak di issue tindak lanjut
-  audit.
+  react-router, undici, postcss, dan lainnya). Dilacak di
+  [#35](https://github.com/bpsprovkaltara/design-system/issues/35).
 - `release.yml` (publish GitHub Packages) hanya mendapat hygiene: pin SHA,
   `permissions`, timeout, tanpa cache. Pensiunnya mengikuti ADR 0003.
 
@@ -57,10 +57,10 @@ alasan per baris.
 
 | Metrik | Baseline | Threshold | Diukur | Tindak lanjut |
 |---|---|---|---|---|
-| lines | 68,48% | 68 | 2026-11-03 | menuju 80%, issue tindak lanjut coverage |
-| functions | 62,47% | 62 | 2026-11-03 | menuju 80%, issue tindak lanjut coverage |
-| branches | 74,56% | 74 | 2026-11-03 | menuju 80%, issue tindak lanjut coverage |
-| statements | 67,89% | 67 | 2026-11-03 | menuju 80%, issue tindak lanjut coverage |
+| lines | 68,48% | 68 | 2026-11-03 | menuju 80%, [#34](https://github.com/bpsprovkaltara/design-system/issues/34) |
+| functions | 62,47% | 62 | 2026-11-03 | menuju 80%, [#34](https://github.com/bpsprovkaltara/design-system/issues/34) |
+| branches | 74,56% | 74 | 2026-11-03 | menuju 80%, [#34](https://github.com/bpsprovkaltara/design-system/issues/34) |
+| statements | 67,89% | 67 | 2026-11-03 | menuju 80%, [#34](https://github.com/bpsprovkaltara/design-system/issues/34) |
 
 - Diukur tiga kali di Node 22 dan tiga kali di Node 24 (pin `.node-version`)
   dengan `test:coverage` (232 test hijau); keenam run identik. Threshold = floor baseline dan hanya boleh naik.
