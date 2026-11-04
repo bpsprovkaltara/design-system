@@ -13,3 +13,7 @@ audits/
 
 # Indeks CodeGraph lokal
 .codegraph/
+
+# Registry dibangkitkan saat build (ADR 0003)
+registry.json
+public/r/
