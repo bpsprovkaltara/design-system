@@ -17,9 +17,17 @@ Showcase tidak mendeklarasikan credential runtime; Docker memakai NODE_ENV=produ
 
 ## Build dan image
 
-Dockerfile dua stage oven/bun:1.3.14-slim, install `bun install --frozen-lockfile --ignore-scripts` sebelum source lengkap, lalu `bun run build` showcase. Runtime memasang serve@14.2.4, menyalin dist, user non-root bun, port 8081 dan `bun run --bun serve dist -l 8081 -s -n` (SPA fallback tanpa clipboard).
+Dockerfile dua stage oven/bun:1.3.14-slim, install `bun install --frozen-lockfile --ignore-scripts` sebelum source lengkap, lalu `bun run registry:build && bun run build` showcase. Runtime memasang serve@14.2.4, menyalin dist, user non-root bun, port 8081 dan `bun run --bun serve dist -l 8081 -s -n` (SPA fallback tanpa clipboard).
 
 Library build menghasilkan ESM/CJS/types, compiled styles.css, raw tokens.css dan fonts.css. Output dist dipakai bersama build showcase; artefak library dan Docker showcase harus dibangun sesuai target, bukan mengasumsikan satu dist memenuhi keduanya.
+
+## Registry
+
+- `bun run registry:build` membangkitkan `registry.json` dari source (`scripts/build-registry.mjs`, termasuk self-check), lalu `shadcn build` menulis `public/r/*.json`. Keduanya tidak di-commit.
+- Vite menyalin `public/r/` ke `dist/r/`, sehingga Docker build (dan CI) menjalankan `registry:build` sebelum build showcase.
+- URL publik: `https://design.kaltarastats.id/r/<item>.json`. Aplikasi mendaftarkan namespace `@bps` di `components.json` lalu `shadcn add @bps/<item>`.
+- `registryDependencies` memakai URL absolut. Untuk uji lokal: `REGISTRY_BASE_URL=http://localhost:4010 bun run registry:build`, lalu sajikan `public/` di port itu.
+- Keputusan dan aturannya: `docs/adr/0003-distribute-via-shadcn-registry.md`.
 
 ## Deploy procedure
 

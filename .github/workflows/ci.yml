@@ -71,6 +71,9 @@ jobs:
       - name: Build library
         run: bun run build:lib
 
+      - name: Build registry
+        run: bun run registry:build
+
       - name: Build showcase
         run: bun run build
 

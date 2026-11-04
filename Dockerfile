@@ -8,7 +8,7 @@ RUN bun install --frozen-lockfile --ignore-scripts
 
 COPY . .
 
-RUN bun run build
+RUN bun run registry:build && bun run build
 
 FROM oven/bun:1.3.14-slim
 
