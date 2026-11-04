@@ -16,14 +16,28 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov'],
-      include: ['src/components/**'],
-      exclude: ['src/test/**', 'src/**/*.stories.*'],
-      // Floor set just below current coverage; ratchet up as more components gain tests
+      // Semua akar sumber yang dikirim ke konsumen (barrel src/index.ts, entri
+      // utils dan tailwind-preset); file tanpa test terhitung 0%.
+      include: [
+        'src/components/ui/**',
+        'src/components/patterns/**',
+        'src/hooks/**',
+        'src/lib/**',
+        'src/index.ts',
+        'src/utils.ts',
+        'src/tailwind-preset.ts',
+      ],
+      exclude: [
+        'src/**/*.{test,spec}.{ts,tsx}', // test itu sendiri, bukan sumber
+        'src/**/*.stories.*', // cerita dokumentasi, tidak dikirim
+        'src/**/*.d.ts', // deklarasi tipe saja, tanpa kode runtime
+      ],
+      // Ratchet (TESTING.md §5a): floor dari baseline di docs/testing.md; hanya boleh naik.
       thresholds: {
-        statements: 34,
-        branches: 42,
-        functions: 26,
-        lines: 34,
+        statements: 67,
+        branches: 74,
+        functions: 62,
+        lines: 68,
       },
     },
   },

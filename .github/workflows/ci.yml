@@ -6,24 +6,36 @@ on:
   pull_request:
     branches: [main, v3]
 
+permissions:
+  contents: read
+
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  verify:
+  # lint, typecheck, test dengan gate coverage, build (TESTING.md §8).
+  quality:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         with:
           bun-version-file: package.json
 
-      - uses: actions/setup-node@v6
+      # vitest dan tsc berjalan di Node (lane browser, ADR 0001 workspace).
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          # vitest dan tsc tetap berjalan di Node; selaras engines (>=20)
-          node-version: '20'
+          node-version-file: .node-version
+
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
 
       - name: Install
         run: bun install --frozen-lockfile
@@ -32,7 +44,7 @@ jobs:
         run: bun run typecheck
 
       - name: Lint
-        run: bun run lint
+        run: bun run lint --max-warnings 0
 
       - name: Check use client directives
         run: |
@@ -52,11 +64,65 @@ jobs:
             exit 1
           fi
 
-      - name: Test
-        run: bun run test
+      # Threshold ratchet di vitest.config.ts; baseline di docs/testing.md.
+      - name: Test with coverage gate
+        run: bun run test:coverage
 
       - name: Build library
         run: bun run build:lib
 
       - name: Build showcase
         run: bun run build
+
+  # Audit dependency, gitleaks CLI, dan zizmor (TESTING.md §8).
+  security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0 # gitleaks memindai riwayat
+          persist-credentials: false
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: package.json
+
+      # Ambang critical; temuan high (dev dependency dan peer zod) dilacak di #35.
+      - name: Dependency audit
+        run: bun audit --audit-level=critical
+
+      # Binary resmi dipin versi dan checksum; gitleaks-action butuh lisensi org.
+      # Scanner berikut tetap jalan walau audit gagal, agar semua temuan terlihat.
+      - name: Install gitleaks
+        if: ${{ !cancelled() }}
+        env:
+          GITLEAKS_VERSION: 8.30.1
+          GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+        run: |
+          curl -fsSLo gitleaks.tar.gz "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          echo "${GITLEAKS_SHA256}  gitleaks.tar.gz" | sha256sum -c -
+          tar -xzf gitleaks.tar.gz gitleaks
+          sudo mv gitleaks /usr/local/bin/gitleaks
+          rm gitleaks.tar.gz
+
+      - name: Gitleaks (PR range)
+        if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: gitleaks git --no-banner --redact --log-opts="$BASE_SHA..$HEAD_SHA" .
+
+      - name: Gitleaks (full history)
+        if: ${{ !cancelled() && github.event_name == 'push' }}
+        # Default gitleaks = `git log --all`; fetch-depth 0 membawa semua branch
+        # remote, jadi batasi ke riwayat commit yang di-push.
+        run: gitleaks git --no-banner --redact --log-opts="HEAD" .
+
+      - name: zizmor
+        if: ${{ !cancelled() }}
+        uses: zizmorcore/zizmor-action@45d7276c9ca790aabd705e31ca99c6185c3e76dd # v0.8.1
+        with:
+          # Tanpa GitHub Advanced Security: hasil sebagai anotasi, bukan SARIF.
+          advanced-security: false
+          annotations: true

@@ -78,11 +78,9 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
     "typecheck": "tsc --noEmit",
+    "check": "bun run lint && bun run typecheck && bun run test",
     "prepare": "bun run prepare:hooks",
     "prepare:hooks": "husky"
-  },
-  "engines": {
-    "node": ">=20"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",
@@ -130,6 +128,7 @@
     }
   },
   "devDependencies": {
+    "@eslint-community/eslint-plugin-eslint-comments": "4.8.1",
     "@eslint/js": "^10.0.1",
     "@hookform/resolvers": "^5.2.2",
     "@tailwindcss/vite": "^4.3.0",
@@ -144,6 +143,7 @@
     "@typescript-eslint/parser": "^8.59.2",
     "@vitejs/plugin-react": "^6.0.1",
     "@vitest/coverage-v8": "^4.1.9",
+    "@vitest/eslint-plugin": "1.6.28",
     "@vitest/ui": "^4.1.5",
     "ajv": "^8.20.0",
     "eslint": "^10.3.0",

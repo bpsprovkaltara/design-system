@@ -10,7 +10,7 @@ Library privat `@bpsprovkaltara/design-system` versi 4.8.1 dan SPA showcase Vite
 
 ## Stack
 
-Versi resolved dari `bun.lock` (dokumen runtime kedua): React 19.2.6, Vite 8.0.11, TypeScript 6.0.3, Vitest 4.1.5. Package manager: Bun 1.3.14 (`packageManager`; pnpm/npm ditolak `preinstall`); Node >=20 untuk vitest dan tsc. Tailwind CSS 4, React Router 7, shadcn/ui dan Radix UI.
+Versi resolved dari `bun.lock` (dokumen runtime kedua): React 19.2.6, Vite 8.0.11, TypeScript 6.0.3, Vitest 4.1.5. Package manager: Bun 1.3.14 (`packageManager`; pnpm/npm ditolak `preinstall`); Node 24 untuk vitest dan tsc (`.node-version`, tooling saja). Tailwind CSS 4, React Router 7, shadcn/ui dan Radix UI.
 
 ## Perintah
 
@@ -62,7 +62,7 @@ framework lain ketika diminta memperbaiki kompatibilitas konsumen.
 
 Stack: React 19, TypeScript 6, Vite 8, Tailwind CSS 4 (CSS-first), React Router 7,
 shadcn/ui gaya `new-york` + Radix UI, Vitest 4 + Testing Library + `jsdom`,
-Bun 1.3.14, Node `>=20` untuk vitest dan tsc.
+Bun 1.3.14, Node 24 (`.node-version`) untuk vitest dan tsc.
 
 Pembagian `src/`: `components/ui` primitif dan komposit BPS · `components/patterns`
 pola tingkat tinggi · `components/showcase` helper dokumentasi · `components/layout`
@@ -179,10 +179,12 @@ kustom.
 | Dependency atau rilis | pemeriksaan relevan di atas + `bun audit` |
 
 CI (`.github/workflows/ci.yml`) pada `main`/`v3` juga memeriksa directive client; menjalankan `bun install --frozen-lockfile`
-lalu `typecheck` → `lint` → `test` → `build:lib` → `build`.
+lalu `typecheck` → `lint` → `test:coverage` → `build:lib` → `build`, plus job
+`security` (`bun audit`, gitleaks, zizmor). `bun run check` = lint + typecheck + test.
 
-Threshold coverage di `vitest.config.ts` saat ini **34% statements, 42%
-branches, 26% functions, 34% lines** — itu bukan gate 80% repo-wide. Target
+Threshold coverage di `vitest.config.ts` saat ini **67% statements, 74%
+branches, 62% functions, 68% lines** (ratchet, baseline di `docs/testing.md`) —
+itu bukan gate 80% repo-wide. Target
 >=80% berlaku untuk kode baru/berubah termasuk jalur error; jangan mengklaim
 repo punya gate global 80%, dan jangan menyatakan test/coverage/lint/build/audit
 lulus tanpa benar-benar menjalankannya.

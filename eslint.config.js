@@ -5,6 +5,8 @@ import reactPlugin from 'eslint-plugin-react'
 import reactHooksPlugin from 'eslint-plugin-react-hooks'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
 import prettierConfig from 'eslint-config-prettier'
+import vitest from '@vitest/eslint-plugin'
+import comments from '@eslint-community/eslint-plugin-eslint-comments'
 
 export default [
   js.configs.recommended,
@@ -52,6 +54,22 @@ export default [
     files: ['scripts/**/*.mjs'],
     languageOptions: {
       globals: { console: 'readonly' },
+    },
+  },
+  {
+    // Aturan test workspace (TESTING.md §5b): error, bukan warning.
+    files: ['src/**/*.{test,spec}.{ts,tsx}'],
+    plugins: { vitest, '@eslint-community/eslint-comments': comments },
+    rules: {
+      'vitest/expect-expect': 'error',
+      'vitest/no-focused-tests': 'error',
+      'vitest/no-disabled-tests': 'error',
+      'vitest/no-conditional-expect': 'error',
+      // Vitest menerima pesan kegagalan sebagai argumen kedua expect().
+      'vitest/valid-expect': ['error', { maxArgs: 2 }],
+      'vitest/no-identical-title': 'error',
+      // Setiap eslint-disable di test wajib menyebut alasannya (dan issue bila skip).
+      '@eslint-community/eslint-comments/require-description': 'error',
     },
   },
   prettierConfig,
