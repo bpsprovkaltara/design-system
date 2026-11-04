@@ -99,7 +99,7 @@ export const DateInput = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLIn
         />
         <div onBlur={notifyBlur}>
           <DatePicker
-            date={parseDateString(stringValue)}
+            date={parseDateString(stringValue) ?? null}
             onChange={(date) => notifyChange(date ? formatDateString(date) : '')}
             disabled={disabled}
             className={cn('w-full', className)}

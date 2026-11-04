@@ -9,29 +9,48 @@ export type ThemeMode = 'dark' | 'light'
 
 const STORAGE_KEY = 'bps-theme'
 
-function getInitialTheme(): ThemeMode {
-  if (typeof window === 'undefined') return 'light'
-  const stored = localStorage.getItem(STORAGE_KEY)
-  if (stored === 'dark' || stored === 'light') return stored
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+function readStoredTheme(): ThemeMode | null {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (stored === 'dark' || stored === 'light') return stored
+  } catch {
+    // storage diblokir
+  }
+  return null
+}
+
+function systemTheme(): ThemeMode {
+  return typeof window !== 'undefined' &&
+    window.matchMedia?.('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light'
 }
 
 function applyTheme(theme: ThemeMode) {
-  const root = document.documentElement
-  if (theme === 'dark') {
-    root.classList.add('dark')
-  } else {
-    root.classList.remove('dark')
+  document.documentElement.classList.toggle('dark', theme === 'dark')
+  try {
+    localStorage.setItem(STORAGE_KEY, theme)
+  } catch {
+    // storage diblokir: class tetap diterapkan
   }
-  localStorage.setItem(STORAGE_KEY, theme)
 }
 
-export function useTheme(defaultTheme?: ThemeMode) {
-  const [theme, setThemeState] = React.useState<ThemeMode>(defaultTheme ?? getInitialTheme)
+function useThemeState(defaultTheme: ThemeMode | undefined, persist: boolean) {
+  const [theme, setThemeState] = React.useState<ThemeMode>(defaultTheme ?? 'light')
+  const [ready, setReady] = React.useState(false)
+
+  // Storage dan matchMedia dibaca setelah mount agar render pertama sama dengan SSR.
+  React.useEffect(() => {
+    if (!persist) return
+    React.startTransition(() => {
+      if (!defaultTheme) setThemeState(readStoredTheme() ?? systemTheme())
+      setReady(true)
+    })
+  }, [persist, defaultTheme])
 
   React.useEffect(() => {
-    applyTheme(theme)
-  }, [theme])
+    if (persist && ready) applyTheme(theme)
+  }, [persist, ready, theme])
 
   const setTheme = React.useCallback((next: ThemeMode) => {
     setThemeState(next)
@@ -44,6 +63,10 @@ export function useTheme(defaultTheme?: ThemeMode) {
   return { theme, setTheme, toggleTheme }
 }
 
+export function useTheme(defaultTheme?: ThemeMode) {
+  return useThemeState(defaultTheme, true)
+}
+
 export interface ThemeToggleProps {
   className?: string
   /** Controlled theme. When omitted, the toggle manages its own state. */
@@ -52,19 +75,19 @@ export interface ThemeToggleProps {
 }
 
 export function ThemeToggle({ className, theme: themeProp, onThemeChange }: ThemeToggleProps) {
-  const internal = useTheme()
-  const theme = themeProp ?? internal.theme
+  const isControlled = themeProp !== undefined
+  const internal = useThemeState(undefined, !isControlled)
+  const theme = isControlled ? themeProp : internal.theme
 
   const toggle = () => {
     const next: ThemeMode = theme === 'dark' ? 'light' : 'dark'
-    if (onThemeChange) {
-      onThemeChange(next)
-    } else {
-      internal.setTheme(next)
-    }
-    if (themeProp !== undefined) {
+    if (isControlled) {
+      onThemeChange?.(next)
       applyTheme(next)
+      return
     }
+    internal.setTheme(next)
+    onThemeChange?.(next)
   }
 
   return (

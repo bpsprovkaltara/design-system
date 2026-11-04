@@ -12,7 +12,8 @@ import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
 export interface DateRangePickerProps {
-  range?: DateRange
+  /** Controlled bila diberikan. `null` = kosong (controlled). */
+  range?: DateRange | null
   onChange?: (range?: DateRange) => void
   placeholder?: string
   className?: string
@@ -34,58 +35,62 @@ export function DateRangePicker({
   disabled = false,
   clearable = true,
 }: DateRangePickerProps) {
-  const [internalRange, setInternalRange] = React.useState<DateRange | undefined>(range)
-  const actualRange = range !== undefined ? range : internalRange
+  const isControlled = range !== undefined
+  const [internalRange, setInternalRange] = React.useState<DateRange | undefined>(
+    range ?? undefined
+  )
+  const actualRange = isControlled ? (range ?? undefined) : internalRange
+  const showClear = clearable && actualRange?.from && !disabled
 
   const handleSelect = (r: DateRange | undefined) => {
-    if (range === undefined) {
-      setInternalRange(r)
-    }
+    if (!isControlled) setInternalRange(r)
     onChange?.(r)
-  }
-
-  const handleClear = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    handleSelect(undefined)
   }
 
   const displayText = formatRange(actualRange)
 
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          disabled={disabled}
-          className={cn(
-            'w-full justify-start text-left font-medium border-border bg-background hover:bg-muted hover:border-border-strong transition-all shadow-sm group',
-            !actualRange?.from && 'text-muted-foreground font-normal',
-            className
-          )}
+    <div className="relative">
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            disabled={disabled}
+            className={cn(
+              'w-full justify-start text-left font-medium border-border bg-background hover:bg-muted hover:border-border-strong transition-all shadow-sm group',
+              !actualRange?.from && 'text-muted-foreground font-normal',
+              showClear && 'pr-8',
+              className
+            )}
+          >
+            <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+            <span className="flex-1 truncate">{displayText || placeholder}</span>
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          className="w-auto p-0 border-border shadow-xl animate-in fade-in slide-in-from-top-2 duration-200"
+          align="start"
         >
-          <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-          <span className="flex-1 truncate">{displayText || placeholder}</span>
-          {clearable && actualRange?.from && !disabled && (
-            <X
-              className="h-3 w-3 ml-2 opacity-40 hover:opacity-100 transition-opacity"
-              onClick={handleClear}
-            />
-          )}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent
-        className="w-auto p-0 border-border shadow-xl animate-in fade-in slide-in-from-top-2 duration-200"
-        align="start"
-      >
-        <Calendar
-          mode="range"
-          selected={actualRange}
-          onSelect={handleSelect}
-          initialFocus
-          numberOfMonths={2}
-          className="bg-background rounded-md"
-        />
-      </PopoverContent>
-    </Popover>
+          <Calendar
+            mode="range"
+            selected={actualRange}
+            onSelect={handleSelect}
+            initialFocus
+            numberOfMonths={2}
+            className="bg-background rounded-md"
+          />
+        </PopoverContent>
+      </Popover>
+      {showClear && (
+        <button
+          type="button"
+          aria-label="Hapus rentang tanggal"
+          onClick={() => handleSelect(undefined)}
+          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-sm p-1 text-muted-foreground opacity-60 transition-opacity hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <X className="h-3 w-3" aria-hidden="true" />
+        </button>
+      )}
+    </div>
   )
 }

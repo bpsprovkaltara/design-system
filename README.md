@@ -360,6 +360,7 @@ Kontak pelaporan: diisi operator — belum ditetapkan.
 | [docs/consumer-chrome.md](docs/consumer-chrome.md) | Batas shell, link router, dan fitur milik konsumen |
 | [ADR 0001](docs/adr/0001-record-architecture-decisions.md) | Mencatat keputusan arsitektur |
 | [ADR 0002](docs/adr/0002-no-motion-js-dependency.md) | Motion tanpa dependency JavaScript tambahan |
+| [ADR 0003](docs/adr/0003-distribute-via-shadcn-registry.md) | Distribusi lewat shadcn registry, bukan paket npm |
 | [PRODUCT.md](PRODUCT.md) | Fakta produk, pengguna, batas library/showcase |
 | [ui_kits/dashboard/README.md](ui_kits/dashboard/README.md) | Prototype dashboard dan batas data/visual |
 | [SKILL.md](SKILL.md) | Panduan skill paket untuk konsumen |

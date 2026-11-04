@@ -14,6 +14,27 @@ export type FileUploadProps = Omit<
   description?: string
   error?: string
   onFilesChange?: (files: File[]) => void
+  /** Ukuran maksimum per berkas, dalam byte. */
+  maxSize?: number
+  /** Dipanggil dengan berkas yang ditolak bila ada. */
+  onReject?: (rejected: FileRejection[]) => void
+}
+
+export type FileRejection = { file: File; reason: 'type' | 'size' | 'count' }
+
+function matchesAccept(file: File, accept: string | undefined): boolean {
+  if (!accept?.trim()) return true
+  const name = file.name.toLowerCase()
+  const type = file.type.toLowerCase()
+  return accept
+    .split(',')
+    .map((token) => token.trim().toLowerCase())
+    .filter(Boolean)
+    .some((token) => {
+      if (token.startsWith('.')) return name.endsWith(token)
+      if (token.endsWith('/*')) return type.startsWith(token.slice(0, -1))
+      return type === token
+    })
 }
 
 function FileUpload({
@@ -24,6 +45,9 @@ function FileUpload({
   multiple,
   disabled,
   onFilesChange,
+  accept,
+  maxSize,
+  onReject,
   ref,
   id,
   ...props
@@ -34,10 +58,30 @@ function FileUpload({
   const [files, setFiles] = React.useState<File[]>([])
   const [dragActive, setDragActive] = React.useState(false)
 
-  function updateFiles(fileList: FileList | null) {
-    const nextFiles = Array.from(fileList ?? [])
-    setFiles(nextFiles)
-    onFilesChange?.(nextFiles)
+  function updateFiles(fileList: FileList | File[] | null) {
+    const accepted: File[] = []
+    const rejected: FileRejection[] = []
+    for (const file of Array.from(fileList ?? [])) {
+      if (!matchesAccept(file, accept)) rejected.push({ file, reason: 'type' })
+      else if (maxSize !== undefined && file.size > maxSize) rejected.push({ file, reason: 'size' })
+      else if (!multiple && accepted.length >= 1) rejected.push({ file, reason: 'count' })
+      else accepted.push(file)
+    }
+    setFiles(accepted)
+    onFilesChange?.(accepted)
+    if (rejected.length > 0) onReject?.(rejected)
+    return { accepted, rejected }
+  }
+
+  // Berkas yang ditolak tidak boleh ikut terkirim lewat submit form native.
+  function keepOnlyAccepted(input: HTMLInputElement, accepted: File[]) {
+    if (typeof DataTransfer === 'undefined') {
+      input.value = ''
+      return
+    }
+    const transfer = new DataTransfer()
+    accepted.forEach((file) => transfer.items.add(file))
+    input.files = transfer.files
   }
 
   function assignRef(node: HTMLInputElement | null) {
@@ -72,10 +116,14 @@ function FileUpload({
           ref={assignRef}
           id={inputId}
           type="file"
+          accept={accept}
           multiple={multiple}
           disabled={disabled}
           className="sr-only"
-          onChange={(event) => updateFiles(event.target.files)}
+          onChange={(event) => {
+            const { accepted, rejected } = updateFiles(event.target.files)
+            if (rejected.length > 0) keepOnlyAccepted(event.target, accepted)
+          }}
           {...props}
         />
         <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">

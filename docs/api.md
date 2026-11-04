@@ -57,7 +57,7 @@ Source dimiliki repo; ada extension lokal sehingga jangan menganggap API sama pe
 
 `StatusBadge` menerima children sebagai teks dan variant default/secondary/destructive/outline/draft/pending/revised/approved; default bila tidak diisi. `Combobox` memakai options value/label, value/onChange, placeholder/searchPlaceholder/emptyText, className/disabled; menekan ulang opsi aktif dapat mengosongkan nilai.
 
-`PerformanceCard`: title/value wajib; unit, target, delta (value/direction/period), trend, icon, variant default/glass/backdrop-blur/gradient, loading dan className. Angka numeric memakai id-ID. `FileUpload` membungkus input file native; validasi dan upload server tetap di aplikasi.
+`PerformanceCard`: title/value wajib; unit, target, delta (value/direction/period), trend, icon, variant default/glass/backdrop-blur/gradient, loading dan className. Angka numeric memakai id-ID. `FileUpload` membungkus input file native; validasi dan upload server tetap di aplikasi. `maxSize` membatasi ukuran per berkas dalam byte. `onReject` menerima berkas yang ditolak beserta alasannya (`type`, `size`, atau `count`).
 
 ## DataTable
 
