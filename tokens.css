@@ -8,7 +8,12 @@
    Tujuan: konsumen yang SUDAH menjalankan Tailwind v4 dapat memakai token +
    tema DS tanpa menggandakan preflight (hindari double-reset).
 
-   Pemakaian (konsumen Tailwind v4):
+   Pemakaian (konsumen registry shadcn, ADR 0003): file ini disalin sebagai
+   `src/styles/bps-tokens.css` lewat `shadcn add @bps/bps-tokens`. Impor salinan itu
+   setelah `@import "tailwindcss"`; komponen ada di source konsumen, jadi
+   tidak perlu `@source`.
+
+   Pemakaian (konsumen paket npm, jalur lama):
      @import "tailwindcss";
      @import "@bpsprovkaltara/design-system/tokens.css";
      @source "../node_modules/@bpsprovkaltara/design-system/dist";

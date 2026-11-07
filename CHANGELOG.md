@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 
+- **Dependency `radix-ui`**: batas minimum naik dari `^1.4.3` ke `^1.6.7`. Rilis 1.6.3 mengirim JavaScript di dalam berkas deklarasi tipe (`.d.mts`), sehingga semua namespace Radix bertipe `any` di konsumen dan `tsc` gagal (TS7006). Registry kini menulis `radix-ui@^1.6.7` ke konsumen.
 - **`DatePicker` / `DateRangePicker`**: `date={null}` / `range={null}` kini mengosongkan nilai secara terkontrol (sebelumnya kembali ke tanggal lama). `undefined` tetap berarti uncontrolled. Tombol hapus kini `<button>` terpisah yang bisa dijangkau keyboard (`aria-label` "Hapus tanggal" / "Hapus rentang tanggal"). Komponen kini dibungkus `<div class="relative">` selebar parent; atur lebar lewat elemen parent, bukan `className`, agar tombol hapus tetap di dalam trigger.
 - **`DateInput`**: tampilan ikut kosong setelah nilai dihapus atau form di-`reset` ke string kosong.
 - **`CommandSearch`**: panel saran tanpa `open` terkontrol kini tertutup saat Escape atau blur, dan terbuka lagi saat user mengetik.
