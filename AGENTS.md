@@ -1,4 +1,4 @@
-# Panduan Agent — bpskaltara-design-system
+# Panduan Agent — design-system
 
 Berlaku untuk seluruh repositori, agent mana pun. Perubahan sekecil mungkin,
 jaga perilaku yang tidak diminta, buktikan dengan pemeriksaan yang benar-benar
