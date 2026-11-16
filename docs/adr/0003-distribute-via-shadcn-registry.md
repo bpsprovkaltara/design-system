@@ -1,7 +1,7 @@
 # ADR 0003: Distribusi DS lewat shadcn registry, bukan paket npm
 
 **Date:** 2026-10-23
-**Status:** Accepted — migrasi berjalan; paket `@bpsprovkaltara/design-system@4.8.1` dibekukan sebagai jalan mundur
+**Status:** Accepted — migrasi berjalan; paket `@bpsprovkaltara/design-system@4.8.1` dibekukan sebagai jalan mundur. Tinjau ulang aplikasi ketiga: lihat ADR 0004 (keputusan tetap registry).
 
 ## Context
 
