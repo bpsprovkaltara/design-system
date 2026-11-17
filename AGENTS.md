@@ -10,7 +10,7 @@ Library privat `@bpsprovkaltara/design-system` versi 4.8.1 dan SPA showcase Vite
 
 ## Stack
 
-Versi resolved dari `bun.lock` (dokumen runtime kedua): React 19.2.6, Vite 8.0.11, TypeScript 6.0.3, Vitest 4.1.5. Package manager: Bun 1.3.14 (`packageManager`; pnpm/npm ditolak `preinstall`); Node 24 untuk vitest dan tsc (`.node-version`, tooling saja). Tailwind CSS 4, React Router 7, shadcn/ui dan Radix UI.
+Stack dan versi resolved: [arsitektur](docs/architecture.md).
 
 ## Perintah
 
@@ -47,68 +47,7 @@ mengedit source. Jangan mengarang script, path, export, atau token.
 
 ## Struktur / Lapisan
 
-Sistem desain internal BPS Provinsi Kalimantan Utara. Satu source tree, dua mode:
-
-- **Library** — paket privat `@bpsprovkaltara/design-system` (versi `4.8.1`)
-  untuk aplikasi internal BPS.
-- **Showcase** — SPA React + Vite untuk dokumentasi interaktif.
-
-Repo ini **bukan aplikasi Next.js**. Directive `'use client'` pada modul
-tertentu ada demi kompatibilitas konsumen React Server Components (termasuk
-Next.js), bukan penanda arsitektur repo. `vite.lib.config.ts` memakai
-`preserveModules` supaya directive itu tetap ada pada output subpath. Jangan
-menambahkan API Next.js ke showcase Vite, dan jangan mengubah showcase jadi
-framework lain ketika diminta memperbaiki kompatibilitas konsumen.
-
-Stack: React 19, TypeScript 6, Vite 8, Tailwind CSS 4 (CSS-first), React Router 7,
-shadcn/ui gaya `new-york` + Radix UI, Vitest 4 + Testing Library + `jsdom`,
-Bun 1.3.14, Node 24 (`.node-version`) untuk vitest dan tsc.
-
-Pembagian `src/`: `components/ui` primitif dan komposit BPS · `components/patterns`
-pola tingkat tinggi · `components/showcase` helper dokumentasi · `components/layout`
-navigasi showcase · `hooks` hook publik · `pages` halaman showcase ·
-`index.ts` API publik · `main.tsx` entry showcase.
-
-### Kontrak ekspor
-
-Jaga tetap sinkron antara `package.json#exports`, `src/index.ts`, dan hasil
-`build:lib`. `exports` adalah satu-satunya kontrak subpath yang didukung.
-
-| Import konsumen | Kontrak |
-|---|---|
-| `@bpsprovkaltara/design-system` | barrel API + side effect CSS all-in-one |
-| `.../components/ui/*` · `.../patterns/*` · `.../hooks/*` | modul terarah; **CSS tidak dijamin ikut** lewat subpath |
-| `.../utils` | `cn`, tanpa kebutuhan client component |
-| `.../styles.css` | CSS terkompilasi, termasuk preflight |
-| `.../tokens.css` | CSS sumber Tailwind 4, token + utilitas, tanpa preflight |
-| `.../fonts.css` | Google Fonts CDN opsional, tidak dimuat default |
-| `.../tailwind-preset` | shim kosong, deprecated — jangan pakai untuk integrasi baru |
-
-Aturan konsumsi CSS: impor tepat sekali di root aplikasi konsumen · konsumen
-non-Tailwind pakai `styles.css` · konsumen Tailwind 4 yang sudah punya preflight
-pakai `tokens.css` setelah `@import "tailwindcss"` plus `@source` ke `dist`
-paket · konsumen subpath komponen **wajib** mengimpor entry CSS sesuai mode
-di atas · jangan mengimpor `styles.css` dan `tokens.css` sekaligus · font produksi
-disediakan sendiri, `fonts.css` hanya jalur CDN opt-in.
-
-Integrasi `Form` butuh peer opsional `react-hook-form`, `zod`,
-`@hookform/resolvers`. Jangan memaksa konsumen non-form memasangnya.
-
-### Sistem token tiga lapis
-
-**Layer A primitive** `--navy-*`, `--amber-*`, `--emerald-*`, `--crimson-*`,
-`--slate-*`, `--warm-*` → **Layer B semantic** `--surface-*`, `--content-*`,
-`--border-*`, `--brand-*`, `--feedback-*`, `--data-*`, `--chart-*`,
-`--map-tier-*` → **Layer C kompatibilitas** alias shadcn (`--background`,
-`--primary`, `--card`, `--input`) dan pemetaan `@theme` ke utility Tailwind.
-
-Secara fisik `tokens.css` menaruh alias shadcn di blok Layer B, dan token khusus
-komponen lama sudah dihapus. Jangan menghidupkan kembali `--button-*`,
-`--input-*`, atau token per-komponen tanpa kebutuhan nyata dan wiring lengkap.
-
-Nilai warna umumnya bare HSL, dipakai sebagai `hsl(var(--token))`. Pengecualian:
-`--warm-50`, `--warm-100`, `--warm-200` sudah terbungkus `hsl()` — pakai
-`var(--warm-*)` langsung, atau varian `--warm-*-hsl` bila butuh komponen mentah.
+Lapisan, kontrak ekspor, dan token: [arsitektur](docs/architecture.md); konsumsi CSS/chrome: [guide](docs/guide.md) dan [consumer-chrome](docs/consumer-chrome.md). Repo ini **bukan Next.js** — `'use client'` hanya kompatibilitas RSC konsumen. Jaga sinkron `package.json#exports`, `src/index.ts`, dan `build:lib`.
 
 ## Invariant dan alur
 
@@ -159,12 +98,11 @@ kustom.
 
 ### Workflow lintas-agent
 
-- Baca `../../WORKFLOW.md` sebelum memulai perubahan.
-- Untuk detail mode/scope dan quality gate, buka `../../PLAYBOOKS.md` bila relevan.
-- Berlaku sama di Claude Code dan OpenCode — keduanya membaca file ini dan
-  skill di `.claude/skills/`. Jangan menganggap capability tool tersedia tanpa
-  memeriksa runtime aktif.
-- OpenCode tidak memuat `../../WORKFLOW.md` otomatis; baca sendiri saat memulai.
+Jika `../../WORKFLOW.md` ada, repo ini berada di workspace pemilik: baca dan ikuti aturan workspace yang relevan sebagai tambahan. Jika tidak ada, instruksi dalam repo ini sudah cukup; ketiadaan dokumen atau tool workspace bukan penghalang untuk mengembangkan proyek.
+
+Invariant, keamanan, dan verifikasi di file ini tetap berlaku di kedua
+lingkungan. Jika aturan tambahan bertentangan dengan aturan repo, jelaskan
+konfliknya. Jangan melemahkan invariant, keamanan, atau verifikasi.
 
 ## Verifikasi
 
