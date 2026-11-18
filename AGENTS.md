@@ -152,11 +152,12 @@ keputusan arsitektur di `docs/adr/`.
 <!-- SKILL-ROUTING:START -->
 ## Skills
 
-Routing ini dirawat **manual**; semua skill di tabel ada di `.claude/skills/` (tidak ikut clone). Impeccable tersedia global, bukan skill lokal repo.
+Routing ini dirawat **manual**; skill repo ada di `.claude/skills/`. Impeccable tersedia global, bukan skill lokal repo.
 
 | Skill | Kondisi Pemicu (Trigger) |
 |---|---|
 | `release-tag` | Buka saat menyiapkan annotated git tag rilis versi library dari `package.json` + `CHANGELOG.md` |
+| `verify-design-system` | Buka untuk membuktikan showcase atau registry dengan browser headless dan menyimpan bukti |
 | `shadcn` | Buka sebelum menambah atau memodifikasi komponen primitif dari registry shadcn (`components.json`) |
 | `vercel-composition-patterns` | Buka sebelum mendesain API komponen tingkat tinggi yang reusable (compound components, render props, context) |
 | `vercel-react-best-practices` | Buka saat mengoptimalkan performa modul React/Vite, tree-shaking, dan bundle size library |

@@ -75,16 +75,18 @@ alasan per baris.
 `vitest/no-conditional-expect`, `vitest/valid-expect` (`maxArgs: 2`),
 `vitest/no-identical-title`, dan
 `@eslint-community/eslint-comments/require-description`. Skip sementara butuh
-`eslint-disable` dengan alasan yang menautkan issue. Tidak ada Playwright di
-repo ini, jadi aturan `eslint-plugin-playwright` tidak berlaku.
+`eslint-disable` dengan alasan yang menautkan issue. Aturan
+`eslint-plugin-playwright` belum diterapkan pada helper verifikasi.
 
 ## Tanpa DB dan tanpa login
 
 Paket ini pustaka komponen: tidak punya database, akun, atau login. Tidak ada DB uji per worktree, akun uji, maupun smoke matriks peran. Komponen auth (form login, chrome) diuji sebagai komponen di Vitest; alur login sungguhan diuji di repo aplikasi konsumen.
 
-Tidak ada Playwright atau suite E2E browser. Pemeriksaan visual showcase (navigasi, responsif, light/dark) dilakukan manual lewat `bun run dev`, atau dengan Playwright Chromium headless dari luar repo bila diperlukan.
+Belum ada suite E2E browser menyeluruh. Helper verifikasi menjalankan Playwright Chromium headless melalui browser slot untuk alur yang tercantum di bawah.
 
 ## Skill verifikasi
 
-Belum ada. `.claude/skills/verify-design-system/` beserta peta fitur
-`features/` dilacak di fachriizzudin/project-rules#85.
+Gunakan [verify-design-system](../.claude/skills/verify-design-system/SKILL.md)
+dan [peta fitur](../.claude/skills/verify-design-system/features/README.md).
+Helper membuktikan navigasi ke Buttons, mode gelap, respons registry, dan
+instalasi satu komponen ke aplikasi konsumen Vite sementara.

@@ -17,3 +17,4 @@ audits/
 # Registry dibangkitkan saat build (ADR 0003)
 registry.json
 public/r/
+test-results/verify/
