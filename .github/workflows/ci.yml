@@ -174,6 +174,12 @@ jobs:
         # remote, jadi batasi ke riwayat commit yang di-push.
         run: gitleaks git --no-banner --redact --log-opts="HEAD" .
 
+      - name: Set up Python for zizmor
+        if: ${{ !cancelled() }}
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+
       - name: zizmor
         if: ${{ !cancelled() }}
         uses: zizmorcore/zizmor-action@45d7276c9ca790aabd705e31ca99c6185c3e76dd # v0.8.1
