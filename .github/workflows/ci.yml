@@ -10,13 +10,13 @@ permissions:
   contents: read
 
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   # lint, typecheck, test dengan gate coverage, build (TESTING.md §8).
-  quality:
-    runs-on: ubuntu-latest
+  ci:
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -79,8 +79,8 @@ jobs:
 
   # Audit dependency, gitleaks CLI, dan zizmor (TESTING.md §8).
   security:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -106,7 +106,9 @@ jobs:
           curl -fsSLo gitleaks.tar.gz "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
           echo "${GITLEAKS_SHA256}  gitleaks.tar.gz" | sha256sum -c -
           tar -xzf gitleaks.tar.gz gitleaks
-          sudo mv gitleaks /usr/local/bin/gitleaks
+          mkdir -p "$RUNNER_TEMP/ci-tools"
+          mv gitleaks "$RUNNER_TEMP/ci-tools/gitleaks"
+          echo "$RUNNER_TEMP/ci-tools" >> "$GITHUB_PATH"
           rm gitleaks.tar.gz
 
       - name: Gitleaks (PR range)
@@ -121,6 +123,12 @@ jobs:
         # Default gitleaks = `git log --all`; fetch-depth 0 membawa semua branch
         # remote, jadi batasi ke riwayat commit yang di-push.
         run: gitleaks git --no-banner --redact --log-opts="HEAD" .
+
+      - name: Set up Python for zizmor
+        if: ${{ !cancelled() }}
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
 
       - name: zizmor
         if: ${{ !cancelled() }}
