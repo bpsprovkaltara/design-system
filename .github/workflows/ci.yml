@@ -16,37 +16,12 @@ concurrency:
 jobs:
   # lint, typecheck, test dengan gate coverage, build (TESTING.md §8).
   ci:
-    runs-on: [self-hosted, bps6500]
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-
-      - name: Provide unzip using Python when missing
-        run: |
-          if ! command -v unzip >/dev/null; then
-            mkdir -p "$RUNNER_TEMP/ci-tools"
-            cat > "$RUNNER_TEMP/ci-tools/unzip" <<'PY'
-          #!/usr/bin/env python3
-          import os, pathlib, sys, zipfile
-          args = sys.argv[1:]
-          archive = next(arg for arg in args if not arg.startswith('-'))
-          dest = pathlib.Path(args[args.index('-d') + 1] if '-d' in args else '.').resolve()
-          with zipfile.ZipFile(archive) as bundle:
-              for entry in bundle.infolist():
-                  path = (dest / entry.filename).resolve()
-                  if not path.is_relative_to(dest) or (entry.external_attr >> 16) & 0o170000 == 0o120000:
-                      raise ValueError('unsafe ZIP entry')
-              bundle.extractall(dest)
-              for entry in bundle.infolist():
-                  mode = (entry.external_attr >> 16) & 0o777
-                  if mode:
-                      os.chmod(dest / entry.filename, mode)
-          PY
-            chmod +x "$RUNNER_TEMP/ci-tools/unzip"
-            echo "$RUNNER_TEMP/ci-tools" >> "$GITHUB_PATH"
-          fi
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         with:
@@ -104,38 +79,13 @@ jobs:
 
   # Audit dependency, gitleaks CLI, dan zizmor (TESTING.md §8).
   security:
-    runs-on: [self-hosted, bps6500]
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0 # gitleaks memindai riwayat
           persist-credentials: false
-
-      - name: Provide unzip using Python when missing
-        run: |
-          if ! command -v unzip >/dev/null; then
-            mkdir -p "$RUNNER_TEMP/ci-tools"
-            cat > "$RUNNER_TEMP/ci-tools/unzip" <<'PY'
-          #!/usr/bin/env python3
-          import os, pathlib, sys, zipfile
-          args = sys.argv[1:]
-          archive = next(arg for arg in args if not arg.startswith('-'))
-          dest = pathlib.Path(args[args.index('-d') + 1] if '-d' in args else '.').resolve()
-          with zipfile.ZipFile(archive) as bundle:
-              for entry in bundle.infolist():
-                  path = (dest / entry.filename).resolve()
-                  if not path.is_relative_to(dest) or (entry.external_attr >> 16) & 0o170000 == 0o120000:
-                      raise ValueError('unsafe ZIP entry')
-              bundle.extractall(dest)
-              for entry in bundle.infolist():
-                  mode = (entry.external_attr >> 16) & 0o777
-                  if mode:
-                      os.chmod(dest / entry.filename, mode)
-          PY
-            chmod +x "$RUNNER_TEMP/ci-tools/unzip"
-            echo "$RUNNER_TEMP/ci-tools" >> "$GITHUB_PATH"
-          fi
 
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         with:
