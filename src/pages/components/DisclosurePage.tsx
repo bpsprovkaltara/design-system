@@ -7,6 +7,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
@@ -16,8 +18,27 @@ export function DisclosurePage() {
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <SectionHeader
         title="Disclosure & Layout"
-        description="Komponen pengungkap konten bertahap: accordion, tabs, scroll area, dan pemisah."
+        description="Komponen pengungkap konten bertahap: collapsible, accordion, tabs, scroll area, dan pemisah."
       />
+
+      <ShowcaseSection title="Collapsible">
+        <div className="rounded-lg border bg-card p-8">
+          <Collapsible className="w-full space-y-2">
+            <CollapsibleTrigger asChild>
+              <Button variant="outline">Tampilkan rincian</Button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="rounded-md border p-4 text-body-sm text-content-secondary">
+              Rincian tambahan ditampilkan di sini. Trigger mengatur aria-expanded secara otomatis.
+            </CollapsibleContent>
+          </Collapsible>
+        </div>
+        <CodeBlock>{`<Collapsible>
+  <CollapsibleTrigger asChild>
+    <Button variant="outline">Tampilkan rincian</Button>
+  </CollapsibleTrigger>
+  <CollapsibleContent>...</CollapsibleContent>
+</Collapsible>`}</CodeBlock>
+      </ShowcaseSection>
 
       <ShowcaseSection title="Accordion">
         <div className="rounded-lg border bg-card p-8">

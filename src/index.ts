@@ -14,6 +14,7 @@ export {
   AccordionTrigger,
   AccordionContent,
 } from '@/components/ui/accordion'
+export { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible'
 export { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert'
 export { Avatar, AvatarImage, AvatarFallback, AvatarGroup } from '@/components/ui/avatar'
 export { Badge } from '@/components/ui/badge'
