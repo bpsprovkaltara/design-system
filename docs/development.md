@@ -1,10 +1,10 @@
-# Pengembangan BPS Kaltara Design System
+# BPS Kaltara Design System Development
 
-## Prasyarat
+## Prerequisites
 
-Node 24 dari `.node-version` (CI menjalankan vitest dan tsc di Node 24; hanya tooling, bukan syarat konsumen) dan Bun 1.3.14 sesuai manifest; `preinstall` menolak pnpm/npm. Cek node --version dan bun --version. Lockfile `bun.lock` (dokumen runtime kedua): React 19.2.6, Vite 8.0.11, TS 6.0.3, Vitest 4.1.5.
+Node 24 from `.node-version` (CI runs vitest and tsc on Node 24; tooling only, not a consumer requirement) and Bun 1.3.14 according to the manifest; `preinstall` rejects pnpm/npm. Check node --version and bun --version. The lockfile `bun.lock` (a second runtime document): React 19.2.6, Vite 8.0.11, TS 6.0.3, Vitest 4.1.5.
 
-## Setup lokal
+## Local setup
 
 ```bash
 git clone https://github.com/bpsprovkaltara/design-system.git
@@ -13,11 +13,11 @@ bun install
 bun run dev
 ```
 
-Showcase berjalan di http://localhost:5173. Jangan memakai package manager lain atau mengedit output dist/node_modules.
+The showcase runs at http://localhost:5173. Do not use another package manager or edit the dist/node_modules output.
 
 ## Scripts
 
-| Script | Implementasi manifest |
+| Script | Manifest implementation |
 |---|---|
 | dev | bun --bun vite |
 | build | tsc && bun --bun vite build |
@@ -36,26 +36,26 @@ Showcase berjalan di http://localhost:5173. Jangan memakai package manager lain 
 | prepare | bun run prepare:hooks |
 | prepare:hooks | husky |
 
-Build showcase/library berbagi dist; build terakhir menentukan isi folder. prepare memasang hook saja, tidak build library. Rilis memicu prepublishOnly.
+The showcase/library builds share dist; the last build decides the folder contents. prepare only installs hooks, it does not build the library. A release triggers prepublishOnly.
 
-## Branching dan commit
+## Branching and commits
 
-Repo internal; kontribusi eksternal tidak diterima. Branch dari main dengan feat/, fix/, chore/, docs/; PR ke main, jangan commit langsung ke main. Jalur v3 legacy terpisah. Conventional Commits, scope opsional, subject lowercase imperatif maksimum 72 karakter. Minimal satu approval; author merge dan menghapus branch sesuai proses tim.
+An internal repo; external contributions are not accepted. Branch from main with feat/, fix/, chore/, docs/; PR to main, do not commit directly to main. The v3 legacy track is separate. Conventional Commits, optional scope, a lowercase imperative subject of at most 72 characters. At least one approval; the author merges and deletes the branch according to the team process.
 
-## Alur menambah fitur
+## Flow for adding a feature
 
-1. Baca AGENTS dan status Git, identifikasi public API/consumer impact.
-2. Implementasi src/components/ui atau patterns dengan named exports dan props types.
-3. Ekspor src/index.ts selaras exports package.json.
-4. Tambahkan regression test berdampingan .test.tsx.
-5. Perbarui showcase page, route src/App.tsx dan navigasi src/components/layout/Sidebar.tsx.
-6. Jalankan gate relevan dan dokumentasikan perubahan konsumen/release.
+1. Read AGENTS and the Git status, identify the public API/consumer impact.
+2. Implement in src/components/ui or patterns with named exports and props types.
+3. Export in src/index.ts aligned with the package.json exports.
+4. Add a regression test next to it, .test.tsx.
+5. Update the showcase page, the route in src/App.tsx, and the navigation in src/components/layout/Sidebar.tsx.
+6. Run the relevant gates and document the consumer/release change.
 
-Komponen yang sudah berada pada halaman gabungan cukup memperbarui yang relevan; jangan membuat route duplikat secara mekanis.
+For a component that is already on a combined page, just update what is relevant; do not create a duplicate route mechanically.
 
-## Konvensi kode
+## Code conventions
 
-Simbol PascalCase, file komponen kebab-case; @/ untuk source internal; cn untuk class kondisional; state/props immutable. Warna semantik/Tailwind, bukan hardcoded hex; dukung light/.dark. UI Bahasa Indonesia formal tanpa emoji; angka Intl.NumberFormat('id-ID'). Keyboard, semantic HTML, focus, label dan ARIA wajib. Komponen navigasi menyediakan asChild/renderLink, tanpa dependency Next.js. Tokens normatif di tokens.css dan [DESIGN](../DESIGN.md), bukan entry colors_and_type.css.
+PascalCase symbols, kebab-case component files; @/ for internal source; cn for conditional classes; immutable state/props. Semantic/Tailwind colors, not hardcoded hex; support light/.dark. UI in formal Indonesian without emoji; numbers with Intl.NumberFormat('id-ID'). Keyboard, semantic HTML, focus, labels, and ARIA are required. Navigation components provide asChild/renderLink, without a Next.js dependency. The normative tokens are in tokens.css and [DESIGN](../DESIGN.md), not the colors_and_type.css entry.
 
 ## Testing
 
@@ -65,16 +65,16 @@ bun run lint
 bun run test
 ```
 
-Tangga verifikasi ada di [testing](testing.md). Vitest/Testing Library/jsdom; test source berdampingan. Threshold global saat ini 67% statements, 74% branches, 62% functions, 68% lines (ratchet, baseline di testing.md); target kode baru/berubah >=80% tanpa mengecualikan file secara palsu. CI main/v3 memeriksa client directives, test:coverage, build:lib dan build showcase, plus job security (audit, gitleaks, zizmor). Perubahan CSS/API/build perlu build:lib dan integrasi Tailwind/non-Tailwind/RSC; route/showcase perlu build dan navigasi/responsif. Dependency/rilis juga audit. Dokumentasi saja memakai cek path/link/versi dan git diff --check, tanpa build.
+The verification ladder is in [testing](testing.md). Vitest/Testing Library/jsdom; tests next to the source. The global threshold is currently 67% statements, 74% branches, 62% functions, 68% lines (a ratchet, baseline in testing.md); the target for new/changed code is >=80% without excluding files falsely. CI main/v3 checks the client directives, test:coverage, build:lib, and the showcase build, plus a security job (audit, gitleaks, zizmor). A CSS/API/build change needs build:lib and Tailwind/non-Tailwind/RSC integration; a route/showcase change needs the build and navigation/responsive checks. A dependency/release also needs an audit. Documentation only uses a path/link/version check and git diff --check, without a build.
 
 ## Debugging
 
-- Focus CommandInput: jangan menghilangkan seluruh indikator fokus; gunakan wrapperClassName/focus-visible yang selaras primitive.
-- warm token invalid: var(--warm-50) langsung atau hsl(var(--warm-50-hsl)); jangan hsl(var(--warm-50)).
-- Styling hilang: pilih CSS entry sesuai tool konsumen, source dist untuk Tailwind; jangan double preflight.
-- Font fallback: CSS paket tidak memuat font default; index.html showcase memakai link, konsumen self-host/CDN opt-in.
-- require is not defined/RSC: telusuri external deps, preserveModules, exports dan client directives.
+- Focus on CommandInput: do not remove the whole focus indicator; use wrapperClassName/focus-visible that matches the primitive.
+- Invalid warm token: var(--warm-50) directly or hsl(var(--warm-50-hsl)); not hsl(var(--warm-50)).
+- Styling missing: choose the CSS entry according to the consumer's tool, the dist source for Tailwind; do not double the preflight.
+- Font fallback: the package CSS does not load a default font; the showcase index.html uses a link, and consumers self-host/opt in to a CDN.
+- require is not defined/RSC: trace the external deps, preserveModules, exports, and client directives.
 
-## Kontribusi
+## Contributing
 
-PR menyertakan kontrak API/tipe/CSS, test, showcase bila relevan, aksesibilitas/light-dark, dokumentasi dan CHANGELOG untuk perubahan rilis. Jangan stage env/secret, output generated atau WIP pihak lain. Rincian deployment/rilis: [operations](operations.md); konsumsi: [api](api.md), [guide](guide.md), [consumer chrome](consumer-chrome.md).
+A PR includes the API/type/CSS contract, tests, the showcase if relevant, accessibility/light-dark, documentation, and the CHANGELOG for release changes. Do not stage env/secrets, generated output, or other parties' WIP. Deployment/release details: [operations](operations.md); consumption: [api](api.md), [guide](guide.md), [consumer chrome](consumer-chrome.md).

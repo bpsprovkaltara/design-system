@@ -1,28 +1,28 @@
-# Panduan konsumsi BPS Kaltara Design System
+# BPS Kaltara Design System consumption guide
 
-Panduan integrasi v4, berdasarkan exports dan CSS source saat ini. [DESIGN](../DESIGN.md) memegang token normatif; [API](api.md) memegang kontrak library. Integrasi chrome dan link framework: [consumer-chrome](consumer-chrome.md); perubahan versi: [upgrading](upgrading.md) dan [CHANGELOG](../CHANGELOG.md).
+The v4 integration guide, based on the current exports and CSS source. [DESIGN](../DESIGN.md) holds the normative tokens; the [API](api.md) holds the library contract. Chrome and framework link integration: [consumer-chrome](consumer-chrome.md); version changes: [upgrading](upgrading.md) and the [CHANGELOG](../CHANGELOG.md).
 
-## Prasyarat dan pemasangan
+## Prerequisites and installation
 
-Pilih jalur yang sesuai aplikasi: v4 React >=19/Tailwind >=4, Node >=20; v3 legacy React18/Tailwind3.4. Registry scope @bpsprovkaltara memakai GitHub Packages, credential read:packages dari environment/home npmrc, tanpa token committed. Setup npmrc di [README](../README.md#mulai-cepat).
+Choose the track that fits the application: v4 React >=19/Tailwind >=4, Node >=20; v3 legacy React18/Tailwind3.4. The registry scope @bpsprovkaltara uses GitHub Packages, with read:packages credentials from the environment/home npmrc, and no committed token. The npmrc setup is in the [README](../README.md#mulai-cepat).
 
 ```bash
 pnpm add @bpsprovkaltara/design-system@latest
-# Peer opsional bila memakai Form:
+# Optional peers if using Form:
 pnpm add react-hook-form zod @hookform/resolvers
 ```
 
-Gunakan paket yang sudah diekspor alih-alih menyalin primitive lokal tanpa alasan. Tidak perlu menjalankan CLI shadcn untuk memakai komponen paket; components.json hanya konfigurasi generator bila aplikasi memang merawat source sendiri.
+Use the exported package instead of copying a local primitive without a reason. You do not need to run the shadcn CLI to use the package components; components.json is only a generator configuration if the application maintains its own source.
 
-## Memilih stylesheet
+## Choosing a stylesheet
 
-| Konsumen | Entry |
+| Consumer | Entry |
 |---|---|
-| Tanpa pipeline Tailwind | styles.css compiled, dengan preflight |
-| Tailwind4 yang sudah memiliki preflight | tokens.css source, tanpa preflight |
-| Font CDN opt-in | fonts.css; bukan default |
+| Without a Tailwind pipeline | the compiled styles.css, with preflight |
+| Tailwind4 that already has preflight | the source tokens.css, without preflight |
+| Opt-in font CDN | fonts.css; not the default |
 
-Konsumen Tailwind memerlukan source dist untuk menghasilkan kelas komponen. Path @source relatif terhadap file CSS aplikasi; sesuaikan kedalaman yang nyata.
+A Tailwind consumer needs the dist source to produce the component classes. The @source path is relative to the application's CSS file; adjust the real depth.
 
 ```css
 @import "tailwindcss";
@@ -31,11 +31,11 @@ Konsumen Tailwind memerlukan source dist untuk menghasilkan kelas komponen. Path
 @source "../src";
 ```
 
-Jangan import styles.css dan tokens.css sekaligus. Subpath komponen tidak menjamin CSS ikut. Barrel memuat CSS all-in-one; gunakan import modul terarah dan pilihan CSS yang sesuai bila aplikasi sudah mengelola preflight. tailwind-preset v4 adalah shim deprecated, bukan setup baru.
+Do not import styles.css and tokens.css together. A component subpath does not guarantee that CSS comes along. The barrel loads the all-in-one CSS; use targeted module imports and the matching CSS choice if the application already manages the preflight. The v4 tailwind-preset is a deprecated shim, not a new setup.
 
-## Next.js dan React
+## Next.js and React
 
-Repo library/showcase bukan Next.js. Aplikasi konsumen tetap mengelola layout, global CSS, auth dan router. Gunakan versi framework yang kompatibel peer React19/Tailwind4; scaffolding framework tidak menjadi script repository ini.
+The library/showcase repo is not Next.js. The consumer application still manages the layout, global CSS, auth, and router. Use a framework version compatible with the React19/Tailwind4 peers; framework scaffolding is not a script of this repository.
 
 ```tsx
 import { Button } from '@bpsprovkaltara/design-system/components/ui/button'
@@ -46,22 +46,22 @@ import { FormSheet } from '@bpsprovkaltara/design-system/components/ui/form-shee
 </FormSheet>
 ```
 
-Boundary client diperlukan untuk hooks/interaksi; preserveModules menjaga directive use client. Utilitas murni dapat diambil dari subpath utils. Komponen navigasi memakai asChild/renderLink dengan link router; jangan menambah Next dependency ke library. Tabel adapter lengkap ada di consumer-chrome.
+A client boundary is needed for hooks/interaction; preserveModules keeps the use client directive. Pure utilities can be taken from the utils subpath. Navigation components use asChild/renderLink with the router link; do not add a Next dependency to the library. The full adapter table is in consumer-chrome.
 
-## HTML/CSS statis
+## Static HTML/CSS
 
-Browser tidak memproses directive @theme/@utility pada raw tokens.css. Gunakan styles.css compiled dari paket atau pipeline Tailwind bila mengolah tokens.css. CSS saja tidak membuat komponen React hidup pada halaman HTML.
+A browser does not process the @theme/@utility directives in the raw tokens.css. Use the compiled styles.css from the package or a Tailwind pipeline if processing tokens.css. CSS alone does not bring React components to life on an HTML page.
 
 ```html
 <link rel="stylesheet" href="./assets/css/bps-styles.css">
 <section class="bg-background text-foreground">Ringkasan</section>
 ```
 
-bps-styles.css adalah salinan compiled styles.css dari versi library yang dipilih. Font dimuat terpisah; tidak otomatis di-import dari token.
+bps-styles.css is a copy of the compiled styles.css of the chosen library version. Fonts are loaded separately; they are not automatically imported from the tokens.
 
-## Laravel Blade dan Vite
+## Laravel Blade and Vite
 
-Blade dapat memakai token/utilitas CSS tanpa primitive React. Bila memakai Tailwind4, import tailwindcss dan paket tokens.css, lalu @source views/js serta dist paket dengan path relatif sesuai resources/css. Integrasi React tambahan dikelola aplikasi sendiri.
+Blade can use the CSS tokens/utilities without the React primitives. If using Tailwind4, import tailwindcss and the package tokens.css, then @source views/js and the package dist with relative paths matching resources/css. Additional React integration is managed by the application itself.
 
 ```css
 @import "tailwindcss";
@@ -71,11 +71,11 @@ Blade dapat memakai token/utilitas CSS tanpa primitive React. Bila memakai Tailw
 @source "../../node_modules/@bpsprovkaltara/design-system/dist";
 ```
 
-Layout Blade memuat CSS lewat mekanisme Vite aplikasi; font self-host atau link/CDN opt-in dikelola aplikasi, tidak otomatis dalam token.
+The Blade layout loads the CSS through the application's Vite mechanism; a self-hosted font or an opt-in link/CDN is managed by the application, not automatic in the tokens.
 
-## Warna dan token semantik
+## Colors and semantic tokens
 
-Tiga lapis: primitive skala → semantic role → alias shadcn/@theme. Komponen memakai surface/content/border/brand/feedback/data/chart/map-tier, bukan skala navy/amber langsung.
+Three layers: scale primitive → semantic role → shadcn/@theme aliases. Components use surface/content/border/brand/feedback/data/chart/map-tier, not the navy/amber scale directly.
 
 ```css
 .panel {
@@ -88,47 +88,47 @@ Tiga lapis: primitive skala → semantic role → alias shadcn/@theme. Komponen 
 .paper { background: var(--warm-50); }
 ```
 
-Umumnya nilai bare HSL, dibungkus hsl saat memakai var. Pengecualian warm-50/100/200 telah terbungkus: var langsung, atau hsl(var(--warm-50-hsl)) untuk kanal. Jangan double-wrap. Semantik primary memakai navy incumbent, card warm-100; jangan menganggap keduanya identitas biru/putih lama. Chart mempunyai sepuluh token seri; map-tier 0–5 dan active. Nilai aktual light/.dark ada di tokens.css dan DESIGN; jangan memelihara salinan tabel nilai yang menyimpang.
+Generally the values are bare HSL, wrapped in hsl when using var. The exception warm-50/100/200 are already wrapped: use var directly, or hsl(var(--warm-50-hsl)) for a channel. Do not double-wrap. The semantic primary uses the incumbent navy, card is warm-100; do not assume either is the old blue/white identity. Charts have ten series tokens; map-tier 0–5 and active. The actual light/.dark values are in tokens.css and DESIGN; do not maintain a copy of a value table that drifts.
 
-## Font dan tipografi
+## Fonts and typography
 
-Fraunces untuk display editorial; IBM Plex Sans untuk heading UI, body, kontrol; IBM Plex Mono untuk angka/kode. Font stack CSS tidak mengunduh font. Showcase memakai link index.html, font produksi disediakan konsumen (self-host atau mekanisme font framework); fonts.css hanya jalur CDN opt-in.
+Fraunces for editorial display; IBM Plex Sans for UI headings, body, controls; IBM Plex Mono for numbers/code. The CSS font stack does not download fonts. The showcase uses the index.html link, production fonts are provided by the consumer (self-hosting or the framework's font mechanism); fonts.css is only the opt-in CDN path.
 
-Utilitas tipografi/numeric mengikuti tokens.css. PageHeader merender h1 dengan kelas h2. Format angka gunakan Intl.NumberFormat('id-ID'); gunakan tabular numeric untuk data. Fallback tetap terbaca bila CDN diblokir. Jangan memberi Fraunces pada input atau tombol.
+The typography/numeric utilities follow tokens.css. PageHeader renders an h1 with the class h2. Format numbers with Intl.NumberFormat('id-ID'); use tabular numerics for data. The fallback stays readable if the CDN is blocked. Do not give Fraunces to inputs or buttons.
 
-## Layout, bentuk dan motion
+## Layout, shapes, and motion
 
-Skala dasar empat poin, spacing dan radius normatif di DESIGN/tokens.css. Default radius md tombol/input, xl kartu; jangan menganggap radius-xl sama dengan default Tailwind. Shell sidebar expanded 280px, collapsed64px, topbar64px. Background dan border semantik memisahkan permukaan sebelum menambah bayangan.
+A four-point base scale, with normative spacing and radius in DESIGN/tokens.css. The default radius md for buttons/inputs, xl for cards; do not assume radius-xl equals the Tailwind default. Shell sidebar expanded 280px, collapsed 64px, topbar 64px. Semantic background and border separate surfaces before adding shadows.
 
-Token transisi source memakai fast/base/slow dan motion-duration; reduced-motion menurunkan animation/transition. Jangan menambah library motion JS, sesuai ADR 0002.
+The source transition tokens use fast/base/slow and motion-duration; reduced-motion lowers animation/transition. Do not add a JS motion library, according to ADR 0002.
 
-## Light dan dark
+## Light and dark
 
-Class .dark mengganti token semantic dan compatibility. Konsumen mengelola preferensi/persistence; ThemeToggle/useTheme tersedia untuk pola yang sesuai aplikasi. Periksa warna, label/focus dan kontras di kedua mode. Framework hydration adalah tanggung jawab aplikasi; jangan memakai suppressHydrationWarning sebagai solusi untuk mismatch lain.
+The .dark class replaces the semantic and compatibility tokens. The consumer manages the preference/persistence; ThemeToggle/useTheme are available for a pattern that fits the application. Check colors, labels/focus, and contrast in both modes. Framework hydration is the application's responsibility; do not use suppressHydrationWarning as a solution for other mismatches.
 
-## Pola aplikasi
+## Application patterns
 
-- PageHeader untuk judul/aksi; KpiCard/PerformanceCard untuk metrik.
-- AppShell sudah menyediakan toggle desktop dan menu mobile; slots logo/footer/topbar milik konsumen.
-- DataTable mendukung loading/error/empty, sorting client-side, pageSize client dan pagination server terkontrol; data fetch tetap di app.
-- FilterBar composable memakai FilterField search/select/custom atau children; preset DocumentFilterBar menjaga API domain lama.
-- FormDialog/FormSheet menyediakan overlay; validasi form memakai optional peers bila dibutuhkan.
-- CommandSearch menyediakan panel dan shortcut; app memasok hasil/fetch. CommandDialog commandProps dapat menonaktifkan filter cmdk untuk hasil server.
-- Tabs untuk panel satu halaman, SectionTabs untuk sibling route dengan pathname/renderLink.
-- StatusBadge memakai children sebagai teks; status tidak disampaikan oleh warna saja.
-- EmptyState/DataStatePanel/PageSkeleton merender state dengan aksi yang dapat ditindaklanjuti.
+- PageHeader for the title/actions; KpiCard/PerformanceCard for metrics.
+- AppShell already provides the desktop toggle and the mobile menu; the logo/footer/topbar slots belong to the consumer.
+- DataTable supports loading/error/empty, client-side sorting, client pageSize, and controlled server pagination; the data fetch stays in the app.
+- A composable FilterBar uses FilterField search/select/custom or children; the DocumentFilterBar preset keeps the old domain API.
+- FormDialog/FormSheet provide overlays; form validation uses the optional peers if needed.
+- CommandSearch provides a panel and a shortcut; the app supplies results/fetch. CommandDialog commandProps can turn off the cmdk filter for server results.
+- Tabs for in-page panels, SectionTabs for sibling routes with pathname/renderLink.
+- StatusBadge uses children as text; status is not conveyed by color alone.
+- EmptyState/DataStatePanel/PageSkeleton render states with actions that can be followed up.
 
-Kontrak props dan daftar ekspor lengkap: API, source declarations dan index.
+The props contract and the full export list: the API, source declarations, and index.
 
-## Checklist integrasi
+## Integration checklist
 
-- Versi paket/peer cocok; registry credential tidak masuk Git.
-- CSS entry dipilih satu, source dist benar dan tidak double-preflight.
-- Font Fraunces/IBM Plex termuat atau fallback dapat dibaca.
-- Komponen link memakai adapter router; server/client boundary benar.
-- Keyboard/focus-visible, icon aria-label, form label dan skip link diuji.
-- Kontras teks target WCAG AA dan state light/.dark diuji; angka id-ID dan null dash yang jelas.
-- Loading/error/empty/ready dan reduced motion diuji.
-- Data auth/notifikasi/pencarian tetap berasal aplikasi, tanpa PII/credential log.
+- The package/peer versions match; registry credentials do not go into Git.
+- One CSS entry is chosen, the dist source is right, and there is no double preflight.
+- Fraunces/IBM Plex fonts are loaded or the fallback is readable.
+- Link components use a router adapter; the server/client boundary is right.
+- Keyboard/focus-visible, icon aria-label, form labels, and skip link are tested.
+- Text contrast targets WCAG AA and the light/.dark states are tested; id-ID numbers and a clear null dash.
+- Loading/error/empty/ready and reduced motion are tested.
+- Auth/notification/search data still comes from the application, with no PII/credentials in logs.
 
-Contoh dashboard: [prototype](../ui_kits/dashboard/README.md); prototype bukan data resmi produksi.
+A dashboard example: the [prototype](../ui_kits/dashboard/README.md); the prototype is not official production data.

@@ -1,4 +1,4 @@
-# Produk BPS Kaltara Design System
+# BPS Kaltara Design System Product
 
 <!-- impeccable:product-schema 1 -->
 
@@ -8,35 +8,35 @@ web
 
 ## Users
 
-Developer aplikasi internal BPS Provinsi Kalimantan Utara memakai library; developer dan designer menelusuri showcase untuk memilih komponen, meninjau token, dan mengambil contoh integrasi.
+Developers of internal BPS Provinsi Kalimantan Utara applications use the library; developers and designers browse the showcase to choose components, review tokens, and take integration examples.
 
 ## Product Purpose
 
-Menyediakan komponen React, token CSS, pola aplikasi dan contoh yang konsisten untuk aplikasi internal. Showcase SPA menyajikan referensi interaktif dari source yang sama dengan paket library.
+Provide consistent React components, CSS tokens, application patterns, and examples for internal applications. The showcase SPA presents an interactive reference from the same source as the library package.
 
 ## Operating Context
 
-Paket privat `@bpsprovkaltara/design-system` dipublikasikan ke GitHub Packages. Jalur v4/main memakai React 19 dan Tailwind 4 dengan dist-tag latest; v3/branch v3 memakai React 18 dan Tailwind 3.4 dengan legacy. Showcase Vite dipasang melalui Docker/Traefik; URL dalam konfigurasi `design.kaltarastats.id`.
+The private package `@bpsprovkaltara/design-system` is published to GitHub Packages. The v4/main track uses React 19 and Tailwind 4 with the dist-tag latest; v3/the v3 branch uses React 18 and Tailwind 3.4 with legacy. The Vite showcase is deployed through Docker/Traefik; the URL in the configuration is `design.kaltarastats.id`.
 
 ## Capabilities and Constraints
 
-Primitive shadcn/Radix, komposit BPS, chart ringan, form, tabel, shell, overlay, pencarian, dan hooks diekspor dengan tipe serta ESM/CJS/subpath. Data bisnis, auth, fetch pencarian/notifikasi, routing framework dan backend tetap milik aplikasi konsumen. Repo tidak menyediakan service HTTP atau database. Optional peer form dipasang hanya bila dipakai. Directive client mendukung konsumen RSC; showcase tetap Vite.
+shadcn/Radix primitives, BPS composites, light charts, forms, tables, shell, overlays, search, and hooks are exported with types and ESM/CJS/subpaths. Business data, auth, search/notification fetching, framework routing, and the backend stay the consumer application's. The repo provides no HTTP service or database. Optional form peers are installed only when used. The client directive supports RSC consumers; the showcase stays Vite.
 
 ## Brand Commitments
 
-Arah incumbent Civic Editorial × Data-First Swiss: identitas BPS Kaltara dan copy Bahasa Indonesia formal tanpa emoji. Identitas visual terperinci ada di DESIGN, bukan keputusan arah baru.
+The incumbent direction Civic Editorial × Data-First Swiss: the BPS Kaltara identity and formal Indonesian copy without emoji. The detailed visual identity is in DESIGN, not a new direction decision.
 
 ## Evidence on Hand
 
-`src/index.ts`, komponen, hooks, showcase pages, token CSS, prototype `ui_kits/dashboard/`, tests, tag git dan CHANGELOG. Prototype memakai data/visual contoh; bukan bukti data statistik produksi atau peta resmi.
+`src/index.ts`, components, hooks, showcase pages, CSS tokens, the `ui_kits/dashboard/` prototype, tests, git tags, and the CHANGELOG. The prototype uses sample data/visuals; it is not evidence of production statistical data or official maps.
 
 ## Product Principles
 
-- Library dan showcase memakai source yang sama.
-- Konsumen mengendalikan data, routing, autentikasi dan font produksi.
-- Ekspor dan tipe mendefinisikan kontrak penggunaan.
-- Komponen mempertahankan keyboard, semantic HTML, focus dan light/dark.
+- The library and the showcase use the same source.
+- Consumers control data, routing, authentication, and production fonts.
+- Exports and types define the usage contract.
+- Components keep keyboard, semantic HTML, focus, and light/dark.
 
 ## Accessibility & Inclusion
 
-Bahasa Indonesia dan format angka id-ID mengikuti pemakaian internal. Pertahankan label, ARIA, keyboard, skip link dan reduced motion; audit aplikasi konsumen tetap diperlukan.
+Indonesian language and id-ID number format follow internal usage. Keep labels, ARIA, keyboard, skip links, and reduced motion; an audit of the consumer application is still needed.

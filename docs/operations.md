@@ -1,50 +1,50 @@
-# Operasi BPS Kaltara Design System
+# BPS Kaltara Design System Operations
 
 ## Environment
 
-| Lingkungan | Konfigurasi |
+| Environment | Configuration |
 |---|---|
 | Development | Vite http://localhost:5173 |
-| Showcase produksi | Host design.kaltarastats.id dalam docker-compose.yml; internal 8081 |
+| Production showcase | Host design.kaltarastats.id in docker-compose.yml; internal 8081 |
 | Library v4 | main, dist-tag latest |
 | Library v3 legacy | v3, dist-tag legacy |
 
-URL HTTPS dipakai dokumentasi produk, tetapi Compose mengatur entrypoint web tanpa label TLS. Terminasi TLS aktual, staging, SSH host/user/path dan kontak: diisi operator — belum ditetapkan; jangan mengklaim websecure terkonfigurasi.
+The HTTPS URL is used by the product documentation, but Compose sets the web entrypoint without a TLS label. The actual TLS termination, staging, SSH host/user/path, and contacts: to be filled in by the operator — not yet set; do not claim websecure is configured.
 
 ## Environment variables
 
-Showcase tidak mendeklarasikan credential runtime; Docker memakai NODE_ENV=production. Publikasi memakai NODE_AUTH_TOKEN dari GITHUB_TOKEN workflow; konsumen registry privat memakai token read:packages di environment/home npmrc. Jangan commit token. Registry scope @bpsprovkaltara menunjuk https://npm.pkg.github.com.
+The showcase declares no runtime credentials; Docker uses NODE_ENV=production. Publishing uses NODE_AUTH_TOKEN from the workflow GITHUB_TOKEN; consumers of the private registry use a read:packages token in the environment/home npmrc. Do not commit tokens. The registry scope @bpsprovkaltara points at https://npm.pkg.github.com.
 
-## Build dan image
+## Build and image
 
-Dockerfile dua stage oven/bun:1.3.14-slim, install `bun install --frozen-lockfile --ignore-scripts` sebelum source lengkap, lalu `bun run registry:build && bun run build` showcase. Runtime memasang serve@14.2.4, menyalin dist, user non-root bun, port 8081 dan `bun run --bun serve dist -l 8081 -s -n` (SPA fallback tanpa clipboard).
+A two-stage Dockerfile oven/bun:1.3.14-slim, install `bun install --frozen-lockfile --ignore-scripts` before the full source, then `bun run registry:build && bun run build` for the showcase. The runtime installs serve@14.2.4, copies dist, the non-root user bun, port 8081, and `bun run --bun serve dist -l 8081 -s -n` (SPA fallback without clipboard).
 
-Library build menghasilkan ESM/CJS/types, compiled styles.css, raw tokens.css dan fonts.css. Output dist dipakai bersama build showcase; artefak library dan Docker showcase harus dibangun sesuai target, bukan mengasumsikan satu dist memenuhi keduanya.
+The library build produces ESM/CJS/types, the compiled styles.css, the raw tokens.css, and fonts.css. The dist output is shared with the showcase build; the library and Docker showcase artifacts must be built according to the target, not assuming one dist satisfies both.
 
 ## Registry
 
-- `bun run registry:build` membangkitkan `registry.json` dari source (`scripts/build-registry.mjs`, termasuk self-check), lalu `shadcn build` menulis `public/r/*.json`. Keduanya tidak di-commit.
-- Vite menyalin `public/r/` ke `dist/r/`, sehingga Docker build (dan CI) menjalankan `registry:build` sebelum build showcase.
-- URL publik: `https://design.kaltarastats.id/r/<item>.json`. Aplikasi mendaftarkan namespace `@bps` di `components.json` lalu `shadcn add @bps/<item>`.
-- `registryDependencies` memakai URL absolut. Untuk uji lokal: `REGISTRY_BASE_URL=http://localhost:4010 bun run registry:build`, lalu sajikan `public/` di port itu.
-- Keputusan dan aturannya: `docs/adr/0003-distribute-via-shadcn-registry.md`.
+- `bun run registry:build` generates `registry.json` from the source (`scripts/build-registry.mjs`, including a self-check), then `shadcn build` writes `public/r/*.json`. Neither is committed.
+- Vite copies `public/r/` to `dist/r/`, so the Docker build (and CI) runs `registry:build` before the showcase build.
+- Public URL: `https://design.kaltarastats.id/r/<item>.json`. An application registers the namespace `@bps` in `components.json` and then `shadcn add @bps/<item>`.
+- `registryDependencies` use absolute URLs. For a local test: `REGISTRY_BASE_URL=http://localhost:4010 bun run registry:build`, then serve `public/` on that port.
+- The decision and its rules: `docs/adr/0003-distribute-via-shadcn-registry.md`.
 
 ## Deploy procedure
 
 ```mermaid
 flowchart LR
-  Source[Source dan lockfile] --> Image[Docker build showcase]
+  Source[Source and lockfile] --> Image[Docker build showcase]
   Image --> Compose[Compose service web]
-  Compose --> Traefik[proxy_network dan entrypoint web]
-  Tag[Annotated tag v sesuai manifest] --> Verify[Release CI checks]
-  Verify --> Package[GitHub Packages latest atau legacy]
+  Compose --> Traefik[proxy_network and the web entrypoint]
+  Tag[Annotated tag v matching the manifest] --> Verify[Release CI checks]
+  Verify --> Package[GitHub Packages latest or legacy]
 ```
 
-Traefik harus sudah berjalan dengan entrypoint yang sesuai; external network proxy_network harus tersedia.
+Traefik must already be running with the matching entrypoint; the external network proxy_network must be available.
 
 ```bash
 docker network inspect proxy_network
-# Hanya bila jaringan belum tersedia dan operator mengelolanya:
+# Only if the network is not available and the operator manages it:
 docker network create proxy_network
 docker build -t design-system:latest .
 docker run --rm -p 8081:8081 design-system:latest
@@ -53,31 +53,31 @@ docker compose ps
 docker compose logs --tail=100
 ```
 
-Compose service web, container design-system, restart unless-stopped; router host design.kaltarastats.id, entrypoint web, backend port 8081. Komentar Nginx dalam Compose historis; runtime sebenarnya serve.
+Compose service web, container design-system, restart unless-stopped; router host design.kaltarastats.id, entrypoint web, backend port 8081. The Nginx comment in Compose is historical; the actual runtime is serve.
 
-CI ci.yml pada push/PR main dan v3: frozen install → typecheck → lint → pemeriksaan client directive → test → build:lib → build. Bukan pipeline deploy Docker. release.yml pada tag v*: install/typecheck/lint/test, cocokkan tag dengan package version, dist-tag legacy untuk major 3 dan latest untuk major lain, publish GitHub Packages (prepublishOnly build:lib). Tag resmi dan CHANGELOG dipelihara; prosedur annotated tag di [release-tag skill](../.claude/skills/release-tag/SKILL.md). Jangan publish/tag/push tanpa permintaan eksplisit.
+CI ci.yml on push/PR to main and v3: frozen install → typecheck → lint → client directive check → test → build:lib → build. Not a Docker deploy pipeline. release.yml on tag v*: install/typecheck/lint/test, match the tag with the package version, dist-tag legacy for major 3 and latest for other majors, publish to GitHub Packages (prepublishOnly build:lib). Official tags and the CHANGELOG are maintained; the annotated tag procedure is in the [release-tag skill](../.claude/skills/release-tag/SKILL.md). Do not publish/tag/push without an explicit request.
 
-## Health check dan monitoring
+## Health check and monitoring
 
-Showcase memakai SPA fallback, bukan endpoint health HTTP library. Cek status/log container dan HTTP root/deep route serta aset CSS/font. Dockerfile tidak menetapkan HEALTHCHECK. Monitoring eksternal, interval dan kontak eskalasi: diisi operator — belum ditetapkan. Kegagalan CDN font memakai fallback, bukan alasan aplikasi berhenti.
+The showcase uses an SPA fallback, not a library HTTP health endpoint. Check the container status/logs and the HTTP root/deep route and the CSS/font assets. The Dockerfile sets no HEALTHCHECK. External monitoring, intervals, and escalation contacts: to be filled in by the operator — not yet set. A font CDN failure uses the fallback, not a reason for the app to stop.
 
-## Backup dan restore
+## Backup and restore
 
-Tidak ada database library/showcase. Simpan source/tag/lockfile, konfigurasi deploy dan image yang diterima agar bisa membangun ulang. Retensi image, konfigurasi Traefik dan backup host: diisi operator — belum ditetapkan. Jangan memasukkan credential registry ke backup publik.
+There is no library/showcase database. Keep the source/tags/lockfile, the deploy configuration, and the accepted image so it can be rebuilt. Image retention, Traefik configuration, and host backup: to be filled in by the operator — not yet set. Do not put registry credentials in a public backup.
 
 ## Rollback
 
-Compose saat ini build dari source, tanpa image registry tag; jangan memakai docker compose pull sebagai rollback pasti. Pulihkan revision source/config yang diketahui, lalu docker compose up -d --build setelah operator menyetujui. Retensi/tagging image rollback: diisi operator — belum ditetapkan. Konsumen library mem-pin versi paket sebelumnya dan meninjau breaking changes [upgrading](upgrading.md); jangan memindah tag rilis yang sudah dipublikasikan.
+Compose currently builds from source, with no registry image tag; do not use docker compose pull as a sure rollback. Restore a known source/config revision, then docker compose up -d --build after the operator approves. Rollback image retention/tagging: to be filled in by the operator — not yet set. Library consumers pin the previous package version and review the breaking changes in [upgrading](upgrading.md); do not move a release tag that has already been published.
 
-## Playbook insiden
+## Incident playbook
 
-| Gejala | Pemeriksaan/tindakan |
+| Symptom | Check/action |
 |---|---|
-| 502/503/timeout | compose ps/logs, restart service web, jaringan proxy_network dan label host/port/entrypoint; cek Traefik |
-| Build gagal | Bun/Node, `bun.lock`, typecheck, config dan peer dependencies; jangan meregenerasi lock tanpa alasan |
-| Styling lama/hilang | Versi paket dan exports; non-Tailwind styles.css, Tailwind4 tokens.css + @source dist; import tepat sekali |
-| Font fallback | index.html, network/CSP Google Fonts; konsumen menyediakan font/self-host; fonts.css hanya opt-in |
-| Publish gagal | Kecocokan tag/manifest, permissions packages:write dan registry; jangan cetak token |
-| Komponen RSC error | Client boundary dan import subpath/utility; jangan menambahkan API Next ke showcase |
+| 502/503/timeout | compose ps/logs, restart the web service, the proxy_network network and the host/port/entrypoint labels; check Traefik |
+| Build fails | Bun/Node, `bun.lock`, typecheck, config, and peer dependencies; do not regenerate the lock without a reason |
+| Old/missing styling | The package version and exports; non-Tailwind styles.css, Tailwind4 tokens.css + @source dist; import exactly once |
+| Font fallback | index.html, Google Fonts network/CSP; consumers provide/self-host fonts; fonts.css is opt-in only |
+| Publish fails | The tag/manifest match, packages:write permissions, and the registry; do not print the token |
+| RSC component error | The client boundary and subpath/utility imports; do not add Next APIs to the showcase |
 
-Self-host WOFF2 showcase belum diimplementasikan. Prioritas/jalur eskalasi produksi dan akses internet host: diisi operator — belum ditetapkan.
+Self-hosting WOFF2 for the showcase has not been implemented. Production escalation priority/paths and host internet access: to be filled in by the operator — not yet set.

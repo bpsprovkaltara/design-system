@@ -1,15 +1,15 @@
 # Upgrade notes — v3.x → v4.0.0
 
-## Ringkasan
+## Summary
 
-Versi 4 memerlukan **React 19**, **Tailwind CSS 4**, dan disarankan **Node.js 20+**. Build toolchain konsumen mengikuti dokumentasi resmi Tailwind v4 (misalnya plugin `@tailwindcss/vite` untuk proyek Vite).
+Version 4 requires **React 19**, **Tailwind CSS 4**, and **Node.js 20+** is recommended. The consumer build toolchain follows the official Tailwind v4 documentation (for example the `@tailwindcss/vite` plugin for a Vite project).
 
-## v4.8.1 — FilterChips.renderLink + kontrak tautan
+## v4.8.1 — FilterChips.renderLink + the link contract
 
 ### FilterChips.renderLink (additive)
 
-Konsumen Next/TanStack mengoper `renderLink` supaya chip tidak menjadi `<a>` mentah
-(reload penuh). Tanpa prop ini, perilaku 4.8.0 tidak berubah.
+Next/TanStack consumers pass `renderLink` so that the chip does not become a raw `<a>`
+(a full reload). Without this prop, the 4.8.0 behavior does not change.
 
 ```tsx
 <FilterChips
@@ -19,15 +19,15 @@ Konsumen Next/TanStack mengoper `renderLink` supaya chip tidak menjadi `<a>` men
 />
 ```
 
-Tabel lubang tautan lengkap: [`consumer-chrome.md`](./consumer-chrome.md)
-(bagian “Kontrak tautan kerangka”). Lebar `FormSheet` cukup ditimpa lewat
-`className` (`sm:max-w-[480px]`); jangan menyuntik CSS ke `html`.
+The full table of link holes: [`consumer-chrome.md`](./consumer-chrome.md)
+(the section “Framework link contract”). The width of `FormSheet` can simply be overridden through
+`className` (`sm:max-w-[480px]`); do not inject CSS into `html`.
 
-## v4.8.0 — Form overlays / SectionTabs / chrome slots + peta chrome konsumen
+## v4.8.0 — Form overlays / SectionTabs / chrome slots + the consumer chrome map
 
 ### NotificationPopover, CommandSearch, SidebarAccount, usePersistedCollapsed (additive)
 
-Kulit chrome lintas app — **tanpa** fetch, NextAuth, atau motion.
+A cross-app chrome shell — **without** fetch, NextAuth, or motion.
 
 ```tsx
 import {
@@ -42,7 +42,7 @@ import {
 const [collapsed, setCollapsed] = usePersistedCollapsed('app.sidebarCollapsed')
 
 <NotificationPopover unreadCount={n} onMarkAllRead={markAll}>
-  <ul>{/* item dari API app */}</ul>
+  <ul>{/* items from the app API */}</ul>
 </NotificationPopover>
 
 <CommandSearch value={q} onValueChange={setQ} placeholder="Cari…">
@@ -64,11 +64,11 @@ const [collapsed, setCollapsed] = usePersistedCollapsed('app.sidebarCollapsed')
 } />
 ```
 
-Suaraku dapat mengganti CSS `t-notif-*` / `t-tsearch-*` secara bertahap; Menara dapat mengganti `NotificationBell` UI shell dan menyalin pola `GlobalSearch` ke `CommandSearch`.
+Suaraku can replace the `t-notif-*` / `t-tsearch-*` CSS step by step; Menara can replace the `NotificationBell` UI shell and move the `GlobalSearch` pattern to `CommandSearch`.
 
 ### SectionTabs (additive)
 
-Sub-nav sibling route. Bukan pengganti `Tabs` Radix (state dalam satu halaman) — ini navigasi rute sungguhan.
+A sibling route sub-nav. Not a replacement for the Radix `Tabs` (in-page state) — this is real route navigation.
 
 ```tsx
 import { SectionTabs } from '@bpsprovkaltara/design-system'
@@ -93,11 +93,11 @@ const pathname = usePathname()
 />
 ```
 
-Helper `resolveActiveTab(pathname, tabs)` diekspor untuk kasus yang hanya butuh id aktif tanpa merender. Fork lokal Menara `section-tabs.tsx` dapat diganti setelah upgrade.
+The helper `resolveActiveTab(pathname, tabs)` is exported for cases that only need the active id without rendering. The local Menara fork `section-tabs.tsx` can be replaced after the upgrade.
 
-### FormDialog dan FormSheet (additive)
+### FormDialog and FormSheet (additive)
 
-Komposit tipis di atas `Dialog` / `Sheet` untuk formulir create/edit. Menggantikan boilerplate yang diulang di konsumen (mis. Menara `FormDialog`/`FormDrawer`, Suaraku `Modal`/`Drawer`) **tanpa** library motion.
+A thin composite on top of `Dialog` / `Sheet` for create/edit forms. It replaces the boilerplate repeated in consumers (e.g. Menara `FormDialog`/`FormDrawer`, Suaraku `Modal`/`Drawer`) **without** a motion library.
 
 ```tsx
 import { FormDialog, FormSheet, Button } from '@bpsprovkaltara/design-system'
@@ -109,7 +109,7 @@ import { FormDialog, FormSheet, Button } from '@bpsprovkaltara/design-system'
 >
   {(close) => (
     <>
-      {/* field */}
+      {/* fields */}
       <Button type="button" onClick={close}>
         Simpan
       </Button>
@@ -130,21 +130,21 @@ import { FormDialog, FormSheet, Button } from '@bpsprovkaltara/design-system'
 </FormSheet>
 ```
 
-Controlled: oper `open` + `onOpenChange`. Primitif `Dialog` / `Sheet` tetap tersedia untuk kasus non-form.
+Controlled: pass `open` + `onOpenChange`. The `Dialog` / `Sheet` primitives are still available for non-form cases.
 
-Peta lengkap “sudah di DS vs tetap di app” (termasuk `AppShell` toggle sejak 4.6 dan pola 4.7): lihat [`consumer-chrome.md`](./consumer-chrome.md).
+The full map of “already in the DS vs stays in the app” (including the `AppShell` toggle since 4.6 and the 4.7 patterns): see [`consumer-chrome.md`](./consumer-chrome.md).
 
-## v4.7.0 — Command/CommandDialog: a11y, varian inline, props cmdk
+## v4.7.0 — Command/CommandDialog: a11y, inline variant, cmdk props
 
-Perbaikan `Command` dan `CommandDialog`. **Tidak ada breaking change API**: semua props lama tetap diterima, tampilan `CommandDialog` yang ada tidak berubah, dan default `Command` tetap mempertahankan `h-full overflow-hidden`. Bagian berikut menjelaskan perbaikan dan opt-in baru.
+Fixes to `Command` and `CommandDialog`. **No breaking API change**: all old props are still accepted, the existing `CommandDialog` look does not change, and the default `Command` keeps `h-full overflow-hidden`. The sections below explain the fixes and the new opt-ins.
 
-### 1. CommandDialog sekarang accessible (a11y, wajib tau)
+### 1. CommandDialog is now accessible (a11y, must know)
 
-Sebelumnya `DialogHeader`/`DialogTitle`/`DialogDescription` dirender sebagai sibling `DialogContent`, sehingga Radix tidak menautkan `aria-labelledby` ke `[role=dialog]` dan dialog tidak punya accessible name. Header kini berada di dalam `DialogContent`. **Tidak ada tindakan konsumen**; verifikasi: dialog tidak lagi memunculkan warning dev Radix "DialogContent requires a DialogTitle".
+Previously `DialogHeader`/`DialogTitle`/`DialogDescription` were rendered as siblings of `DialogContent`, so Radix did not link `aria-labelledby` to `[role=dialog]` and the dialog had no accessible name. The header is now inside `DialogContent`. **No consumer action**; to verify: the dialog no longer shows the Radix dev warning "DialogContent requires a DialogTitle".
 
-### 2. Varian `inline` untuk palette anchored di topbar
+### 2. The `inline` variant for a palette anchored in the topbar
 
-`Command` kini menerima `variant?: "dialog" | "inline"` (default `"dialog"`, kompatibel mundur). Untuk memasang palette inline (input di topbar, panel saran `absolute` di bawah):
+`Command` now accepts `variant?: "dialog" | "inline"` (default `"dialog"`, backward compatible). To install an inline palette (the input in the topbar, an `absolute` suggestion panel below):
 
 ```tsx
 import {
@@ -166,40 +166,40 @@ import {
 </Command>
 ```
 
-### 3. `commandProps` untuk pencarian server-side / `shouldFilter={false}`
+### 3. `commandProps` for server-side search / `shouldFilter={false}`
 
-`CommandDialog` kini meneruskan props cmdk ke instance `<Command>` internal via `commandProps`:
+`CommandDialog` now forwards cmdk props to the internal `<Command>` instance via `commandProps`:
 
 ```tsx
 <CommandDialog commandProps={{ shouldFilter: false }}>
-  {/* item ditampilkan apa adanya; cocok untuk hasil dari API */}
+  {/* items are shown as they are; suitable for results from an API */}
 </CommandDialog>
 ```
 
-Tanpa ini, filter fuzzy klien cmdk membuang baris yang sebenarnya cocok (mis. server mencocokkan NIP/email, label yang tampil adalah nama).
+Without this, the cmdk client fuzzy filter drops rows that actually match (e.g. the server matches NIP/email, while the displayed label is the name).
 
-### 4. `CommandInput.wrapperClassName` + indikator fokus yang tidak terkunci
+### 4. `CommandInput.wrapperClassName` + a focus indicator that is not locked
 
-Wrapper `CommandInput` (pemegang `border-b`, padding, ikon Search) kini bisa di-styling lewat `wrapperClassName`; `className` tetap ke `<input>`. Indikator fokus tidak lagi memakai `!important` dan inset shadow 2px; diganti ring konvensional pada wrapper. Konsumen yang mengandalkan selector arbitrer `[&_[data-slot=command-input-wrapper]]` dapat beralih ke `wrapperClassName`.
+The `CommandInput` wrapper (the holder of `border-b`, padding, the Search icon) can now be styled through `wrapperClassName`; `className` still goes to the `<input>`. The focus indicator no longer uses `!important` and a 2px inset shadow; it is replaced by a conventional ring on the wrapper. Consumers that rely on the arbitrary selector `[&_[data-slot=command-input-wrapper]]` can switch to `wrapperClassName`.
 
-### 5. Komponen baru: `Kbd`
+### 5. New component: `Kbd`
 
-Badge tombol keyboard (`⌘K`, `↵`) tersedia lewat barrel root dan subpath `@bpsprovkaltara/design-system/components/ui/kbd`.
+A keyboard key badge (`⌘K`, `↵`) is available through the root barrel and the subpath `@bpsprovkaltara/design-system/components/ui/kbd`.
 
-### 6. Card / FilterBar: skin `surface` (opt-in)
+### 6. Card / FilterBar: the `surface` skin (opt-in)
 
-Untuk menghilangkan reskin berulang `rounded-2xl border-border-subtle shadow-elevation-1`:
+To remove the repeated reskin `rounded-2xl border-border-subtle shadow-elevation-1`:
 
 ```tsx
 <Card variant="surface">…</Card>
 <FilterBar variant="surface" filters={…} />
 ```
 
-Default visual tidak berubah. Konsumen yang sudah menulis className yang sama dapat menggantinya dengan `variant="surface"`.
+The default look does not change. Consumers that already write the same className can replace it with `variant="surface"`.
 
-### 7. Stepper interaktif (`onStepClick`, `stepErrors`)
+### 7. Interactive Stepper (`onStepClick`, `stepErrors`)
 
-Additive, non-breaking. Tanpa props baru, Stepper tetap display-only.
+Additive, non-breaking. Without the new props, the Stepper stays display-only.
 
 ```tsx
 <Stepper
@@ -210,11 +210,11 @@ Additive, non-breaking. Tanpa props baru, Stepper tetap display-only.
 />
 ```
 
-Hanya langkah dengan `index <= current` yang bisa diklik. `stepErrors[i] === true` menampilkan status error (ikon peringatan).
+Only steps with `index <= current` can be clicked. `stepErrors[i] === true` shows an error status (a warning icon).
 
-### 8. Adapter form native / RHF (`SelectInput`, `DateInput`, `CheckboxInput`)
+### 8. Native form / RHF adapters (`SelectInput`, `DateInput`, `CheckboxInput`)
 
-Komponen baru (additive). Primitif lama tetap ada.
+New components (additive). The old primitives remain.
 
 ```tsx
 import { SelectInput, DateInput, CheckboxInput } from '@bpsprovkaltara/design-system'
@@ -229,11 +229,11 @@ import { SelectInput, DateInput, CheckboxInput } from '@bpsprovkaltara/design-sy
 <CheckboxInput name="setuju" label="Saya setuju" />
 ```
 
-Bisa dipakai dengan `register('field')` karena ref mengarah ke elemen native. Konsumen yang punya adapter lokal (mis. Menara `inputs.tsx`) dapat migrasi bertahap.
+They can be used with `register('field')` because the ref points to a native element. Consumers that have a local adapter (e.g. Menara `inputs.tsx`) can migrate step by step.
 
 ### 9. Patterns Wave 2 (`SectionCard`, `DataTableCard`, `FilterChips`, `PageSkeleton`, `KpiCard.accent`, `nav`)
 
-Additive. Impor dari barrel atau subpath `patterns/*` / `components/ui/*`.
+Additive. Import from the barrel or the subpath `patterns/*` / `components/ui/*`.
 
 ```tsx
 import {
@@ -253,9 +253,9 @@ import {
 <LinkButton variant="nav" size="sm" href="/modul">Modul</LinkButton>
 ```
 
-`KpiCard` tanpa `accent` tetap memakai `border-l-4 border-l-primary`.
+`KpiCard` without `accent` still uses `border-l-4 border-l-primary`.
 
-### 10. BadgeTooltip, RowDetailLink, dan keputusan motion (#22)
+### 10. BadgeTooltip, RowDetailLink, and the motion decision (#22)
 
 ```tsx
 <BadgeTooltip content="Menunggu verifikasi">
@@ -270,13 +270,13 @@ import {
 </RowDetailLink>
 ```
 
-**Motion JS:** DS **tidak** mengadopsi library `motion`. Standar tetap token CSS (`--motion-duration-*`, `--motion-ease-*`). Lihat `docs/adr/0002-no-motion-js-dependency.md`.
+**Motion JS:** the DS does **not** adopt the `motion` library. The standard stays the CSS tokens (`--motion-duration-*`, `--motion-ease-*`). See `docs/adr/0002-no-motion-js-dependency.md`.
 
-### 11. Combobox: tinggi search + escape hatch styling
+### 11. Combobox: search height + a styling escape hatch
 
-`Combobox` tidak lagi memaksa `h-11` pada `CommandInput`. Default sudah selaras wrapper `h-9` dan fokus ring standar. Jika konsumen Menara (atau aplikasi lain) sudah mem-patch dengan selector arbitrer / `focus-visible:shadow-none` / override tinggi, patch itu biasanya bisa dihapus.
+`Combobox` no longer forces `h-11` on `CommandInput`. The default is already aligned with the `h-9` wrapper and the standard focus ring. If the Menara consumer (or another application) has already patched it with an arbitrary selector / `focus-visible:shadow-none` / a height override, that patch can usually be removed.
 
-Prop baru (opsional, non-breaking):
+New props (optional, non-breaking):
 
 ```tsx
 <Combobox
@@ -287,19 +287,19 @@ Prop baru (opsional, non-breaking):
 />
 ```
 
-`className` tetap hanya mengenai tombol trigger.
+`className` still only affects the trigger button.
 
 ## v4.6.0 — Chrome alignment & sidebar a11y
 
-Rilis ini mengubah tampilan shell secara visual. Tidak ada perubahan API pada `AppShell`, tapi ada dua hal yang perlu disadari konsumen.
+This release changes the shell visually. There is no API change to `AppShell`, but there are two things consumers need to be aware of.
 
-### 1. Tombol collapse pindah dari `AppSidebar` ke `AppShell`
+### 1. The collapse button moves from `AppSidebar` to `AppShell`
 
-Tombol sekarang dirender sebagai lingkaran mengambang di tepi kanan rail, di luar `<aside>` supaya tidak terpotong oleh overflow sidebar.
+The button is now rendered as a floating circle on the right edge of the rail, outside the `<aside>` so it is not clipped by the sidebar overflow.
 
-Pemakai `AppShell` **tidak perlu berbuat apa-apa** — `onCollapsedChange` tetap diteruskan seperti biasa.
+Users of `AppShell` **do not need to do anything** — `onCollapsedChange` is still forwarded as usual.
 
-Pemakai `<AppSidebar>` langsung: prop `onCollapsedChange` masih diterima tapi kini diabaikan. Sediakan tombolnya sendiri dan arahkan `aria-controls` ke prop `id` yang baru:
+Users of `<AppSidebar>` directly: the `onCollapsedChange` prop is still accepted but is now ignored. Provide your own button and point `aria-controls` at the new `id` prop:
 
 ```tsx
 <div className="relative">
@@ -310,18 +310,18 @@ Pemakai `<AppSidebar>` langsung: prop `onCollapsedChange` masih diterima tapi ki
 </div>
 ```
 
-### 2. Tinggi topbar 56px → 64px
+### 2. Topbar height 56px → 64px
 
-`AppTopbar` memakai `h-topbar` (token `--topbar-height`, default `4rem`). Header `AppSidebar` memakai tinggi yang sama, sehingga kedua garis bawahnya membentuk satu garis lurus.
+`AppTopbar` uses `h-topbar` (the token `--topbar-height`, default `4rem`). The `AppSidebar` header uses the same height, so their bottom lines form one straight line.
 
-Ganti offset yang di-hardcode:
+Replace the hardcoded offset:
 
 ```diff
 - <div className="top-14">
 + <div className="top-[var(--topbar-height)]">
 ```
 
-Konsumen bisa menimpanya di `:root`:
+Consumers can override it in `:root`:
 
 ```css
 :root {
@@ -329,13 +329,13 @@ Konsumen bisa menimpanya di `:root`:
 }
 ```
 
-### 3. Warna border sidebar
+### 3. Sidebar border color
 
-Sidebar tidak lagi memakai `--border` (token light theme yang merender terang di atas permukaan navy). Token barunya `--sidebar-border`, default `var(--navy-800)`. Timpa di `:root` bila perlu.
+The sidebar no longer uses `--border` (a light theme token that renders bright on the navy surface). Its new token is `--sidebar-border`, default `var(--navy-800)`. Override it in `:root` if needed.
 
-### 4. `renderLink` — jangan lagi menata sendiri
+### 4. `renderLink` — do not style it yourself any more
 
-`AppSidebar` kini menyalin styling item ke elemen yang dikembalikan `renderLink`, bukan ke `<div>` pembungkus. Kalau sebelumnya link Anda diberi kelas sendiri untuk mengakali hal ini, hapus — kelasnya akan digabungkan dan bisa saling menimpa.
+`AppSidebar` now copies the item styling onto the element returned by `renderLink`, not onto the wrapping `<div>`. If your link previously got its own class to work around this, remove it — the classes will be merged and can override each other.
 
 ```tsx
 // Cukup begini:
@@ -346,7 +346,7 @@ renderLink={(item, content) => <Link href={item.href ?? '#'}>{content}</Link>}
 
 ### AppShell / AppSidebar / AppTopbar
 
-Layout aplikasi kini diekspor (bukan hanya showcase):
+The application layout is now exported (not only the showcase):
 
 ```tsx
 import { AppShell } from '@bpsprovkaltara/design-system'
@@ -361,44 +361,44 @@ import { AppShell } from '@bpsprovkaltara/design-system'
 </AppShell>
 ```
 
-`AppTopbar` menerima slot `start` / `end` (prop `appTitle` tetap didukung sebagai fallback).
+`AppTopbar` accepts the slots `start` / `end` (the `appTitle` prop is still supported as a fallback).
 
 ### FilterBar composable
 
-Prefer `filters: FilterField[]` atau `children`. API lama `{ keyword, status, unitKerja }` tetap berfungsi; domain preset: `DocumentFilterBar`.
+Prefer `filters: FilterField[]` or `children`. The old API `{ keyword, status, unitKerja }` still works; the domain preset: `DocumentFilterBar`.
 
 ### DataTable states & server pagination
 
 - `loading` / `error` / empty (`EmptyState`)
-- `pagination={{ page, pageSize, total, onPageChange }}` untuk server-driven lists
+- `pagination={{ page, pageSize, total, onPageChange }}` for server-driven lists
 
 ### ConfirmDialog
 
-Ganti `ConfirmActionDialog` (deprecated wrapper) dengan `ConfirmDialog` — controlled `open`, `trigger` ReactNode, `busy`, `showReason`, `variant="destructive"`, `onConfirm` async.
+Replace `ConfirmActionDialog` (a deprecated wrapper) with `ConfirmDialog` — controlled `open`, `trigger` ReactNode, `busy`, `showReason`, `variant="destructive"`, async `onConfirm`.
 
 ### ThemeToggle / useTheme
 
-Toggle dark mode berbasis class `.dark` kini publik (sebelumnya showcase-only).
+The `.dark` class-based dark mode toggle is now public (previously showcase-only).
 
-## v4.4.0 — eval-fixes & kapabilitas BPS
+## v4.4.0 — eval-fixes & BPS capabilities
 
-### Peer dependencies Form (opsional)
+### Form peer dependencies (optional)
 
-`react-hook-form`, `zod`, dan `@hookform/resolvers` kini **peer optional**. Jika aplikasi memakai `Form` + RHF/Zod, install eksplisit:
+`react-hook-form`, `zod`, and `@hookform/resolvers` are now **optional peers**. If the application uses `Form` + RHF/Zod, install them explicitly:
 
 ```bash
 pnpm add react-hook-form zod @hookform/resolvers
 ```
 
-Aplikasi yang tidak memakai Form tidak perlu menginstal ketiganya.
+An application that does not use Form does not need to install the three.
 
-### `prepare` tidak lagi membangun library
+### `prepare` no longer builds the library
 
-`bun install` pada repo ini tidak menjalankan `build:lib`. Build tetap di `prepublishOnly` dan CI. Pastikan `dist/` ada saat consume dari git/path, atau install dari registry yang sudah di-publish.
+`bun install` in this repo does not run `build:lib`. The build stays in `prepublishOnly` and CI. Make sure `dist/` exists when consuming from git/path, or install from the published registry.
 
 ### DataTable — row actions
 
-Kolom **Aksi** / tombol Edit tidak lagi otomatis. Tanpa `renderRowActions`, hanya kolom data yang dirender:
+The **Actions** column / Edit button is no longer automatic. Without `renderRowActions`, only the data columns are rendered:
 
 ```tsx
 <DataTable
@@ -413,19 +413,19 @@ Kolom **Aksi** / tombol Edit tidak lagi otomatis. Tanpa `renderRowActions`, hany
 />
 ```
 
-Opsional: `sortable` per kolom + `pageSize` untuk pagination client-side.
+Optional: `sortable` per column + `pageSize` for client-side pagination.
 
-### BulkActionBar — actions generik
+### BulkActionBar — generic actions
 
 ```tsx
-// Sebelum
+// Before
 <BulkActionBar
   selectedCount={n}
   onSetPending={...}
   onSetApproved={...}
 />
 
-// Sesudah
+// After
 <BulkActionBar
   selectedCount={n}
   actions={[
@@ -435,17 +435,17 @@ Opsional: `sortable` per kolom + `pageSize` untuk pagination client-side.
 />
 ```
 
-### StatusBadge — rename tipe
+### StatusBadge — type rename
 
 ```tsx
-// Sebelum
+// Before
 import { StatusBadge, badgeVariants, type BadgeProps } from '...'
 
-// Sesudah
+// After
 import { StatusBadge, statusBadgeVariants, type StatusBadgeProps } from '...'
 ```
 
-### FilterBar — options kustom
+### FilterBar — custom options
 
 ```tsx
 <FilterBar
@@ -459,33 +459,33 @@ import { StatusBadge, statusBadgeVariants, type StatusBadgeProps } from '...'
 />
 ```
 
-### Subpath import UI
+### UI subpath imports
 
-Catch-all `./*` dihapus. Gunakan path kanonik:
+The catch-all `./*` was removed. Use the canonical paths:
 
 ```tsx
-// Sebelum
+// Before
 import { Button } from '@bpsprovkaltara/design-system/button'
 
-// Sesudah
+// After
 import { Button } from '@bpsprovkaltara/design-system/components/ui/button'
-// atau tetap dari entry utama:
+// or still from the main entry:
 import { Button } from '@bpsprovkaltara/design-system'
 ```
 
-Tetap tersedia: `./utils`, `./patterns/*`, `./hooks/*`, `./styles.css`, `./tokens.css`, `./fonts.css`.
+Still available: `./utils`, `./patterns/*`, `./hooks/*`, `./styles.css`, `./tokens.css`, `./fonts.css`.
 
-### Token
+### Tokens
 
-- Layer C (`--button-primary-*`, `--input-*`, `--table-*`) dihapus — pakai Layer B / shadcn semantic.
-- Dark mode kini meng-override `--brand-*`, `--data-*`, `--map-tier-*`.
-- Util Tailwind baru: `bg-slate-*`, `bg-map-tier-*`, `font-sans` / `font-mono` dari `@theme`.
+- Layer C (`--button-primary-*`, `--input-*`, `--table-*`) was removed — use Layer B / shadcn semantic.
+- Dark mode now overrides `--brand-*`, `--data-*`, `--map-tier-*`.
+- New Tailwind utilities: `bg-slate-*`, `bg-map-tier-*`, `font-sans` / `font-mono` from `@theme`.
 
-## v4.3.0 — Button sebagai link / navigasi
+## v4.3.0 — Button as a link / navigation
 
-Untuk navigasi bergaya tombol, gunakan **`LinkButton`**. Komponen ini memakai
-`buttonVariants()` dari design system sehingga konsumen tidak perlu menyalin class
-manual dari `Button`.
+For button-styled navigation, use **`LinkButton`**. This component uses
+`buttonVariants()` from the design system so consumers do not need to copy the classes
+by hand from `Button`.
 
 ```tsx
 import { LinkButton } from '@bpsprovkaltara/design-system'
@@ -500,7 +500,7 @@ export function EditPegawaiLink() {
 }
 ```
 
-Jika aplikasi Next.js App Router membutuhkan perilaku `<Link>` seperti prefetch dan
+If a Next.js App Router application needs `<Link>` behavior such as prefetch and
 client-side navigation, gunakan `LinkButton asChild`:
 
 ```tsx
@@ -517,13 +517,13 @@ export function EditPegawaiLink() {
 }
 ```
 
-`Button asChild` tetap didukung untuk komposisi advanced seperti `DialogTrigger`,
-`SheetTrigger`, atau trigger Radix lain. Untuk navigasi biasa, prefer `LinkButton`.
+`Button asChild` is still supported for advanced composition such as `DialogTrigger`,
+`SheetTrigger`, or another Radix trigger. For normal navigation, prefer `LinkButton`.
 
-Migrasi dari pola lama:
+Migrating from the old pattern:
 
 ```tsx
-// Sebelum
+// Before
 <Button asChild>
   <Link href="/pegawai/1/edit">
     <Pencil />
@@ -531,7 +531,7 @@ Migrasi dari pola lama:
   </Link>
 </Button>
 
-// Sesudah
+// After
 <LinkButton href="/pegawai/1/edit" variant="outline" size="sm" iconLeft={<Pencil />}>
   Edit
 </LinkButton>
@@ -539,48 +539,48 @@ Migrasi dari pola lama:
 
 ## Peer dependencies
 
-| Paket         | v3.x  | v4.0.0   |
+| Package       | v3.x  | v4.0.0   |
 | ------------- | ----- | -------- |
 | `react`       | ≥ 18  | **≥ 19** |
 | `react-dom`   | ≥ 18  | **≥ 19** |
 | `tailwindcss` | ≥ 3.4 | **≥ 4**  |
 
-## 1) Naikkan React dan TypeScript
+## 1) Raise React and TypeScript
 
 ```bash
 pnpm add react@^19 react-dom@^19
 pnpm add -D @types/react@^19 @types/react-dom@^19 typescript@latest
 ```
 
-Sesuaikan `tsconfig` konsumen bila compiler mengeluh (target/lib modern, JSX `react-jsx`).
+Adjust the consumer `tsconfig` if the compiler complains (modern target/lib, JSX `react-jsx`).
 
-## 2) Stylesheet design system (wajib)
+## 2) The design system stylesheet (required)
 
-Untuk aplikasi non-Tailwind, di entry aplikasi (mis. `main.tsx`):
+For a non-Tailwind application, in the application entry (e.g. `main.tsx`):
 
 ```ts
 import '@bpsprovkaltara/design-system/styles.css'
 ```
 
-Ini memuat token + utilitas dan preflight. Aplikasi Tailwind4 yang sudah memiliki
-preflight memakai tokens.css dan @source dist, seperti bagian 2bb di bawah;
-jangan mengimpor kedua entry CSS. Token dikonfigurasi di CSS, bukan preset.
+This loads the tokens + utilities and the preflight. A Tailwind4 application that already has
+the preflight uses tokens.css and @source dist, as in section 2bb below;
+do not import both CSS entries. Tokens are configured in CSS, not a preset.
 
-## 2b) Font (wajib mulai 4.0.1)
+## 2b) Fonts (required from 4.0.1)
 
-Mulai **4.0.1**, `styles.css` paket **tidak lagi** me-`@import` Google Fonts (CDN dalam
-CSS library bersifat render-blocking dan memaksa request pihak ketiga tanpa kontrol
-konsumen). Anda **wajib** menyediakan tiga font sendiri agar tipografi sesuai desain:
+From **4.0.1**, the package `styles.css` **no longer** `@import`s Google Fonts (a CDN inside
+library CSS is render-blocking and forces third-party requests without consumer
+control). You **must** provide the three fonts yourself so the typography matches the design:
 **Fraunces**, **IBM Plex Sans**, **IBM Plex Mono**.
 
-### Next.js (disarankan — `next/font`, self-host otomatis)
+### Next.js (recommended — `next/font`, automatic self-hosting)
 
 ```ts
 import { Fraunces, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google'
-// daftarkan, lalu pasang CSS variable / className di <html> atau <body>
+// register them, then attach the CSS variable / className on <html> or <body>
 ```
 
-### Stack lain (`<link>` atau self-host)
+### Other stacks (`<link>` or self-hosting)
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -591,37 +591,37 @@ import { Fraunces, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google'
 />
 ```
 
-### Jalur CDN opt-in (`fonts.css`, 4.1.0+)
+### Opt-in CDN path (`fonts.css`, 4.1.0+)
 
-Bila ingin cepat tanpa setup, impor file font opsional (bukan default — tidak ditarik
-`styles.css`):
+If you want it quick without setup, import the optional font file (not the default — not pulled
+by `styles.css`):
 
 ```css
 @import '@bpsprovkaltara/design-system/fonts.css';
 ```
 
-Weight yang dibutuhkan: IBM Plex Sans `400/500/600/700`, IBM Plex Mono `400/500`,
-Fraunces `300–900`. Token punya fallback system (`system-ui`/`serif`/`monospace`).
+Required weights: IBM Plex Sans `400/500/600/700`, IBM Plex Mono `400/500`,
+Fraunces `300–900`. The tokens have a system fallback (`system-ui`/`serif`/`monospace`).
 
-## 2bb) Hindari double-preflight: `tokens.css` (4.1.0+)
+## 2bb) Avoid double-preflight: `tokens.css` (4.1.0+)
 
-`styles.css` berisi **preflight Tailwind penuh**. Jika app Anda **sudah** menjalankan
-Tailwind v4, mengimpornya akan menggandakan base/reset. Sejak **4.1.0** tersedia
-`tokens.css` (token + `@theme` + utilitas DS, **tanpa** preflight):
+`styles.css` contains the **full Tailwind preflight**. If your app **already** runs
+Tailwind v4, importing it will double the base/reset. Since **4.1.0**,
+`tokens.css` is available (tokens + `@theme` + DS utilities, **without** preflight):
 
 ```css
-@import 'tailwindcss'; /* preflight app Anda (satu kali) */
-@import '@bpsprovkaltara/design-system/tokens.css'; /* token + tema DS, tanpa preflight */
+@import 'tailwindcss'; /* your app's preflight (once) */
+@import '@bpsprovkaltara/design-system/tokens.css'; /* DS tokens + theme, without preflight */
 @source "../node_modules/@bpsprovkaltara/design-system/dist"; /* generate kelas komponen DS */
 ```
 
-`tokens.css` diproses oleh Tailwind milik Anda (mengandung directive `@theme`/`@utility`),
-jadi integrasi tema penuh aktif tanpa `tailwind-preset` (deprecated). Konsumen
-**non-Tailwind** tetap memakai `styles.css` (all-in-one).
+`tokens.css` is processed by your own Tailwind (it contains the `@theme`/`@utility` directives),
+so the full theme integration is active without `tailwind-preset` (deprecated).
+**Non-Tailwind** consumers still use `styles.css` (all-in-one).
 
-## 2c) Impor per-komponen (opsional, 4.0.1+; path kanonik sejak 4.4.0)
+## 2c) Per-component imports (optional, 4.0.1+; canonical paths since 4.4.0)
 
-Untuk tree-shaking lebih ketat dan isolasi RSC, komponen bisa diimpor lewat subpath:
+For stricter tree-shaking and RSC isolation, components can be imported through a subpath:
 
 ```ts
 import { Button } from '@bpsprovkaltara/design-system/components/ui/button'
@@ -630,14 +630,14 @@ import { EmptyState } from '@bpsprovkaltara/design-system/patterns/empty-state'
 import { useToast } from '@bpsprovkaltara/design-system/hooks/use-toast'
 ```
 
-Impor barrel (`from '@bpsprovkaltara/design-system'`) tetap didukung penuh. Catch-all
-`@bpsprovkaltara/design-system/button` dihapus di **4.4.0** — lihat § v4.4.0.
+Barrel imports (`from '@bpsprovkaltara/design-system'`) are still fully supported. The catch-all
+`@bpsprovkaltara/design-system/button` was removed in **4.4.0** — see § v4.4.0.
 
-## 3) Tailwind 4 di aplikasi Anda
+## 3) Tailwind 4 in your application
 
-**Hapus** dependensi pada preset paket ini. Ekspor `@bpsprovkaltara/design-system/tailwind-preset` **deprecated** (shim + `console.warn`); akan dihapus di v5.
+**Remove** the dependency on this package's preset. The export `@bpsprovkaltara/design-system/tailwind-preset` is **deprecated** (a shim + `console.warn`); it will be removed in v5.
 
-### Vite (contoh)
+### Vite (example)
 
 `vite.config.ts`:
 
@@ -658,13 +658,13 @@ Entry CSS aplikasi (mis. `src/index.css`):
 @import '@bpsprovkaltara/design-system/tokens.css';
 ```
 
-Pastikan file CSS itu diimpor dari `main.tsx`. Ikuti [instalasi Tailwind v4 + Vite](https://tailwindcss.com/docs/installation/using-vite).
+Make sure that CSS file is imported from `main.tsx`. Follow the [Tailwind v4 + Vite installation](https://tailwindcss.com/docs/installation/using-vite).
 
-### Memindahkan `content` / `@source`
+### Moving `content` / `@source`
 
-Agar kelas Tailwind di **kode Anda** ikut discan:
+So that the Tailwind classes in **your code** are scanned:
 
-- Tailwind v4: gunakan `@source` di CSS aplikasi, misalnya:
+- Tailwind v4: use `@source` in the application CSS, for example:
 
 ```css
 @import 'tailwindcss';
@@ -672,45 +672,45 @@ Agar kelas Tailwind di **kode Anda** ikut discan:
 @source "../node_modules/@bpsprovkaltara/design-system/dist";
 ```
 
-Baris `node_modules` hanya diperlukan bila Anda mengimpor stylesheet paket dari CSS aplikasi dan ingin Tailwind memproses source paket saat build aplikasi. Jika Anda mengimpor `@bpsprovkaltara/design-system/styles.css` langsung dari entry TypeScript, CSS library sudah prebuilt.
+The `node_modules` line is only needed if you import the package stylesheet from the application CSS and want Tailwind to process the package source during the application build. If you import `@bpsprovkaltara/design-system/styles.css` directly from the TypeScript entry, the library CSS is already prebuilt.
 
-### Sebelum / sesudah (preset lama)
+### Before / after (the old preset)
 
-**Sebelum (v3):**
+**Before (v3):**
 
 ```ts
-// tailwind.config.ts — pola lama, jangan dipakai lagi untuk v4
+// tailwind.config.ts — the old pattern, do not use it for v4 any more
 import preset from '@bpsprovkaltara/design-system/tailwind-preset'
 export default { presets: [preset], content: [...] }
 ```
 
-**Sesudah (v4):** tidak perlu `presets` dari paket ini; konfigurasi Tailwind mengikuti dokumentasi v4 + `tokens.css` sesudah `@import 'tailwindcss'` (lihat contoh di atas). `styles.css` hanya untuk konsumen non-Tailwind — jangan diimpor bersama `tokens.css`.
+**After (v4):** no `presets` from this package are needed; the Tailwind configuration follows the v4 documentation + `tokens.css` after `@import 'tailwindcss'` (see the example above). `styles.css` is only for non-Tailwind consumers — do not import it together with `tokens.css`.
 
-## 4) Utility Tailwind yang berubah
+## 4) Tailwind utilities that changed
 
-Jika aplikasi Anda masih memakai pola v3, sesuaikan dengan Tailwind v4:
+If your application still uses v3 patterns, adjust them to Tailwind v4:
 
-- `outline-none` untuk focus ring lama menjadi `outline-hidden`.
-- Shorthand variable arbitrary seperti `h-[--cell-size]` menjadi `h-(--cell-size)`.
-- Konfigurasi `darkMode: 'class'` diganti dengan CSS: `@custom-variant dark (&:where(.dark, .dark *));`.
+- `outline-none` for the old focus ring becomes `outline-hidden`.
+- Arbitrary variable shorthand such as `h-[--cell-size]` becomes `h-(--cell-size)`.
+- The `darkMode: 'class'` configuration is replaced with CSS: `@custom-variant dark (&:where(.dark, .dark *));`.
 
-## 5) Komponen React (`ref`)
+## 5) React components (`ref`)
 
-Komponen library tidak lagi memakai `React.forwardRef`; `ref` diteruskan sebagai prop biasa (pola React 19). Pemakaian JSX `<Button ref={r} />` tetap sama.
+Library components no longer use `React.forwardRef`; `ref` is passed as a normal prop (the React 19 pattern). JSX usage `<Button ref={r} />` stays the same.
 
 ## 6) TypeScript
 
-Repositori design system memakai TypeScript 6.x; konsumen disarankan memakai TypeScript yang kompatibel dengan React 19.
+The design system repository uses TypeScript 6.x; consumers are advised to use a TypeScript compatible with React 19.
 
-## Checklist konsumen
+## Consumer checklist
 
-1. Naikkan `react` dan `react-dom` ke 19 (+ tipe dev bila perlu).
-2. Naikkan `tailwindcss` ke 4; pasang tooling resmi (`@tailwindcss/vite` atau PostCSS sesuai stack).
-3. Impor stylesheet paket sekali di root: `@bpsprovkaltara/design-system/tokens.css` sesudah `@import 'tailwindcss'` untuk aplikasi Tailwind 4; `styles.css` hanya bila aplikasi tidak memakai Tailwind.
-4. Hapus impor `tailwind-preset` dari paket ini; atur `@source` / `content` agar mencakup `src` dan `node_modules/.../design-system/dist` bila perlu.
-5. Jalankan test, lint, dan tinjau UI (terutama dialog, sheet, form, tabel).
+1. Raise `react` and `react-dom` to 19 (+ the dev types if needed).
+2. Raise `tailwindcss` to 4; install the official tooling (`@tailwindcss/vite` or PostCSS according to the stack).
+3. Import the package stylesheet once at the root: `@bpsprovkaltara/design-system/tokens.css` after `@import 'tailwindcss'` for a Tailwind 4 application; `styles.css` only if the application does not use Tailwind.
+4. Remove the `tailwind-preset` import from this package; set `@source` / `content` to cover `src` and `node_modules/.../design-system/dist` if needed.
+5. Run the tests and lint, and review the UI (especially dialogs, sheets, forms, tables).
 
-## Bantuan rilis
+## Release help
 
-- Catatan siap tempel untuk GitHub Releases: `docs/releases/v4.0.0-github.md`
+- Ready-to-paste notes for GitHub Releases: `docs/releases/v4.0.0-github.md`
 - Riwayat perubahan: `CHANGELOG.md`

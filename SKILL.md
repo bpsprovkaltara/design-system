@@ -4,16 +4,16 @@ description: Use this skill to generate well-branded interfaces and assets for B
 user-invocable: true
 ---
 
-Baca [README.md](README.md), [PRODUCT.md](PRODUCT.md), dan [DESIGN.md](DESIGN.md)
-sebelum membuat antarmuka atau artefak visual BPS Kaltara. DESIGN memegang token
-normatif; API aktual ada pada src/index.ts dan package exports.
+Read [README.md](README.md), [PRODUCT.md](PRODUCT.md), and [DESIGN.md](DESIGN.md)
+before building an interface or visual artifact for BPS Kaltara. DESIGN holds the
+normative tokens; the actual API is in src/index.ts and the package exports.
 
-Untuk mock/prototype, salin asset yang relevan ke artefak yang dapat diperiksa.
-Untuk aplikasi produksi, ikuti kontrak konsumsi CSS/font, tipe/ekspor dan
-asChild/renderLink pada [guide](docs/guide.md) serta
-[consumer-chrome](docs/consumer-chrome.md). Prototype dashboard memakai contoh
-data/peta/logo; jangan menjadikannya bukti produksi.
+For a mock/prototype, copy the relevant assets into an artifact that can be inspected.
+For a production application, follow the CSS/font consumption contract, the types/exports, and
+asChild/renderLink in the [guide](docs/guide.md) and
+[consumer-chrome](docs/consumer-chrome.md). The dashboard prototype uses sample
+data/maps/logos; do not treat it as production evidence.
 
-Bila skill dipanggil tanpa target, klarifikasi kebutuhan produk dan scope
-sebelum membuat artefak. Superpowers tetap workflow utama implementasi;
-impeccable global mencatat konteks produk dan sistem visual incumbent.
+If the skill is invoked without a target, clarify the product needs and scope
+before building an artifact. Superpowers remains the main implementation workflow;
+the global impeccable records the product context and the incumbent visual system.

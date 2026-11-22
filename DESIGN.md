@@ -1,6 +1,6 @@
 ---
 name: BPS Kaltara
-description: Token visual @bpsprovkaltara/design-system agar aplikasi konsumen tetap pada sistem.
+description: The visual tokens of @bpsprovkaltara/design-system, so that consumer applications stay on the system.
 colors:
   surface-canvas: "hsl(33 20% 97%)"
   surface-raised: "hsl(0 0% 100%)"
@@ -186,326 +186,326 @@ components:
 
 # Design System: BPS Kaltara
 
-## Identitas dan karakter
+## Identity and character
 
-Bentuk visual incumbent adalah **Civic Editorial × Data-First Swiss**:
-navy–amber, permukaan hangat, display editorial dan susunan data yang teratur.
+The incumbent visual form is **Civic Editorial × Data-First Swiss**:
+navy–amber, warm surfaces, editorial display type, and an orderly arrangement of data.
 
-Berkas ini mencatat token visual `@bpsprovkaltara/design-system` supaya aplikasi konsumen tetap pada sistem. Nilai di frontmatter adalah mode terang (`:root`) setelah alias semantik di-resolve ke kanal HSL. Sumber kanal itu `tokens.css`. Skala primitif hanya dipakai untuk mendefinisikan token semantik, bukan untuk diwarnai langsung di komponen.
+This file records the visual tokens of `@bpsprovkaltara/design-system` so that consumer applications stay on the system. The values in the frontmatter are the light mode (`:root`) after the semantic aliases are resolved into HSL channels. The source of those channels is `tokens.css`. The primitive scales are only used to define the semantic tokens, not to be colored directly in components.
 
-Paket ini CSS-first (Tailwind 4). Konsumen memakai token semantik `surface`, `content`, `border`, `brand`, dan `feedback`. Mode `.dark` menimpa token semantik yang sama; skala primitif tidak berubah. Salinan antarmuka Bahasa Indonesia formal, tanpa emoji.
+The package is CSS-first (Tailwind 4). Consumers use the semantic tokens `surface`, `content`, `border`, `brand`, and `feedback`. The `.dark` mode overrides the same semantic tokens; the primitive scales do not change. Interface copy is in formal Indonesian, without emoji.
 
-**Karakteristik utama:**
+**Key characteristics:**
 
-- Token semantik untuk komponen; primitif hanya bahan definisi.
-- Warna disimpan sebagai kanal HSL mentah, dipakai lewat `hsl(var(--token))`.
-- Fraunces untuk display, IBM Plex Sans untuk UI, IBM Plex Mono untuk angka.
-- Radius tertahan dan enam tingkat elevasi bernuansa navy.
-- Lapisan permukaan (kanvas, sunken, raised) lebih dulu daripada bayangan.
+- Semantic tokens for components; primitives are only definition material.
+- Colors are stored as raw HSL channels, used through `hsl(var(--token))`.
+- Fraunces for display, IBM Plex Sans for the UI, IBM Plex Mono for numbers.
+- Restrained radius and six navy-tinted elevation levels.
+- Surface layers (canvas, sunken, raised) come before shadows.
 
-## Stack visual
+## Visual stack
 
-React, Tailwind CSS 4 CSS-first, shadcn/ui/Radix dan CSS motion. Fraunces untuk display editorial, IBM Plex Sans untuk antarmuka dan IBM Plex Mono untuk angka. Sumber normatif tokens.css; entry colors_and_type.css menambahkan preflight. Showcase Vite memakai font link di index.html; library tidak memuat CDN default.
+React, Tailwind CSS 4 CSS-first, shadcn/ui/Radix, and CSS motion. Fraunces for editorial display, IBM Plex Sans for the interface, and IBM Plex Mono for numbers. The normative source is tokens.css; the colors_and_type.css entry adds preflight. The Vite showcase uses a font link in index.html; the library does not load a CDN by default.
 
-## Token warna
+## Color tokens
 
-Palet konsumen adalah token semantik mode terang. Frontmatter sudah dalam bentuk `hsl(H S% L%)`. Di CSS, nilai yang sama disimpan tanpa pembungkus `hsl()`, misalnya `214 52% 20%`.
+The consumer palette is the light-mode semantic tokens. The frontmatter is already in the form `hsl(H S% L%)`. In CSS, the same value is stored without the `hsl()` wrapper, for example `214 52% 20%`.
 
-### Primer
+### Primary
 
-- **Navy merek** (hsl(214 52% 20%)): `brand-primary`, juga `content-brand`, `border-brand`, dan `border-focus`. Latar tombol primer dan aksen KPI `brand`.
-- **Teks pada primer** (hsl(210 40% 98%)): `primary-foreground` (navy-50). Ini teks varian tombol dan badge default, bukan putih penuh.
-- **Putih aksen merek** (hsl(0 0% 100%)): `brand-primary-fg`. Jangan dipakai sebagai teks tombol default.
+- **Brand navy** (hsl(214 52% 20%)): `brand-primary`, also `content-brand`, `border-brand`, and `border-focus`. The primary button background and the `brand` KPI accent.
+- **Text on primary** (hsl(210 40% 98%)): `primary-foreground` (navy-50). This is the text of the default button and badge variants, not pure white.
+- **Brand accent white** (hsl(0 0% 100%)): `brand-primary-fg`. Do not use it as the default button text.
 
-### Sekunder
+### Secondary
 
-- **Amber aksen** (hsl(35 93% 54%)): `brand-accent`. Aksen kedua, data peringatan, dan seri grafik perekonomian.
-- **Teks amber** (hsl(28 87% 37%)): `content-accent`. Teks amber yang masih cukup kontras; jangan memakai amber-500 untuk teks kecil di atas kanvas terang.
-- **Teks pada amber** (hsl(218 70% 8%)): `brand-accent-fg`.
+- **Accent amber** (hsl(35 93% 54%)): `brand-accent`. The second accent, warning data, and the economy chart series.
+- **Amber text** (hsl(28 87% 37%)): `content-accent`. Amber text that still has enough contrast; do not use amber-500 for small text on a light canvas.
+- **Text on amber** (hsl(218 70% 8%)): `brand-accent-fg`.
 
-### Netral
+### Neutrals
 
-- **Kanvas** (hsl(33 20% 97%)): `surface-canvas`. Latar halaman.
-- **Permukaan naik** (hsl(0 0% 100%)): `surface-raised`. Panel putih. Bukan latar kartu default.
-- **Permukaan kartu** (hsl(34 29% 94%)): `card` dan `surface-sunken`. Kartu default memakai `card`; area inset memakai `surface-sunken`. Keduanya resolve ke warm-100 di mode terang.
-- **Teks utama** (hsl(215 60% 13%)): `content-primary`. Juga `surface-inverse`.
-- **Teks sekunder** (hsl(215 19% 35%)): `content-secondary`. Keterangan dan caption.
-- **Teks tersier** (hsl(215 20% 65%)): `content-tertiary`. Placeholder.
-- **Teks nonaktif** (hsl(213 27% 84%)): `content-disabled`.
-- **Teks invers** (hsl(0 0% 100%)): `content-inverse`. Teks di atas permukaan gelap.
-- **Garis halus** (hsl(36 30% 89%)): `border-subtle`. Juga batas input (`--input` dan `--border` shadcn).
-- **Garis default** (hsl(214 32% 91%)): `border-default`. Kartu default.
-- **Garis kuat** (hsl(213 27% 84%)): `border-strong`.
-- **Lapisan gelap** (hsl(218 70% 8%)): `surface-overlay`. Tirai modal.
+- **Canvas** (hsl(33 20% 97%)): `surface-canvas`. The page background.
+- **Raised surface** (hsl(0 0% 100%)): `surface-raised`. A white panel. Not the default card background.
+- **Card surface** (hsl(34 29% 94%)): `card` and `surface-sunken`. The default card uses `card`; inset areas use `surface-sunken`. Both resolve to warm-100 in light mode.
+- **Primary text** (hsl(215 60% 13%)): `content-primary`. Also `surface-inverse`.
+- **Secondary text** (hsl(215 19% 35%)): `content-secondary`. Descriptions and captions.
+- **Tertiary text** (hsl(215 20% 65%)): `content-tertiary`. Placeholder.
+- **Disabled text** (hsl(213 27% 84%)): `content-disabled`.
+- **Inverse text** (hsl(0 0% 100%)): `content-inverse`. Text on a dark surface.
+- **Subtle line** (hsl(36 30% 89%)): `border-subtle`. Also the input border (`--input` and shadcn `--border`).
+- **Default line** (hsl(214 32% 91%)): `border-default`. The default card.
+- **Strong line** (hsl(213 27% 84%)): `border-strong`.
+- **Dark overlay** (hsl(218 70% 8%)): `surface-overlay`. The modal scrim.
 
-### Tersier
+### Tertiary
 
-- **Biru grafik** (hsl(196 100% 40%)): `chart-1`. Seri kependudukan. Bukan warna tombol.
-- **Hijau data** (hsl(160 84% 39%)): `data-positive` dan `chart-3`. Seri pertanian.
-- **Amber grafik** (hsl(35 93% 54%)): `chart-2`. Sama dengan amber aksen; peran di sini khusus seri perekonomian.
+- **Chart blue** (hsl(196 100% 40%)): `chart-1`. The population series. Not a button color.
+- **Data green** (hsl(160 84% 39%)): `data-positive` and `chart-3`. The agriculture series.
+- **Chart amber** (hsl(35 93% 54%)): `chart-2`. The same as the accent amber; its role here is specific to the economy series.
 
-### Umpan balik
+### Feedback
 
-- **Berhasil** (hsl(161 94% 30%)): `feedback-success`, dengan latar `feedback-success-bg` (hsl(152 81% 96%)).
-- **Peringatan** (hsl(32 95% 44%)): `feedback-warning`, dengan latar `feedback-warning-bg` (hsl(40 100% 97%)).
-- **Bahaya** (hsl(0 72% 51%)): `feedback-danger` dan `data-negative`, dengan latar `feedback-danger-bg` (hsl(0 86% 97%)).
-- **Informasi** (hsl(214 89% 40%)): `feedback-info`, dengan latar `feedback-info-bg` (hsl(214 100% 96%)).
-- **Data netral** (hsl(215 20% 65%)): `data-neutral`.
-- **Data sorot** (hsl(38 96% 73%)): `data-highlight`.
+- **Success** (hsl(161 94% 30%)): `feedback-success`, with the background `feedback-success-bg` (hsl(152 81% 96%)).
+- **Warning** (hsl(32 95% 44%)): `feedback-warning`, with the background `feedback-warning-bg` (hsl(40 100% 97%)).
+- **Danger** (hsl(0 72% 51%)): `feedback-danger` and `data-negative`, with the background `feedback-danger-bg` (hsl(0 86% 97%)).
+- **Information** (hsl(214 89% 40%)): `feedback-info`, with the background `feedback-info-bg` (hsl(214 100% 96%)).
+- **Neutral data** (hsl(215 20% 65%)): `data-neutral`.
+- **Highlight data** (hsl(38 96% 73%)): `data-highlight`.
 
-**The Semantic Token Rule.** Komponen konsumen memakai `surface-*`, `content-*`, `border-*`, `brand-*`, `feedback-*`, dan `data-*`. Skala primitif `navy`, `amber`, `emerald`, `crimson`, `slate`, dan `warm` hanya mendefinisikan token itu.
+**The Semantic Token Rule.** Consumer components use `surface-*`, `content-*`, `border-*`, `brand-*`, `feedback-*`, and `data-*`. The primitive scales `navy`, `amber`, `emerald`, `crimson`, `slate`, and `warm` only define those tokens.
 
-**The Bare Channel Rule.** Jangan menulis hex di komponen. Umumnya kanal disimpan mentah; pemakaiannya `hsl(var(--token))` atau utilitas Tailwind, termasuk opasitas `hsl(var(--token) / 0.9)`. Warm-50/100/200 yang terbungkus memakai var langsung atau kanal -hsl.
+**The Bare Channel Rule.** Do not write hex in components. Channels are generally stored raw; they are used as `hsl(var(--token))` or Tailwind utilities, including opacity `hsl(var(--token) / 0.9)`. The wrapped warm-50/100/200 use the var directly or the -hsl channel.
 
-Mode `.dark` mengganti token semantik (permukaan menjadi navy gelap, merek menjadi navy-300, umpan balik menjadi langkah yang lebih terang). Jangan menyalin nilai terang ke permukaan gelap.
+The `.dark` mode replaces the semantic tokens (surfaces become dark navy, the brand becomes navy-300, feedback becomes a lighter step). Do not copy light values onto a dark surface.
 
-### Kontrak token tiga lapis
+### Three-layer token contract
 
-Otoritas nilai dan tema adalah `tokens.css`; `colors_and_type.css` hanya entry all-in-one yang mengimpor token bersama Tailwind preflight. Frontmatter merekam nilai token reuse yang diekstrak, bukan skala baru.
+The authority for values and themes is `tokens.css`; `colors_and_type.css` is only an all-in-one entry that imports the tokens together with the Tailwind preflight. The frontmatter records the extracted reuse token values, not a new scale.
 
-| Lapis | Token |
+| Layer | Tokens |
 |---|---|
 | A primitive | navy, amber, emerald, crimson, slate; warm-50/100/200 |
-| B semantic | surface, content, border, brand, feedback, data; chart-1..10; map-tier-0..5 dan active |
-| C compatibility | background/foreground, card/card-foreground, popover, primary/primary-foreground, secondary, muted, accent, destructive, success/warning/info, border/input/ring; @theme ke utilitas |
+| B semantic | surface, content, border, brand, feedback, data; chart-1..10; map-tier-0..5 and active |
+| C compatibility | background/foreground, card/card-foreground, popover, primary/primary-foreground, secondary, muted, accent, destructive, success/warning/info, border/input/ring; @theme to utilities |
 
-Alias shadcn secara fisik ada dalam blok semantic. background → surface-canvas; foreground/card-foreground → content-primary; card/muted → warm-100-hsl; popover → surface-raised; primary → brand-primary; primary-foreground → navy-50; secondary → slate-600; muted-foreground → content-secondary; accent → brand-accent; destructive → crimson-600; feedback aliases ke feedback; border/input → border-subtle; ring → border-focus. Radius shadcn mengikuti radius-md aktual, bukan nilai historis dokumen database. Token khusus button/input lama telah dihapus.
+The shadcn aliases physically live in the semantic block. background → surface-canvas; foreground/card-foreground → content-primary; card/muted → warm-100-hsl; popover → surface-raised; primary → brand-primary; primary-foreground → navy-50; secondary → slate-600; muted-foreground → content-secondary; accent → brand-accent; destructive → crimson-600; feedback aliases to feedback; border/input → border-subtle; ring → border-focus. The shadcn radius follows the actual radius-md, not the historical value of the database document. The old button/input-specific tokens have been removed.
 
-**Pengecualian warm.** warm-50/100/200 sudah terbungkus hsl: gunakan var(--warm-*) langsung. Bila memerlukan kanal/opacity, gunakan hsl(var(--warm-*-hsl)). Jangan hsl(var(--warm-50)). Mode .dark mengganti semantik dan alias di source yang sama.
+**The warm exception.** warm-50/100/200 are already wrapped in hsl: use var(--warm-*) directly. If you need a channel/opacity, use hsl(var(--warm-*-hsl)). Do not use hsl(var(--warm-50)). The .dark mode replaces the semantics and aliases in the same source.
 
 
-## Tipografi
+## Typography
 
-**Font display:** Fraunces (fallback Georgia, 'Times New Roman', serif)
+**Display font:** Fraunces (fallback Georgia, 'Times New Roman', serif)
 
-**Font body:** IBM Plex Sans (fallback system-ui, -apple-system, sans-serif)
+**Body font:** IBM Plex Sans (fallback system-ui, -apple-system, sans-serif)
 
-**Font mono:** IBM Plex Mono (fallback JetBrains Mono, Cascadia Code, monospace)
+**Mono font:** IBM Plex Mono (fallback JetBrains Mono, Cascadia Code, monospace)
 
-**Karakter:** Display editorial memakai Fraunces. UI, heading, dan badan memakai IBM Plex Sans. Angka tabular memakai IBM Plex Mono lewat kelas `.numeric`. `fonts.css` hanya CDN opsional; produksi meng-host font sendiri.
+**Character:** Editorial display uses Fraunces. The UI, headings, and body use IBM Plex Sans. Tabular numbers use IBM Plex Mono through the `.numeric` class. `fonts.css` is only an optional CDN; production self-hosts fonts.
 
-### Hierarki
+### Hierarchy
 
-- **Display 2xl** (500, 4.5rem, line-height 1.05, letter-spacing -0.02em): Puncak skala display.
-- **Display xl** (500, 3.5rem, line-height 1.08, letter-spacing -0.018em): Display besar.
-- **Display** (500, 2.5rem, line-height 1.15, letter-spacing -0.015em): Display yang masih muat di halaman aplikasi.
-- **Headline** (600, 2rem, line-height 1.2, letter-spacing -0.01em): Heading 1. IBM Plex Sans, bukan Fraunces.
-- **Title** (600, 1.5rem, line-height 1.3, letter-spacing -0.008em): Heading 2. `PageHeader` merender `<h1>` dengan kelas `.h2`, jadi ukuran judul halaman adalah title, bukan headline.
+- **Display 2xl** (500, 4.5rem, line-height 1.05, letter-spacing -0.02em): The top of the display scale.
+- **Display xl** (500, 3.5rem, line-height 1.08, letter-spacing -0.018em): Large display.
+- **Display** (500, 2.5rem, line-height 1.15, letter-spacing -0.015em): Display that still fits on an application page.
+- **Headline** (600, 2rem, line-height 1.2, letter-spacing -0.01em): Heading 1. IBM Plex Sans, not Fraunces.
+- **Title** (600, 1.5rem, line-height 1.3, letter-spacing -0.008em): Heading 2. `PageHeader` renders an `<h1>` with the class `.h2`, so the page title size is title, not headline.
 - **Title sm** (600, 1.25rem, line-height 1.35, letter-spacing -0.005em): Heading 3.
-- **Body** (400, 1rem, line-height 1.55): Teks berjalan. Dasar dokumen 16px.
-- **Body sm** (400, 0.875rem, line-height 1.5): Teks kontrol dan deskripsi kartu.
-- **Button** (500, 0.875rem, line-height 1.5): Label tombol. Ukuran body sm dengan berat medium.
-- **Label** (600, 0.8125rem, line-height 1.4): Label formulir (kelas `.label`).
-- **Caption** (500, 0.75rem, line-height 1.4): Badge dan keterangan kecil.
-- **Micro** (600, 0.6875rem, line-height 1.3, letter-spacing 0.05em): Header tabel, huruf kapital.
-- **Mono** (400, 0.875rem, line-height 1.5): Angka dan kode. `.numeric` memaksa tabular-nums dan rata kanan.
+- **Body** (400, 1rem, line-height 1.55): Running text. The document base is 16px.
+- **Body sm** (400, 0.875rem, line-height 1.5): Control text and card descriptions.
+- **Button** (500, 0.875rem, line-height 1.5): Button label. Body sm size with medium weight.
+- **Label** (600, 0.8125rem, line-height 1.4): Form label (the class `.label`).
+- **Caption** (500, 0.75rem, line-height 1.4): Badges and small notes.
+- **Micro** (600, 0.6875rem, line-height 1.3, letter-spacing 0.05em): Table headers, uppercase.
+- **Mono** (400, 0.875rem, line-height 1.5): Numbers and code. `.numeric` forces tabular-nums and right alignment.
 
-**The Type Role Rule.** Fraunces tidak dipakai untuk tombol, input, atau tabel. IBM Plex Mono tidak dipakai untuk paragraf. Heading aplikasi tetap IBM Plex Sans.
+**The Type Role Rule.** Fraunces is not used for buttons, inputs, or tables. IBM Plex Mono is not used for paragraphs. Application headings stay IBM Plex Sans.
 
 ## Layout
 
-Satuan dasar 4px. Langkah jarak: 0, 2, 4, 6, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, dan 96px, sesuai token `--space-*` di frontmatter. Jarak semantik: inline xs–lg (8–24px), stack xs–lg (8–48px), inset sm–lg (12–24px).
+The base unit is 4px. Spacing steps: 0, 2, 4, 6, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, and 96px, matching the `--space-*` tokens in the frontmatter. Semantic spacing: inline xs–lg (8–24px), stack xs–lg (8–48px), inset sm–lg (12–24px).
 
-Lebar wadah: 640, 768, 1024, 1280, dan 1536px. Shell: sidebar terbuka 17.5rem (280px), sidebar rapat 4rem (64px), topbar 4rem (64px). `PageHeader` menumpuk di layar sempit dan menjadi baris (judul di kiri, aksi di kanan) mulai 768px, dengan jarak 12px dan padding bawah 16px.
+Container widths: 640, 768, 1024, 1280, and 1536px. Shell: open sidebar 17.5rem (280px), collapsed sidebar 4rem (64px), topbar 4rem (64px). `PageHeader` stacks on narrow screens and becomes a row (title on the left, actions on the right) from 768px, with a 12px gap and 16px bottom padding.
 
-**The Four Point Rule.** Jangan mengarang jarak di luar skala `--space-*`. Padding komponen yang sudah ada (tombol 16px horizontal, kartu 24px) mengikuti langkah itu.
+**The Four Point Rule.** Do not invent spacing outside the `--space-*` scale. The padding of existing components (button 16px horizontal, card 24px) follows those steps.
 
-### Kedalaman dan elevasi
+### Depth and elevation
 
-Kedalaman utama datang dari lapisan warna, bukan dari bayangan tebal. Kanvas hangat, area sunken, dan permukaan putih sudah memisahkan bidang. Bayangan hanya mengangkat kontrol dan kartu. Token `--elevation-*` tidak berubah di `.dark`. Alias `--shadow-xs` sampai `--shadow-xl` di `.dark` diganti bayangan hitam yang lebih dalam.
+The main depth comes from color layers, not from heavy shadows. The warm canvas, sunken areas, and white surfaces already separate the planes. Shadows only lift controls and cards. The `--elevation-*` tokens do not change in `.dark`. The aliases `--shadow-xs` to `--shadow-xl` are replaced in `.dark` by deeper black shadows.
 
-### Kosakata bayangan
+### Shadow vocabulary
 
-- **Elevation 0** (`box-shadow: none`): Permukaan diam yang hanya mengandalkan warna bidang.
-- **Elevation 1** (`box-shadow: 0 1px 2px 0 rgba(8, 28, 52, 0.06)`): Angkat paling kecil. Kartu varian `surface` memakai ini.
-- **Elevation 2** (`box-shadow: 0 2px 4px 0 rgba(8, 28, 52, 0.06), 0 1px 2px 0 rgba(8, 28, 52, 0.04)`): Tombol primer saat diam.
-- **Elevation 3** (`box-shadow: 0 8px 16px -2px rgba(8, 28, 52, 0.08), 0 2px 4px 0 rgba(8, 28, 52, 0.04)`): Tombol primer saat hover.
-- **Elevation 4** (`box-shadow: 0 16px 32px -4px rgba(8, 28, 52, 0.12), 0 4px 8px -2px rgba(8, 28, 52, 0.06)`): Overlay yang lebih tinggi.
-- **Elevation 5** (`box-shadow: 0 24px 48px -6px rgba(8, 28, 52, 0.16), 0 8px 16px -4px rgba(8, 28, 52, 0.08)`): Lapisan paling atas.
-- **Shadow sm** (`box-shadow: 0 1px 3px 0 rgba(8, 28, 52, 0.06), 0 1px 2px -1px rgba(8, 28, 52, 0.04)`): Kartu default. Bukan alias langsung dari elevation 1.
+- **Elevation 0** (`box-shadow: none`): A resting surface that relies only on the plane color.
+- **Elevation 1** (`box-shadow: 0 1px 2px 0 rgba(8, 28, 52, 0.06)`): The smallest lift. The `surface` card variant uses this.
+- **Elevation 2** (`box-shadow: 0 2px 4px 0 rgba(8, 28, 52, 0.06), 0 1px 2px 0 rgba(8, 28, 52, 0.04)`): The primary button at rest.
+- **Elevation 3** (`box-shadow: 0 8px 16px -2px rgba(8, 28, 52, 0.08), 0 2px 4px 0 rgba(8, 28, 52, 0.04)`): The primary button on hover.
+- **Elevation 4** (`box-shadow: 0 16px 32px -4px rgba(8, 28, 52, 0.12), 0 4px 8px -2px rgba(8, 28, 52, 0.06)`): Higher overlays.
+- **Elevation 5** (`box-shadow: 0 24px 48px -6px rgba(8, 28, 52, 0.16), 0 8px 16px -4px rgba(8, 28, 52, 0.08)`): The top layer.
+- **Shadow sm** (`box-shadow: 0 1px 3px 0 rgba(8, 28, 52, 0.06), 0 1px 2px -1px rgba(8, 28, 52, 0.04)`): The default card. Not a direct alias of elevation 1.
 
-**The Surface Layer Rule.** Jangan menambah bayangan baru untuk membedakan kartu dari halaman. Gunakan `surface-canvas`, `surface-sunken`, dan `surface-raised` lebih dulu. Bayangan yang dipakai komponen adalah elevation 0–5 dan `shadow-sm` di atas.
+**The Surface Layer Rule.** Do not add new shadows to tell a card from the page. Use `surface-canvas`, `surface-sunken`, and `surface-raised` first. The shadows components use are elevation 0–5 and `shadow-sm` above.
 
-### Bentuk
+### Shapes
 
-Sudut institusional dan kecil. Tidak ada sudut besar sebagai bahasa default.
+Corners are institutional and small. There are no large corners as the default language.
 
-- `none` (0) untuk bidang yang harus rata.
-- `xs` (2px) jarang.
-- `sm` (4px) untuk badge lama dan chip; badge default sekarang pill (`full`).
-- `md` (6px) untuk tombol dan input. Sama dengan `--radius` shadcn.
-- `lg` (8px) untuk tombol ukuran lg dan dialog.
-- `xl` (10px) untuk kartu default. Utilitas `rounded-xl` mengikuti token ini, bukan 12px bawaan Tailwind.
-- `full` (9999px) untuk badge pill dan avatar.
+- `none` (0) for planes that must be flat.
+- `xs` (2px) rarely.
+- `sm` (4px) for old badges and chips; the default badge is now a pill (`full`).
+- `md` (6px) for buttons and inputs. Equal to the shadcn `--radius`.
+- `lg` (8px) for lg-size buttons and dialogs.
+- `xl` (10px) for the default card. The `rounded-xl` utility follows this token, not Tailwind's default 12px.
+- `full` (9999px) for pill badges and avatars.
 
-Varian kartu `surface` memakai `rounded-2xl` (1rem pada skala Tailwind). Itu bukan token `--radius-*` paket.
+The `surface` card variant uses `rounded-2xl` (1rem on the Tailwind scale). That is not a `--radius-*` token of the package.
 
-**The Restrained Radius Rule.** Tombol dan input tetap 6px. Jangan menukar kartu default ke pill atau ke sudut nol.
+**The Restrained Radius Rule.** Buttons and inputs stay 6px. Do not swap the default card to a pill or to zero corners.
 
-## Komponen
+## Components
 
-### Tombol
+### Buttons
 
-Tombol primer padat, tinggi tetap, label medium. Varian lain (outline, tertiary, secondary, ghost, link, destructive, success, danger-outline, nav) ada di `buttonVariants`; yang normatif di frontmatter adalah primer.
+The primary button is solid, fixed height, medium label. The other variants (outline, tertiary, secondary, ghost, link, destructive, success, danger-outline, nav) are in `buttonVariants`; what is normative in the frontmatter is the primary.
 
-- **Shape:** Sudut md (6px). Ukuran lg naik ke lg (8px).
-- **Primary:** Latar `brand-primary`, teks `primary-foreground`, tinggi 36px, padding horizontal 16px, bayangan elevation 2.
-- **Hover / Focus:** Hover memakai `primary` pada opasitas 0.9, elevation 3, dan geser 1px ke atas. Active kembali ke elevation 1 tanpa geser. Fokus: garis 2px `border-focus` dengan offset 2px. Nonaktif: opasitas 0.5.
-- **Secondary / Ghost / Tertiary:** Secondary mengisi `surface-sunken` dengan garis halus. Outline dan tertiary berbatas `border-default` dan mengisi sunken saat hover. Ghost hanya teks, tanpa batas.
+- **Shape:** md corners (6px). The lg size goes up to lg (8px).
+- **Primary:** `brand-primary` background, `primary-foreground` text, 36px height, 16px horizontal padding, elevation 2 shadow.
+- **Hover / Focus:** Hover uses `primary` at 0.9 opacity, elevation 3, and moves up 1px. Active returns to elevation 1 without moving. Focus: a 2px `border-focus` line with a 2px offset. Disabled: 0.5 opacity.
+- **Secondary / Ghost / Tertiary:** Secondary fills with `surface-sunken` with a subtle line. Outline and tertiary are bordered with `border-default` and fill sunken on hover. Ghost is text only, without a border.
 
-### Kartu
+### Cards
 
-Kartu default berbatas `border-default`, latar `card` (warm-100, bukan putih), teks `content-primary`, sudut xl (10px), bayangan `shadow-sm`. Header dan konten ber-padding 24px; konten menghapus padding atas. Varian `surface` memakai sudut 2xl Tailwind, batas `border-subtle`, dan elevation 1.
+The default card is bordered with `border-default`, has a `card` background (warm-100, not white), `content-primary` text, xl corners (10px), and a `shadow-sm` shadow. The header and content have 24px padding; the content removes the top padding. The `surface` variant uses Tailwind 2xl corners, a `border-subtle` border, and elevation 1.
 
-- **Corner Style:** xl pada default (10px).
-- **Background:** token `card`.
-- **Shadow Strategy:** `shadow-sm` saat diam. Bukan elevation 2.
+- **Corner Style:** xl on the default (10px).
+- **Background:** the `card` token.
+- **Shadow Strategy:** `shadow-sm` at rest. Not elevation 2.
 - **Border:** `border-default`.
 - **Internal Padding:** 24px.
 
-### Input
+### Inputs
 
-Tinggi 36px, lebar penuh, sudut md, padding 4px 12px, latar transparan, batas `border-subtle`, bayangan elevation 1, teks body sm. Placeholder memakai `content-tertiary`. Fokus sama dengan tombol: garis 2px token ring, offset 2px. Nonaktif opasitas 0.5. `aria-invalid` menggeser batas ke `feedback-danger`.
+36px height, full width, md corners, 4px 12px padding, transparent background, `border-subtle` border, elevation 1 shadow, body sm text. The placeholder uses `content-tertiary`. Focus is the same as the button: a 2px ring-token line, 2px offset. Disabled 0.5 opacity. `aria-invalid` moves the border to `feedback-danger`.
 
-- **Style:** Garis halus, latar transparan, sudut 6px.
-- **Focus:** Ring 2px `border-focus`, offset 2px.
-- **Error / Disabled:** Batas bahaya saat tidak valid; opasitas 0.5 saat nonaktif.
+- **Style:** A subtle line, transparent background, 6px corners.
+- **Focus:** A 2px `border-focus` ring, 2px offset.
+- **Error / Disabled:** A danger border when invalid; 0.5 opacity when disabled.
 
-### Badge
+### Badges
 
-Pill (`rounded-full`), padding 2px 8px, caption berat medium. Default: latar primer dan teks `primary-foreground`. Hover (`primary` pada 0.9) hanya berlaku bila badge dirender sebagai tautan. Fokus mengikuti ring 2px yang sama.
+A pill (`rounded-full`), 2px 8px padding, caption with medium weight. Default: a primary background and `primary-foreground` text. Hover (`primary` at 0.9) only applies if the badge is rendered as a link. Focus follows the same 2px ring.
 
-- **Style:** Pill, latar primer, teks `primary-foreground`.
-- **State:** Varian secondary, destructive, outline, ghost, dan link ada. Default yang dicatat di frontmatter adalah primer.
+- **Style:** Pill, primary background, `primary-foreground` text.
+- **State:** The secondary, destructive, outline, ghost, and link variants exist. The default recorded in the frontmatter is the primary.
 
-### Header halaman
+### Page header
 
-Bukan heading manual. Wadah flex, jarak 12px, garis bawah token `--border` (halus), padding bawah 16px. Di 768px ke atas, judul dan aksi sejajar ujung bawah. Judul adalah `<h1>` bertipografi title (`.h2`), warna `content-primary`. Deskripsi `text-sm` (0.875rem), warna `content-secondary`, jarak atas 4px. Komponen ini tidak punya hover sendiri.
+Not a manual heading. A flex container, 12px gap, a bottom line in the `--border` token (subtle), 16px bottom padding. From 768px up, the title and actions align at the bottom edge. The title is an `<h1>` with title typography (`.h2`), `content-primary` color. The description is `text-sm` (0.875rem), `content-secondary` color, 4px top gap. This component has no hover of its own.
 
-- **Style:** Baris judul plus deskripsi, dengan slot aksi.
-- **Typography:** Title untuk judul halaman, bukan skala headline.
+- **Style:** A title row plus a description, with an actions slot.
+- **Typography:** Title for the page title, not the headline scale.
 
-### Kartu KPI
+### KPI card
 
-Kartu dengan nilai angka. Tanpa `accent`, tepi kiri 4px memakai `brand-primary`. Dengan `accent` (`brand`, `accent`, `success`, `info`, `warning`), bar 4px di atas memakai warna umpan balik atau merek yang sesuai, dan ikon duduk di chip 28px sudut lg. Judul: 12px, huruf kapital, tracking 0.05em, warna `content-secondary`. Nilai: IBM Plex Mono, 1.5rem, berat 700, tabular, rata kanan. Keterangan: 12px, `content-secondary`.
+A card with a numeric value. Without `accent`, the 4px left edge uses `brand-primary`. With `accent` (`brand`, `accent`, `success`, `info`, `warning`), the 4px bar on top uses the matching feedback or brand color, and the icon sits in a 28px chip with lg corners. Title: 12px, uppercase, 0.05em tracking, `content-secondary` color. Value: IBM Plex Mono, 1.5rem, weight 700, tabular, right-aligned. Note: 12px, `content-secondary`.
 
-- **Corner Style:** Mengikuti kartu default (10px).
-- **Background:** token `card`.
-- **Internal Padding:** Header dan konten 24px; header KPI merapatkan padding bawah menjadi 8px.
+- **Corner Style:** Follows the default card (10px).
+- **Background:** the `card` token.
+- **Internal Padding:** The header and content 24px; the KPI header tightens the bottom padding to 8px.
 
 ## Motion
 
-Token durasi source: instant 50ms, fast 120ms, base 200ms, slow 320ms, slower 480ms, dengan easing CSS source. prefers-reduced-motion di tokens.css menurunkan animation/transition; verifikasi implementasi interaktif tetap menghormati preferensi. Tidak menambah library motion JavaScript; [ADR 0002](docs/adr/0002-no-motion-js-dependency.md) immutable.
+The source duration tokens: instant 50ms, fast 120ms, base 200ms, slow 320ms, slower 480ms, with the source CSS easing. prefers-reduced-motion in tokens.css lowers animation/transition; verify that interactive implementations still respect the preference. Do not add a JavaScript motion library; [ADR 0002](docs/adr/0002-no-motion-js-dependency.md) is immutable.
 
-## Aksesibilitas
+## Accessibility
 
-Pertahankan keyboard navigation, semantic HTML, label, focus-visible/ARIA, SkipLink dan reduced motion. Dialog/sheet/command mempertahankan judul/deskripsi aksesibel. Status dan chart tidak boleh mengandalkan warna saja. Checklist integrasi di guide memeriksa kontras; belum ada bukti audit formal WCAG menyeluruh yang dipelihara. Ukuran komponen dan token bukan bukti otomatis kepatuhan.
+Keep keyboard navigation, semantic HTML, labels, focus-visible/ARIA, SkipLink, and reduced motion. A dialog/sheet/command keeps an accessible title/description. Status and charts must not rely on color alone. The integration checklist in the guide checks contrast; there is no maintained evidence of a comprehensive formal WCAG audit. Component sizes and tokens are not automatic proof of compliance.
 
-## Anti-referensi
+## Anti-references
 
-### Gunakan
+### Do
 
-- **Gunakan** pakai token semantik di komponen konsumen: `surface`, `content`, `border`, `brand`, `feedback`, dan `data`.
-- **Gunakan** simpan warna sebagai kanal HSL mentah dan pakai `hsl(var(--token))` atau utilitas Tailwind.
-- **Gunakan** impor CSS paket tepat sekali di root. Tailwind 4 memakai `tokens.css` sesudah `@import "tailwindcss"`. Non-Tailwind memakai `styles.css`.
-- **Gunakan** tulis salinan UI dalam Bahasa Indonesia formal, tanpa emoji, dan format angka dengan `Intl.NumberFormat('id-ID')`.
-- **Gunakan** andalkan token semantik yang sama untuk mode terang dan `.dark`.
+- **Do** use the semantic tokens in consumer components: `surface`, `content`, `border`, `brand`, `feedback`, and `data`.
+- **Do** store colors as raw HSL channels and use `hsl(var(--token))` or Tailwind utilities.
+- **Do** import the package CSS exactly once at the root. Tailwind 4 uses `tokens.css` after `@import "tailwindcss"`. Non-Tailwind uses `styles.css`.
+- **Do** write UI copy in formal Indonesian, without emoji, and format numbers with `Intl.NumberFormat('id-ID')`.
+- **Do** rely on the same semantic tokens for light mode and `.dark`.
 
-### Hindari
+### Avoid
 
-- **Hindari** hardcode hex di komponen konsumen.
-- **Hindari** pakai skala primitif (`navy`, `amber`, `emerald`, `crimson`, `slate`, `warm`) langsung di komponen.
-- **Hindari** mengimpor `styles.css` dan `tokens.css` sekaligus, dan jangan memakai `tailwind-preset` untuk integrasi baru.
-- **Hindari** menganggap latar kartu putih. Token `card` adalah warm-100; yang putih adalah `surface-raised`.
-- **Hindari** menganggap teks tombol primer `brand-primary-fg`. Varian default memakai `primary-foreground`.
-- **Hindari** memuat `fonts.css` sebagai default. Berkas itu CDN opsional.
+- **Avoid** hardcoding hex in consumer components.
+- **Avoid** using the primitive scales (`navy`, `amber`, `emerald`, `crimson`, `slate`, `warm`) directly in components.
+- **Avoid** importing `styles.css` and `tokens.css` together, and do not use `tailwind-preset` for a new integration.
+- **Avoid** assuming the card background is white. The `card` token is warm-100; the white one is `surface-raised`.
+- **Avoid** assuming the primary button text is `brand-primary-fg`. The default variant uses `primary-foreground`.
+- **Avoid** loading `fonts.css` as a default. That file is an optional CDN.
 
-## Catatan pemakaian
+## Usage notes
 
-Bagian ini panduan **membangun aplikasi konsumen** dengan paket
-`@bpsprovkaltara/design-system` — bukan cara mengembangkan library-nya.
-Sumber kebenaran API selalu `src/index.ts` pada tag yang dipakai; bila
-dokumen ini berbeda, ikuti `src/index.ts`.
+This section is a guide to **building a consumer application** with the package
+`@bpsprovkaltara/design-system` — not how to develop the library itself.
+The source of truth of the API is always `src/index.ts` at the tag in use; if
+this document differs, follow `src/index.ts`.
 
-### Pilih versi dulu
+### Choose the version first
 
-Ada dua jalur rilis paralel. **Tentukan versi sebelum menulis kode** — API-nya berbeda.
+There are two parallel release tracks. **Decide the version before writing code** — the APIs differ.
 
 | | v3 (LTS) | v4 (latest) |
 |---|---|---|
 | Tailwind CSS | 3.4 | 4 |
 | React | 18 | 19 |
-| Node | ≥18 | ≥20 di aplikasi konsumen (tooling repo: Node 24, `.node-version`) |
-| Tema / styling | preset (`tailwind-preset`) | CSS-first (`import 'styles.css'`) |
-| Nama komponen custom | ber-prefix `BpsX` | tanpa prefix |
+| Node | ≥18 | ≥20 in the consumer application (repo tooling: Node 24, `.node-version`) |
+| Theme / styling | preset (`tailwind-preset`) | CSS-first (`import 'styles.css'`) |
+| Custom component names | prefixed `BpsX` | no prefix |
 | dist-tag | `legacy` | `latest` |
-| Branch sumber | `v3` | `main` |
+| Source branch | `v3` | `main` |
 
-Aturan praktis: aplikasi **Tailwind 4 + React 19** → pakai **v4**. Aplikasi lama yang masih
-**Tailwind 3 / React 18** → pakai **v3**. Migrasi antar versi **bukan drop-in** (lihat Migrasi v3 ke v4 di bawah).
+A practical rule: a **Tailwind 4 + React 19** application → use **v4**. An old application still on
+**Tailwind 3 / React 18** → use **v3**. Migrating between versions is **not drop-in** (see Migrating v3 to v4 below).
 
-### Instalasi (GitHub Packages)
+### Installation (GitHub Packages)
 
-Paket dipublikasikan ke **GitHub Packages** (registry privat), bukan npm publik. Aplikasi
-konsumen butuh `.npmrc` yang mengarahkan scope `@bpsprovkaltara` ke registry tersebut plus
-token GitHub dengan izin `read:packages`.
+The package is published to **GitHub Packages** (a private registry), not public npm. The consumer
+application needs an `.npmrc` that points the `@bpsprovkaltara` scope at that registry plus a
+GitHub token with the `read:packages` permission.
 
-`.npmrc` di root aplikasi konsumen:
+`.npmrc` at the root of the consumer application:
 
 ```
 @bpsprovkaltara:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
 ```
 
-> Jangan commit token. Set `GITHUB_TOKEN` sebagai environment variable (atau pakai
-> `.npmrc` di home dir untuk dev lokal).
+> Do not commit the token. Set `GITHUB_TOKEN` as an environment variable (or use
+> an `.npmrc` in the home dir for local development).
 
-Install sesuai versi:
+Install according to the version:
 
 ```bash
 # v4 (latest)
 pnpm add @bpsprovkaltara/design-system@latest
-# atau pin: @^4
+# or pin: @^4
 
 # v3 (LTS)
 pnpm add @bpsprovkaltara/design-system@legacy
-# atau pin: @^3
+# or pin: @^3
 ```
 
-Peer dependencies (install bila belum ada):
+Peer dependencies (install if not present):
 
 ```bash
 # v4
 pnpm add react@^19 react-dom@^19 tailwindcss@^4
-# Form opsional (jika memakai Form + RHF/Zod):
+# Optional form (if using Form + RHF/Zod):
 pnpm add react-hook-form zod @hookform/resolvers
 # v3
 pnpm add react@^18 react-dom@^18 tailwindcss@^3.4
 ```
 
-Subpath yang didukung (v4):
+Supported subpaths (v4):
 
-| Path | Isi |
+| Path | Contents |
 |---|---|
 | `@bpsprovkaltara/design-system` | Barrel + CSS side-effect |
-| `.../components/ui/button` (dll.) | Satu modul UI |
+| `.../components/ui/button` (etc.) | One UI module |
 | `.../patterns/empty-state` | Pattern |
 | `.../hooks/use-toast` | Hook |
-| `.../utils` | `cn` dan utility murni RSC-safe |
+| `.../utils` | `cn` and pure RSC-safe utilities |
 | `.../styles.css` / `tokens.css` / `fonts.css` | CSS |
 
-Jangan memakai catch-all lama `@bpsprovkaltara/design-system/button` — gunakan
-`.../components/ui/button` atau entry utama.
+Do not use the old catch-all `@bpsprovkaltara/design-system/button` — use
+`.../components/ui/button` or the main entry.
 
-### Setup styling
+### Styling setup
 
-Non-Tailwind memakai `styles.css` compiled sekali. Tailwind 4 yang sudah memiliki preflight memakai `tokens.css` sesudah `@import "tailwindcss"` plus `@source` ke dist paket. Subpath komponen tidak menjamin side effect CSS; root konsumen wajib mengatur import. Jangan mengimpor kedua entry CSS bersamaan. Jangan memakai shim tailwind-preset untuk integrasi baru v4.
+Non-Tailwind uses the compiled `styles.css` once. Tailwind 4 that already has preflight uses `tokens.css` after `@import "tailwindcss"` plus `@source` to the package dist. A component subpath does not guarantee a CSS side effect; the consumer root must set up the import. Do not import both CSS entries together. Do not use the tailwind-preset shim for a new v4 integration.
 
-Font produksi disediakan konsumen; `fonts.css` Google CDN opt-in. Contoh v3 memakai preset kompatibilitas jalur legacy, bukan aturan untuk v4.
+Production fonts are provided by the consumer; `fonts.css` Google CDN is opt-in. The v3 examples use a compatibility preset of the legacy track, not a rule for v4.
 
-### API publik (v4)
+### Public API (v4)
 
-Impor semua dari entry point utama: `import { ... } from '@bpsprovkaltara/design-system'`.
+Import everything from the main entry point: `import { ... } from '@bpsprovkaltara/design-system'`.
 
 **Utilities**: `cn`
 
@@ -518,9 +518,9 @@ Input, Label, NavigationMenu, Pagination, Popover, Progress, RadioGroup, ScrollA
 Separator, Sheet, Skeleton, Slider, Spinner (+type `SpinnerProps`), StatusBadge (+`statusBadgeVariants`, type `StatusBadgeProps`), Switch, Table, Tabs, Textarea,
 Toggle (+type `ToggleProps`), ToggleGroup (+types), Toast (+`Toaster`), Tooltip.
 
-**Komponen shell dan interaksi**: `AppShell`, `AppSidebar`, `FormDialog`, `FormSheet`, `CommandSearch`, `NotificationPopover`, `SidebarAccount`, `ThemeToggle`, `ConfirmDialog`, `DocumentFilterBar`, `TableEmpty`, `TablePagination`. **Pola**: `SectionCard`, `DataTableCard`, `FilterChips`, `SectionTabs`, `resolveActiveTab`, `PageSkeleton`. **Hooks tambahan**: `useTheme`, `usePersistedCollapsed`. Props dan API aktual: [docs/api.md](docs/api.md); boundary client, asChild/renderLink: [docs/consumer-chrome.md](docs/consumer-chrome.md).
+**Shell and interaction components**: `AppShell`, `AppSidebar`, `FormDialog`, `FormSheet`, `CommandSearch`, `NotificationPopover`, `SidebarAccount`, `ThemeToggle`, `ConfirmDialog`, `DocumentFilterBar`, `TableEmpty`, `TablePagination`. **Patterns**: `SectionCard`, `DataTableCard`, `FilterChips`, `SectionTabs`, `resolveActiveTab`, `PageSkeleton`. **Additional hooks**: `useTheme`, `usePersistedCollapsed`. The actual props and API: [docs/api.md](docs/api.md); the client boundary, asChild/renderLink: [docs/consumer-chrome.md](docs/consumer-chrome.md).
 
-**Komponen custom BPS**: `Combobox` (+`ComboboxProps`/`ComboboxOption`), `AppTopbar`,
+**BPS custom components**: `Combobox` (+`ComboboxProps`/`ComboboxOption`), `AppTopbar`,
 `ConfirmActionDialog`, `BulkActionBar` (+`actions[]`), `DataStatePanel`, `DataTable`
 (+`renderRowActions`, `sortable`, `pageSize`), `DatePicker`, `DateRangePicker`, `FilterBar`
 (+`statusOptions`/`unitKerjaOptions`), `FormSection`, `KpiCard`, `PageHeader`,
@@ -535,10 +535,10 @@ Toggle (+type `ToggleProps`), ToggleGroup (+types), Toast (+`Toaster`), Tooltip.
 
 **Hooks**: `useToast`
 
-> Di **v3** komponen custom memakai prefix `Bps` (mis. `BpsDataTable`, `BpsKpiCard`,
-> `BpsStatusBadge` jika berlaku). Periksa `src/index.ts` pada tag v3.
+> In **v3** the custom components use the `Bps` prefix (e.g. `BpsDataTable`, `BpsKpiCard`,
+> `BpsStatusBadge` if applicable). Check `src/index.ts` at the v3 tag.
 
-### Pola penggunaan
+### Usage patterns
 
 ```tsx
 import { Button, KpiCard, StatusBadge } from '@bpsprovkaltara/design-system'
@@ -554,23 +554,23 @@ export function Contoh() {
 }
 ```
 
-- **Header halaman**: gunakan `PageHeader`, bukan merangkai heading manual.
-- **Tabel data**: `DataTable` mendukung `renderRowActions`, sorting kolom (`sortable`), dan
-  pagination client-side (`pageSize`). Untuk kontrol penuh, gunakan primitif `Table`.
-- **Form**: `Form` + `react-hook-form` + `zod` (peer opsional; resolver via `@hookform/resolvers`).
-- **Status workflow**: `StatusBadge` variant `draft` | `pending` | `revised` | `approved`
-  (selain variant umum `default`/`secondary`/`destructive`/`outline`). Komponen butuh
-  children sebagai teks — `<StatusBadge variant="approved">Disetujui</StatusBadge>`.
+- **Page header**: use `PageHeader`, do not assemble a heading by hand.
+- **Data table**: `DataTable` supports `renderRowActions`, column sorting (`sortable`), and
+  client-side pagination (`pageSize`). For full control, use the `Table` primitives.
+- **Forms**: `Form` + `react-hook-form` + `zod` (optional peers; resolver via `@hookform/resolvers`).
+- **Workflow status**: `StatusBadge` variant `draft` | `pending` | `revised` | `approved`
+  (besides the general variants `default`/`secondary`/`destructive`/`outline`). The component needs
+  children as text — `<StatusBadge variant="approved">Disetujui</StatusBadge>`.
 - **Empty/loading/error state**: `EmptyState`, `DataStatePanel`, `Skeleton`, `Spinner`.
-- **Tahun / angka lokal**: `YearSelect`, `NumberField` (format `id-ID`).
+- **Local year / numbers**: `YearSelect`, `NumberField` (`id-ID` format).
 
-### Migrasi v3 ke v4
+### Migrating v3 to v4
 
-1. Naikkan peer deps: React 19, Tailwind 4, Node 20.
-2. Ganti integrasi tema: hapus `presets: [preset]` dari `tailwind.config`, ganti dengan
-   `@import '@bpsprovkaltara/design-system/tokens.css'` sesudah `@import 'tailwindcss'`.
-   `styles.css` hanya untuk konsumen non-Tailwind — jangan diimpor bersama `tokens.css`.
-3. **Rename impor komponen custom**: hapus prefix `Bps` (`BpsDataTable` → `DataTable`,
-   `BpsKpiCard` → `KpiCard`, dst.).
-4. Sesuaikan utility Tailwind 4 yang berubah (mis. `outline-none` → `outline-hidden`).
-5. Checklist lengkap per framework (Vite, HTML, Laravel): `docs/upgrading.md`.
+1. Raise the peer deps: React 19, Tailwind 4, Node 20.
+2. Replace the theme integration: remove `presets: [preset]` from `tailwind.config`, replace it with
+   `@import '@bpsprovkaltara/design-system/tokens.css'` after `@import 'tailwindcss'`.
+   `styles.css` is only for non-Tailwind consumers — do not import it together with `tokens.css`.
+3. **Rename custom component imports**: remove the `Bps` prefix (`BpsDataTable` → `DataTable`,
+   `BpsKpiCard` → `KpiCard`, etc.).
+4. Adjust the Tailwind 4 utilities that changed (e.g. `outline-none` → `outline-hidden`).
+5. The full checklist per framework (Vite, HTML, Laravel): `docs/upgrading.md`.

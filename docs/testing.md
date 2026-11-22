@@ -1,90 +1,90 @@
 # Testing
 
-Standar workspace ada di `TESTING.md`. Dokumen ini mencatat penerapannya di design system.
+The workspace standard is in `TESTING.md`. This document records how it is applied in the design system.
 
-## Lane dan perintah
+## Lanes and commands
 
-Lane: browser, docker (`TESTING.md` §2a; lane docker = Dockerfile showcase, job image-nya di tiket CI/image terpisah). Kode komponen berjalan di browser,
-jadi Vitest berjalan di Node 24 (`.node-version`), bukan di Bun. Pin Node ini
-hanya untuk tooling repo; aplikasi konsumen paket atau registry tidak terikat
-padanya. Test masih memakai jsdom + Testing Library; migrasi ke Vitest Browser
-Mode belum termasuk kontrak ini.
+Lanes: browser, docker (`TESTING.md` §2a; the docker lane = the showcase Dockerfile, its image job is in a separate CI/image ticket). The component code runs in the browser,
+so Vitest runs on Node 24 (`.node-version`), not on Bun. This Node pin is
+only for the repo tooling; consumer applications of the package or the registry are not bound
+to it. The tests still use jsdom + Testing Library; migrating to Vitest Browser
+Mode is not part of this contract yet.
 
-| Script | Isi |
+| Script | Contents |
 |---|---|
-| `bun run check` | lint + typecheck + test; lane ini tidak punya project `unit` terpisah, jadi `test` dipakai sebagai tier cepat |
-| `bun run lint` | ESLint atas `src`, termasuk aturan test; CI menambah `--max-warnings 0` |
+| `bun run check` | lint + typecheck + test; this lane has no separate `unit` project, so `test` is used as the fast tier |
+| `bun run lint` | ESLint over `src`, including the test rules; CI adds `--max-warnings 0` |
 | `bun run typecheck` | `tsc --noEmit` |
-| `bun run test` | seluruh Vitest (jsdom) |
-| `bun run test:coverage` | `test` dengan threshold coverage; inilah yang dijalankan CI |
+| `bun run test` | the whole Vitest suite (jsdom) |
+| `bun run test:coverage` | `test` with coverage thresholds; this is what CI runs |
 
-## Tangga verifikasi
+## Verification ladder
 
-| Lingkup | Perintah |
+| Scope | Command |
 |---|---|
-| quick | `bun run check`, atau `bunx vitest run <file>` untuk satu file |
-| standard | `bun run test` (seluruh Vitest/Testing Library/jsdom) |
-| complex | + `bun run build:lib` bila CSS, API publik, atau build berubah; `bun run build` bila showcase/route berubah |
-| high-risk | + `bun run test:coverage` dan uji paket hasil `build:lib` di aplikasi konsumen (Tailwind, non-Tailwind, RSC) sebelum rilis |
+| quick | `bun run check`, or `bunx vitest run <file>` for one file |
+| standard | `bun run test` (the whole Vitest/Testing Library/jsdom suite) |
+| complex | + `bun run build:lib` if CSS, the public API, or the build changes; `bun run build` if the showcase/routes change |
+| high-risk | + `bun run test:coverage` and test the `build:lib` package output in a consumer application (Tailwind, non-Tailwind, RSC) before a release |
 
-`build:lib` dan `build` menulis ulang `dist/` yang di-commit. Kembalikan
-`dist/` bila perubahan tidak dimaksudkan untuk rilis.
+`build:lib` and `build` rewrite the committed `dist/`. Restore
+`dist/` if the change is not meant for a release.
 
 ## CI
 
-- Job `quality`: typecheck, lint, cek directive `"use client"`,
-  `test:coverage`, `build:lib`, build showcase.
-- Job `security`: `bun audit --audit-level=critical`, gitleaks CLI (rentang
-  PR, atau `HEAD` saat push), dan zizmor atas workflow.
-- Ambang audit `critical`. Per 2026-11-03 ada 37 temuan high; di cakupan
-  produksi hanya peer `zod` (<4.6.6), sisanya dependency dev (vite,
-  react-router, undici, postcss, dan lainnya). Dilacak di
+- Job `quality`: typecheck, lint, the `"use client"` directive check,
+  `test:coverage`, `build:lib`, the showcase build.
+- Job `security`: `bun audit --audit-level=critical`, the gitleaks CLI (the PR
+  range, or `HEAD` on a push), and zizmor over the workflows.
+- The audit threshold is `critical`. As of 2026-11-03 there are 37 high findings; in the
+  production scope only the `zod` peer (<4.6.6), the rest are dev dependencies (vite,
+  react-router, undici, postcss, and others). Tracked in
   [#35](https://github.com/bpsprovkaltara/design-system/issues/35).
-- `release.yml` (publish GitHub Packages) hanya mendapat hygiene: pin SHA,
-  `permissions`, timeout, tanpa cache. Pensiunnya mengikuti ADR 0003.
+- `release.yml` (publish to GitHub Packages) only gets hygiene: SHA pinning,
+  `permissions`, timeout, no cache. Its retirement follows ADR 0003.
 
 ## Coverage
 
-Provider V8 (lane browser di Node). `include` mencakup semua akar sumber yang
-dikirim ke konsumen: `src/components/ui`, `src/components/patterns`,
+The V8 provider (the browser lane on Node). `include` covers all the source roots
+shipped to consumers: `src/components/ui`, `src/components/patterns`,
 `src/hooks`, `src/lib`, `src/index.ts`, `src/utils.ts`, `src/tailwind-preset.ts`.
-Showcase (`src/pages`, `src/layouts`, `src/components/{layout,showcase}`,
-`src/App.tsx`, `src/main.tsx`) tidak dikirim, jadi tidak dihitung; ia
-dibuktikan lewat `bun run build`. Akar ini diturunkan dari barrel
-`src/index.ts` dan `package.json#exports`, karena registry ADR 0003 belum
-ada di `main`; cek ulang daftarnya saat registry dibangun. Exclude ada di `vitest.config.ts` dengan
-alasan per baris.
+The showcase (`src/pages`, `src/layouts`, `src/components/{layout,showcase}`,
+`src/App.tsx`, `src/main.tsx`) is not shipped, so it is not counted; it
+is proven through `bun run build`. These roots are derived from the barrel
+`src/index.ts` and `package.json#exports`, because the ADR 0003 registry does not exist
+on `main` yet; recheck the list when the registry is built. The excludes are in `vitest.config.ts` with
+a reason per line.
 
-| Metrik | Baseline | Threshold | Diukur | Tindak lanjut |
+| Metric | Baseline | Threshold | Measured | Follow-up |
 |---|---|---|---|---|
-| lines | 68,48% | 68 | 2026-11-03 | menuju 80%, [#34](https://github.com/bpsprovkaltara/design-system/issues/34) |
-| functions | 62,47% | 62 | 2026-11-03 | menuju 80%, [#34](https://github.com/bpsprovkaltara/design-system/issues/34) |
-| branches | 74,56% | 74 | 2026-11-03 | menuju 80%, [#34](https://github.com/bpsprovkaltara/design-system/issues/34) |
-| statements | 67,89% | 67 | 2026-11-03 | menuju 80%, [#34](https://github.com/bpsprovkaltara/design-system/issues/34) |
+| lines | 68.48% | 68 | 2026-11-03 | toward 80%, [#34](https://github.com/bpsprovkaltara/design-system/issues/34) |
+| functions | 62.47% | 62 | 2026-11-03 | toward 80%, [#34](https://github.com/bpsprovkaltara/design-system/issues/34) |
+| branches | 74.56% | 74 | 2026-11-03 | toward 80%, [#34](https://github.com/bpsprovkaltara/design-system/issues/34) |
+| statements | 67.89% | 67 | 2026-11-03 | toward 80%, [#34](https://github.com/bpsprovkaltara/design-system/issues/34) |
 
-- Diukur tiga kali di Node 22 dan tiga kali di Node 24 (pin `.node-version`)
-  dengan `test:coverage` (232 test hijau); keenam run identik. Threshold = floor baseline dan hanya boleh naik.
-- Threshold sebelumnya (34/42/26/34) hanya menghitung `src/components/**`
-  termasuk showcase, dan CI tidak menjalankannya.
+- Measured three times on Node 22 and three times on Node 24 (the `.node-version` pin)
+  with `test:coverage` (232 green tests); all six runs identical. Threshold = the baseline floor, and it may only go up.
+- The previous threshold (34/42/26/34) only counted `src/components/**`
+  including the showcase, and CI did not run it.
 
-## Aturan lint test
+## Test lint rules
 
-`eslint.config.js` (blok `src/**/*.{test,spec}.{ts,tsx}`) menegakkan
-`TESTING.md` §5b sebagai error: `vitest/expect-expect`,
+`eslint.config.js` (the block `src/**/*.{test,spec}.{ts,tsx}`) enforces
+`TESTING.md` §5b as errors: `vitest/expect-expect`,
 `vitest/no-focused-tests`, `vitest/no-disabled-tests`,
 `vitest/no-conditional-expect`, `vitest/valid-expect` (`maxArgs: 2`),
-`vitest/no-identical-title`, dan
-`@eslint-community/eslint-comments/require-description`. Skip sementara butuh
-`eslint-disable` dengan alasan yang menautkan issue. Tidak ada Playwright di
-repo ini, jadi aturan `eslint-plugin-playwright` tidak berlaku.
+`vitest/no-identical-title`, and
+`@eslint-community/eslint-comments/require-description`. A temporary skip needs an
+`eslint-disable` with a reason that links an issue. There is no Playwright in
+this repo, so the `eslint-plugin-playwright` rules do not apply.
 
-## Tanpa DB dan tanpa login
+## No DB and no login
 
-Paket ini pustaka komponen: tidak punya database, akun, atau login. Tidak ada DB uji per worktree, akun uji, maupun smoke matriks peran. Komponen auth (form login, chrome) diuji sebagai komponen di Vitest; alur login sungguhan diuji di repo aplikasi konsumen.
+This package is a component library: it has no database, accounts, or login. There is no per-worktree test DB, test accounts, or role-matrix smoke. Auth components (login form, chrome) are tested as components in Vitest; the real login flow is tested in the consumer application repo.
 
-Tidak ada Playwright atau suite E2E browser. Pemeriksaan visual showcase (navigasi, responsif, light/dark) dilakukan manual lewat `bun run dev`, atau dengan Playwright Chromium headless dari luar repo bila diperlukan.
+There is no Playwright or browser E2E suite. Visual checks of the showcase (navigation, responsive, light/dark) are done manually through `bun run dev`, or with headless Playwright Chromium from outside the repo when needed.
 
-## Skill verifikasi
+## Verification skill
 
-Belum ada. `.claude/skills/verify-design-system/` beserta peta fitur
-`features/` dilacak di fachriizzudin/project-rules#85.
+None yet. `.claude/skills/verify-design-system/` and the feature map
+`features/` are tracked in fachriizzudin/project-rules#85.
