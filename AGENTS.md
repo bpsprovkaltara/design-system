@@ -98,7 +98,7 @@ kustom.
 
 ### Workflow lintas-agent
 
-Jika `../../WORKFLOW.md` ada, repo ini berada di workspace pemilik: baca dan ikuti aturan workspace yang relevan sebagai tambahan. Jika tidak ada, instruksi dalam repo ini sudah cukup; ketiadaan dokumen atau tool workspace bukan penghalang untuk mengembangkan proyek.
+If `../../WORKFLOW.md` exists, this repo lives in the owner's workspace: read and follow the relevant workspace rules as an addition. If it does not exist, the instructions in this repo are enough; the absence of workspace docs or tools is not a blocker to developing the project.
 
 Invariant, keamanan, dan verifikasi di file ini tetap berlaku di kedua
 lingkungan. Jika aturan tambahan bertentangan dengan aturan repo, jelaskan
