@@ -23,7 +23,7 @@ Peer wajib: React/ReactDOM >=19 dan Tailwind >=4. Form memakai optional peers re
 
 ## Primitive dan ekspor
 
-Primitive beserta subkomponen tersedia melalui barrel: Accordion, Alert, Avatar/AvatarGroup, Badge/BadgeTooltip, Breadcrumb, Button/buttonVariants/LinkButton, Calendar, Carousel, Card/cardVariants, Checkbox/CheckboxInput, Command/CommandDialog/Kbd, Dialog, DropdownMenu, Drawer, DescriptionList, FileUpload, Form/useFormField, Input, Label, NavigationMenu, Pagination, Popover, Progress, RadioGroup, ScrollArea, Select/SelectInput, Separator, Sheet, Skeleton, Slider, Spinner, StatusBadge, Switch, Table, Tabs, Textarea, Toggle/ToggleGroup, Toast/Toaster, Tooltip.
+Primitive beserta subkomponen tersedia melalui barrel: Accordion, Alert, Avatar/AvatarGroup, Badge/BadgeTooltip, Breadcrumb, Button/buttonVariants/LinkButton, Calendar, Carousel, Card/cardVariants, Checkbox/CheckboxInput, Collapsible/CollapsibleTrigger/CollapsibleContent, Command/CommandDialog/Kbd, Dialog, DropdownMenu, Drawer, DescriptionList, FileUpload, Form/useFormField, Input, Label, NavigationMenu, Pagination, Popover, Progress, RadioGroup, ScrollArea, Select/SelectInput, Separator, Sheet, Skeleton, Slider, Spinner, StatusBadge, Switch, Table, Tabs, Textarea, Toggle/ToggleGroup, Toast/Toaster, Tooltip.
 
 Source dimiliki repo; ada extension lokal sehingga jangan menganggap API sama persis dokumentasi upstream shadcn. Props/types yang diekspor eksplisit tercatat pada `src/index.ts`; declarations diproduksi build:lib.
 

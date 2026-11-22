@@ -194,7 +194,7 @@ export function ContohHalaman() {
         <ul className="list-disc pl-5 space-y-2 text-sm text-foreground">
           <li>
             <strong>Primitives</strong> — Accordion, Alert, Avatar, Badge, Breadcrumb, Button,
-            Calendar, Card, Checkbox, Command, Dialog, Dropdown Menu, Form, Input, Label,
+            Calendar, Card, Checkbox, Collapsible, Command, Dialog, Dropdown Menu, Form, Input, Label,
             Pagination, Popover, Progress, Radio Group, Scroll Area, Select, Separator, Sheet,
             Skeleton, Slider, Spinner, Switch, Table, Tabs, Textarea, Toast, Tooltip, dan lainnya.
           </li>

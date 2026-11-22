@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- **`Collapsible`, `CollapsibleTrigger`, `CollapsibleContent`**: primitive Radix tanpa gaya bawaan (pola shadcn/ui) untuk satu area yang dibuka-tutup; diekspor dari barrel dan tersedia sebagai item registry `collapsible`.
 - **`FileUpload`**: prop `maxSize` dan `onReject`.
 
 ### Fixed
