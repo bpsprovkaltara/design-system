@@ -10,9 +10,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - **`Collapsible`, `CollapsibleTrigger`, `CollapsibleContent`**: primitive Radix tanpa gaya bawaan (pola shadcn/ui) untuk satu area yang dibuka-tutup; diekspor dari barrel dan tersedia sebagai item registry `collapsible`.
 - **`FileUpload`**: prop `maxSize` dan `onReject`.
+- **`Combobox`**: field `description` pada opsi (ditampilkan dan ikut dicari) dan prop `allowDeselect` (default `true`, perilaku lama; `false` agar memilih ulang tidak mengosongkan nilai).
+- **`DatePicker`**: prop `formatStr` (default `'dd MMMM yyyy'`, sama seperti sebelumnya).
 
 ### Fixed
 
+- **`Combobox`**: opsi dengan label kembar tidak lagi bentrok (item memakai `value` unik), dan pencarian hanya mencocokkan label dan deskripsi, bukan `value`.
+- **`Calendar`**: default `locale` Indonesia dan `weekStartsOn={1}` (Senin); keduanya bisa ditimpa lewat props. `DatePicker` dan `DateRangePicker` memakai `autoFocus` menggantikan `initialFocus` yang deprecated di react-day-picker v9.
+- **`Progress`**: `value` kini diteruskan ke Radix (`aria-valuenow` terisi) dan indikator dibatasi 0–100.
 - **Dependency `radix-ui`**: batas minimum naik dari `^1.4.3` ke `^1.6.7`. Rilis 1.6.3 mengirim JavaScript di dalam berkas deklarasi tipe (`.d.mts`), sehingga semua namespace Radix bertipe `any` di konsumen dan `tsc` gagal (TS7006). Registry kini menulis `radix-ui@^1.6.7` ke konsumen.
 - **`DatePicker` / `DateRangePicker`**: `date={null}` / `range={null}` kini mengosongkan nilai secara terkontrol (sebelumnya kembali ke tanggal lama). `undefined` tetap berarti uncontrolled. Tombol hapus kini `<button>` terpisah yang bisa dijangkau keyboard (`aria-label` "Hapus tanggal" / "Hapus rentang tanggal"). Komponen kini dibungkus `<div class="relative">` selebar parent; atur lebar lewat elemen parent, bukan `className`, agar tombol hapus tetap di dalam trigger.
 - **`DateInput`**: tampilan ikut kosong setelah nilai dihapus atau form di-`reset` ke string kosong.

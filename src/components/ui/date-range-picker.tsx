@@ -75,7 +75,7 @@ export function DateRangePicker({
             mode="range"
             selected={actualRange}
             onSelect={handleSelect}
-            initialFocus
+            autoFocus
             numberOfMonths={2}
             className="bg-background rounded-md"
           />

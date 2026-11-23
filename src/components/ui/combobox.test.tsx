@@ -96,4 +96,46 @@ describe('Combobox', () => {
       'data-testid-wrapper-extra'
     )
   })
+
+  it('keeps the value when re-selected and allowDeselect is false', async () => {
+    const onChange = vi.fn()
+    render(<Combobox options={options} value="tarakan" onChange={onChange} allowDeselect={false} />)
+    await userEvent.click(screen.getByRole('combobox'))
+    const item = screen.getAllByText('Tarakan').find((el) => el.closest('[cmdk-item]'))
+    await userEvent.click(item as HTMLElement)
+    expect(onChange).toHaveBeenCalledWith('tarakan')
+  })
+
+  it('renders description and finds options by description', async () => {
+    const opts = [
+      { value: 'a', label: 'Budi', description: 'Kepala Seksi' },
+      { value: 'b', label: 'Sari', description: 'Statistisi' },
+    ]
+    render(<Combobox options={opts} />)
+    await userEvent.click(screen.getByRole('combobox'))
+    expect(screen.getByText('Kepala Seksi')).toBeInTheDocument()
+    await userEvent.type(screen.getByPlaceholderText('Cari...'), 'statistisi')
+    expect(screen.queryByText('Budi')).not.toBeInTheDocument()
+    expect(screen.getByText('Sari')).toBeInTheDocument()
+  })
+
+  it('does not match search against the option value (e.g. a UUID)', async () => {
+    const opts = [{ value: 'zzz-uuid', label: 'Budi' }]
+    render(<Combobox options={opts} />)
+    await userEvent.click(screen.getByRole('combobox'))
+    await userEvent.type(screen.getByPlaceholderText('Cari...'), 'uuid')
+    expect(screen.getByText('Tidak ditemukan.')).toBeInTheDocument()
+  })
+
+  it('handles options that share the same label', async () => {
+    const onChange = vi.fn()
+    const opts = [
+      { value: 'x1', label: 'Sama' },
+      { value: 'x2', label: 'Sama' },
+    ]
+    render(<Combobox options={opts} onChange={onChange} />)
+    await userEvent.click(screen.getByRole('combobox'))
+    await userEvent.click(screen.getAllByText('Sama')[1])
+    expect(onChange).toHaveBeenCalledWith('x2')
+  })
 })

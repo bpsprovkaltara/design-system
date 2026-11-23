@@ -87,4 +87,9 @@ describe('DatePicker', () => {
     render(<DatePicker date={new Date(2026, 0, 15)} onChange={vi.fn()} clearable disabled />)
     expect(screen.queryByRole('button', { name: 'Hapus tanggal' })).not.toBeInTheDocument()
   })
+
+  it('honours a custom formatStr', () => {
+    render(<DatePicker date={new Date(2026, 8, 12)} formatStr="dd MMM yyyy" />)
+    expect(screen.getByText('12 Sep 2026')).toBeInTheDocument()
+  })
 })
