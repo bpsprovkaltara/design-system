@@ -18,6 +18,22 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 export interface ComboboxOption {
   value: string
   label: string
+  /** Teks pendukung (mis. jabatan) di bawah label; ikut dicari. */
+  description?: string
+}
+
+/**
+ * Cocokkan pencarian terhadap label + deskripsi saja (bukan `value`, yang bisa
+ * berupa UUID). Substring lebih diutamakan daripada subsequence.
+ */
+function matchKeywords(_value: string, search: string, keywords?: string[]) {
+  const query = search.trim().toLowerCase()
+  if (!query) return 1
+  const haystack = (keywords ?? []).join(' ').toLowerCase()
+  if (haystack.includes(query)) return 1
+  let i = 0
+  for (const ch of haystack) if (ch === query[i]) i++
+  return i === query.length ? 0.5 : 0
 }
 
 export interface ComboboxProps {
@@ -36,6 +52,12 @@ export interface ComboboxProps {
   /** Kelas untuk wrapper `CommandInput` (border-b, padding, fokus). */
   inputWrapperClassName?: string
   disabled?: boolean
+  /**
+   * Memilih ulang opsi yang sedang terpilih mengosongkan nilai (`onChange('')`).
+   * Setel `false` agar memilih ulang tetap memilih opsi yang sama.
+   * @default true
+   */
+  allowDeselect?: boolean
 }
 
 export function Combobox({
@@ -50,6 +72,7 @@ export function Combobox({
   inputClassName,
   inputWrapperClassName,
   disabled = false,
+  allowDeselect = true,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false)
 
@@ -80,7 +103,7 @@ export function Combobox({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 border-border shadow-lg animate-in fade-in zoom-in-95 duration-200">
-        <Command className={cn('bg-background', commandClassName)}>
+        <Command filter={matchKeywords} className={cn('bg-background', commandClassName)}>
           <CommandInput
             placeholder={searchPlaceholder}
             className={inputClassName}
@@ -94,9 +117,12 @@ export function Combobox({
               {options.map((option) => (
                 <CommandItem
                   key={option.value}
-                  value={option.label} // Penting: gunakan label untuk pencarian cmdk yang lebih natural
+                  // `value` unik per opsi (label boleh kembar); pencarian lewat `keywords`.
+                  value={option.value}
+                  keywords={[option.label, option.description ?? '']}
                   onSelect={() => {
-                    const newValue = option.value === actualValue ? '' : option.value
+                    const newValue =
+                      allowDeselect && option.value === actualValue ? '' : option.value
                     if (value === undefined) {
                       setInternalValue(newValue)
                     }
@@ -117,7 +143,14 @@ export function Combobox({
                         actualValue === option.value ? 'opacity-100' : 'opacity-0'
                       )}
                     />
-                    {option.label}
+                    <span className="flex flex-col">
+                      <span>{option.label}</span>
+                      {option.description && (
+                        <span className="text-xs font-normal text-muted-foreground">
+                          {option.description}
+                        </span>
+                      )}
+                    </span>
                   </div>
                 </CommandItem>
               ))}

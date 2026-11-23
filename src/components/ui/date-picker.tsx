@@ -14,6 +14,8 @@ export interface DatePickerProps {
   /** Controlled bila diberikan. `null` = kosong (controlled). */
   date?: Date | null
   onChange?: (date?: Date) => void
+  /** Format tampilan tanggal (token date-fns). @default 'dd MMMM yyyy' */
+  formatStr?: string
   placeholder?: string
   className?: string
   disabled?: boolean
@@ -27,6 +29,7 @@ export function DatePicker({
   className,
   disabled = false,
   clearable = true,
+  formatStr = 'dd MMMM yyyy',
 }: DatePickerProps) {
   const isControlled = date !== undefined
   const [internalDate, setInternalDate] = React.useState<Date | undefined>(date ?? undefined)
@@ -54,7 +57,7 @@ export function DatePicker({
           >
             <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
             <span className="flex-1 truncate">
-              {actualDate ? format(actualDate, 'dd MMMM yyyy', { locale: id }) : placeholder}
+              {actualDate ? format(actualDate, formatStr, { locale: id }) : placeholder}
             </span>
           </Button>
         </PopoverTrigger>
@@ -66,7 +69,7 @@ export function DatePicker({
             mode="single"
             selected={actualDate}
             onSelect={handleSelect}
-            initialFocus
+            autoFocus
             className="bg-background rounded-md"
           />
         </PopoverContent>

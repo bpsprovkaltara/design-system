@@ -37,16 +37,19 @@ type ProgressProps = React.ComponentProps<typeof ProgressPrimitive.Root> &
   VariantProps<typeof progressIndicatorVariants>
 
 function Progress({ className, value, size, intent, ...props }: ProgressProps) {
+  // Batasi 0–100 agar indikator tidak keluar dari track.
+  const clamped = Math.min(100, Math.max(0, value ?? 0))
   return (
     <ProgressPrimitive.Root
       data-slot="progress"
+      value={value}
       className={cn(progressTrackVariants({ size }), className)}
       {...props}
     >
       <ProgressPrimitive.Indicator
         data-slot="progress-indicator"
         className={cn(progressIndicatorVariants({ intent }))}
-        style={{ transform: `translateX(-${100 - (value ?? 0)}%)` }}
+        style={{ transform: `translateX(-${100 - clamped}%)` }}
       />
     </ProgressPrimitive.Root>
   )
