@@ -387,7 +387,7 @@ Toggle dark mode berbasis class `.dark` kini publik (sebelumnya showcase-only).
 `react-hook-form`, `zod`, dan `@hookform/resolvers` kini **peer optional**. Jika aplikasi memakai `Form` + RHF/Zod, install eksplisit:
 
 ```bash
-pnpm add react-hook-form zod @hookform/resolvers
+pnpm add react-hook-form 'zod@^4.6.6' @hookform/resolvers
 ```
 
 Aplikasi yang tidak memakai Form tidak perlu menginstal ketiganya.

@@ -2,7 +2,7 @@
 
 ## Prasyarat
 
-Node 24 dari `.node-version` (CI menjalankan vitest dan tsc di Node 24; hanya tooling, bukan syarat konsumen) dan Bun 1.3.14 sesuai manifest; `preinstall` menolak pnpm/npm. Cek node --version dan bun --version. Lockfile `bun.lock` (dokumen runtime kedua): React 19.2.6, Vite 8.0.11, TS 6.0.3, Vitest 4.1.5.
+Node 24 dari `.node-version` (CI menjalankan vitest dan tsc di Node 24; hanya tooling, bukan syarat konsumen) dan Bun 1.3.14 sesuai manifest; `preinstall` menolak pnpm/npm. Cek node --version dan bun --version. Lockfile `bun.lock` (dokumen runtime kedua): React 19.2.6, Vite 8.1.6, TS 6.0.3, Vitest 4.1.12.
 
 ## Setup lokal
 
