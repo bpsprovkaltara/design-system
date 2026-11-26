@@ -7,6 +7,7 @@ import { CodeBlock } from '@/components/showcase/CodeBlock'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
+import { FormError } from '@/components/ui/form-error'
 import { FormSection } from '@/components/ui/form-section'
 import { ValidationSummary, type ValidationItem } from '@/components/ui/validation-summary'
 import { Stepper } from '@/components/ui/stepper'
@@ -197,6 +198,19 @@ export function FormWorkflowPage() {
 </FormSection>`}</CodeBlock>
       </ShowcaseSection>
 
+      <ShowcaseSection title="Pesan Kesalahan pada Kolom">
+        <div className="rounded-lg border bg-card p-8">
+          <InlineFieldErrorDemo />
+        </div>
+        <CodeBlock>{`<Input
+  id="judul-contoh"
+  aria-invalid={Boolean(errors.judul)}
+  aria-describedby={errors.judul ? 'judul-contoh-error' : undefined}
+  {...register('judul', { required: 'Judul dokumen wajib diisi.' })}
+/>
+<FormError id="judul-contoh-error" message={errors.judul?.message} />`}</CodeBlock>
+      </ShowcaseSection>
+
       <ShowcaseSection title="Form RHF + Zod">
         <div className="border rounded-lg p-8 bg-card">
           <RhfFormDemo />
@@ -222,6 +236,28 @@ const form = useForm({ resolver: zodResolver(schema), defaultValues: { judul: ''
   </form>
 </Form>`}</CodeBlock>
       </ShowcaseSection>
+    </div>
+  )
+}
+
+function InlineFieldErrorDemo() {
+  const {
+    register,
+    formState: { errors },
+  } = useForm<{ judul: string }>({ defaultValues: { judul: '' }, mode: 'onTouched' })
+
+  return (
+    <div className="max-w-sm">
+      <label className="label" htmlFor="judul-contoh">
+        Judul Dokumen Contoh
+      </label>
+      <Input
+        id="judul-contoh"
+        aria-invalid={Boolean(errors.judul)}
+        aria-describedby={errors.judul ? 'judul-contoh-error' : undefined}
+        {...register('judul', { required: 'Judul dokumen wajib diisi.' })}
+      />
+      <FormError id="judul-contoh-error" message={errors.judul?.message} />
     </div>
   )
 }
