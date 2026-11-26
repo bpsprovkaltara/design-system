@@ -20,8 +20,14 @@ describe('FormDialog', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Buka formulir' }))
 
-    expect(screen.getByRole('dialog')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Tambah pengguna' })).toBeInTheDocument()
+    const dialog = screen.getByRole('dialog', { name: 'Tambah pengguna' })
+    expect(dialog).toHaveAccessibleDescription('Lengkapi data akun baru.')
+    expect(document.getElementById(dialog.getAttribute('aria-labelledby')!)).toBe(
+      screen.getByRole('heading', { name: 'Tambah pengguna' })
+    )
+    expect(document.getElementById(dialog.getAttribute('aria-describedby')!)).toHaveTextContent(
+      'Lengkapi data akun baru.'
+    )
     expect(screen.getByText('Lengkapi data akun baru.')).toBeInTheDocument()
     expect(screen.getByText('Isi formulir di sini')).toBeInTheDocument()
   })
@@ -39,10 +45,13 @@ describe('FormDialog', () => {
     )
 
     await user.click(screen.getByRole('button', { name: 'Edit' }))
-    expect(screen.getByRole('dialog')).toBeInTheDocument()
+    expect(screen.getByRole('dialog', { name: 'Ubah data' })).toHaveAccessibleDescription(
+      'Ubah data'
+    )
 
     await user.click(screen.getByRole('button', { name: 'Selesai' }))
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Edit' })).toHaveFocus()
   })
 
   it('supports controlled open state', async () => {

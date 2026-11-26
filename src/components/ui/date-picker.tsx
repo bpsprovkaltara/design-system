@@ -10,7 +10,10 @@ import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
-export interface DatePickerProps {
+export interface DatePickerProps extends Pick<
+  React.ComponentProps<'button'>,
+  'id' | 'aria-label' | 'aria-labelledby' | 'aria-describedby' | 'aria-invalid'
+> {
   /** Controlled bila diberikan. `null` = kosong (controlled). */
   date?: Date | null
   onChange?: (date?: Date) => void
@@ -30,6 +33,7 @@ export function DatePicker({
   disabled = false,
   clearable = true,
   formatStr = 'dd MMMM yyyy',
+  ...triggerProps
 }: DatePickerProps) {
   const isControlled = date !== undefined
   const [internalDate, setInternalDate] = React.useState<Date | undefined>(date ?? undefined)
@@ -46,6 +50,7 @@ export function DatePicker({
       <Popover>
         <PopoverTrigger asChild>
           <Button
+            {...triggerProps}
             variant={'outline'}
             disabled={disabled}
             className={cn(

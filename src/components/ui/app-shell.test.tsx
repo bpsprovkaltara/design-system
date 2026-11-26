@@ -1,5 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { act, render, screen, within } from '@testing-library/react'
+import { renderToString } from 'react-dom/server'
+import { hydrateRoot } from 'react-dom/client'
 import userEvent from '@testing-library/user-event'
 import { AppShell } from './app-shell'
 import { AppTopbar } from './app-topbar'
@@ -116,6 +118,87 @@ describe('AppSidebar', () => {
 })
 
 describe('AppShell', () => {
+  it('hydrates a collapsed server rail without replacing its landmarks', async () => {
+    const view = (
+      <AppShell groups={groups} defaultCollapsed>
+        Isi server
+      </AppShell>
+    )
+    const container = document.createElement('div')
+    container.innerHTML = renderToString(view)
+    document.body.appendChild(container)
+    const main = within(container).getByRole('main', { name: 'Konten utama' })
+    const rail = within(container).getByRole('complementary', { name: 'Navigasi utama' })
+    expect(within(container).getByRole('button', { name: 'Buka sidebar' })).toHaveAttribute(
+      'aria-expanded',
+      'false'
+    )
+    const errors: unknown[] = []
+    let root: ReturnType<typeof hydrateRoot> | undefined
+    try {
+      await act(async () => {
+        root = hydrateRoot(container, view, { onRecoverableError: (error) => errors.push(error) })
+      })
+      expect(errors).toEqual([])
+      expect(within(container).getByRole('main', { name: 'Konten utama' })).toBe(main)
+      expect(within(container).getByRole('complementary', { name: 'Navigasi utama' })).toBe(rail)
+      const user = userEvent.setup()
+      await user.click(within(container).getByRole('button', { name: 'Buka sidebar' }))
+      expect(within(container).getByRole('button', { name: 'Tutup sidebar' })).toHaveAttribute(
+        'aria-expanded',
+        'true'
+      )
+    } finally {
+      await act(async () => root?.unmount())
+      container.remove()
+    }
+  })
+
+  it('leaves controlled collapse to its parent across keyboard activation and rerenders', async () => {
+    const user = userEvent.setup()
+    const onCollapsedChange = vi.fn()
+    const { rerender } = render(
+      <AppShell groups={groups} collapsed onCollapsedChange={onCollapsedChange}>
+        Isi
+      </AppShell>
+    )
+    screen.getByRole('button', { name: 'Buka sidebar' }).focus()
+    await user.keyboard('{Enter}')
+    expect(onCollapsedChange).toHaveBeenCalledWith(false)
+    expect(screen.getByRole('button', { name: 'Buka sidebar' })).toHaveAttribute(
+      'aria-expanded',
+      'false'
+    )
+    rerender(
+      <AppShell groups={groups} collapsed={false} onCollapsedChange={onCollapsedChange}>
+        Isi
+      </AppShell>
+    )
+    expect(screen.getByRole('button', { name: 'Tutup sidebar' })).toHaveAttribute(
+      'aria-expanded',
+      'true'
+    )
+  })
+  it('puts the named main scroll region in the keyboard tab order (#33)', async () => {
+    const user = userEvent.setup()
+    render(
+      <>
+        <AppShell groups={[]}>
+          <p>Grafik tanpa kontrol</p>
+        </AppShell>
+        <button>Setelah shell</button>
+      </>
+    )
+    await user.click(screen.getByRole('button', { name: 'Setelah shell' }))
+    await user.tab({ shift: true })
+    const main = screen.getByRole('main', { name: 'Konten utama' })
+    expect(main).toHaveFocus()
+    expect(screen.getByRole('link', { name: 'Lewati ke konten utama' })).toHaveAttribute(
+      'href',
+      `#${main.id}`
+    )
+  })
+
   it('renders main content and desktop sidebar', () => {
     render(
       <AppShell groups={groups} activeId="home" appTitle="App" topbarEnd={<span>End</span>}>

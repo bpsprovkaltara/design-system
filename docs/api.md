@@ -47,7 +47,7 @@ Source dimiliki repo; ada extension lokal sehingga jangan menganggap API sama pe
 | FormSection/ValidationSummary | Komposisi section/summary form |
 | PageHeader/KpiCard/PerformanceCard | Heading/metric; KpiAccent dan PerformanceCardProps tersedia |
 | ProgressAudit/ReviewTimeline | Presentasi audit/timeline dari input konsumen |
-| DatePicker/DateInput/DateRangePicker | Tanggal dan adapter input |
+| DatePicker/DateInput/DateRangePicker | Tanggal dan adapter input. `DatePicker` dan `DateInput` meneruskan `id`, `aria-label`, `aria-labelledby`, `aria-describedby`, dan `aria-invalid` ke tombol pemicu. |
 | YearSelect/NumberField | Tahun descending dan angka format id-ID; NumberField dapat menampilkan unit |
 | MapLegend/SkipLink | Skala map-tier; skip link ke main-content default |
 | TableEmpty/TablePagination | State tabel dan kontrol pagination terpisah |
@@ -80,6 +80,10 @@ import { DataTable } from '@bpsprovkaltara/design-system'
 ```
 
 ## Patterns dan hooks
+
+Wilayah gulir utama `AppShell` bernama "Konten utama" dan dapat dijangkau dengan Tab atau melalui skip link `#main-content`. `CommandSearch` mempertahankan target `aria-controls` saat panel tertutup.
+
+`Skeleton` dekoratif disembunyikan dari teknologi bantu. `PageSkeleton` dan `PerformanceCard` menyediakan satu status bernama saat memuat. Untuk susunan skeleton kustom, pasang status loading pada elemen pembungkus.
 
 Patterns: EmptyState, SectionCard, DataTableCard, FilterChips, SectionTabs/resolveActiveTab, PageSkeleton beserta props/types. EmptyState title wajib; illustration empty/search/error atau ReactNode, description, action/secondaryAction, compact, className. FilterChips dapat renderLink; aplikasi tetap menentukan href dan navigasi.
 

@@ -57,7 +57,12 @@ export function PerformanceCard({
 }: PerformanceCardProps) {
   if (loading) {
     return (
-      <Card className={cn(cardVariants({ variant }), className)} {...props}>
+      <Card
+        role="status"
+        aria-label={`Memuat ${title}...`}
+        className={cn(cardVariants({ variant }), className)}
+        {...props}
+      >
         <CardHeader className="pb-2">
           <Skeleton className="h-3 w-24" />
         </CardHeader>

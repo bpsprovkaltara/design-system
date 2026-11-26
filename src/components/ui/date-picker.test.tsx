@@ -4,6 +4,46 @@ import userEvent from '@testing-library/user-event'
 import { DatePicker } from './date-picker'
 
 describe('DatePicker', () => {
+  it('labels the visible trigger and associates hint and error state (#32)', async () => {
+    const user = userEvent.setup()
+    render(
+      <>
+        <label htmlFor="birth-date">Tanggal lahir</label>
+        <p id="date-hint">Pilih tanggal yang benar.</p>
+        <DatePicker
+          id="birth-date"
+          aria-describedby="date-hint"
+          aria-invalid="true"
+          date={new Date(2026, 10, 26)}
+          formatStr="yyyy-MM-dd"
+        />
+      </>
+    )
+    const trigger = screen.getByRole('button', { name: 'Tanggal lahir' })
+    expect(screen.getByLabelText('Tanggal lahir')).toBe(trigger)
+    expect(trigger).toHaveAccessibleDescription('Pilih tanggal yang benar.')
+    expect(trigger).toHaveAttribute('aria-invalid', 'true')
+    expect(trigger).toHaveTextContent('2026-11-26')
+    await user.click(screen.getByText('Tanggal lahir'))
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+    await user.keyboard('{Escape}')
+    expect(trigger).toHaveFocus()
+    await user.keyboard('{Enter}')
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+  })
+
+  it('supports aria-label and aria-labelledby on the trigger (#32)', () => {
+    const { rerender } = render(<DatePicker aria-label="Tanggal masuk" />)
+    expect(screen.getByRole('button', { name: 'Tanggal masuk' })).toBeVisible()
+    rerender(
+      <>
+        <span id="date-label">TMT CPNS</span>
+        <DatePicker aria-labelledby="date-label" />
+      </>
+    )
+    expect(screen.getByRole('button', { name: 'TMT CPNS' })).toBeVisible()
+  })
+
   it('renders placeholder when no date is set', () => {
     render(<DatePicker placeholder="Pilih tanggal" />)
     expect(screen.getByText('Pilih tanggal')).toBeInTheDocument()

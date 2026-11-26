@@ -50,11 +50,12 @@ describe('PerformanceCard', () => {
   })
 
   it('renders loading skeletons when loading is true', () => {
-    const { container } = render(<PerformanceCard title="Memuat" value={0} loading />)
+    render(<PerformanceCard title="Penduduk" value={0} loading />)
 
-    const skeletons = container.querySelectorAll('[aria-busy="true"]')
-    expect(skeletons.length).toBeGreaterThan(0)
-    expect(screen.queryByText('Memuat')).not.toBeInTheDocument()
+    const status = screen.getByRole('status', { name: 'Memuat Penduduk...' })
+    const skeleton = status.querySelector('[data-slot="skeleton"]')
+    expect(skeleton).toHaveAttribute('aria-hidden', 'true')
+    expect(screen.queryByText('Penduduk')).not.toBeInTheDocument()
   })
 
   it('renders sparkline svg when trend has at least 2 points', () => {

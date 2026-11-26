@@ -5,6 +5,24 @@ import { createRef } from 'react'
 import { DateInput } from './date-input'
 
 describe('DateInput', () => {
+  it('associates its label and ARIA state with the visible picker (#32)', async () => {
+    const user = userEvent.setup()
+    render(
+      <>
+        <label htmlFor="tanggal">Tanggal</label>
+        <p id="hint">Wajib diisi</p>
+        <DateInput id="tanggal" name="tanggal" aria-describedby="hint" aria-invalid="true" />
+      </>
+    )
+    const trigger = screen.getByRole('button', { name: 'Tanggal' })
+    expect(screen.getByLabelText('Tanggal')).toBe(trigger)
+    expect(trigger).toHaveAccessibleDescription('Wajib diisi')
+    expect(trigger).toHaveAttribute('aria-invalid', 'true')
+    expect(document.querySelectorAll('#tanggal')).toHaveLength(1)
+    await user.click(screen.getByText('Tanggal'))
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+  })
+
   it('renders a hidden native input with yyyy-MM-dd value', () => {
     const { container } = render(<DateInput name="tanggal" defaultValue="2024-08-17" />)
     const native = container.querySelector('input[name="tanggal"]') as HTMLInputElement

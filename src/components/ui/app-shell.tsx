@@ -72,11 +72,14 @@ export function AppShell({
 
   const [mobileOpen, setMobileOpen] = React.useState(false)
 
-  // The collapsed state is restored on the client, so the first paint always shows
-  // the expanded rail. Withholding transitions until mount keeps that correction
-  // from animating as a 280→64px jump on every page load.
-  const [mounted, setMounted] = React.useState(false)
-  React.useEffect(() => setMounted(true), [])
+  // Restored controlled state may arrive after hydration (even in a deferred
+  // transition). Enable motion only on an explicit collapse request, not mount,
+  // so restoration never animates the rail from 280 to 64px.
+  const [animate, setAnimate] = React.useState(false)
+  const toggleCollapsed = () => {
+    setAnimate(true)
+    setCollapsed(!collapsed)
+  }
 
   const handleNavigate = React.useCallback(
     (item: AppSidebarNavItem) => {
@@ -137,10 +140,10 @@ export function AppShell({
       {/* Desktop rail. `relative` anchors the toggle, which sits outside the
           <aside> so the rail's own overflow clipping can't cut it off. */}
       <div className={cn('relative hidden h-full', desktopVisibleClass)}>
-        <AppSidebar {...sidebarProps} id={SIDEBAR_ID} animate={mounted} />
+        <AppSidebar {...sidebarProps} id={SIDEBAR_ID} animate={animate} />
         <button
           type="button"
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={toggleCollapsed}
           aria-label={collapsed ? 'Buka sidebar' : 'Tutup sidebar'}
           aria-expanded={!collapsed}
           aria-controls={SIDEBAR_ID}
@@ -149,7 +152,7 @@ export function AppShell({
             'bg-sidebar-active text-sidebar shadow-md ring-2 ring-background',
             'hover:scale-110 active:scale-95',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-active focus-visible:ring-offset-2 focus-visible:ring-offset-background',
-            mounted && 'transition-transform duration-200'
+            animate && 'transition-transform duration-200'
           )}
         >
           {collapsed ? <ChevronRight className="size-3.5" /> : <ChevronLeft className="size-3.5" />}
@@ -182,13 +185,19 @@ export function AppShell({
           </div>
         )}
 
+        {/* eslint-disable jsx-a11y/no-noninteractive-tabindex -- #33: the scrollable main must be keyboard reachable even without focusable children. */}
         <main
           id="main-content"
-          tabIndex={-1}
-          className={cn('flex-1 overflow-y-auto outline-none', mainClassName)}
+          tabIndex={0}
+          aria-label="Konten utama"
+          className={cn(
+            'flex-1 overflow-y-auto outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring',
+            mainClassName
+          )}
         >
           {children}
         </main>
+        {/* eslint-enable jsx-a11y/no-noninteractive-tabindex */}
       </div>
     </div>
   )

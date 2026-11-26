@@ -91,7 +91,7 @@ export function PageSkeleton({ variant, rows = 5, cols = 4, className }: PageSke
       className={cn('space-y-6', className)}
       data-slot="page-skeleton"
       data-variant={variant}
-      aria-busy="true"
+      role="status"
       aria-label="Memuat halaman..."
     >
       {variant === 'table' ? (
