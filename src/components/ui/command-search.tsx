@@ -112,6 +112,7 @@ export function CommandSearch({
       }}
     >
       <CommandInput
+        asChild
         ref={inputRef}
         value={value}
         onValueChange={setValue}
@@ -123,27 +124,30 @@ export function CommandSearch({
         aria-keyshortcuts="Meta+K Control+K"
         wrapperClassName="border-b-0"
         className={cn('h-9', inputClassName)}
-      />
+      >
+        {/* eslint-disable-next-line jsx-a11y/role-supports-aria-props -- cmdk supplies the combobox role and defaults aria-expanded to true. */}
+        <input aria-expanded={open} />
+      </CommandInput>
 
-      {open ? (
-        <div
-          className={cn(
-            'absolute top-full left-0 z-50 mt-2 w-[min(28rem,calc(100vw-2rem))] overflow-hidden rounded-lg border border-border-subtle bg-popover shadow-elevation-3',
-            panelClassName
-          )}
+      {/* cmdk keeps aria-controls on the input; retain its empty target when closed. */}
+      <div
+        hidden={!open}
+        className={cn(
+          'absolute top-full left-0 z-50 mt-2 w-[min(28rem,calc(100vw-2rem))] overflow-hidden rounded-lg border border-border-subtle bg-popover shadow-elevation-3',
+          panelClassName
+        )}
+      >
+        <CommandList
+          // Cegah blur input saat item diklik — tanpa ini panel hilang sebelum onSelect.
+          onMouseDown={(event) => event.preventDefault()}
+          className="max-h-[min(60vh,320px)]"
         >
-          <CommandList
-            // Cegah blur input saat item diklik — tanpa ini panel hilang sebelum onSelect.
-            onMouseDown={(event) => event.preventDefault()}
-            className="max-h-[min(60vh,320px)]"
-          >
-            {!hasChildren ? (
-              <CommandEmpty>{loading ? loadingLabel : emptyLabel}</CommandEmpty>
-            ) : null}
-            {children}
-          </CommandList>
-        </div>
-      ) : null}
+          {open && !hasChildren ? (
+            <CommandEmpty>{loading ? loadingLabel : emptyLabel}</CommandEmpty>
+          ) : null}
+          {open ? children : null}
+        </CommandList>
+      </div>
     </Command>
   )
 }

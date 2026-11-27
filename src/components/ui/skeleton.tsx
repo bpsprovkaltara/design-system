@@ -6,8 +6,7 @@ function Skeleton({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="skeleton"
-      aria-busy="true"
-      aria-label="Memuat..."
+      aria-hidden="true"
       className={cn('animate-shimmer rounded-md bg-border-subtle', className)}
       style={{
         backgroundImage:

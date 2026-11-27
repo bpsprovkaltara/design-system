@@ -5,6 +5,35 @@ import { CommandSearch } from './command-search'
 import { CommandGroup, CommandItem } from './command'
 
 describe('CommandSearch', () => {
+  it('keeps the controlled list reference valid while closed, empty and populated (#29)', async () => {
+    const user = userEvent.setup()
+    const { rerender } = render(<CommandSearch />)
+    const input = screen.getByRole('combobox')
+    const controls = input.getAttribute('aria-controls')!
+    expect(input).toHaveAttribute('aria-expanded', 'false')
+    expect(document.getElementById(controls)).toBeInTheDocument()
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
+
+    await user.type(input, 'abc')
+    expect(input).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByRole('listbox')).toHaveAttribute('id', controls)
+    expect(screen.getByText('Tidak ada hasil.')).toBeVisible()
+
+    rerender(
+      <CommandSearch>
+        <CommandItem>Hasil</CommandItem>
+      </CommandSearch>
+    )
+    expect(screen.getByRole('option', { name: 'Hasil' })).toBeVisible()
+    expect(screen.getByRole('listbox')).toHaveAttribute('id', controls)
+    await user.keyboard('{Escape}')
+    expect(input).toHaveAttribute('aria-expanded', 'false')
+    expect(document.getElementById(controls)).toBeInTheDocument()
+    expect(screen.queryByRole('option')).not.toBeInTheDocument()
+    await user.click(input)
+    expect(screen.getByRole('listbox')).toHaveAttribute('id', controls)
+  })
+
   it('shows the results panel once the query is non-empty', async () => {
     const user = userEvent.setup()
     const onValueChange = vi.fn()

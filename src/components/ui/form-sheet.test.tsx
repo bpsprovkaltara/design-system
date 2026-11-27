@@ -20,8 +20,14 @@ describe('FormSheet', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Buka laci' }))
 
-    expect(screen.getByRole('dialog')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Edit pegawai' })).toBeInTheDocument()
+    const dialog = screen.getByRole('dialog', { name: 'Edit pegawai' })
+    expect(dialog).toHaveAccessibleDescription('Perbarui data kepegawaian.')
+    expect(document.getElementById(dialog.getAttribute('aria-labelledby')!)).toBe(
+      screen.getByRole('heading', { name: 'Edit pegawai' })
+    )
+    expect(document.getElementById(dialog.getAttribute('aria-describedby')!)).toHaveTextContent(
+      'Perbarui data kepegawaian.'
+    )
     expect(screen.getByText('Perbarui data kepegawaian.')).toBeInTheDocument()
     expect(screen.getByText('Formulir panjang')).toBeInTheDocument()
   })
@@ -47,7 +53,7 @@ describe('FormSheet', () => {
     )
 
     await user.click(screen.getByRole('button', { name: 'Buka' }))
-    expect(screen.getByRole('dialog')).toBeInTheDocument()
+    expect(screen.getByRole('dialog', { name: 'Formulir' })).toHaveAccessibleDescription('Formulir')
 
     await user.click(screen.getByRole('button', { name: 'Tutup body' }))
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
@@ -55,6 +61,7 @@ describe('FormSheet', () => {
     await user.click(screen.getByRole('button', { name: 'Buka' }))
     await user.click(screen.getByRole('button', { name: 'Tutup footer' }))
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Buka' })).toHaveFocus()
   })
 
   it('supports controlled open state', async () => {

@@ -34,7 +34,21 @@ function formatDateString(date: Date): string {
  */
 export const DateInput = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
   function DateInput(
-    { className, value, defaultValue, disabled, id, name, onBlur, onChange, ...props },
+    {
+      className,
+      value,
+      defaultValue,
+      disabled,
+      id,
+      name,
+      onBlur,
+      onChange,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledBy,
+      'aria-describedby': ariaDescribedBy,
+      'aria-invalid': ariaInvalid,
+      ...props
+    },
     ref
   ) {
     const hiddenRef = useRef<HTMLInputElement | null>(null)
@@ -88,7 +102,6 @@ export const DateInput = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLIn
           {...props}
           ref={setRefs}
           type="hidden"
-          id={id}
           name={name}
           disabled={disabled}
           defaultValue={isControlled ? undefined : defaultStr}
@@ -99,6 +112,11 @@ export const DateInput = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLIn
         />
         <div onBlur={notifyBlur}>
           <DatePicker
+            id={id}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledBy}
+            aria-describedby={ariaDescribedBy}
+            aria-invalid={ariaInvalid}
             date={parseDateString(stringValue) ?? null}
             onChange={(date) => notifyChange(date ? formatDateString(date) : '')}
             disabled={disabled}
