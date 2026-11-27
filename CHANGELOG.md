@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 
+- **Audit dependensi (#35)**: perbarui tooling dan resolusi transitif. Minimum peer opsional `zod` naik ke `^4.6.6`. CI menolak temuan audit dengan tingkat `high` atau lebih tinggi.
 - **`Combobox`**: opsi dengan label kembar tidak lagi bentrok (item memakai `value` unik), dan pencarian hanya mencocokkan label dan deskripsi, bukan `value`.
 - **`Calendar`**: default `locale` Indonesia dan `weekStartsOn={1}` (Senin); keduanya bisa ditimpa lewat props. `DatePicker` dan `DateRangePicker` memakai `autoFocus` menggantikan `initialFocus` yang deprecated di react-day-picker v9.
 - **`Progress`**: `value` kini diteruskan ke Radix (`aria-valuenow` terisi) dan indikator dibatasi 0–100.

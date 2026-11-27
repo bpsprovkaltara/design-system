@@ -43,7 +43,7 @@ Versi resolved dari dokumen runtime kedua `bun.lock`; manifest menentukan API, s
 |---|---|
 | Runtime UI | React 19.2.6 |
 | Bahasa | TypeScript 6.0.3 |
-| Build | Vite 8.0.11 |
+| Build | Vite 8.1.6 |
 | Styling | Tailwind CSS 4, CSS-first |
 | Komponen dasar | shadcn/ui gaya `new-york` + Radix UI |
 | Routing showcase | React Router 7 |
@@ -51,7 +51,7 @@ Versi resolved dari dokumen runtime kedua `bun.lock`; manifest menentukan API, s
 | Command palette | cmdk |
 | Tanggal | react-day-picker + date-fns |
 | Ikon | lucide-react |
-| Uji | Vitest 4.1.5 + Testing Library + jsdom |
+| Uji | Vitest 4.1.12 + Testing Library + jsdom |
 | Paket | Bun 1.3.14 |
 | Node.js | 24 untuk tooling repo (`.node-version`); konsumen paket/registry ≥20 |
 
