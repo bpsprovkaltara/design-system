@@ -19,7 +19,7 @@ Library React privat, versi manifest 4.8.1. API publik ditentukan `src/index.ts`
 
 Subpath tidak menjamin CSS ikut. Impor CSS sekali; non-Tailwind pilih styles.css; Tailwind 4 pilih tokens.css sesudah @import tailwindcss dan @source dist paket. Jangan memasang kedua entry CSS sekaligus. Font produksi disediakan konsumen.
 
-Peer wajib: React/ReactDOM >=19 dan Tailwind >=4. Form memakai optional peers react-hook-form ^7, zod ^4 dan @hookform/resolvers ^5; konsumen yang tidak memakai Form tidak wajib memasangnya. Setup registry di [README](../README.md#mulai-cepat).
+Peer wajib: React/ReactDOM >=19 dan Tailwind >=4. Form memakai optional peers react-hook-form ^7, zod ^4.6.6 dan @hookform/resolvers ^5; konsumen yang tidak memakai Form tidak wajib memasangnya. Setup registry di [README](../README.md#mulai-cepat).
 
 ## Primitive dan ekspor
 
@@ -35,6 +35,7 @@ Source dimiliki repo; ada extension lokal sehingga jangan menganggap API sama pe
 | AppSidebar/AppTopbar | Primitive chrome untuk komposisi shell; consumer adapter mengendalikan route |
 | FormSheet | title dan children wajib; description, trigger, open/onOpenChange, footer, className, side right/left (default right). children/footer boleh fungsi yang menerima close; lebar via className, tidak ada prop style khusus |
 | FormDialog | Overlay form berbasis dialog; lihat FormDialogProps. Controlled/uncontrolled; children boleh fungsi yang menerima `close()`; tanpa slot footer — footer hanya di FormSheet |
+| FormError | Pesan validasi untuk satu field. Menerima `message`, `id`, dan `className`. Pesan kosong tidak merender elemen. Nilai pesan dirender sebagai teks dengan `role="alert"`. Tersedia sebagai item registry `form-error`. |
 | CommandSearch | value/defaultValue/onValueChange; open/onOpenChange; placeholder/label; loading/loadingLabel/emptyLabel; enableShortcut default true (Ctrl/⌘K); children hasil pencarian; className/panelClassName/inputClassName |
 | DataStatePanel | state loading/error/empty/ready; title/description/onRetry/children. ready merender children; fetching tetap di app |
 | FilterBar | filters: FilterField[] atau children; onReset/onSubmit/resetLabel, columns 2/3/4, aria-label, variant default/surface. FilterField search/select/custom; API keyword/status/unitKerja lama deprecated |
@@ -56,6 +57,8 @@ Source dimiliki repo; ada extension lokal sehingga jangan menganggap API sama pe
 | Stepper | Step/StepStatus, onStepClick dan stepErrors untuk workflow |
 
 `StatusBadge` menerima children sebagai teks dan variant default/secondary/destructive/outline/draft/pending/revised/approved; default bila tidak diisi. `Combobox` memakai options value/label, value/onChange, placeholder/searchPlaceholder/emptyText, className/disabled; menekan ulang opsi aktif dapat mengosongkan nilai.
+
+Gunakan `FormError` untuk pesan yang dipasok langsung, misalnya `<FormError message={errors.email?.message} />`. Gunakan `FormMessage` di dalam `FormField` jika pesan dan ID berasal dari konteks formulir.
 
 `PerformanceCard`: title/value wajib; unit, target, delta (value/direction/period), trend, icon, variant default/glass/backdrop-blur/gradient, loading dan className. Angka numeric memakai id-ID. `FileUpload` membungkus input file native; validasi dan upload server tetap di aplikasi. `maxSize` membatasi ukuran per berkas dalam byte. `onReject` menerima berkas yang ditolak beserta alasannya (`type`, `size`, atau `count`).
 
