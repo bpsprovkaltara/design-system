@@ -19,7 +19,7 @@ Library React privat, versi manifest 4.8.1. API publik ditentukan `src/index.ts`
 
 Subpath tidak menjamin CSS ikut. Impor CSS sekali; non-Tailwind pilih styles.css; Tailwind 4 pilih tokens.css sesudah @import tailwindcss dan @source dist paket. Jangan memasang kedua entry CSS sekaligus. Font produksi disediakan konsumen.
 
-Peer wajib: React/ReactDOM >=19 dan Tailwind >=4. Form memakai optional peers react-hook-form ^7, zod ^4 dan @hookform/resolvers ^5; konsumen yang tidak memakai Form tidak wajib memasangnya. Setup registry di [README](../README.md#mulai-cepat).
+Peer wajib: React/ReactDOM >=19 dan Tailwind >=4. Form memakai optional peers react-hook-form ^7, zod ^4.6.6 dan @hookform/resolvers ^5; konsumen yang tidak memakai Form tidak wajib memasangnya. Setup registry di [README](../README.md#mulai-cepat).
 
 ## Primitive dan ekspor
 

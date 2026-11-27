@@ -34,12 +34,11 @@ Mode belum termasuk kontrak ini.
 
 - Job `quality`: typecheck, lint, cek directive `"use client"`,
   `test:coverage`, `build:lib`, build showcase.
-- Job `security`: `bun audit --audit-level=critical`, gitleaks CLI (rentang
+- Job `security`: `bun audit --audit-level=high`, gitleaks CLI (rentang
   PR, atau `HEAD` saat push), dan zizmor atas workflow.
-- Ambang audit `critical`. Per 2026-11-03 ada 37 temuan high; di cakupan
-  produksi hanya peer `zod` (<4.6.6), sisanya dependency dev (vite,
-  react-router, undici, postcss, dan lainnya). Dilacak di
-  [#35](https://github.com/bpsprovkaltara/design-system/issues/35).
+- Perbaikan [#35](https://github.com/bpsprovkaltara/design-system/issues/35)
+  menaikkan minimum peer opsional `zod` ke 4.6.6 dan memperbarui lockfile.
+  Audit dengan ambang `high` lulus untuk cakupan penuh dan produksi.
 - `release.yml` (publish GitHub Packages) hanya mendapat hygiene: pin SHA,
   `permissions`, timeout, tanpa cache. Pensiunnya mengikuti ADR 0003.
 

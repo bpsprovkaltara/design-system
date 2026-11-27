@@ -91,9 +91,8 @@ jobs:
         with:
           bun-version-file: package.json
 
-      # Ambang critical; temuan high (dev dependency dan peer zod) dilacak di #35.
       - name: Dependency audit
-        run: bun audit --audit-level=critical
+        run: bun audit --audit-level=high
 
       # Binary resmi dipin versi dan checksum; gitleaks-action butuh lisensi org.
       # Scanner berikut tetap jalan walau audit gagal, agar semua temuan terlihat.
