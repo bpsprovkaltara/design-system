@@ -128,6 +128,8 @@ export {
   FormMessage,
   useFormField,
 } from '@/components/ui/form'
+export { FormError } from '@/components/ui/form-error'
+export type { FormErrorProps } from '@/components/ui/form-error'
 export { Input } from '@/components/ui/input'
 export { Label } from '@/components/ui/label'
 export {

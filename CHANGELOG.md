@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- **`FormError`**: pesan validasi per field dengan `role="alert"`, tersedia melalui barrel dan item registry `form-error` (#47).
 - **`Collapsible`, `CollapsibleTrigger`, `CollapsibleContent`**: primitive Radix tanpa gaya bawaan (pola shadcn/ui) untuk satu area yang dibuka-tutup; diekspor dari barrel dan tersedia sebagai item registry `collapsible`.
 - **`FileUpload`**: prop `maxSize` dan `onReject`.
 - **`Combobox`**: field `description` pada opsi (ditampilkan dan ikut dicari) dan prop `allowDeselect` (default `true`, perilaku lama; `false` agar memilih ulang tidak mengosongkan nilai).
